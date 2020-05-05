@@ -1,0 +1,14 @@
+
+schema: http://localhost:4464/type__graphql/api
+generates:
+#  src/common/graphqlTypes/types.fragment.ts:
+#    plugins:
+#      - fragment-matcher
+#    config:
+#      apolloClientVersion: 2
+  utils/graphqlTypes/types.ts:
+    - typescript
+    - typescript-operations
+#  file/graphql_codegen/resolvers.ts:
+#    - typescript
+#    - typescript-resolvers

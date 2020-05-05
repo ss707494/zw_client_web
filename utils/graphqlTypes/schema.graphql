@@ -1,0 +1,585 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+type AuthBody {
+    refreshtoken: String
+    token: String
+}
+
+type Category {
+    categoryParent: Category
+    childCategories: [Category]
+    createTime: Timestamp
+    fullParentId: String
+    id: String
+    imgUrl: String
+    isDelete: Float
+    isEnable: Float
+    name: String
+    number: Float
+    parentCategory: Category
+    parentId: String
+    remark: String
+    sort: Float
+    updateTime: Timestamp
+    userId: String
+}
+
+type CategoryPage {
+    list: [Category]
+    total: Float
+}
+
+type DataConfig {
+    createTime: Timestamp
+    id: String
+    isDelete: Float
+    name: String
+    remark: String
+    type: String
+    updateTime: Timestamp
+    value: JSON
+}
+
+type Dict {
+    code: String
+    createTime: Timestamp
+    dictTypeCode: String
+    dictTypeFirst: DictTypeFirst
+    id: String
+    isDelete: Float
+    isDisable: Float
+    name: String
+    remark: String
+    sort: Float
+    updateTime: Timestamp
+}
+
+type DictTypeFirst {
+    code: String
+    createTime: Timestamp
+    dict: Dict
+    id: String
+    isDelete: Float
+    name: String
+    parentCode: String
+    remark: String
+    sort: Float
+    updateTime: Timestamp
+}
+
+type Mutation {
+    registerUser(data: UserItemInput): User
+    saveCategory(categoryItemInput: CategoryItemInput): Category
+    saveDataConfig(dataConfigInput: DataConfigItemInput): DataConfig
+    saveDictTypeFirst(dictTypeFirstItemInput: [DictTypeFirstItemInput]): [DictTypeFirst]
+    saveOrderList(orderInfoItemInput: [OrderInfoItemInput]): [OrderInfo]
+    saveUserList(userItemInput: [UserItemInput]): [User]
+}
+
+type OrderInfo {
+    actuallyPaid: Float
+    addressId: String
+    couponDiscount: Float
+    createTime: Timestamp
+    currentUserLevel: String
+    deductCoin: Float
+    discountProductTotal: Float
+    finishTime: Timestamp
+    generateCoin: Float
+    id: String
+    isDelete: Float
+    name: String
+    number: String
+    orderId: String
+    paymentMethodCardId: String
+    pickUpTime: Timestamp
+    pickUpType: String
+    rOrderProduct: [ROrderProduct!]
+    rOrderUser: ROrderUser
+    saleTax: Float
+    selfAddressId: String
+    state: Float
+    subtotal: Float
+    transportationCosts: Float
+    updateTime: Timestamp
+    user: User
+    userAddress: UserAddress
+    userPayCard: UserPayCard
+    vipDiscount: Float
+}
+
+type OrderPage {
+    list: [OrderInfo]
+    total: Float
+}
+
+"page type"
+type PageResult {
+    total: Float
+}
+
+type Product {
+    brand: String
+    categoryId: String
+    createTime: Timestamp
+    groupAmount: Float
+    groupAmountUnit: String
+    groupPrecision: Float
+    groupRemark: String
+    id: String
+    isDelete: Float
+    isEnable: Float
+    isGroup: Float
+    isHot: Float
+    isNew: Float
+    name: String
+    number: Float
+    packingUnit: String
+    priceIn: Float
+    priceMarket: Float
+    priceOut: Float
+    rOrderProduct: [ROrderProduct!]
+    remark: String
+    shelvesTypes: String
+    sort: Float
+    stock: Float
+    unit: String
+    updateTime: Timestamp
+    weight: Float
+}
+
+type PromoCode {
+    code: String
+    createTime: Timestamp
+    discountAmount: Float
+    discountCondition: String
+    discountConditionAmount: Float
+    discountType: String
+    effectiveDateEnd: Timestamp
+    effectiveDateStart: Timestamp
+    id: String
+    imgUrl: String
+    isDelete: Float
+    isDisable: Float
+    name: String
+    productCategory: String
+    promoCodeType: String
+    remark: String
+    reuseTimes: Float
+    title: String
+    updateTime: Timestamp
+}
+
+type Query {
+    categoryList(data: CategoryListInput): CategoryPage
+    getDataConfig(dataConfigInput: DataConfigItemInput): DataConfig
+    getDictList(dictInput: DictInput): [Dict]
+    getDictTypeList: [DictTypeFirst]
+    homeCarouselImgs(dataConfigInput: DataConfigItemInput): DataConfig
+    oneCategory(data: CategoryItemInput): Category
+    oneUser: User
+    orderList(orderInput: OrderInput): OrderPage
+    orderListTotal(orderInput: OrderInput): Float
+    passwordCode(password: String): String
+    promoCodeList(promoCodeItemInput: PromoCodeItemInput): [PromoCode]
+    refreshToken(refreshtoken: String!): AuthBody
+    testLongApi: String
+    userList(userListInput: UserListInput): UserPage
+}
+
+type ROrderProduct {
+    count: Float
+    createTime: Timestamp
+    dealPrice: Float
+    id: String
+    isDelete: Float
+    name: String
+    orderId: String
+    orderInfo: OrderInfo
+    product: Product
+    productId: String
+    updateTime: Timestamp
+}
+
+type ROrderUser {
+    createTime: Timestamp
+    id: String
+    isDelete: Float
+    name: String
+    orderId: String
+    orderInfo: OrderInfo
+    updateTime: Timestamp
+    user: User
+    userId: String
+}
+
+type User {
+    createTime: Timestamp
+    id: String
+    isDelete: Float
+    name: String
+    orderAmountCurrentYear: Float
+    orderCoinCurrentMonth: Float
+    orderCoinNextMonth: Float
+    orderInfo: [OrderInfo!]
+    password: String
+    rOrderUser: [ROrderUser!]
+    type: Float
+    updateTime: Timestamp
+    userInfo: UserInfo
+}
+
+type UserAddress {
+    address: String
+    city: String
+    combineAddress: String
+    contactInformation: String
+    contactUserName: String
+    createTime: Timestamp
+    district: String
+    id: String
+    isDefault: Float
+    isDelete: Float
+    name: String
+    orderInfo: [OrderInfo]
+    province: String
+    updateTime: Timestamp
+    userId: String
+    zip: String
+}
+
+type UserInfo {
+    createTime: Timestamp
+    email: String
+    id: String
+    isDelete: Float
+    name: String
+    phone: String
+    updateTime: Timestamp
+    user: User
+    userId: String
+    userLevel: String
+}
+
+type UserPage {
+    list: [User]
+    total: Float
+}
+
+type UserPayCard {
+    addressDetail: String
+    city: String
+    code: String
+    contact: String
+    createTime: Timestamp
+    expirationTime: Timestamp
+    id: String
+    isDefault: Float
+    isDelete: Float
+    name: String
+    number: String
+    orderInfo: [OrderInfo]
+    updateTime: Timestamp
+    userId: String
+    userName: String
+    zipCode: String
+}
+
+input CategoryItemInput {
+    categoryParent: CategoryItemInput
+    childCategories: [CategoryItemInput]
+    createTime: Timestamp
+    fullParentId: String
+    id: String
+    imgUrl: String
+    isDelete: Float
+    isEnable: Float
+    name: String
+    number: Float
+    parentCategory: CategoryItemInput
+    parentId: String
+    remark: String
+    sort: Float
+    updateTime: Timestamp
+    userId: String
+}
+
+input CategoryListInput {
+    category: CategoryItemInput
+    orderByInput: OrderByInput
+    pageInput: PageInput = {rows_per_page : 10.0, page : 0.0}
+}
+
+input DataConfigItemInput {
+    createTime: Timestamp
+    id: String
+    isDelete: Float
+    name: String
+    remark: String
+    type: String
+    updateTime: Timestamp
+    value: JSON
+}
+
+input DictInput {
+    dictTypeCode: String
+    isDisable: Float
+}
+
+input DictItemInput {
+    code: String
+    createTime: Timestamp
+    dictTypeCode: String
+    dictTypeFirst: DictTypeFirstItemInput
+    id: String
+    isDelete: Float
+    isDisable: Float
+    name: String
+    remark: String
+    sort: Float
+    updateTime: Timestamp
+}
+
+input DictTypeFirstItemInput {
+    code: String
+    createTime: Timestamp
+    dict: DictItemInput
+    id: String
+    isDelete: Float
+    name: String
+    parentCode: String
+    remark: String
+    sort: Float
+    updateTime: Timestamp
+}
+
+input OrderByAndPageInput {
+    orderByObject: [[String]] = []
+    page: Float = 0.0
+    rows_per_page: Float = 10.0
+}
+
+input OrderByInput {
+    orderByObject: [[String]]
+}
+
+input OrderInfoItemInput {
+    actuallyPaid: Float
+    addressId: String
+    couponDiscount: Float
+    createTime: Timestamp
+    currentUserLevel: String
+    deductCoin: Float
+    discountProductTotal: Float
+    finishTime: Timestamp
+    generateCoin: Float
+    id: String
+    isDelete: Float
+    name: String
+    number: String
+    orderId: String
+    paymentMethodCardId: String
+    pickUpTime: Timestamp
+    pickUpType: String
+    rOrderProduct: [ROrderProductItemInput!]
+    rOrderUser: ROrderUserItemInput
+    saleTax: Float
+    selfAddressId: String
+    state: Float
+    subtotal: Float
+    transportationCosts: Float
+    updateTime: Timestamp
+    user: UserItemInput
+    userAddress: UserAddressItemInput
+    userPayCard: UserPayCardItemInput
+    vipDiscount: Float
+}
+
+input OrderInput {
+    address: String
+    city: String
+    district: String
+    endTime: Timestamp
+    number: String
+    page: Float = 0.0
+    pickUpTime: Timestamp
+    pickUpType: String
+    province: String
+    registerName: String
+    rows_per_page: Float = 10.0
+    startTime: Timestamp
+    state: Float
+    userName: String
+    zip: String
+}
+
+input PageInput {
+    page: Float = 0.0
+    rows_per_page: Float = 10.0
+}
+
+input ProductItemInput {
+    brand: String
+    categoryId: String
+    createTime: Timestamp
+    groupAmount: Float
+    groupAmountUnit: String
+    groupPrecision: Float
+    groupRemark: String
+    id: String
+    isDelete: Float
+    isEnable: Float
+    isGroup: Float
+    isHot: Float
+    isNew: Float
+    name: String
+    number: Float
+    packingUnit: String
+    priceIn: Float
+    priceMarket: Float
+    priceOut: Float
+    rOrderProduct: [ROrderProductItemInput!]
+    remark: String
+    shelvesTypes: String
+    sort: Float
+    stock: Float
+    unit: String
+    updateTime: Timestamp
+    weight: Float
+}
+
+input PromoCodeItemInput {
+    code: String
+    createTime: Timestamp
+    discountAmount: Float
+    discountCondition: String
+    discountConditionAmount: Float
+    discountType: String
+    effectiveDateEnd: Timestamp
+    effectiveDateStart: Timestamp
+    id: String
+    imgUrl: String
+    isDelete: Float
+    isDisable: Float
+    name: String
+    productCategory: String
+    promoCodeType: String
+    remark: String
+    reuseTimes: Float
+    title: String
+    updateTime: Timestamp
+}
+
+input ROrderProductItemInput {
+    count: Float
+    createTime: Timestamp
+    dealPrice: Float
+    id: String
+    isDelete: Float
+    name: String
+    orderId: String
+    orderInfo: OrderInfoItemInput
+    product: ProductItemInput
+    productId: String
+    updateTime: Timestamp
+}
+
+input ROrderUserItemInput {
+    createTime: Timestamp
+    id: String
+    isDelete: Float
+    name: String
+    orderId: String
+    orderInfo: OrderInfoItemInput
+    updateTime: Timestamp
+    user: UserItemInput
+    userId: String
+}
+
+input UserAddressItemInput {
+    address: String
+    city: String
+    combineAddress: String
+    contactInformation: String
+    contactUserName: String
+    createTime: Timestamp
+    district: String
+    id: String
+    isDefault: Float
+    isDelete: Float
+    name: String
+    orderInfo: [OrderInfoItemInput]
+    province: String
+    updateTime: Timestamp
+    userId: String
+    zip: String
+}
+
+input UserInfoItemInput {
+    createTime: Timestamp
+    email: String
+    id: String
+    isDelete: Float
+    name: String
+    phone: String
+    updateTime: Timestamp
+    user: UserItemInput
+    userId: String
+    userLevel: String
+}
+
+input UserItemInput {
+    createTime: Timestamp
+    id: String
+    isDelete: Float
+    name: String
+    orderAmountCurrentYear: Float = 0.0
+    orderCoinCurrentMonth: Float = 0.0
+    orderCoinNextMonth: Float = 0.0
+    orderInfo: [OrderInfoItemInput!]
+    password: String
+    rOrderUser: [ROrderUserItemInput!]
+    type: Float
+    updateTime: Timestamp
+    userInfo: UserInfoItemInput
+}
+
+input UserListInput {
+    email: String = ""
+    name: String = ""
+    page: Float = 0.0
+    phone: String = ""
+    registerName: String = ""
+    rows_per_page: Float = 10.0
+}
+
+input UserPayCardItemInput {
+    addressDetail: String
+    city: String
+    code: String
+    contact: String
+    createTime: Timestamp
+    expirationTime: Timestamp
+    id: String
+    isDefault: Float
+    isDelete: Float
+    name: String
+    number: String
+    orderInfo: [OrderInfoItemInput]
+    updateTime: Timestamp
+    userId: String
+    userName: String
+    zipCode: String
+}
+
+
+"The javascript `Date` as integer. Type represents date and time as number of milliseconds from start of UNIX epoch."
+scalar Timestamp
+
+"The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf)."
+scalar JSON
