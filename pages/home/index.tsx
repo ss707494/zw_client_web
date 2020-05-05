@@ -8,7 +8,7 @@ import {grey} from '@material-ui/core/colors'
 import {Button} from '@material-ui/core'
 import CusCarousel from '../../utils/components/Swipe/Swipe'
 import {DictTypeEnum} from 'ss_common/enum'
-import {HomeTabs} from './components/Tabs/Tabs'
+import { HomeTabs } from '../../utils/components/home/Tabs/Tabs'
 
 const Home: NextPage<{ userList: UserPage, homeCarouselImgs: DataConfig }> = ({userList, homeCarouselImgs}) => {
   const [num, setNum] = useState(1)
