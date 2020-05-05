@@ -34,7 +34,6 @@
     "react-dom": "^16.13.1",
     "react-responsive-carousel": "^3.2.5",
     "react-swipeable-views": "^0.13.9",
-    "ss_common": "../zw_server_api/my_modules/lib/common",
     "styled-components": "^5.1.0",
     "styled-jsx-plugin-postcss": "^2.0.1",
     "styled-jsx-plugin-sass": "^1.0.0"

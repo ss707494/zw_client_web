@@ -1,11 +1,11 @@
 import {Tab, Tabs} from '@material-ui/core'
 import React from 'react'
-import {AppModuleTypeEnum} from 'ss_common/enum'
 import CategorySelection from '../CategorySelection/CategorySelection'
 import {modelFactory} from '../../../ModelAction/modelUtil'
 import {fpMergePre} from '../../../tools/utils'
 import {useStoreModel} from '../../../ModelAction/useStore'
 import {ls} from '../../../tools/dealKey'
+import {AppModuleTypeEnum} from '../../../ss_common/enum'
 
 
 export const homeTabsModel = modelFactory('HomeTabs', {

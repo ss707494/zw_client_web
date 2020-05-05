@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react'
 import {homeTabsModel} from '../Tabs/Tabs'
-import {AppModuleTypeEnum} from 'ss_common/enum'
 import {modelFactory} from '../../../ModelAction/modelUtil'
 import {ssLog} from '../../../tools/global'
 import {useStoreModel} from '../../../ModelAction/useStore'
+import {AppModuleTypeEnum} from '../../../ss_common/enum'
 
 export const homeCategorySelectionModel = modelFactory('HomeCategorySelection', {
   listData: [],
