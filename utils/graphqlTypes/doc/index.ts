@@ -1,4 +1,5 @@
 import {gql} from 'apollo-boost'
+import {fragment} from './fragment'
 
 export const getUserListDoc = gql`
     query refactored643($data: UserListInput!) {
@@ -91,3 +92,24 @@ export const homeCarouselImgs = gql`
         }
     }
 `
+
+export const categoryList = gql`
+    query query_query_testLong565($data: CategoryListInput) {
+        categoryList(data: $data) {
+            total
+            list {
+                ...Category
+            }
+        }
+    }
+    ${fragment.category}
+`
+
+
+export const doc = {
+  getUserListDoc,
+  categoryList,
+  getDataConfig,
+  homeCarouselImgs,
+}
+

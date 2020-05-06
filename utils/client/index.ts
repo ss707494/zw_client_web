@@ -6,6 +6,7 @@ import {showMessage} from '../components/Message/Message'
 import Router from 'next/router'
 import ApolloClient from 'apollo-boost'
 import {ssLog} from '../tools/global'
+import {DocumentNode} from 'graphql'
 
 export const getClient = () => {
 
@@ -79,7 +80,7 @@ const dealParams = ((params: any) => ({
   data: params,
 }))
 
-export const graphQLQuery = (client = defaultClient) => async (query: any, params: any, option: any) => {
+export const graphQLQuery = (client = defaultClient) => async (query: DocumentNode, params: any, option?: any) => {
   const _dealParamsIn = option?.dealParamsIn ?? dealParams
   return client.query({
     fetchPolicy: 'network-only',
@@ -91,7 +92,7 @@ export const graphQLQuery = (client = defaultClient) => async (query: any, param
   })
 }
 
-export const graphQLMutate = (client = defaultClient) => async (mutation: any, params: any, option: any) => {
+export const graphQLMutate = (client = defaultClient) => async (mutation: any, params: any, option?: any) => {
   const _dealParamsIn = option?.dealParamsIn ?? dealParams
   return client.mutate({
     mutation,

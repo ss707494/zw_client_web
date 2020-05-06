@@ -1,45 +1,76 @@
 import {NextPage} from 'next'
 import React, {useState} from 'react'
 import {graphQLQuery} from '../../utils/client'
-import {getDataConfig, getUserListDoc, homeCarouselImgs} from '../../utils/graphqlTypes/doc'
-import {DataConfig, DataConfigItemInput, UserPage} from '../../utils/graphqlTypes/types'
+import {categoryList, getDataConfig, getUserListDoc, homeCarouselImgs} from '../../utils/graphqlTypes/doc'
+import {Category, CategoryListInput, DataConfig, DataConfigItemInput, UserPage} from '../../utils/graphqlTypes/types'
 import {BorderedInputBase} from '../../utils/components/HeaderSearch/HeaderSearch'
 import {grey} from '@material-ui/core/colors'
 import {Button} from '@material-ui/core'
 import CusCarousel from '../../utils/components/Swipe/Swipe'
-import { HomeTabs } from '../../utils/components/home/Tabs/Tabs'
-import { DictTypeEnum } from '../../utils/ss_common/enum'
+import {HomeTabs} from '../../utils/components/home/Tabs/Tabs'
+import {CategoryRootName, DictTypeEnum} from '../../utils/ss_common/enum'
+import {BScroller} from '../../utils/components/BScroll/BScroller'
 
-const Home: NextPage<{ userList: UserPage, homeCarouselImgs: DataConfig }> = ({userList, homeCarouselImgs}) => {
+const Home: NextPage<{
+  userList: UserPage,
+  homeCarouselImgs: DataConfig,
+  homeCategorySelection_listData: Category[]
+}> = ({userList, homeCarouselImgs, homeCategorySelection_listData}) => {
   const [num, setNum] = useState(1)
 
-  console.log(homeCarouselImgs)
   return (
-      <div className={'common_box'}>
-        <header>
-          <BorderedInputBase/>
-        </header>
-        <div className={'tip'}>
-          <aside>热搜:</aside>
-          {['薯条', '小龙虾'].map(value => <span key={`tip_${value}`}>{value}</span>)}
-        </div>
-        <div className={'cusCarousel'}>
-          <CusCarousel
-              dataList={homeCarouselImgs.value.list as []}
+      <BScroller>
+        <div className={'common_box'}>
+          <header>
+            <BorderedInputBase/>
+          </header>
+          <div className={'tip'}>
+            <aside>热搜:</aside>
+            {['薯条', '小龙虾'].map(value => <span key={`tip_${value}`}>{value}</span>)}
+          </div>
+          <div className={'cusCarousel'}>
+            <CusCarousel
+                dataList={homeCarouselImgs.value.list as []}
+            />
+          </div>
+          <HomeTabs
+              homeCategorySelection_listData={homeCategorySelection_listData}
           />
-        </div>
-        <HomeTabs />
-        <main>
-          {num}
-          <Button
-              onClick={() => {
-                setNum(num + 1)
-              }}
-          >add</Button>
-        </main>
-        <style jsx>{`
+          <main>
+            {num}
+            <Button
+                onClick={() => {
+                  setNum(num + 1)
+                }}
+            >add</Button>
+          </main>
+          <main>
+            {num}
+            <Button
+                onClick={() => {
+                  setNum(num + 1)
+                }}
+            >add</Button>
+          </main>
+          <main>
+            {num}
+            <Button
+                onClick={() => {
+                  setNum(num + 1)
+                }}
+            >add</Button>
+          </main>
+          <main>
+            {num}
+            <Button
+                onClick={() => {
+                  setNum(num + 1)
+                }}
+            >add</Button>
+          </main>
+          <style jsx>{`
           .common_box {
-            margin-top: 10px;
+            padding-top: 10px;
           }
           .tip {
             display: flex;
@@ -51,9 +82,12 @@ const Home: NextPage<{ userList: UserPage, homeCarouselImgs: DataConfig }> = ({u
           }
           .cusCarousel {
             max-height: 230px;
+            border-radius: 10px;
+            overflow: hidden;
           }
         `}</style>
-      </div>
+        </div>
+      </BScroller>
   )
 }
 
@@ -69,8 +103,17 @@ export const getStaticProps = async () => {
     ...rest,
   } as DataConfigItemInput, {})
 
+  const categoryRes = await graphQLQuery()(categoryList, {
+    category: {
+      parentCategory: {
+        id: CategoryRootName,
+      },
+    },
+  } as CategoryListInput)
+
   return {
     props: {
+      homeCategorySelection_listData: categoryRes?.data?.categoryList?.list,
       ...res?.data,
       ...homeCarouselDataComfig?.data,
     },

@@ -1,5 +1,5 @@
 
-export const dealImgUrl = (src: string = '') => {
+export const dealImgUrl = (src: string | undefined | null = '') => {
   if (src?.includes('blob:')) {
     return src
   }

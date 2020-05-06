@@ -70,4 +70,6 @@ export enum AppModuleTypeEnum {
   topRanking = 'topRanking',
 }
 
+export const CategoryRootName = 'root'
+
 export const orderStateKeys: string[] = Object.values(OrderState).filter(value => typeof (value) === 'string') as string[]
