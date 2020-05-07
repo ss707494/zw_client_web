@@ -1,8 +1,8 @@
 import {NextPage} from 'next'
 import React, {useState} from 'react'
 import {graphQLQuery} from '../../utils/client'
-import {categoryList, getDataConfig, getUserListDoc, homeCarouselImgs} from '../../utils/graphqlTypes/doc'
-import {Category, CategoryListInput, DataConfig, DataConfigItemInput, UserPage} from '../../utils/graphqlTypes/types'
+import {categoryList, getDataConfig, homeCarouselImgs} from '../../utils/graphqlTypes/doc'
+import {Category, CategoryListInput, DataConfig, DataConfigItemInput} from '../../utils/graphqlTypes/types'
 import {BorderedInputBase} from '../../utils/components/HeaderSearch/HeaderSearch'
 import {grey} from '@material-ui/core/colors'
 import {Button} from '@material-ui/core'
@@ -12,10 +12,9 @@ import {CategoryRootName, DictTypeEnum} from '../../utils/ss_common/enum'
 import {BScroller} from '../../utils/components/BScroll/BScroller'
 
 const Home: NextPage<{
-  userList: UserPage,
   homeCarouselImgs: DataConfig,
   homeCategorySelection_listData: Category[]
-}> = ({userList, homeCarouselImgs, homeCategorySelection_listData}) => {
+}> = ({homeCarouselImgs, homeCategorySelection_listData}) => {
   const [num, setNum] = useState(1)
 
   return (
@@ -94,7 +93,6 @@ const Home: NextPage<{
 export default Home
 
 export const getStaticProps = async () => {
-  const res = await graphQLQuery()(getUserListDoc, {}, {})
   const res2 = await graphQLQuery()(getDataConfig, {
     type: DictTypeEnum.HomeCarousel,
   } as DataConfigItemInput, {})
@@ -114,7 +112,6 @@ export const getStaticProps = async () => {
   return {
     props: {
       homeCategorySelection_listData: categoryRes?.data?.categoryList?.list,
-      ...res?.data,
       ...homeCarouselDataComfig?.data,
     },
   }

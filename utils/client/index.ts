@@ -68,7 +68,7 @@ export const getClient = () => {
 
   return new ApolloClient({
     // link: httpLink,
-    uri: 'http://localhost:4464/type__graphql/api',
+    uri: process.env.client_api_uri || 'http://localhost:4464/type__graphql/api',
     request,
     onError,
   })
