@@ -3,12 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "node server.js",
     "build": "next build",
-    "start": "node ./node_modules/next/dist/cli/next-start.js",
+    "start": "node server.js",
     "graphql-codegen": "graphql-codegen",
-    "prod": "cross-env NODE_ENV=production node server.js",
-    "prod_remote_uri": "cross-env NODE_ENV=production node server.js -client_api_uri http://47.75.157.220:4464/type__graphql/api"
+    "prod": "next build & cross-env NODE_ENV=production node server.js",
+    "prod_remote_uri": "cross-env NODE_ENV=production node server.js -client_api_uri http://47.75.157.220:4464/type__graphql/api",
+    "pm2": "pm2 start ecosystem.config.js --name 'client_web'"
   },
   "dependencies": {
     "@material-ui/core": "^4.9.12",
@@ -48,8 +49,10 @@
     "@graphql-codegen/typescript-operations": "^1.13.4",
     "@types/node": "^13.9.3",
     "@types/react": "^16.9.25",
+    "@types/shelljs": "^0.8.7",
     "postcss-px-to-viewport": "^1.1.1",
     "postcss-pxtorem": "^5.1.1",
+    "shelljs": "^0.8.4",
     "typescript": "^3.8.3"
   }
 }

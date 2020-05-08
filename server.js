@@ -27,20 +27,20 @@ app.prepare()
         const serverUrl = `http:127.0.0.1:${port}`
         console.log(`> Ready on ${serverUrl}`)
         // 开发环境自动启动
-        if (dev) {
-          switch (process.platform) {
-              //mac系统使用 一下命令打开url在浏览器
-            case 'darwin':
-              cp.exec(`open ${serverUrl}`)
-              break
-              //win系统使用 一下命令打开url在浏览器
-            case 'win32':
-              cp.exec(`start ${serverUrl}`)
-              break
-              // 默认mac系统
-            default:
-              cp.exec(`open ${serverUrl}`)
-          }
-        }
+        // if (dev) {
+        //   switch (process.platform) {
+        //       //mac系统使用 一下命令打开url在浏览器
+        //     case 'darwin':
+        //       cp.exec(`open ${serverUrl}`)
+        //       break
+        //       //win系统使用 一下命令打开url在浏览器
+        //     case 'win32':
+        //       cp.exec(`start ${serverUrl}`)
+        //       break
+        //       // 默认mac系统
+        //     default:
+        //       cp.exec(`open ${serverUrl}`)
+        //   }
+        // }
       })
     })

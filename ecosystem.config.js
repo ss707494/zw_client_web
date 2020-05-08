@@ -1,7 +1,7 @@
 module.exports = {
   apps : [{
     name: 'dw_web_client',
-    script: './server.js',
+    script: './scripts/startPro.js',
 
     args: '',
     instances: 1,
