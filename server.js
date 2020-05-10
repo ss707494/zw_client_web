@@ -3,6 +3,14 @@ const cp = require('child_process')
 const { parse } = require('url')
 const next = require('next')
 
+const path = require('path')
+const setEnv = require('dotenv')
+;['.env.local', '.env'].forEach(e => {
+  setEnv.config({
+    path: path.resolve(process.cwd(), e)
+  })
+})
+
 const port = parseInt(process.env.PORT, 10) || 3006
 // 判断开发环境和生产环境
 process.env.NODE_ENV = (typeof process.env.NODE_ENV !== 'undefined')
