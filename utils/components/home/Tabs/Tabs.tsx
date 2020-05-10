@@ -2,25 +2,28 @@ import {Tab, Tabs} from '@material-ui/core'
 import React from 'react'
 import CategorySelection from '../CategorySelection/CategorySelection'
 import {modelFactory} from '../../../ModelAction/modelUtil'
-import {fpMergePre} from '../../../tools/utils'
 import {useStoreModel} from '../../../ModelAction/useStore'
 import {ls} from '../../../tools/dealKey'
 import {AppModuleTypeEnum} from '../../../ss_common/enum'
-import {Category} from '../../../graphqlTypes/types'
-
+import Router, { useRouter } from 'next/router'
 
 export const homeTabsModel = modelFactory('HomeTabs', {
-  value: AppModuleTypeEnum.categorySelection,
+  appModuleConfig: {} as any,
 }, {
   onChange: (value, option) => {
-    option.setData(fpMergePre({
-      value,
-    }))
+    // @ts-ignore
+    Router.push(`/home/[appModule]`, `/home/${value}`, {shallow: true})
+    // option.setData(fpMergePre({
+    //   value,
+    // }))
   },
 })
 
-export const HomeTabs = ({homeCategorySelection_listData}: {homeCategorySelection_listData?: Category[]}) => {
+export const HomeTabs = () => {
+  const router = useRouter()
   const {state: homeTabsState, actions: homeTabsActions} = useStoreModel(homeTabsModel)
+  console.log(homeTabsState.appModuleConfig)
+  console.log([AppModuleTypeEnum.limitTime, AppModuleTypeEnum.mayLike, AppModuleTypeEnum.salesRank, AppModuleTypeEnum.themeSelection].filter(v => (homeTabsState.appModuleConfig[v])))
 
   return (
       <div
@@ -28,25 +31,35 @@ export const HomeTabs = ({homeCategorySelection_listData}: {homeCategorySelectio
       >
         <Tabs
             variant={'fullWidth'}
-            value={homeTabsState.value}
+            value={router.query.appModule}
             onChange={(event, value) => homeTabsActions.onChange(value)}
         >
           <Tab
               value={AppModuleTypeEnum.categorySelection}
               label={ls('分类选择')}
           />
-          <Tab value={AppModuleTypeEnum.limitTime}
-               label={ls('限时选购')}
-          />
+          {[
+            [AppModuleTypeEnum.limitTime, '限时选购'],
+            [AppModuleTypeEnum.mayLike, '猜你喜欢'],
+            [AppModuleTypeEnum.salesRank, '热销排行'],
+            [AppModuleTypeEnum.themeSelection, '主题甄选'],
+          ].filter(v => (homeTabsState.appModuleConfig[v[0]])).map(v => <Tab
+              key={`AppModuleTypeEnum_${v[0]}`}
+              value={v[0]}
+              label={ls(v[1])}
+          />)}
         </Tabs>
         <main
             style={{marginTop: '10px'}}
         >
-          {homeTabsState.value === AppModuleTypeEnum.categorySelection
-          && <CategorySelection
-              homeCategorySelection_listData={homeCategorySelection_listData}
-          />}
+          {router.query.appModule === AppModuleTypeEnum.categorySelection
+          && <CategorySelection/>}
         </main>
+        <style jsx>{`
+          div :global(.MuiButtonBase-root) {
+            padding: 0;
+          }
+        `}</style>
       </div>
   )
 }

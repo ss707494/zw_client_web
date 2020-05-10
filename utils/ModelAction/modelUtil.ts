@@ -135,6 +135,17 @@ export const mergeListModel = (modelList: ModelData<any, any>[]) => {
   return modelList.slice(1).reduce((acc, model) => mergeTwoModel(acc, model), modelList[0])
 }
 
+const initList: string[] = []
+export const initModel = <T extends FetchObj, E extends ModelActionObjHelp<any, T>>(model: ModelData<T, E>, initState: Partial<T>) => {
+  if (initList.includes(model.name)) return
+  initList.push(model.name)
+  console.log(`init_${model.name}`)
+  model.state = {
+    ...model.state,
+    ...initState,
+  }
+}
+
 // const model = modelFactory({}, {
 //   ss: {
 //     eee: (value: string, option) => {
