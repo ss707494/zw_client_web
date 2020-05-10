@@ -1,5 +1,5 @@
 import {NextPage} from 'next'
-import React from 'react'
+import React, {useEffect} from 'react'
 import {graphQLQuery} from '../../utils/client'
 import {categoryList, getDataConfig, homeCarouselImgs} from '../../utils/graphqlTypes/doc'
 import {Category, CategoryListInput, DataConfig, DataConfigItemInput} from '../../utils/graphqlTypes/types'
@@ -7,17 +7,26 @@ import {BorderedInputBase} from '../../utils/components/HeaderSearch/HeaderSearc
 import {grey} from '@material-ui/core/colors'
 import CusCarousel from '../../utils/components/Swipe/Swipe'
 import {HomeTabs, homeTabsModel} from '../../utils/components/home/Tabs/Tabs'
-import {CategoryRootName, DictTypeEnum} from '../../utils/ss_common/enum'
+import {AppModuleTypeEnum, CategoryRootName, DictTypeEnum} from '../../utils/ss_common/enum'
 import {BScroller} from '../../utils/components/BScroll/BScroller'
 import {homeCategorySelectionModel} from '../../utils/components/home/CategorySelection/CategorySelection'
 import {initModel} from '../../utils/ModelAction/modelUtil'
 import {FootBar} from '../../utils/components/FootBar/FootBar'
+import {useRouter} from 'next/router'
 
 const Home: NextPage<{
   homeCarouselImgs: DataConfig,
   appModuleConfig: DataConfig,
   homeCategorySelection_listData: Category[]
 }> = ({homeCarouselImgs, homeCategorySelection_listData, appModuleConfig}) => {
+  const router = useRouter()
+  useEffect(() => {
+    if (!([AppModuleTypeEnum.limitTime, AppModuleTypeEnum.mayLike, AppModuleTypeEnum.salesRank, AppModuleTypeEnum.themeSelection]as any[]).includes(router.query.appModule)
+    ) {
+      router.replace('/home/[appModule]', '/home/categorySelection', {})
+    }
+  })
+
 
   initModel(homeTabsModel, {
     appModuleConfig: appModuleConfig?.value,
@@ -78,7 +87,7 @@ const Home: NextPage<{
           }
         `}</style>
         </BScroller>
-        <FootBar />
+        <FootBar/>
       </div>
   )
 }
