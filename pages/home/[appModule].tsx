@@ -21,12 +21,11 @@ const Home: NextPage<{
 }> = ({homeCarouselImgs, homeCategorySelection_listData, appModuleConfig}) => {
   const router = useRouter()
   useEffect(() => {
-    if (!([AppModuleTypeEnum.limitTime, AppModuleTypeEnum.mayLike, AppModuleTypeEnum.salesRank, AppModuleTypeEnum.themeSelection]as any[]).includes(router.query.appModule)
+    if (!([AppModuleTypeEnum.limitTime, AppModuleTypeEnum.mayLike, AppModuleTypeEnum.salesRank, AppModuleTypeEnum.themeSelection, AppModuleTypeEnum.categorySelection]as any[]).includes(router.query.appModule)
     ) {
       router.replace('/home/[appModule]', '/home/categorySelection', {})
     }
   })
-
 
   initModel(homeTabsModel, {
     appModuleConfig: appModuleConfig?.value,

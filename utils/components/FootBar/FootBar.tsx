@@ -6,6 +6,7 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 import PeopleIcon from '@material-ui/icons/People'
 import { useRouter } from 'next/router'
 import red from '@material-ui/core/colors/red'
+import {AppFootBar} from '../../ss_common/enum'
 
 export const FootBar = () => {
   const router = useRouter()
@@ -15,11 +16,11 @@ export const FootBar = () => {
       <div
           className={'FootBar'}>
         {[
-          ['逛店', <StorefrontIcon/>, '/home'],
-          ['拼团', <PeopleIcon/>, '/332'],
-          ['达人卡', <RedeemIcon/>, '/332'],
-          ['购物车', <ShoppingCartIcon/>, '/332'],
-          ['我', <AccountBoxIcon/>, '/332'],
+          ['逛店', <StorefrontIcon/>, `/${AppFootBar.home}`],
+          ['拼团', <PeopleIcon/>, `/${AppFootBar.group}`],
+          ['达人卡', <RedeemIcon/>, `/${AppFootBar.card}`],
+          ['购物车', <ShoppingCartIcon/>, `/${AppFootBar.cart}`],
+          ['我', <AccountBoxIcon/>, `/${AppFootBar.me}`],
         ].map(v => (
             <section
                 key={`FootBar_${v[0]}`}
