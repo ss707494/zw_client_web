@@ -2,7 +2,7 @@ import {useCallback, useEffect, useState} from "react"
 import {graphQLMutate, graphQLQuery} from '../client'
 import {baseActionOption} from './modelUtil'
 
-const originStore: OriginStore = {}
+export const originStore: OriginStore = {}
 
 const isFunction = (functionToCheck: any) => {
   return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]'

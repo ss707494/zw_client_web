@@ -12,5 +12,7 @@
       }
     ]
   ],
-  "plugins": []
+  "plugins": [
+    "styled-components"
+  ]
 }
