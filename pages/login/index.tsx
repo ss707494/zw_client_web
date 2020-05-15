@@ -1,11 +1,4 @@
 import React from 'react'
-import { useTheme } from '@material-ui/core'
+import {Login} from '../../utils/view/login'
 
-export default function() {
-  const theme = useTheme()
-  console.log(theme)
-
-  return (
-      <div>login</div>
-  )
-}
+export default Login

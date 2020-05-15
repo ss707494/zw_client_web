@@ -139,7 +139,6 @@ const initList: string[] = []
 export const initModel = <T extends FetchObj, E extends ModelActionObjHelp<any, T>>(model: ModelData<T, E>, initState: Partial<T>) => {
   if (initList.includes(model.name)) return
   initList.push(model.name)
-  console.log(`init_${model.name}`)
   model.state = {
     ...model.state,
     ...initState,

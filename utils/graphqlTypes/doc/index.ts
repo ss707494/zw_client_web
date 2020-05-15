@@ -105,11 +105,58 @@ export const categoryList = gql`
     ${fragment.category}
 `
 
-
 export const doc = {
   getUserListDoc,
   categoryList,
   getDataConfig,
   homeCarouselImgs,
+  registerUser: gql`
+      mutation mutation_registerUse998($data: UserItemInput) {
+          registerUser(data: $data) {
+              token
+              refreshtoken
+              user {
+                  id
+                  name
+                  createTime
+                  updateTime
+                  isDelete
+                  password
+                  type
+                  userInfo {
+                      name
+                  }
+              }
+          }
+      }
+  `,
+  refreshToken: gql`
+      query refreshToken($data: String!) {
+          refreshToken(refreshtoken: $data) {
+              refreshtoken
+              token
+          }
+      }
+  `,
+  login: gql`
+      query login($data: UserItemInput) {
+          login(user: $data) {
+              token
+              refreshtoken
+          }
+      }
+  `,
+  oneUser: gql`
+      query oneUser {
+          oneUser {
+              ...UserFields
+              userInfo {
+                  ...UserInfoFields
+              }
+          }
+      }
+      ${fragment.UserInfoFields}
+      ${fragment.UserFields}
+  `,
 }
 

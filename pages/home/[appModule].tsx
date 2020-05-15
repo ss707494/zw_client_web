@@ -1,112 +1,26 @@
-import {NextPage} from 'next'
-import React, {useEffect} from 'react'
-import {graphQLQuery} from '../../utils/client'
+import React from 'react'
+import {serverQuery} from '../../utils/client'
 import {categoryList, getDataConfig, homeCarouselImgs} from '../../utils/graphqlTypes/doc'
-import {Category, CategoryListInput, DataConfig, DataConfigItemInput} from '../../utils/graphqlTypes/types'
-import {BorderedInputBase} from '../../utils/components/HeaderSearch/HeaderSearch'
-import {grey} from '@material-ui/core/colors'
-import CusCarousel from '../../utils/components/Swipe/Swipe'
-import {HomeTabs, homeTabsModel} from '../../utils/components/home/Tabs/Tabs'
-import {AppModuleTypeEnum, CategoryRootName, DictTypeEnum} from '../../utils/ss_common/enum'
-import {BScroller} from '../../utils/components/BScroll/BScroller'
-import {homeCategorySelectionModel} from '../../utils/components/home/CategorySelection/CategorySelection'
-import {initModel} from '../../utils/ModelAction/modelUtil'
-import {FootBar} from '../../utils/components/FootBar/FootBar'
-import {useRouter} from 'next/router'
+import {CategoryListInput, DataConfigItemInput} from '../../utils/graphqlTypes/types'
+import {CategoryRootName, DictTypeEnum} from '../../utils/ss_common/enum'
+import {HomeAppModule} from '../../utils/view/home/appModule'
 
-const Home: NextPage<{
-  homeCarouselImgs: DataConfig,
-  appModuleConfig: DataConfig,
-  homeCategorySelection_listData: Category[]
-}> = ({homeCarouselImgs, homeCategorySelection_listData, appModuleConfig}) => {
-  const router = useRouter()
-  useEffect(() => {
-    if (!([AppModuleTypeEnum.limitTime, AppModuleTypeEnum.mayLike, AppModuleTypeEnum.salesRank, AppModuleTypeEnum.themeSelection, AppModuleTypeEnum.categorySelection]as any[]).includes(router.query.appModule)
-    ) {
-      router.replace('/home/[appModule]', '/home/categorySelection', {})
-    }
-  })
-
-  initModel(homeTabsModel, {
-    appModuleConfig: appModuleConfig?.value,
-  })
-  initModel(homeCategorySelectionModel, {
-    listData: homeCategorySelection_listData,
-  })
-
-  return (
-      <div>
-        <BScroller>
-          <div className={'common_box'}>
-            <header>
-              <BorderedInputBase/>
-            </header>
-            <div className={'tip'}>
-              <aside>热搜:</aside>
-              {['薯条', '小龙虾'].map(value => <span key={`tip_${value}`}>{value}</span>)}
-            </div>
-            <div className={'cusCarousel'}>
-              <CusCarousel
-                  dataList={homeCarouselImgs.value.list as []}
-              />
-            </div>
-            <div>
-              <HomeTabs/>
-            </div>
-          </div>
-          <style jsx>{`
-          .common_box {
-            padding-top: 10px;
-            padding-bottom: 120px;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-            flex-shrink: 1;
-            overflow: auto;
-            > * {
-              margin-left: 10px;
-              margin-right: 10px;
-            }
-          }
-          .tip {
-            display: flex;
-            color: ${grey[600]};
-            padding: 8px 0;
-            > span {
-              margin: 0 10px;
-            }
-          }
-          .cusCarousel {
-            max-height: 230px;
-            border-radius: 10px;
-            overflow: hidden;
-          }
-          .footer {
-            height: 200px;
-          }
-        `}</style>
-        </BScroller>
-        <FootBar/>
-      </div>
-  )
-}
-
-export default Home
+export default HomeAppModule
 
 const init = async () => {
-  const appModuleConfig = await graphQLQuery()(getDataConfig, {
+  const appModuleConfig = await serverQuery(getDataConfig, {
     type: DictTypeEnum.AppModule,
   } as DataConfigItemInput, {})
 
-  const res2 = await graphQLQuery()(getDataConfig, {
+  const res2 = await serverQuery(getDataConfig, {
     type: DictTypeEnum.HomeCarousel,
   } as DataConfigItemInput, {})
-  const {__typename, ...rest} = res2?.data?.getDataConfig
-  const homeCarouselDataComfig = await graphQLQuery()(homeCarouselImgs, {
+  const {__typename, ...rest} = res2?.getDataConfig
+  const homeCarouselDataComfig = await serverQuery(homeCarouselImgs, {
     ...rest,
   } as DataConfigItemInput, {})
 
-  const categoryRes = await graphQLQuery()(categoryList, {
+  const categoryRes = await serverQuery(categoryList, {
     category: {
       parentCategory: {
         id: CategoryRootName,
@@ -116,14 +30,21 @@ const init = async () => {
 
   return {
     props: {
-      homeCategorySelection_listData: categoryRes?.data?.categoryList?.list,
-      ...homeCarouselDataComfig?.data,
-      appModuleConfig: appModuleConfig?.data?.getDataConfig,
+      homeCategorySelection_listData: categoryRes?.categoryList?.list,
+      ...homeCarouselDataComfig,
+      appModuleConfig: appModuleConfig?.getDataConfig,
     },
   }
 }
 
-export const getServerSideProps = init
-// export const getStaticProps = async () => {
-//   return await init()
-// }
+export const getStaticPaths = () => {
+  return {
+    paths: [{
+      params: {
+        appModule: 'categorySelection',
+      },
+    }],
+    fallback: true,
+  }
+}
+export const getStaticProps = init

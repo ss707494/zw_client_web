@@ -1,8 +1,8 @@
 import React, {useEffect, useRef} from 'react'
 import BetterScroll from 'better-scroll'
-import {modelFactory} from '../../ModelAction/modelUtil'
-import {fpMergePre} from '../../tools/utils'
-import {useStoreModel} from '../../ModelAction/useStore'
+import {modelFactory} from '../../../ModelAction/modelUtil'
+import {fpMergePre} from '../../../tools/utils'
+import {useStoreModel} from '../../../ModelAction/useStore'
 
 export const bScrollModel = modelFactory('bScrollModel', {
   scroll: {} as any,

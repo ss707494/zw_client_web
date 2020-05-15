@@ -8,7 +8,7 @@
     "start": "node server.js",
     "graphql-codegen": "graphql-codegen",
     "prod": "next build & cross-env NODE_ENV=production node server.js",
-    "prod_remote_uri": "cross-env NODE_ENV=production node server.js -client_api_uri http://47.75.157.220:4464/type__graphql/api",
+    "prod_start": "cross-env NODE_ENV=production node server.js",
     "pm2": "pm2 start ecosystem.config.js --name 'client_web'"
   },
   "dependencies": {
@@ -44,7 +44,8 @@
     "react-swipeable-views": "^0.13.9",
     "styled-components": "^5.1.0",
     "styled-jsx-plugin-postcss": "^2.0.1",
-    "styled-jsx-plugin-sass": "^1.0.0"
+    "styled-jsx-plugin-sass": "^1.0.0",
+    "universal-cookie": "^4.0.3"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^1.13.4",

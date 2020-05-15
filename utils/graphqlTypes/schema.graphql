@@ -73,7 +73,7 @@ type DictTypeFirst {
 }
 
 type Mutation {
-    registerUser(data: UserItemInput): User
+    registerUser(data: UserItemInput): UserInRegister
     saveCategory(categoryItemInput: CategoryItemInput): Category
     saveDataConfig(dataConfigInput: DataConfigItemInput): DataConfig
     saveDictTypeFirst(dictTypeFirstItemInput: [DictTypeFirstItemInput]): [DictTypeFirst]
@@ -181,6 +181,7 @@ type Query {
     getDictList(dictInput: DictInput): [Dict]
     getDictTypeList: [DictTypeFirst]
     homeCarouselImgs(dataConfigInput: DataConfigItemInput): DataConfig
+    login(user: UserItemInput): AuthBody
     oneCategory(data: CategoryItemInput): Category
     oneUser: User
     orderList(orderInput: OrderInput): OrderPage
@@ -251,6 +252,12 @@ type UserAddress {
     updateTime: Timestamp
     userId: String
     zip: String
+}
+
+type UserInRegister {
+    refreshtoken: String
+    token: String
+    user: User
 }
 
 type UserInfo {

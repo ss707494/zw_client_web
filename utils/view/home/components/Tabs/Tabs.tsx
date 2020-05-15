@@ -1,11 +1,11 @@
 import {Tab, Tabs} from '@material-ui/core'
 import React from 'react'
 import CategorySelection from '../CategorySelection/CategorySelection'
-import {modelFactory} from '../../../ModelAction/modelUtil'
-import {useStoreModel} from '../../../ModelAction/useStore'
-import {ls} from '../../../tools/dealKey'
-import {AppModuleTypeEnum} from '../../../ss_common/enum'
-import Router, { useRouter } from 'next/router'
+import Router, {useRouter} from 'next/router'
+import {modelFactory} from '../../../../ModelAction/modelUtil'
+import {useStoreModel} from '../../../../ModelAction/useStore'
+import {AppModuleTypeEnum} from '../../../../ss_common/enum'
+import {ls} from '../../../../tools/dealKey'
 
 export const homeTabsModel = modelFactory('HomeTabs', {
   appModuleConfig: {} as any,
@@ -22,8 +22,6 @@ export const homeTabsModel = modelFactory('HomeTabs', {
 export const HomeTabs = () => {
   const router = useRouter()
   const {state: homeTabsState, actions: homeTabsActions} = useStoreModel(homeTabsModel)
-  console.log(homeTabsState.appModuleConfig)
-  console.log([AppModuleTypeEnum.limitTime, AppModuleTypeEnum.mayLike, AppModuleTypeEnum.salesRank, AppModuleTypeEnum.themeSelection].filter(v => (homeTabsState.appModuleConfig[v])))
 
   return (
       <div
@@ -43,7 +41,7 @@ export const HomeTabs = () => {
             [AppModuleTypeEnum.mayLike, '猜你喜欢'],
             [AppModuleTypeEnum.salesRank, '热销排行'],
             [AppModuleTypeEnum.themeSelection, '主题甄选'],
-          ].filter(v => (homeTabsState.appModuleConfig[v[0]])).map(v => <Tab
+          ].filter(v => (homeTabsState?.appModuleConfig?.[v[0]])).map(v => <Tab
               key={`AppModuleTypeEnum_${v[0]}`}
               value={v[0]}
               label={ls(v[1])}

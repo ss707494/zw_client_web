@@ -20,11 +20,13 @@ export type Query = {
   orderList?: Maybe<OrderPage>;
   orderListTotal?: Maybe<Scalars['Float']>;
   getDataConfig?: Maybe<DataConfig>;
+  homeCarouselImgs?: Maybe<DataConfig>;
   getDictTypeList?: Maybe<Array<Maybe<DictTypeFirst>>>;
   getDictList?: Maybe<Array<Maybe<Dict>>>;
   categoryList?: Maybe<CategoryPage>;
   oneCategory?: Maybe<Category>;
   promoCodeList?: Maybe<Array<Maybe<PromoCode>>>;
+  login?: Maybe<AuthBody>;
   refreshToken?: Maybe<AuthBody>;
   passwordCode?: Maybe<Scalars['String']>;
 };
@@ -50,6 +52,11 @@ export type QueryGetDataConfigArgs = {
 };
 
 
+export type QueryHomeCarouselImgsArgs = {
+  dataConfigInput?: Maybe<DataConfigItemInput>;
+};
+
+
 export type QueryGetDictListArgs = {
   dictInput?: Maybe<DictInput>;
 };
@@ -67,6 +74,11 @@ export type QueryOneCategoryArgs = {
 
 export type QueryPromoCodeListArgs = {
   promoCodeItemInput?: Maybe<PromoCodeItemInput>;
+};
+
+
+export type QueryLoginArgs = {
+  user?: Maybe<UserItemInput>;
 };
 
 
@@ -445,52 +457,6 @@ export type PromoCode = {
   isDisable?: Maybe<Scalars['Float']>;
 };
 
-export type AuthBody = {
-   __typename?: 'AuthBody';
-  token?: Maybe<Scalars['String']>;
-  refreshtoken?: Maybe<Scalars['String']>;
-};
-
-export type Mutation = {
-   __typename?: 'Mutation';
-  saveUserList?: Maybe<Array<Maybe<User>>>;
-  registerUser?: Maybe<User>;
-  saveOrderList?: Maybe<Array<Maybe<OrderInfo>>>;
-  saveDataConfig?: Maybe<DataConfig>;
-  saveDictTypeFirst?: Maybe<Array<Maybe<DictTypeFirst>>>;
-  saveCategory?: Maybe<Category>;
-};
-
-
-export type MutationSaveUserListArgs = {
-  userItemInput?: Maybe<Array<Maybe<UserItemInput>>>;
-};
-
-
-export type MutationRegisterUserArgs = {
-  data?: Maybe<UserItemInput>;
-};
-
-
-export type MutationSaveOrderListArgs = {
-  orderInfoItemInput?: Maybe<Array<Maybe<OrderInfoItemInput>>>;
-};
-
-
-export type MutationSaveDataConfigArgs = {
-  dataConfigInput?: Maybe<DataConfigItemInput>;
-};
-
-
-export type MutationSaveDictTypeFirstArgs = {
-  dictTypeFirstItemInput?: Maybe<Array<Maybe<DictTypeFirstItemInput>>>;
-};
-
-
-export type MutationSaveCategoryArgs = {
-  categoryItemInput?: Maybe<CategoryItemInput>;
-};
-
 export type UserItemInput = {
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
@@ -644,6 +610,59 @@ export type UserPayCardItemInput = {
   isDefault?: Maybe<Scalars['Float']>;
   orderInfo?: Maybe<Array<Maybe<OrderInfoItemInput>>>;
   expirationTime?: Maybe<Scalars['Timestamp']>;
+};
+
+export type AuthBody = {
+   __typename?: 'AuthBody';
+  token?: Maybe<Scalars['String']>;
+  refreshtoken?: Maybe<Scalars['String']>;
+};
+
+export type Mutation = {
+   __typename?: 'Mutation';
+  saveUserList?: Maybe<Array<Maybe<User>>>;
+  registerUser?: Maybe<UserInRegister>;
+  saveOrderList?: Maybe<Array<Maybe<OrderInfo>>>;
+  saveDataConfig?: Maybe<DataConfig>;
+  saveDictTypeFirst?: Maybe<Array<Maybe<DictTypeFirst>>>;
+  saveCategory?: Maybe<Category>;
+};
+
+
+export type MutationSaveUserListArgs = {
+  userItemInput?: Maybe<Array<Maybe<UserItemInput>>>;
+};
+
+
+export type MutationRegisterUserArgs = {
+  data?: Maybe<UserItemInput>;
+};
+
+
+export type MutationSaveOrderListArgs = {
+  orderInfoItemInput?: Maybe<Array<Maybe<OrderInfoItemInput>>>;
+};
+
+
+export type MutationSaveDataConfigArgs = {
+  dataConfigInput?: Maybe<DataConfigItemInput>;
+};
+
+
+export type MutationSaveDictTypeFirstArgs = {
+  dictTypeFirstItemInput?: Maybe<Array<Maybe<DictTypeFirstItemInput>>>;
+};
+
+
+export type MutationSaveCategoryArgs = {
+  categoryItemInput?: Maybe<CategoryItemInput>;
+};
+
+export type UserInRegister = {
+   __typename?: 'UserInRegister';
+  token?: Maybe<Scalars['String']>;
+  refreshtoken?: Maybe<Scalars['String']>;
+  user?: Maybe<User>;
 };
 
 export type DictTypeFirstItemInput = {

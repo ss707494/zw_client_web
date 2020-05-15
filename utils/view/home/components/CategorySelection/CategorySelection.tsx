@@ -1,25 +1,22 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {homeTabsModel} from '../Tabs/Tabs'
-import {modelFactory} from '../../../ModelAction/modelUtil'
-import {useStoreModel} from '../../../ModelAction/useStore'
-import {CategoryRootName} from '../../../ss_common/enum'
-import {categoryList} from '../../../graphqlTypes/doc'
-import {Category, CategoryListInput} from '../../../graphqlTypes/types'
-import {fpMergePre} from '../../../tools/utils'
-import {dealImgUrl} from '../../../tools/img'
 import {grey} from '@material-ui/core/colors'
 import {KeyboardArrowRight} from '@material-ui/icons'
-import {Loading} from '../../Loading/Loading'
-import {bScrollModel} from '../../BScroll/BScroller'
 import {ButtonBase} from '@material-ui/core'
+import {useStoreModel} from '../../../../ModelAction/useStore'
+import {Category, CategoryListInput} from '../../../../graphqlTypes/types'
+import {fpMergePre} from '../../../../tools/utils'
+import {Loading} from '../../../../components/common/Loading/Loading'
+import {categoryList} from '../../../../graphqlTypes/doc'
+import {dealImgUrl} from '../../../../tools/img'
+import {CategoryRootName} from '../../../../ss_common/enum'
+import {bScrollModel} from '../../../../components/common/BScroll/BScroller'
+import {modelFactory} from '../../../../ModelAction/modelUtil'
 
 export const homeCategorySelectionModel = modelFactory('HomeCategorySelection', {
   listData: [] as Category[],
   total: 0,
 }, {
-  init: (value, option) => option.setData(fpMergePre({
-    listData: value,
-  })),
   getList: async (value, option) => {
     const res = await option.query(categoryList, {
       category: {
@@ -38,6 +35,10 @@ export const CategorySelection = () => {
   const {state: bsState, actions: bsActions} = useStoreModel(bScrollModel)
   const {state: homeTabsState, actions: homeTabsActions} = useStoreModel(homeTabsModel)
   const {state: homeCategorySelectionState, actions: homeCategorySelectionActions, getLoad: hsGetLoad} = useStoreModel(homeCategorySelectionModel)
+
+  useEffect(() => {
+    homeCategorySelectionActions.getList()
+  }, [])
 
   return (
       <div>

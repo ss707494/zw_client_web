@@ -6,7 +6,7 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 import PeopleIcon from '@material-ui/icons/People'
 import { useRouter } from 'next/router'
 import red from '@material-ui/core/colors/red'
-import {AppFootBar} from '../../ss_common/enum'
+import { AppFootBar } from '../../../ss_common/enum'
 
 export const FootBar = () => {
   const router = useRouter()
