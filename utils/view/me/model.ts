@@ -5,6 +5,9 @@ import {setToken} from '../../tools/token'
 import {doc} from '../../graphqlTypes/doc'
 import {modelFactory} from '../../ModelAction/modelUtil'
 
+const toLogin = async () => {
+  await Router.push('/login')
+}
 export const meModel = modelFactory('meModel', {
   user: {} as User,
 }, {
@@ -17,6 +20,9 @@ export const meModel = modelFactory('meModel', {
   logout: async (value, option) => {
     setToken('')
     setToken('', 'refreshtoken')
-    await Router.push('/login')
+    await toLogin()
   },
+  toLogin: value => {
+    toLogin()
+  }
 })

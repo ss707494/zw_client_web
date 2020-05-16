@@ -158,5 +158,15 @@ export const doc = {
       ${fragment.UserInfoFields}
       ${fragment.UserFields}
   `,
+  orderList: gql`
+      query orderList($data: OrderInput){
+          orderList (orderInput: $data, fromUser: true) {
+              list {
+                  ...OrderInfoFields
+              }
+          }
+      }
+    ${fragment.OrderInfoFields}
+  `,
 }
 

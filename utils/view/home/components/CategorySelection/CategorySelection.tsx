@@ -6,11 +6,11 @@ import {ButtonBase} from '@material-ui/core'
 import {useStoreModel} from '../../../../ModelAction/useStore'
 import {Category, CategoryListInput} from '../../../../graphqlTypes/types'
 import {fpMergePre} from '../../../../tools/utils'
-import {Loading} from '../../../../components/common/Loading/Loading'
+import {Loading} from '../../../../components/Loading/Loading'
 import {categoryList} from '../../../../graphqlTypes/doc'
 import {dealImgUrl} from '../../../../tools/img'
 import {CategoryRootName} from '../../../../ss_common/enum'
-import {bScrollModel} from '../../../../components/common/BScroll/BScroller'
+import {bScrollModel} from '../../../../components/BScroll/BScroller'
 import {modelFactory} from '../../../../ModelAction/modelUtil'
 
 export const homeCategorySelectionModel = modelFactory('HomeCategorySelection', {
@@ -19,12 +19,14 @@ export const homeCategorySelectionModel = modelFactory('HomeCategorySelection', 
 }, {
   getList: async (value, option) => {
     const res = await option.query(categoryList, {
-      category: {
-        parentCategory: {
-          id: CategoryRootName,
+      data: {
+        category: {
+          parentCategory: {
+            id: CategoryRootName,
+          },
         },
-      },
-    } as CategoryListInput)
+      } as CategoryListInput
+    })
     option.setData(fpMergePre({
       listData: res?.categoryList?.list,
     }))

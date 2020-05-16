@@ -9,24 +9,32 @@ export default HomeAppModule
 
 const init = async () => {
   const appModuleConfig = await serverQuery(getDataConfig, {
-    type: DictTypeEnum.AppModule,
-  } as DataConfigItemInput, {})
+    data: {
+      type: DictTypeEnum.AppModule,
+    } as DataConfigItemInput
+  }, {})
 
   const res2 = await serverQuery(getDataConfig, {
-    type: DictTypeEnum.HomeCarousel,
-  } as DataConfigItemInput, {})
+    data: {
+      type: DictTypeEnum.HomeCarousel,
+    } as DataConfigItemInput
+  }, {})
   const {__typename, ...rest} = res2?.getDataConfig
   const homeCarouselDataComfig = await serverQuery(homeCarouselImgs, {
-    ...rest,
-  } as DataConfigItemInput, {})
+    data: {
+      ...rest,
+    } as DataConfigItemInput
+  }, {})
 
   const categoryRes = await serverQuery(categoryList, {
-    category: {
-      parentCategory: {
-        id: CategoryRootName,
+    data: {
+      category: {
+        parentCategory: {
+          id: CategoryRootName,
+        },
       },
-    },
-  } as CategoryListInput)
+    } as CategoryListInput
+  })
 
   return {
     props: {

@@ -184,7 +184,7 @@ type Query {
     login(user: UserItemInput): AuthBody
     oneCategory(data: CategoryItemInput): Category
     oneUser: User
-    orderList(orderInput: OrderInput): OrderPage
+    orderList(fromUser: Boolean, orderInput: OrderInput): OrderPage
     orderListTotal(orderInput: OrderInput): Float
     passwordCode(password: String): String
     promoCodeList(promoCodeItemInput: PromoCodeItemInput): [PromoCode]
@@ -421,6 +421,7 @@ input OrderInput {
     rows_per_page: Float = 10.0
     startTime: Timestamp
     state: Float
+    userId: String
     userName: String
     zip: String
 }

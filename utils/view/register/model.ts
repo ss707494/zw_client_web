@@ -2,7 +2,7 @@ import Router from 'next/router'
 import {fpMergePre, fpSetPre} from '../../tools/utils'
 import {User, UserInRegister} from '../../graphqlTypes/types'
 import {setToken} from '../../tools/token'
-import {showMessage} from '../../components/common/Message/Message'
+import {showMessage} from '../../components/Message/Message'
 import {doc} from '../../graphqlTypes/doc'
 import {modelFactory} from '../../ModelAction/modelUtil'
 import { ls } from '../../tools/dealKey'
@@ -45,7 +45,9 @@ export const registerModel = modelFactory('register', {
     }
     const {confirmPassword, ...params} = option.data.userForm
     const res = await option.mutate(doc.registerUser, {
-      ...params,
+      data: {
+        ...params,
+      },
     })
     const registerUser = res?.registerUser as UserInRegister
     if (registerUser?.user?.id) {

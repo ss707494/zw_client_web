@@ -7,7 +7,7 @@ import ApolloClient from 'apollo-boost'
 import {ssLog} from '../tools/global'
 import {DocumentNode} from 'graphql'
 import {doc} from '../graphqlTypes/doc'
-import {showMessage} from '../components/common/Message/Message'
+import {showMessage} from '../components/Message/Message'
 
 export const getClient = () => {
 
@@ -25,7 +25,9 @@ export const getClient = () => {
   }
 
   const refreshToken = () => {
-    graphQLQuery()(doc.refreshToken, getToken('refreshtoken'))
+    graphQLQuery()(doc.refreshToken, {
+      data: getToken('refreshtoken')
+    })
         .then(res => {
           if (res.data?.refreshToken?.token) {
             setToken(res.data?.refreshToken?.token)
@@ -93,9 +95,10 @@ export const getClient = () => {
 
 const defaultClient = getClient()
 
-const dealParams = ((params: any) => ({
-  data: params,
-}))
+// const dealParams = ((params: any) => ({
+//   data: params,
+// }))
+const dealParams = ((params: any) => params)
 
 export const graphQLQuery = (client = defaultClient) => async (query: DocumentNode, params: any, option?: any) => {
   const _dealParamsIn = option?.dealParamsIn ?? dealParams

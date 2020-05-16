@@ -1,7 +1,7 @@
 import Router from 'next/router'
 import {fpSetPre} from '../../tools/utils'
 import {setToken} from '../../tools/token'
-import {showMessage} from '../../components/common/Message/Message'
+import {showMessage} from '../../components/Message/Message'
 import {doc} from '../../graphqlTypes/doc'
 import {UserItemInput} from '../../graphqlTypes/types'
 import {modelFactory} from '../../ModelAction/modelUtil'
@@ -21,7 +21,9 @@ export const loginModel = modelFactory('loginModel', {
     if (!form?.name || !form?.password) {
       return showMessage(ls('请填写表单'))
     }
-    const res = await option.query(doc.login, {...form})
+    const res = await option.query(doc.login, {
+      data: {...form}
+    })
     if (res?.login?.token) {
       setToken(res?.login?.token)
       setToken(res?.login?.refreshtoken, 'refreshtoken')

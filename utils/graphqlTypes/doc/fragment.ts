@@ -42,4 +42,32 @@ export const fragment = {
           userLevel
       }
   `,
+  OrderInfoFields: gql`
+      fragment OrderInfoFields on OrderInfo {
+          id
+          name
+          createTime
+          updateTime
+          isDelete
+          number
+          state
+          actuallyPaid
+          addressId
+          paymentMethodCardId
+          subtotal
+          couponDiscount
+          vipDiscount
+          transportationCosts
+          saleTax
+          orderId
+          discountProductTotal
+          finishTime
+          pickUpTime
+          pickUpType
+          generateCoin
+          deductCoin
+          selfAddressId
+          currentUserLevel
+      }
+  `
 }

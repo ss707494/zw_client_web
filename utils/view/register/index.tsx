@@ -5,9 +5,9 @@ import {Button, ButtonProps, TextField} from '@material-ui/core'
 import {TextFieldProps} from '@material-ui/core/TextField/TextField'
 import {mpStyle} from '../../style/common'
 import {useStoreModel} from '../../ModelAction/useStore'
-import {RegisterHeader} from '../../components/common/RegisterHeader/RegisterHeader'
+import {RegisterHeader} from '../../components/RegisterHeader/RegisterHeader'
 import { ls } from '../../tools/dealKey'
-import {Box} from '../../components/common/Box/Box'
+import {Box} from '../../components/Box/Box'
 
 const Tab = styled.div`
   font-size: 22px;

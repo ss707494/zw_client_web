@@ -1103,10 +1103,34 @@
     "@graphql-toolkit/schema-merging" "~0.10.4"
     tslib "~1.11.1"
 
+"@graphql-codegen/fragment-matcher@^1.13.5":
+  version "1.13.5"
+  resolved "https://registry.npm.taobao.org/@graphql-codegen/fragment-matcher/download/@graphql-codegen/fragment-matcher-1.13.5.tgz#97c3e06b19a154b1f9437c721ad0c07269566e31"
+  integrity sha1-l8PgaxmhVLH5Q3xyGtDAcmlWbjE=
+  dependencies:
+    "@graphql-codegen/plugin-helpers" "1.13.5"
+    tslib "~1.11.1"
+
 "@graphql-codegen/plugin-helpers@1.13.4":
   version "1.13.4"
   resolved "https://registry.npm.taobao.org/@graphql-codegen/plugin-helpers/download/@graphql-codegen/plugin-helpers-1.13.4.tgz#bb750f22d723403c76e079ce58fe1f9345ae9ef4"
   integrity sha1-u3UPItcjQDx24HnOWP4fk0WunvQ=
+  dependencies:
+    "@graphql-toolkit/common" "~0.10.4"
+    camel-case "4.1.1"
+    common-tags "1.8.0"
+    constant-case "3.0.3"
+    import-from "3.0.0"
+    lower-case "2.0.1"
+    param-case "3.0.3"
+    pascal-case "3.1.1"
+    tslib "~1.11.1"
+    upper-case "2.0.1"
+
+"@graphql-codegen/plugin-helpers@1.13.5":
+  version "1.13.5"
+  resolved "https://registry.npm.taobao.org/@graphql-codegen/plugin-helpers/download/@graphql-codegen/plugin-helpers-1.13.5.tgz#a4ef9b432b547c82a9c6d55068bdc10c2d39bd74"
+  integrity sha1-pO+bQytUfIKpxtVQaL3BDC05vXQ=
   dependencies:
     "@graphql-toolkit/common" "~0.10.4"
     camel-case "4.1.1"

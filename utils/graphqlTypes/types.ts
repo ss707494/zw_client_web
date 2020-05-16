@@ -38,6 +38,7 @@ export type QueryUserListArgs = {
 
 
 export type QueryOrderListArgs = {
+  fromUser?: Maybe<Scalars['Boolean']>;
   orderInput?: Maybe<OrderInput>;
 };
 
@@ -279,6 +280,7 @@ export type OrderInput = {
   state?: Maybe<Scalars['Float']>;
   userName?: Maybe<Scalars['String']>;
   registerName?: Maybe<Scalars['String']>;
+  userId?: Maybe<Scalars['String']>;
   zip?: Maybe<Scalars['String']>;
   province?: Maybe<Scalars['String']>;
   city?: Maybe<Scalars['String']>;

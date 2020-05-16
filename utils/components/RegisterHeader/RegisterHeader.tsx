@@ -1,7 +1,7 @@
-import {ls} from '../../../tools/dealKey'
 import React from 'react'
 import styled from 'styled-components'
-import {mpStyle} from '../../../style/common'
+import { ls } from '../../tools/dealKey'
+import {mpStyle} from '../../style/common'
 
 const Header = styled.div`
   margin-top: 20px;

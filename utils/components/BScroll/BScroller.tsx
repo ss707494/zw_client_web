@@ -1,8 +1,8 @@
 import React, {useEffect, useRef} from 'react'
 import BetterScroll from 'better-scroll'
-import {modelFactory} from '../../../ModelAction/modelUtil'
-import {fpMergePre} from '../../../tools/utils'
-import {useStoreModel} from '../../../ModelAction/useStore'
+import {useStoreModel} from '../../ModelAction/useStore'
+import {fpMergePre} from '../../tools/utils'
+import {modelFactory} from '../../ModelAction/modelUtil'
 
 export const bScrollModel = modelFactory('bScrollModel', {
   scroll: {} as any,
@@ -34,7 +34,7 @@ export const BScroller = ({children}: any) => {
       <div
           ref={scrollRef}
           className={'box'}>
-        {children}
+        <div>{children}</div>
         <style jsx>{`
           .box {
             height: 100vh;

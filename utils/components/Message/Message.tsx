@@ -3,9 +3,9 @@ import styled from 'styled-components'
 import {Snackbar} from '@material-ui/core'
 import {amber, blue, common, green, grey, red} from '@material-ui/core/colors'
 import {SnackbarProps} from '@material-ui/core/Snackbar/Snackbar'
-import { modelFactory } from '../../../ModelAction/modelUtil'
-import { fpMergePre } from '../../../tools/utils'
-import { originStore, useStoreModel } from '../../../ModelAction/useStore'
+import {originStore, useStoreModel} from '../../ModelAction/useStore'
+import {fpMergePre} from '../../tools/utils'
+import {modelFactory} from '../../ModelAction/modelUtil'
 
 const typeHelp = {
   default: `background: ${grey[700]};`,
