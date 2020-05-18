@@ -45,8 +45,7 @@
     "react-swipeable-views": "^0.13.9",
     "styled-components": "^5.1.0",
     "styled-jsx-plugin-postcss": "^2.0.1",
-    "styled-jsx-plugin-sass": "^1.0.0",
-    "universal-cookie": "^4.0.3"
+    "styled-jsx-plugin-sass": "^1.0.0"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^1.13.4",
