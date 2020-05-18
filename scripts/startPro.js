@@ -12,7 +12,7 @@ function callback (code, stdout, stderr) {
   console.log('Program stderr:', stderr)
 }
 
-shelljs.exec('next build', { windowsHide: true })
+shelljs.exec('next build')
 
-shelljs.exec('cross-env NODE_ENV=production node server.js', { windowsHide: true }, callback)
+shelljs.exec('cross-env NODE_ENV=production node server.js', {}, callback)
 

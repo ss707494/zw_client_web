@@ -85,6 +85,7 @@ export const OrderDetail = () => {
             <footer>{orderInfo?.userPayCard?.userName}</footer>
           </section>
         </InfoLabel>
+        <div style={{marginTop: '12px', position: 'relative', left: '-20px', width: '100vw', height: '12px', background: grey[200]}}/>
       </Box>
     </BScroller>}
 
