@@ -38,6 +38,22 @@ export enum OrderState {
   Cancel = 6,
 }
 
+// 1:代付款 2:已付款 3:已发货 4:已收货 5:已取消 6:已完成 7:已退回
+const _s: {
+  [key in number]: string
+} = {
+  1: '代付款',
+  2: '已付款',
+  3: '已发货',
+  4: '已收货',
+  5: '已取消',
+  6: '已完成',
+  7: '已退回',
+}
+export const orderStateToString = (s: number | null = 0) => {
+  return _s?.[(s ?? 0)] ?? ''
+}
+
 // 配置管理
 export enum DictTypeEnum {
   GroupPrecision = 'GroupPrecision',

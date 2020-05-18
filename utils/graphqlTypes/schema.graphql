@@ -132,6 +132,7 @@ type Product {
     groupPrecision: Float
     groupRemark: String
     id: String
+    img: [ProductImg]
     isDelete: Float
     isEnable: Float
     isGroup: Float
@@ -151,6 +152,18 @@ type Product {
     unit: String
     updateTime: Timestamp
     weight: Float
+}
+
+type ProductImg {
+    createTime: Timestamp
+    id: String
+    isDelete: Float
+    name: String
+    number: Float
+    product: Product
+    productId: String
+    updateTime: Timestamp
+    url: String
 }
 
 type PromoCode {
@@ -184,6 +197,7 @@ type Query {
     login(user: UserItemInput): AuthBody
     oneCategory(data: CategoryItemInput): Category
     oneUser: User
+    orderDetail(id: String): OrderInfo
     orderList(fromUser: Boolean, orderInput: OrderInput): OrderPage
     orderListTotal(orderInput: OrderInput): Float
     passwordCode(password: String): String
@@ -431,6 +445,18 @@ input PageInput {
     rows_per_page: Float = 10.0
 }
 
+input ProductImgItemInput {
+    createTime: Timestamp
+    id: String
+    isDelete: Float
+    name: String
+    number: Float
+    product: ProductItemInput
+    productId: String
+    updateTime: Timestamp
+    url: String
+}
+
 input ProductItemInput {
     brand: String
     categoryId: String
@@ -440,6 +466,7 @@ input ProductItemInput {
     groupPrecision: Float
     groupRemark: String
     id: String
+    img: [ProductImgItemInput]
     isDelete: Float
     isEnable: Float
     isGroup: Float

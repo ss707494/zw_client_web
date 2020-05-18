@@ -72,14 +72,20 @@ export const dealNumberZero = (length: number) => (num: number) => {
   return Array(length - _s.length).fill('0').join('') + _s
 }
 
-export const formatDate = (date: any = '', formatString: string) => {
+export const formatDate = (date: any = '', formatString = 'YYYY-MM-DD HH:mm:ss') => {
   if (!date) {
     return ''
   }
   if (isString(date)) {
-    return format(new Date(date), formatString)
+    return format(new Date(date), formatString, {
+      useAdditionalDayOfYearTokens: true,
+      useAdditionalWeekYearTokens: true,
+    })
   }
-  return (isNaN(date)) ? '' : format(date, formatString)
+  return (isNaN(date)) ? '' : format(date, formatString, {
+    useAdditionalDayOfYearTokens: true,
+    useAdditionalWeekYearTokens: true,
+  })
 }
 
 export const dealNonBooleanProps = (value: any) => !!value ? 1 : 0

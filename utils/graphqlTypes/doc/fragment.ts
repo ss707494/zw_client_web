@@ -69,5 +69,98 @@ export const fragment = {
           selfAddressId
           currentUserLevel
       }
-  `
+  `,
+  ROrderProductFields: gql`
+      fragment ROrderProductFields on ROrderProduct {
+          count
+          createTime
+          dealPrice
+          id
+          isDelete
+          name
+          orderId
+          productId
+          updateTime
+      }
+  `,
+  ProductFields: gql`
+      fragment ProductFields on Product {
+          brand
+          categoryId
+          createTime
+          groupAmount
+          groupAmountUnit
+          groupPrecision
+          groupRemark
+          id
+          isDelete
+          isEnable
+          isGroup
+          isHot
+          isNew
+          name
+          number
+          packingUnit
+          priceIn
+          priceMarket
+          priceOut
+          remark
+          shelvesTypes
+          sort
+          stock
+          unit
+          updateTime
+          weight
+      }
+  `,
+  ImgFields: gql`
+    fragment ImgFields on ProductImg {
+        createTime
+        id
+        isDelete
+        name
+        number
+        productId
+        updateTime
+        url
+    } 
+  `,
+  UserAddressFields: gql`
+      fragment UserAddressFields on UserAddress {
+          address
+          city
+          combineAddress
+          contactInformation
+          contactUserName
+          createTime
+          district
+          id
+          isDefault
+          isDelete
+          name
+          province
+          updateTime
+          userId
+          zip
+      }
+  `,
+  UserPayCardFields: gql`
+      fragment UserPayCardFields on UserPayCard {
+          addressDetail
+          city
+          code
+          contact
+          createTime
+          expirationTime
+          id
+          isDefault
+          isDelete
+          name
+          number
+          updateTime
+          userId
+          userName
+          zipCode
+      }
+  `,
 }

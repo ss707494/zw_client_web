@@ -163,10 +163,58 @@ export const doc = {
           orderList (orderInput: $data, fromUser: true) {
               list {
                   ...OrderInfoFields
+                  rOrderProduct {
+                      ...ROrderProductFields
+                      product {
+                          ...ProductFields
+                          img {
+                              ...ImgFields
+                          }
+                      }
+                  }
               }
           }
       }
-    ${fragment.OrderInfoFields}
+      ${fragment.OrderInfoFields}
+      ${fragment.ROrderProductFields}
+      ${fragment.ProductFields}
+      ${fragment.ImgFields}
   `,
+  orderDetail: gql`
+    query orderDetail($id: String) {
+        orderDetail(id: $id) {
+            ...OrderInfoFields
+            rOrderProduct {
+                ...ROrderProductFields
+                product {
+                    ...ProductFields
+                    img {
+                        ...ImgFields
+                    }
+                }
+            }
+            user {
+                ...UserFields
+                userInfo {
+                    ...UserInfoFields
+                }
+            }
+            userAddress {
+                ...UserAddressFields
+            }
+            userPayCard {
+                ...UserPayCardFields
+            }
+        }
+    }
+    ${fragment.OrderInfoFields}
+    ${fragment.ROrderProductFields}
+    ${fragment.ProductFields}
+    ${fragment.ImgFields}
+    ${fragment.UserFields}
+    ${fragment.UserInfoFields}
+    ${fragment.UserPayCardFields}
+    ${fragment.UserAddressFields}
+  `
 }
 

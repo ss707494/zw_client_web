@@ -14,7 +14,7 @@ export const bScrollModel = modelFactory('bScrollModel', {
   },
 })
 
-export const BScroller = ({children}: any) => {
+export const BScroller = ({children, boxHeight}: {children?: any, boxHeight?: any}) => {
   const {state: bsState, actions: bsActions} = useStoreModel(bScrollModel)
   const scrollRef = useRef(null)
   useEffect(() => {
@@ -37,7 +37,8 @@ export const BScroller = ({children}: any) => {
         <div>{children}</div>
         <style jsx>{`
           .box {
-            height: 100vh;
+            height: ${boxHeight || '100vh'};
+            overflow: hidden;
           }
         `}</style>
       </div>

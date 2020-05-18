@@ -26,19 +26,18 @@ export const getClient = () => {
 
   const refreshToken = () => {
     graphQLQuery()(doc.refreshToken, {
-      data: getToken('refreshtoken')
-    })
-        .then(res => {
-          if (res.data?.refreshToken?.token) {
-            setToken(res.data?.refreshToken?.token)
-            setToken(res.data?.refreshToken?.refreshtoken, 'refreshtoken')
-            showMessage({message: '登录超时,刷新登录信息'})
-            Router.reload()
-          } else {
-            showMessage({message: '请重新登录'})
-            Router.push('/login')
-          }
-        }).catch(err => {
+      data: getToken('refreshtoken'),
+    }).then(res => {
+      if (res.data?.refreshToken?.token) {
+        setToken(res.data?.refreshToken?.token)
+        setToken(res.data?.refreshToken?.refreshtoken, 'refreshtoken')
+        showMessage({message: '登录超时,刷新登录信息'})
+        Router.reload()
+      } else {
+        showMessage({message: '请重新登录'})
+        Router.push('/login')
+      }
+    }).catch(err => {
       ssLog(err)
       showMessage({message: '请重新登录'})
       Router.push('/login')
