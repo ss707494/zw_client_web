@@ -72,7 +72,7 @@ export const dealNumberZero = (length: number) => (num: number) => {
   return Array(length - _s.length).fill('0').join('') + _s
 }
 
-export const formatDate = (date: any = '', formatString = 'YYYY-MM-DD HH:mm:ss') => {
+export const formatDate = (date: any = '', formatString = 'YYYY-MM-dd HH:mm:ss') => {
   if (!date) {
     return ''
   }

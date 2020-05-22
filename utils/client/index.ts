@@ -8,13 +8,21 @@ import {ssLog} from '../tools/global'
 import {DocumentNode} from 'graphql'
 import {doc} from '../graphqlTypes/doc'
 import {showMessage} from '../components/Message/Message'
+import getConfig from 'next/config'
+
+const config = getConfig()
+const client_api_uri = config?.publicRuntimeConfig?.client_api_uri ?? 'http://localhost:4464/type__graphql/api'
+
+const omitTypename = (key: any, value: any) => {
+  return key === '__typename' ? undefined : value
+}
 
 export const getClient = () => {
 
   const request: (operation: Operation) => Promise<void> | void = (operation) => {
-    // if (operation.variables) {
-    //   operation.variables = JSON.parse(JSON.stringify(operation.variables), omitTypename)
-    // }
+    if (operation.variables) {
+      operation.variables = JSON.parse(JSON.stringify(operation.variables), omitTypename)
+    }
     operation.setContext(({headers = {}}) => ({
       headers: {
         ...headers,
@@ -86,7 +94,7 @@ export const getClient = () => {
 
   return new ApolloClient({
     // link: httpLink,
-    uri: process.env.client_api_uri || 'http://localhost:4464/type__graphql/api',
+    uri: client_api_uri,
     request,
     onError,
   })
@@ -124,7 +132,7 @@ export const graphQLMutate = (client = defaultClient) => async (mutation: any, p
 
 const serverClient = () => new ApolloClient({
   // link: httpLink,
-  uri: process.env.client_api_uri || 'http://localhost:4464/type__graphql/api',
+  uri: client_api_uri,
 })
 
 export const serverQuery = async (query: any, params: any, option?: any) => (await graphQLQuery(serverClient())(query, params, option))?.data

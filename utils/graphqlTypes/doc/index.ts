@@ -1,5 +1,6 @@
 import {gql} from 'apollo-boost'
 import {fragment} from './fragment'
+import {DictTypeEnum} from '../../ss_common/enum'
 
 export const getUserListDoc = gql`
     query refactored643($data: UserListInput!) {
@@ -64,7 +65,7 @@ export const getUserListDoc = gql`
 `
 
 export const getDataConfig = gql`
-    query query_query_testLong354($data: DataConfigItemInput) {
+    query ($data: DataConfigItemInput) {
         getDataConfig(dataConfigInput: $data) {
             id
             name
@@ -215,6 +216,84 @@ export const doc = {
     ${fragment.UserInfoFields}
     ${fragment.UserPayCardFields}
     ${fragment.UserAddressFields}
-  `
+  `,
+  updatePassword: gql`
+    mutation ($data: UpdatePasswordInput) {
+        updatePassword (data: $data) {
+            user {
+                ...UserFields
+            }
+            authBody {
+                token
+                refreshtoken
+            }
+        }
+    }
+    ${fragment.UserFields}
+  `,
+  payCardListOneUser: gql`
+    query {
+        payCardListOneUser {
+            ...UserPayCardFields
+        }
+    }
+    ${fragment.UserPayCardFields}
+  `,
+  userPayCard: gql`
+    query ($data: UserPayCardItemInput) {
+        userPayCard (userPayCard: $data) {
+            ...UserPayCardFields
+        }
+    }
+    ${fragment.UserPayCardFields}
+  `,
+  saveUserPayCard: gql`
+    mutation ($data: UserPayCardItemInput){
+        saveUserPayCard (userPayCard: $data) {
+            ...UserPayCardFields
+        }
+    }
+    ${fragment.UserPayCardFields}
+  `,
+  setUserPayCardDefault: gql`
+    mutation ($data: UserPayCardItemInput) {
+        setUserPayCardDefault (userPayCard: $data) {
+            ...UserPayCardFields
+        }
+    }
+    ${fragment.UserPayCardFields}
+  `,
+  pickupAddress: gql`
+      query {
+          getDataConfig(dataConfigInput: {
+              type: "${DictTypeEnum.SelfAddress}"
+          }) {
+              id
+              name
+              createTime
+              updateTime
+              isDelete
+              type
+              value
+              remark
+          }
+          oneUser {
+              ...UserFields
+              userInfo {
+                  ...UserInfoFields
+              }
+          }
+      }
+      ${fragment.UserInfoFields}
+      ${fragment.UserFields}
+  `,
+  updateUserInfo: gql`
+    mutation ($userInfo: UserInfoItemInput) {
+        updateUserInfo (userInfo: $userInfo) {
+            ...UserInfoFields
+        }
+    }
+    ${fragment.UserInfoFields}
+  `,
 }
 

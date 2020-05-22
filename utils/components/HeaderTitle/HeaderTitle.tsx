@@ -12,11 +12,14 @@ const Box = styled.div`
   height: 60px;
   align-items: center;
 `
-export const HeaderTitle = ({title = ''}: {title?: string}) => {
+export const HeaderTitle = ({title = '', backCall = () => {}}: {title?: string, backCall?: Function}) => {
   const router = useRouter()
   return <Box>
     <IconButton
-        onClick={() => router.back()}
+        onClick={() => {
+          backCall && backCall()
+          router.back()
+        }}
     >
       <ArrowBackIosIcon/>
     </IconButton>

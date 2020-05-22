@@ -14,6 +14,9 @@ export type Scalars = {
 
 export type Query = {
    __typename?: 'Query';
+  login?: Maybe<AuthBody>;
+  refreshToken?: Maybe<AuthBody>;
+  passwordCode?: Maybe<Scalars['String']>;
   testLongApi?: Maybe<Scalars['String']>;
   userList?: Maybe<UserPage>;
   oneUser?: Maybe<User>;
@@ -27,9 +30,23 @@ export type Query = {
   categoryList?: Maybe<CategoryPage>;
   oneCategory?: Maybe<Category>;
   promoCodeList?: Maybe<Array<Maybe<PromoCode>>>;
-  login?: Maybe<AuthBody>;
-  refreshToken?: Maybe<AuthBody>;
-  passwordCode?: Maybe<Scalars['String']>;
+  payCardListOneUser?: Maybe<Array<Maybe<UserPayCard>>>;
+  userPayCard?: Maybe<UserPayCard>;
+};
+
+
+export type QueryLoginArgs = {
+  user?: Maybe<UserItemInput>;
+};
+
+
+export type QueryRefreshTokenArgs = {
+  refreshtoken: Scalars['String'];
+};
+
+
+export type QueryPasswordCodeArgs = {
+  password?: Maybe<Scalars['String']>;
 };
 
 
@@ -84,18 +101,186 @@ export type QueryPromoCodeListArgs = {
 };
 
 
-export type QueryLoginArgs = {
+export type QueryUserPayCardArgs = {
+  userPayCard?: Maybe<UserPayCardItemInput>;
+};
+
+export type UserItemInput = {
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  createTime?: Maybe<Scalars['Timestamp']>;
+  updateTime?: Maybe<Scalars['Timestamp']>;
+  isDelete?: Maybe<Scalars['Float']>;
+  password?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['Float']>;
+  userInfo?: Maybe<UserInfoItemInput>;
+  rOrderUser?: Maybe<Array<ROrderUserItemInput>>;
+  orderInfo?: Maybe<Array<OrderInfoItemInput>>;
+  userPayCard?: Maybe<Array<Maybe<UserPayCardItemInput>>>;
+  orderCoinNextMonth?: Maybe<Scalars['Float']>;
+  orderCoinCurrentMonth?: Maybe<Scalars['Float']>;
+  orderAmountCurrentYear?: Maybe<Scalars['Float']>;
+};
+
+
+export type UserInfoItemInput = {
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  createTime?: Maybe<Scalars['Timestamp']>;
+  updateTime?: Maybe<Scalars['Timestamp']>;
+  isDelete?: Maybe<Scalars['Float']>;
+  userId?: Maybe<Scalars['String']>;
+  phone?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  userLevel?: Maybe<Scalars['String']>;
+  user?: Maybe<UserItemInput>;
+  pickupAddressId?: Maybe<Scalars['String']>;
+};
+
+export type ROrderUserItemInput = {
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  createTime?: Maybe<Scalars['Timestamp']>;
+  updateTime?: Maybe<Scalars['Timestamp']>;
+  isDelete?: Maybe<Scalars['Float']>;
+  userId?: Maybe<Scalars['String']>;
+  orderId?: Maybe<Scalars['String']>;
+  orderInfo?: Maybe<OrderInfoItemInput>;
   user?: Maybe<UserItemInput>;
 };
 
-
-export type QueryRefreshTokenArgs = {
-  refreshtoken: Scalars['String'];
+export type OrderInfoItemInput = {
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  createTime?: Maybe<Scalars['Timestamp']>;
+  updateTime?: Maybe<Scalars['Timestamp']>;
+  isDelete?: Maybe<Scalars['Float']>;
+  number?: Maybe<Scalars['String']>;
+  state?: Maybe<Scalars['Float']>;
+  actuallyPaid?: Maybe<Scalars['Float']>;
+  addressId?: Maybe<Scalars['String']>;
+  paymentMethodCardId?: Maybe<Scalars['String']>;
+  subtotal?: Maybe<Scalars['Float']>;
+  couponDiscount?: Maybe<Scalars['Float']>;
+  vipDiscount?: Maybe<Scalars['Float']>;
+  transportationCosts?: Maybe<Scalars['Float']>;
+  saleTax?: Maybe<Scalars['Float']>;
+  orderId?: Maybe<Scalars['String']>;
+  discountProductTotal?: Maybe<Scalars['Float']>;
+  finishTime?: Maybe<Scalars['Timestamp']>;
+  rOrderUser?: Maybe<ROrderUserItemInput>;
+  user?: Maybe<UserItemInput>;
+  rOrderProduct?: Maybe<Array<ROrderProductItemInput>>;
+  userAddress?: Maybe<UserAddressItemInput>;
+  pickUpTime?: Maybe<Scalars['Timestamp']>;
+  pickUpType?: Maybe<Scalars['String']>;
+  generateCoin?: Maybe<Scalars['Float']>;
+  deductCoin?: Maybe<Scalars['Float']>;
+  userPayCard?: Maybe<UserPayCardItemInput>;
+  selfAddressId?: Maybe<Scalars['String']>;
+  currentUserLevel?: Maybe<Scalars['String']>;
 };
 
+export type ROrderProductItemInput = {
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  createTime?: Maybe<Scalars['Timestamp']>;
+  updateTime?: Maybe<Scalars['Timestamp']>;
+  isDelete?: Maybe<Scalars['Float']>;
+  orderId?: Maybe<Scalars['String']>;
+  productId?: Maybe<Scalars['String']>;
+  count?: Maybe<Scalars['Float']>;
+  dealPrice?: Maybe<Scalars['Float']>;
+  product?: Maybe<ProductItemInput>;
+  orderInfo?: Maybe<OrderInfoItemInput>;
+};
 
-export type QueryPasswordCodeArgs = {
-  password?: Maybe<Scalars['String']>;
+export type ProductItemInput = {
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  createTime?: Maybe<Scalars['Timestamp']>;
+  updateTime?: Maybe<Scalars['Timestamp']>;
+  isDelete?: Maybe<Scalars['Float']>;
+  categoryId?: Maybe<Scalars['String']>;
+  remark?: Maybe<Scalars['String']>;
+  isHot?: Maybe<Scalars['Float']>;
+  isNew?: Maybe<Scalars['Float']>;
+  shelvesTypes?: Maybe<Scalars['String']>;
+  isEnable?: Maybe<Scalars['Float']>;
+  sort?: Maybe<Scalars['Float']>;
+  stock?: Maybe<Scalars['Float']>;
+  packingUnit?: Maybe<Scalars['String']>;
+  unit?: Maybe<Scalars['String']>;
+  weight?: Maybe<Scalars['Float']>;
+  priceIn?: Maybe<Scalars['Float']>;
+  priceOut?: Maybe<Scalars['Float']>;
+  priceMarket?: Maybe<Scalars['Float']>;
+  brand?: Maybe<Scalars['String']>;
+  number?: Maybe<Scalars['Float']>;
+  isGroup?: Maybe<Scalars['Float']>;
+  groupPrecision?: Maybe<Scalars['Float']>;
+  groupAmount?: Maybe<Scalars['Float']>;
+  groupRemark?: Maybe<Scalars['String']>;
+  groupAmountUnit?: Maybe<Scalars['String']>;
+  rOrderProduct?: Maybe<Array<ROrderProductItemInput>>;
+  img?: Maybe<Array<Maybe<ProductImgItemInput>>>;
+};
+
+export type ProductImgItemInput = {
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  createTime?: Maybe<Scalars['Timestamp']>;
+  updateTime?: Maybe<Scalars['Timestamp']>;
+  isDelete?: Maybe<Scalars['Float']>;
+  productId?: Maybe<Scalars['String']>;
+  number?: Maybe<Scalars['Float']>;
+  url?: Maybe<Scalars['String']>;
+  product?: Maybe<ProductItemInput>;
+};
+
+export type UserAddressItemInput = {
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  createTime?: Maybe<Scalars['Timestamp']>;
+  updateTime?: Maybe<Scalars['Timestamp']>;
+  isDelete?: Maybe<Scalars['Float']>;
+  zip?: Maybe<Scalars['String']>;
+  province?: Maybe<Scalars['String']>;
+  city?: Maybe<Scalars['String']>;
+  district?: Maybe<Scalars['String']>;
+  address?: Maybe<Scalars['String']>;
+  isDefault?: Maybe<Scalars['Float']>;
+  userId?: Maybe<Scalars['String']>;
+  contactInformation?: Maybe<Scalars['String']>;
+  contactUserName?: Maybe<Scalars['String']>;
+  orderInfo?: Maybe<Array<Maybe<OrderInfoItemInput>>>;
+  combineAddress?: Maybe<Scalars['String']>;
+};
+
+export type UserPayCardItemInput = {
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  createTime?: Maybe<Scalars['Timestamp']>;
+  updateTime?: Maybe<Scalars['Timestamp']>;
+  isDelete?: Maybe<Scalars['Float']>;
+  userId?: Maybe<Scalars['String']>;
+  number?: Maybe<Scalars['String']>;
+  code?: Maybe<Scalars['String']>;
+  userName?: Maybe<Scalars['String']>;
+  addressDetail?: Maybe<Scalars['String']>;
+  zipCode?: Maybe<Scalars['String']>;
+  city?: Maybe<Scalars['String']>;
+  contact?: Maybe<Scalars['String']>;
+  isDefault?: Maybe<Scalars['Float']>;
+  orderInfo?: Maybe<Array<Maybe<OrderInfoItemInput>>>;
+  expirationTime?: Maybe<Scalars['Timestamp']>;
+  user?: Maybe<UserItemInput>;
+};
+
+export type AuthBody = {
+   __typename?: 'AuthBody';
+  token?: Maybe<Scalars['String']>;
+  refreshtoken?: Maybe<Scalars['String']>;
 };
 
 export type UserListInput = {
@@ -125,11 +310,11 @@ export type User = {
   userInfo?: Maybe<UserInfo>;
   rOrderUser?: Maybe<Array<ROrderUser>>;
   orderInfo?: Maybe<Array<OrderInfo>>;
+  userPayCard?: Maybe<Array<Maybe<UserPayCard>>>;
   orderCoinNextMonth?: Maybe<Scalars['Float']>;
   orderCoinCurrentMonth?: Maybe<Scalars['Float']>;
   orderAmountCurrentYear?: Maybe<Scalars['Float']>;
 };
-
 
 export type UserInfo = {
    __typename?: 'UserInfo';
@@ -143,6 +328,7 @@ export type UserInfo = {
   email?: Maybe<Scalars['String']>;
   userLevel?: Maybe<Scalars['String']>;
   user?: Maybe<User>;
+  pickupAddressId?: Maybe<Scalars['String']>;
 };
 
 export type ROrderUser = {
@@ -289,6 +475,7 @@ export type UserPayCard = {
   isDefault?: Maybe<Scalars['Float']>;
   orderInfo?: Maybe<Array<Maybe<OrderInfo>>>;
   expirationTime?: Maybe<Scalars['Timestamp']>;
+  user?: Maybe<User>;
 };
 
 export type OrderInput = {
@@ -479,188 +666,18 @@ export type PromoCode = {
   isDisable?: Maybe<Scalars['Float']>;
 };
 
-export type UserItemInput = {
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  createTime?: Maybe<Scalars['Timestamp']>;
-  updateTime?: Maybe<Scalars['Timestamp']>;
-  isDelete?: Maybe<Scalars['Float']>;
-  password?: Maybe<Scalars['String']>;
-  type?: Maybe<Scalars['Float']>;
-  userInfo?: Maybe<UserInfoItemInput>;
-  rOrderUser?: Maybe<Array<ROrderUserItemInput>>;
-  orderInfo?: Maybe<Array<OrderInfoItemInput>>;
-  orderCoinNextMonth?: Maybe<Scalars['Float']>;
-  orderCoinCurrentMonth?: Maybe<Scalars['Float']>;
-  orderAmountCurrentYear?: Maybe<Scalars['Float']>;
-};
-
-export type UserInfoItemInput = {
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  createTime?: Maybe<Scalars['Timestamp']>;
-  updateTime?: Maybe<Scalars['Timestamp']>;
-  isDelete?: Maybe<Scalars['Float']>;
-  userId?: Maybe<Scalars['String']>;
-  phone?: Maybe<Scalars['String']>;
-  email?: Maybe<Scalars['String']>;
-  userLevel?: Maybe<Scalars['String']>;
-  user?: Maybe<UserItemInput>;
-};
-
-export type ROrderUserItemInput = {
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  createTime?: Maybe<Scalars['Timestamp']>;
-  updateTime?: Maybe<Scalars['Timestamp']>;
-  isDelete?: Maybe<Scalars['Float']>;
-  userId?: Maybe<Scalars['String']>;
-  orderId?: Maybe<Scalars['String']>;
-  orderInfo?: Maybe<OrderInfoItemInput>;
-  user?: Maybe<UserItemInput>;
-};
-
-export type OrderInfoItemInput = {
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  createTime?: Maybe<Scalars['Timestamp']>;
-  updateTime?: Maybe<Scalars['Timestamp']>;
-  isDelete?: Maybe<Scalars['Float']>;
-  number?: Maybe<Scalars['String']>;
-  state?: Maybe<Scalars['Float']>;
-  actuallyPaid?: Maybe<Scalars['Float']>;
-  addressId?: Maybe<Scalars['String']>;
-  paymentMethodCardId?: Maybe<Scalars['String']>;
-  subtotal?: Maybe<Scalars['Float']>;
-  couponDiscount?: Maybe<Scalars['Float']>;
-  vipDiscount?: Maybe<Scalars['Float']>;
-  transportationCosts?: Maybe<Scalars['Float']>;
-  saleTax?: Maybe<Scalars['Float']>;
-  orderId?: Maybe<Scalars['String']>;
-  discountProductTotal?: Maybe<Scalars['Float']>;
-  finishTime?: Maybe<Scalars['Timestamp']>;
-  rOrderUser?: Maybe<ROrderUserItemInput>;
-  user?: Maybe<UserItemInput>;
-  rOrderProduct?: Maybe<Array<ROrderProductItemInput>>;
-  userAddress?: Maybe<UserAddressItemInput>;
-  pickUpTime?: Maybe<Scalars['Timestamp']>;
-  pickUpType?: Maybe<Scalars['String']>;
-  generateCoin?: Maybe<Scalars['Float']>;
-  deductCoin?: Maybe<Scalars['Float']>;
-  userPayCard?: Maybe<UserPayCardItemInput>;
-  selfAddressId?: Maybe<Scalars['String']>;
-  currentUserLevel?: Maybe<Scalars['String']>;
-};
-
-export type ROrderProductItemInput = {
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  createTime?: Maybe<Scalars['Timestamp']>;
-  updateTime?: Maybe<Scalars['Timestamp']>;
-  isDelete?: Maybe<Scalars['Float']>;
-  orderId?: Maybe<Scalars['String']>;
-  productId?: Maybe<Scalars['String']>;
-  count?: Maybe<Scalars['Float']>;
-  dealPrice?: Maybe<Scalars['Float']>;
-  product?: Maybe<ProductItemInput>;
-  orderInfo?: Maybe<OrderInfoItemInput>;
-};
-
-export type ProductItemInput = {
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  createTime?: Maybe<Scalars['Timestamp']>;
-  updateTime?: Maybe<Scalars['Timestamp']>;
-  isDelete?: Maybe<Scalars['Float']>;
-  categoryId?: Maybe<Scalars['String']>;
-  remark?: Maybe<Scalars['String']>;
-  isHot?: Maybe<Scalars['Float']>;
-  isNew?: Maybe<Scalars['Float']>;
-  shelvesTypes?: Maybe<Scalars['String']>;
-  isEnable?: Maybe<Scalars['Float']>;
-  sort?: Maybe<Scalars['Float']>;
-  stock?: Maybe<Scalars['Float']>;
-  packingUnit?: Maybe<Scalars['String']>;
-  unit?: Maybe<Scalars['String']>;
-  weight?: Maybe<Scalars['Float']>;
-  priceIn?: Maybe<Scalars['Float']>;
-  priceOut?: Maybe<Scalars['Float']>;
-  priceMarket?: Maybe<Scalars['Float']>;
-  brand?: Maybe<Scalars['String']>;
-  number?: Maybe<Scalars['Float']>;
-  isGroup?: Maybe<Scalars['Float']>;
-  groupPrecision?: Maybe<Scalars['Float']>;
-  groupAmount?: Maybe<Scalars['Float']>;
-  groupRemark?: Maybe<Scalars['String']>;
-  groupAmountUnit?: Maybe<Scalars['String']>;
-  rOrderProduct?: Maybe<Array<ROrderProductItemInput>>;
-  img?: Maybe<Array<Maybe<ProductImgItemInput>>>;
-};
-
-export type ProductImgItemInput = {
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  createTime?: Maybe<Scalars['Timestamp']>;
-  updateTime?: Maybe<Scalars['Timestamp']>;
-  isDelete?: Maybe<Scalars['Float']>;
-  productId?: Maybe<Scalars['String']>;
-  number?: Maybe<Scalars['Float']>;
-  url?: Maybe<Scalars['String']>;
-  product?: Maybe<ProductItemInput>;
-};
-
-export type UserAddressItemInput = {
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  createTime?: Maybe<Scalars['Timestamp']>;
-  updateTime?: Maybe<Scalars['Timestamp']>;
-  isDelete?: Maybe<Scalars['Float']>;
-  zip?: Maybe<Scalars['String']>;
-  province?: Maybe<Scalars['String']>;
-  city?: Maybe<Scalars['String']>;
-  district?: Maybe<Scalars['String']>;
-  address?: Maybe<Scalars['String']>;
-  isDefault?: Maybe<Scalars['Float']>;
-  userId?: Maybe<Scalars['String']>;
-  contactInformation?: Maybe<Scalars['String']>;
-  contactUserName?: Maybe<Scalars['String']>;
-  orderInfo?: Maybe<Array<Maybe<OrderInfoItemInput>>>;
-  combineAddress?: Maybe<Scalars['String']>;
-};
-
-export type UserPayCardItemInput = {
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  createTime?: Maybe<Scalars['Timestamp']>;
-  updateTime?: Maybe<Scalars['Timestamp']>;
-  isDelete?: Maybe<Scalars['Float']>;
-  userId?: Maybe<Scalars['String']>;
-  number?: Maybe<Scalars['String']>;
-  code?: Maybe<Scalars['String']>;
-  userName?: Maybe<Scalars['String']>;
-  addressDetail?: Maybe<Scalars['String']>;
-  zipCode?: Maybe<Scalars['String']>;
-  city?: Maybe<Scalars['String']>;
-  contact?: Maybe<Scalars['String']>;
-  isDefault?: Maybe<Scalars['Float']>;
-  orderInfo?: Maybe<Array<Maybe<OrderInfoItemInput>>>;
-  expirationTime?: Maybe<Scalars['Timestamp']>;
-};
-
-export type AuthBody = {
-   __typename?: 'AuthBody';
-  token?: Maybe<Scalars['String']>;
-  refreshtoken?: Maybe<Scalars['String']>;
-};
-
 export type Mutation = {
    __typename?: 'Mutation';
   saveUserList?: Maybe<Array<Maybe<User>>>;
   registerUser?: Maybe<UserInRegister>;
+  updatePassword?: Maybe<UpdatePasswordRes>;
+  updateUserInfo?: Maybe<UserInfo>;
   saveOrderList?: Maybe<Array<Maybe<OrderInfo>>>;
   saveDataConfig?: Maybe<DataConfig>;
   saveDictTypeFirst?: Maybe<Array<Maybe<DictTypeFirst>>>;
   saveCategory?: Maybe<Category>;
+  saveUserPayCard?: Maybe<UserPayCard>;
+  setUserPayCardDefault?: Maybe<UserPayCard>;
 };
 
 
@@ -671,6 +688,16 @@ export type MutationSaveUserListArgs = {
 
 export type MutationRegisterUserArgs = {
   data?: Maybe<UserItemInput>;
+};
+
+
+export type MutationUpdatePasswordArgs = {
+  data?: Maybe<UpdatePasswordInput>;
+};
+
+
+export type MutationUpdateUserInfoArgs = {
+  userInfo?: Maybe<UserInfoItemInput>;
 };
 
 
@@ -693,10 +720,32 @@ export type MutationSaveCategoryArgs = {
   categoryItemInput?: Maybe<CategoryItemInput>;
 };
 
+
+export type MutationSaveUserPayCardArgs = {
+  userPayCard?: Maybe<UserPayCardItemInput>;
+};
+
+
+export type MutationSetUserPayCardDefaultArgs = {
+  userPayCard?: Maybe<UserPayCardItemInput>;
+};
+
 export type UserInRegister = {
    __typename?: 'UserInRegister';
   token?: Maybe<Scalars['String']>;
   refreshtoken?: Maybe<Scalars['String']>;
+  user?: Maybe<User>;
+};
+
+export type UpdatePasswordInput = {
+  oldPassword?: Maybe<Scalars['String']>;
+  newPassword?: Maybe<Scalars['String']>;
+  confirmPassword?: Maybe<Scalars['String']>;
+};
+
+export type UpdatePasswordRes = {
+   __typename?: 'UpdatePasswordRes';
+  authBody?: Maybe<AuthBody>;
   user?: Maybe<User>;
 };
 

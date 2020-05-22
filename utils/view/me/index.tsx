@@ -3,7 +3,6 @@ import PersonPinCircleIcon from '@material-ui/icons/PersonPinCircle'
 import PinDropIcon from '@material-ui/icons/PinDrop'
 import CardGiftcardIcon from '@material-ui/icons/CardGiftcard'
 import CardMembershipIcon from '@material-ui/icons/CardMembership'
-import UpdateIcon from '@material-ui/icons/Update'
 import HistoryIcon from '@material-ui/icons/History'
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 import React, {useEffect} from 'react'
@@ -105,7 +104,9 @@ export default function Me() {
   const router = useRouter()
   const {state: stateMe, actions: actionsMe} = useStoreModel(meModel)
   useEffect(() => {
-    actionsMe.getLoginUser()
+    if (!stateMe.user.id) {
+      actionsMe.getLoginUser()
+    }
   }, [])
   return <Box>
     {!stateMe.user.id
@@ -164,17 +165,21 @@ export default function Me() {
               <ArrowForwardIosIcon/>
             </aside>
           </ListItem>
-          <ListItem>
-            <UpdateIcon/>
-            <main>
-              <section>{ls('下次买清单')}</section>
-              <footer>{ls('')}</footer>
-            </main>
-            <aside>
-              <ArrowForwardIosIcon/>
-            </aside>
-          </ListItem>
-          <ListItem>
+          {/*<ListItem*/}
+          {/*    onClick={() => {showMessage('网站建设中...')}}*/}
+          {/*>*/}
+          {/*  <UpdateIcon/>*/}
+          {/*  <main>*/}
+          {/*    <section>{ls('下次买清单')}</section>*/}
+          {/*    <footer>{ls('')}</footer>*/}
+          {/*  </main>*/}
+          {/*  <aside>*/}
+          {/*    <ArrowForwardIosIcon/>*/}
+          {/*  </aside>*/}
+          {/*</ListItem>*/}
+          <ListItem
+              onClick={() => {router.push('/me/myInfo')}}
+          >
             <CardMembershipIcon/>
             <main>
               <section>{ls('我的达人证')}</section>
@@ -183,7 +188,9 @@ export default function Me() {
               <ArrowForwardIosIcon/>
             </aside>
           </ListItem>
-          <ListItem>
+          <ListItem
+              onClick={() => {router.push('/me/myCreditCard')}}
+          >
             <CardGiftcardIcon/>
             <main>
               <section>{ls('我的信用卡')}</section>
@@ -192,7 +199,9 @@ export default function Me() {
               <ArrowForwardIosIcon/>
             </aside>
           </ListItem>
-          <ListItem>
+          <ListItem
+              onClick={() => {router.push('/me/pickupAddress')}}
+          >
             <PinDropIcon/>
             <main>
               <section>{ls('我的取货点')}</section>

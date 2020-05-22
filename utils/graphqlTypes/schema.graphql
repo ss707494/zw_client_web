@@ -79,6 +79,10 @@ type Mutation {
     saveDictTypeFirst(dictTypeFirstItemInput: [DictTypeFirstItemInput]): [DictTypeFirst]
     saveOrderList(orderInfoItemInput: [OrderInfoItemInput]): [OrderInfo]
     saveUserList(userItemInput: [UserItemInput]): [User]
+    saveUserPayCard(userPayCard: UserPayCardItemInput): UserPayCard
+    setUserPayCardDefault(userPayCard: UserPayCardItemInput): UserPayCard
+    updatePassword(data: UpdatePasswordInput): UpdatePasswordRes
+    updateUserInfo(userInfo: UserInfoItemInput): UserInfo
 }
 
 type OrderInfo {
@@ -201,10 +205,12 @@ type Query {
     orderList(fromUser: Boolean, orderInput: OrderInput): OrderPage
     orderListTotal(orderInput: OrderInput): Float
     passwordCode(password: String): String
+    payCardListOneUser: [UserPayCard]
     promoCodeList(promoCodeItemInput: PromoCodeItemInput): [PromoCode]
     refreshToken(refreshtoken: String!): AuthBody
     testLongApi: String
     userList(userListInput: UserListInput): UserPage
+    userPayCard(userPayCard: UserPayCardItemInput): UserPayCard
 }
 
 type ROrderProduct {
@@ -233,6 +239,11 @@ type ROrderUser {
     userId: String
 }
 
+type UpdatePasswordRes {
+    authBody: AuthBody
+    user: User
+}
+
 type User {
     createTime: Timestamp
     id: String
@@ -247,6 +258,7 @@ type User {
     type: Float
     updateTime: Timestamp
     userInfo: UserInfo
+    userPayCard: [UserPayCard]
 }
 
 type UserAddress {
@@ -281,6 +293,7 @@ type UserInfo {
     isDelete: Float
     name: String
     phone: String
+    pickupAddressId: String
     updateTime: Timestamp
     user: User
     userId: String
@@ -306,6 +319,7 @@ type UserPayCard {
     number: String
     orderInfo: [OrderInfo]
     updateTime: Timestamp
+    user: User
     userId: String
     userName: String
     zipCode: String
@@ -536,6 +550,12 @@ input ROrderUserItemInput {
     userId: String
 }
 
+input UpdatePasswordInput {
+    confirmPassword: String
+    newPassword: String
+    oldPassword: String
+}
+
 input UserAddressItemInput {
     address: String
     city: String
@@ -562,6 +582,7 @@ input UserInfoItemInput {
     isDelete: Float
     name: String
     phone: String
+    pickupAddressId: String
     updateTime: Timestamp
     user: UserItemInput
     userId: String
@@ -582,6 +603,7 @@ input UserItemInput {
     type: Float
     updateTime: Timestamp
     userInfo: UserInfoItemInput
+    userPayCard: [UserPayCardItemInput]
 }
 
 input UserListInput {
@@ -607,6 +629,7 @@ input UserPayCardItemInput {
     number: String
     orderInfo: [OrderInfoItemInput]
     updateTime: Timestamp
+    user: UserItemInput
     userId: String
     userName: String
     zipCode: String

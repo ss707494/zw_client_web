@@ -5,13 +5,15 @@ import styled from 'styled-components'
 import {modelFactory} from '../../../ModelAction/modelUtil'
 import {OrderInfo} from '../../../graphqlTypes/types'
 import {doc} from '../../../graphqlTypes/doc'
-import {formatDate, fpMergePre} from '../../../tools/utils'
+import {dealMoney, formatDate, fpMergePre} from '../../../tools/utils'
 import {useStoreModel} from '../../../ModelAction/useStore'
 import {useRouter} from 'next/router'
 import {ls} from '../../../tools/dealKey'
 import {orderStateToString} from '../../../ss_common/enum'
 import {mpStyle} from '../../../style/common'
 import {grey} from '@material-ui/core/colors'
+import {dealImgUrl} from '../../../tools/img'
+import {Button} from '@material-ui/core'
 
 export const orderDetailModel = modelFactory('orderDetail', {
   orderInfo: {} as OrderInfo,
@@ -44,6 +46,59 @@ const InfoLabel = styled.div`
     width: 80px;
   }
   
+`
+
+const GreyPart = styled.div`
+  margin-top: 12px;
+  position: relative;
+  left: -20px;
+  width: 100vw;
+  height: 12px;
+  background: ${grey[200]};
+`
+const ProductBox = styled.div`
+  display: grid;
+  padding-top: 4vw;
+  margin-bottom: 10px;
+  grid-template-columns: min-content 1fr 30vw;
+  > img {
+    grid-area: 1/1/4/2;
+    width: 20vw;
+    height: 20vw;
+    margin-right: 14px;
+  }
+  > section {
+    grid-area: 1/2/2/4;
+    font-size: 20px;
+  }
+  > main {
+    padding: 10px 0;
+    grid-area: 2/2/3/4;
+    font-size: 14px;
+    color: ${grey[500]};
+  }
+  > footer {
+    display: flex;
+    > aside {
+      text-decoration: line-through;
+    }
+    > span {
+      margin-left: 5px;
+      color: ${mpStyle.red};
+      font-size: 17px;
+    }
+  }
+  > aside {
+    > button {
+      border-radius: 10px;
+      padding: 2px 14px;
+    }
+  }
+`
+const Sum = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
 `
 
 export const OrderDetail = () => {
@@ -85,7 +140,56 @@ export const OrderDetail = () => {
             <footer>{orderInfo?.userPayCard?.userName}</footer>
           </section>
         </InfoLabel>
-        <div style={{marginTop: '12px', position: 'relative', left: '-20px', width: '100vw', height: '12px', background: grey[200]}}/>
+        <GreyPart/>
+        {orderInfo.rOrderProduct?.map(rOrderProduct => (
+            <ProductBox
+                key={`ProductBox_${rOrderProduct.id}`}
+            >
+              <img src={dealImgUrl(rOrderProduct.product?.img?.[0]?.url)}
+                   alt=""/>
+              <section>{rOrderProduct.product?.name}</section>
+              <main>独立包装</main>
+              <footer>
+                <aside>{dealMoney(rOrderProduct.product?.priceMarket)}</aside>
+                <span>{dealMoney(rOrderProduct.product?.priceOut)}</span>
+              </footer>
+              <aside>
+                <Button
+                    variant={'contained'}
+                >{ls('加入购物车')}</Button>
+              </aside>
+            </ProductBox>
+        ))}
+        <div style={{height: '26px', width: '100%'}}/>
+        <Sum>
+          <aside>{ls('小计')}</aside>
+          <main>{dealMoney(orderInfo.subtotal)}</main>
+        </Sum>
+        <Sum>
+          <aside>{ls('优惠券折扣')}</aside>
+          <main>{dealMoney(0, '-')}</main>
+        </Sum>
+        <Sum>
+          <aside>{ls('运费')}</aside>
+          <main>{dealMoney(orderInfo.transportationCosts)}</main>
+        </Sum>
+        <Sum>
+          <aside>{ls('达人币抵扣')}</aside>
+          <main>{dealMoney(orderInfo.deductCoin, '-')}</main>
+        </Sum>
+        <Sum>
+          <aside>{ls('消费税')}</aside>
+          <main>{dealMoney(orderInfo.saleTax)}</main>
+        </Sum>
+        <Sum>
+          <aside>{ls('实际支付')}</aside>
+          <main>{dealMoney(orderInfo.actuallyPaid)}</main>
+        </Sum>
+        <Sum>
+          <aside>{ls('获得达人币')}</aside>
+          <main>{dealMoney(orderInfo.generateCoin)}</main>
+        </Sum>
+        <div style={{height: '96px', width: '100%'}}/>
       </Box>
     </BScroller>}
 

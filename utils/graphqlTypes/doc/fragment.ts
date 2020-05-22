@@ -40,6 +40,7 @@ export const fragment = {
           phone
           email
           userLevel
+          pickupAddressId
       }
   `,
   OrderInfoFields: gql`

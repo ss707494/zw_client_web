@@ -71,6 +71,10 @@ const ImgList = styled(ButtonBase)`
     grid-gap: 10px;
     align-items: center;
     min-height: 20vw;
+    > img {
+      max-width: 16vw;
+      border-radius: 8px;
+    }
     > aside {
       grid-area: 1/5/2/6;
       justify-self: end;

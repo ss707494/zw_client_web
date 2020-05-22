@@ -36,11 +36,15 @@ const messageModel = modelFactory('messageModel', {
   open: (value: string | MessageProps, option) => {
     if (typeof value === 'string') {
       option.setData(fpMergePre({
+        autoHideDuration: 2000,
+        msg_type: 'default',
         message: value,
         open: true,
       }))
     } else {
       option.setData(fpMergePre({
+        autoHideDuration: 2000,
+        msg_type: 'default',
         ...value,
         open: true,
       }))

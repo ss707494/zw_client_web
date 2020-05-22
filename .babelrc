@@ -13,6 +13,6 @@
     ]
   ],
   "plugins": [
-    "styled-components"
+    ["styled-components", { "ssr": true }]
   ]
 }

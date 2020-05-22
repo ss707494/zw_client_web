@@ -12,6 +12,8 @@ const setEnv = require('dotenv')
 })
 
 const port = parseInt(process.env.PORT, 10) || 3006
+// console.log('process.env.NODE_ENV')
+// console.log(process.env.img_domain)
 // 判断开发环境和生产环境
 process.env.NODE_ENV = (typeof process.env.NODE_ENV !== 'undefined')
     ? process.env.NODE_ENV.trim()
