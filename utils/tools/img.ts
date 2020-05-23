@@ -8,8 +8,5 @@ export const dealImgUrl = (src: string | undefined | null = '') => {
   if (src?.includes('blob:')) {
     return src
   }
-  if (process.env.NODE_ENV === 'production') {
-    return `${src}`
-  }
   return `${imgDomain}${src}`
 }
