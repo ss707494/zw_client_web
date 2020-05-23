@@ -295,5 +295,37 @@ export const doc = {
     }
     ${fragment.UserInfoFields}
   `,
+  userAddressListOneUser: gql`
+    query {
+        userAddressListOneUser {
+            ...UserAddressFields
+        }
+    }
+    ${fragment.UserAddressFields}
+  `,
+  userAddress: gql`
+      query ($data: UserAddressItemInput) {
+          userAddress (userAddress: $data) {
+              ...UserAddressFields
+          }
+      }
+      ${fragment.UserAddressFields}
+  `,
+  saveUserAddress: gql`
+      mutation ($data: UserAddressItemInput){
+          saveUserAddress (userAddress: $data) {
+              ...UserAddressFields
+          }
+      }
+      ${fragment.UserAddressFields}
+  `,
+  setUserAddressDefault: gql`
+      mutation ($data: UserAddressItemInput) {
+          setUserAddressDefault (userAddress: $data) {
+              ...UserAddressFields
+          }
+      }
+      ${fragment.UserAddressFields}
+  `,
 }
 

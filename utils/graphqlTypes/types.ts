@@ -32,6 +32,8 @@ export type Query = {
   promoCodeList?: Maybe<Array<Maybe<PromoCode>>>;
   payCardListOneUser?: Maybe<Array<Maybe<UserPayCard>>>;
   userPayCard?: Maybe<UserPayCard>;
+  userAddressListOneUser?: Maybe<Array<Maybe<UserAddress>>>;
+  userAddress?: Maybe<UserAddress>;
 };
 
 
@@ -105,6 +107,11 @@ export type QueryUserPayCardArgs = {
   userPayCard?: Maybe<UserPayCardItemInput>;
 };
 
+
+export type QueryUserAddressArgs = {
+  userAddress?: Maybe<UserAddressItemInput>;
+};
+
 export type UserItemInput = {
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
@@ -117,6 +124,7 @@ export type UserItemInput = {
   rOrderUser?: Maybe<Array<ROrderUserItemInput>>;
   orderInfo?: Maybe<Array<OrderInfoItemInput>>;
   userPayCard?: Maybe<Array<Maybe<UserPayCardItemInput>>>;
+  userAddress?: Maybe<Array<Maybe<UserAddressItemInput>>>;
   orderCoinNextMonth?: Maybe<Scalars['Float']>;
   orderCoinCurrentMonth?: Maybe<Scalars['Float']>;
   orderAmountCurrentYear?: Maybe<Scalars['Float']>;
@@ -255,6 +263,7 @@ export type UserAddressItemInput = {
   contactUserName?: Maybe<Scalars['String']>;
   orderInfo?: Maybe<Array<Maybe<OrderInfoItemInput>>>;
   combineAddress?: Maybe<Scalars['String']>;
+  user?: Maybe<UserItemInput>;
 };
 
 export type UserPayCardItemInput = {
@@ -311,6 +320,7 @@ export type User = {
   rOrderUser?: Maybe<Array<ROrderUser>>;
   orderInfo?: Maybe<Array<OrderInfo>>;
   userPayCard?: Maybe<Array<Maybe<UserPayCard>>>;
+  userAddress?: Maybe<Array<Maybe<UserAddress>>>;
   orderCoinNextMonth?: Maybe<Scalars['Float']>;
   orderCoinCurrentMonth?: Maybe<Scalars['Float']>;
   orderAmountCurrentYear?: Maybe<Scalars['Float']>;
@@ -455,6 +465,7 @@ export type UserAddress = {
   contactUserName?: Maybe<Scalars['String']>;
   orderInfo?: Maybe<Array<Maybe<OrderInfo>>>;
   combineAddress?: Maybe<Scalars['String']>;
+  user?: Maybe<User>;
 };
 
 export type UserPayCard = {
@@ -678,6 +689,8 @@ export type Mutation = {
   saveCategory?: Maybe<Category>;
   saveUserPayCard?: Maybe<UserPayCard>;
   setUserPayCardDefault?: Maybe<UserPayCard>;
+  saveUserAddress?: Maybe<UserAddress>;
+  setUserAddressDefault?: Maybe<UserAddress>;
 };
 
 
@@ -728,6 +741,16 @@ export type MutationSaveUserPayCardArgs = {
 
 export type MutationSetUserPayCardDefaultArgs = {
   userPayCard?: Maybe<UserPayCardItemInput>;
+};
+
+
+export type MutationSaveUserAddressArgs = {
+  userAddress?: Maybe<UserAddressItemInput>;
+};
+
+
+export type MutationSetUserAddressDefaultArgs = {
+  userAddress?: Maybe<UserAddressItemInput>;
 };
 
 export type UserInRegister = {

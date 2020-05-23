@@ -78,8 +78,10 @@ type Mutation {
     saveDataConfig(dataConfigInput: DataConfigItemInput): DataConfig
     saveDictTypeFirst(dictTypeFirstItemInput: [DictTypeFirstItemInput]): [DictTypeFirst]
     saveOrderList(orderInfoItemInput: [OrderInfoItemInput]): [OrderInfo]
+    saveUserAddress(userAddress: UserAddressItemInput): UserAddress
     saveUserList(userItemInput: [UserItemInput]): [User]
     saveUserPayCard(userPayCard: UserPayCardItemInput): UserPayCard
+    setUserAddressDefault(userAddress: UserAddressItemInput): UserAddress
     setUserPayCardDefault(userPayCard: UserPayCardItemInput): UserPayCard
     updatePassword(data: UpdatePasswordInput): UpdatePasswordRes
     updateUserInfo(userInfo: UserInfoItemInput): UserInfo
@@ -209,6 +211,8 @@ type Query {
     promoCodeList(promoCodeItemInput: PromoCodeItemInput): [PromoCode]
     refreshToken(refreshtoken: String!): AuthBody
     testLongApi: String
+    userAddress(userAddress: UserAddressItemInput): UserAddress
+    userAddressListOneUser: [UserAddress]
     userList(userListInput: UserListInput): UserPage
     userPayCard(userPayCard: UserPayCardItemInput): UserPayCard
 }
@@ -257,6 +261,7 @@ type User {
     rOrderUser: [ROrderUser!]
     type: Float
     updateTime: Timestamp
+    userAddress: [UserAddress]
     userInfo: UserInfo
     userPayCard: [UserPayCard]
 }
@@ -276,6 +281,7 @@ type UserAddress {
     orderInfo: [OrderInfo]
     province: String
     updateTime: Timestamp
+    user: User
     userId: String
     zip: String
 }
@@ -571,6 +577,7 @@ input UserAddressItemInput {
     orderInfo: [OrderInfoItemInput]
     province: String
     updateTime: Timestamp
+    user: UserItemInput
     userId: String
     zip: String
 }
@@ -602,6 +609,7 @@ input UserItemInput {
     rOrderUser: [ROrderUserItemInput!]
     type: Float
     updateTime: Timestamp
+    userAddress: [UserAddressItemInput]
     userInfo: UserInfoItemInput
     userPayCard: [UserPayCardItemInput]
 }

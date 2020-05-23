@@ -18,6 +18,7 @@ import PaymentIcon from '@material-ui/icons/Payment'
 import {BScroller} from '../../components/BScroll/BScroller'
 import {RegisterHeader} from '../../components/RegisterHeader/RegisterHeader'
 import {useRouter} from 'next/router'
+import {showMessage} from '../../components/Message/Message'
 
 const BasePadding = styled.div`
   padding: 0 20px;
@@ -155,7 +156,9 @@ export default function Me() {
             </Card>
           </Tab>
           <ListItem
-              onClick={() => {router.push('/me/orderHistory')}}
+              onClick={() => {
+                router.push('/me/orderHistory')
+              }}
           >
             <HistoryIcon/>
             <main>
@@ -178,7 +181,9 @@ export default function Me() {
           {/*  </aside>*/}
           {/*</ListItem>*/}
           <ListItem
-              onClick={() => {router.push('/me/myInfo')}}
+              onClick={() => {
+                router.push('/me/myInfo')
+              }}
           >
             <CardMembershipIcon/>
             <main>
@@ -189,7 +194,9 @@ export default function Me() {
             </aside>
           </ListItem>
           <ListItem
-              onClick={() => {router.push('/me/myCreditCard')}}
+              onClick={() => {
+                router.push('/me/myCreditCard')
+              }}
           >
             <CardGiftcardIcon/>
             <main>
@@ -200,7 +207,9 @@ export default function Me() {
             </aside>
           </ListItem>
           <ListItem
-              onClick={() => {router.push('/me/pickupAddress')}}
+              onClick={() => {
+                router.push('/me/pickupAddress')
+              }}
           >
             <PinDropIcon/>
             <main>
@@ -210,7 +219,11 @@ export default function Me() {
               <ArrowForwardIosIcon/>
             </aside>
           </ListItem>
-          <ListItem>
+          <ListItem
+              onClick={() => {
+                router.push('/me/myAddress')
+              }}
+          >
             <PersonPinCircleIcon/>
             <main>
               <section>{ls('我的地址')}</section>
@@ -219,7 +232,11 @@ export default function Me() {
               <ArrowForwardIosIcon/>
             </aside>
           </ListItem>
-          <ListItem>
+          <ListItem
+              onClick={() => {
+                showMessage('网站建设中...')
+              }}
+          >
             <HelpOutlineIcon/>
             <main>
               <section>{ls('帮助中心')}</section>
