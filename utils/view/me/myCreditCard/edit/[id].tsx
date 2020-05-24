@@ -15,14 +15,14 @@ import {showMessage} from '../../../../components/Message/Message'
 
 export const myCreditCardEditModel = modelFactory('myCreditCardEditModel', {
   form: {
-    number: '123',
-    code: '4321',
-    name: 'ss',
-    userName: 'ss',
-    addressDetail: '地址...',
-    zipCode: 'code',
-    city: 'city',
-    contact: 'user',
+    number: '',
+    code: '',
+    name: '',
+    userName: '',
+    addressDetail: '',
+    zipCode: '',
+    city: '',
+    contact: '',
   } as UserPayCard,
 }, {
   setForm: setForm,
