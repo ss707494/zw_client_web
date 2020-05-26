@@ -23,6 +23,7 @@ type Category {
     number: Float
     parentCategory: Category
     parentId: String
+    product: [Product]
     remark: String
     sort: Float
     updateTime: Timestamp
@@ -131,6 +132,7 @@ type PageResult {
 
 type Product {
     brand: String
+    category: Category
     categoryId: String
     createTime: Timestamp
     groupAmount: Float
@@ -208,6 +210,7 @@ type Query {
     orderListTotal(orderInput: OrderInput): Float
     passwordCode(password: String): String
     payCardListOneUser: [UserPayCard]
+    productsInCategory(categoryItemInput: CategoryItemInput): [Product]
     promoCodeList(promoCodeItemInput: PromoCodeItemInput): [PromoCode]
     refreshToken(refreshtoken: String!): AuthBody
     testLongApi: String
@@ -344,6 +347,7 @@ input CategoryItemInput {
     number: Float
     parentCategory: CategoryItemInput
     parentId: String
+    product: [ProductItemInput]
     remark: String
     sort: Float
     updateTime: Timestamp
@@ -479,6 +483,7 @@ input ProductImgItemInput {
 
 input ProductItemInput {
     brand: String
+    category: CategoryItemInput
     categoryId: String
     createTime: Timestamp
     groupAmount: Float

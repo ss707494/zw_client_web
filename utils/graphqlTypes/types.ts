@@ -29,6 +29,7 @@ export type Query = {
   getDictList?: Maybe<Array<Maybe<Dict>>>;
   categoryList?: Maybe<CategoryPage>;
   oneCategory?: Maybe<Category>;
+  productsInCategory?: Maybe<Array<Maybe<Product>>>;
   promoCodeList?: Maybe<Array<Maybe<PromoCode>>>;
   payCardListOneUser?: Maybe<Array<Maybe<UserPayCard>>>;
   userPayCard?: Maybe<UserPayCard>;
@@ -95,6 +96,11 @@ export type QueryCategoryListArgs = {
 
 export type QueryOneCategoryArgs = {
   data?: Maybe<CategoryItemInput>;
+};
+
+
+export type QueryProductsInCategoryArgs = {
+  categoryItemInput?: Maybe<CategoryItemInput>;
 };
 
 
@@ -232,6 +238,7 @@ export type ProductItemInput = {
   groupAmountUnit?: Maybe<Scalars['String']>;
   rOrderProduct?: Maybe<Array<ROrderProductItemInput>>;
   img?: Maybe<Array<Maybe<ProductImgItemInput>>>;
+  category?: Maybe<CategoryItemInput>;
 };
 
 export type ProductImgItemInput = {
@@ -244,6 +251,26 @@ export type ProductImgItemInput = {
   number?: Maybe<Scalars['Float']>;
   url?: Maybe<Scalars['String']>;
   product?: Maybe<ProductItemInput>;
+};
+
+export type CategoryItemInput = {
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  createTime?: Maybe<Scalars['Timestamp']>;
+  updateTime?: Maybe<Scalars['Timestamp']>;
+  isDelete?: Maybe<Scalars['Float']>;
+  isEnable?: Maybe<Scalars['Float']>;
+  remark?: Maybe<Scalars['String']>;
+  sort?: Maybe<Scalars['Float']>;
+  parentId?: Maybe<Scalars['String']>;
+  fullParentId?: Maybe<Scalars['String']>;
+  number?: Maybe<Scalars['Float']>;
+  userId?: Maybe<Scalars['String']>;
+  imgUrl?: Maybe<Scalars['String']>;
+  parentCategory?: Maybe<CategoryItemInput>;
+  childCategories?: Maybe<Array<Maybe<CategoryItemInput>>>;
+  categoryParent?: Maybe<CategoryItemInput>;
+  product?: Maybe<Array<Maybe<ProductItemInput>>>;
 };
 
 export type UserAddressItemInput = {
@@ -432,6 +459,7 @@ export type Product = {
   groupAmountUnit?: Maybe<Scalars['String']>;
   rOrderProduct?: Maybe<Array<ROrderProduct>>;
   img?: Maybe<Array<Maybe<ProductImg>>>;
+  category?: Maybe<Category>;
 };
 
 export type ProductImg = {
@@ -445,6 +473,27 @@ export type ProductImg = {
   number?: Maybe<Scalars['Float']>;
   url?: Maybe<Scalars['String']>;
   product?: Maybe<Product>;
+};
+
+export type Category = {
+   __typename?: 'Category';
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  createTime?: Maybe<Scalars['Timestamp']>;
+  updateTime?: Maybe<Scalars['Timestamp']>;
+  isDelete?: Maybe<Scalars['Float']>;
+  isEnable?: Maybe<Scalars['Float']>;
+  remark?: Maybe<Scalars['String']>;
+  sort?: Maybe<Scalars['Float']>;
+  parentId?: Maybe<Scalars['String']>;
+  fullParentId?: Maybe<Scalars['String']>;
+  number?: Maybe<Scalars['Float']>;
+  userId?: Maybe<Scalars['String']>;
+  imgUrl?: Maybe<Scalars['String']>;
+  parentCategory?: Maybe<Category>;
+  childCategories?: Maybe<Array<Maybe<Category>>>;
+  categoryParent?: Maybe<Category>;
+  product?: Maybe<Array<Maybe<Product>>>;
 };
 
 export type UserAddress = {
@@ -578,25 +627,6 @@ export type CategoryListInput = {
   orderByInput?: Maybe<OrderByInput>;
 };
 
-export type CategoryItemInput = {
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  createTime?: Maybe<Scalars['Timestamp']>;
-  updateTime?: Maybe<Scalars['Timestamp']>;
-  isDelete?: Maybe<Scalars['Float']>;
-  isEnable?: Maybe<Scalars['Float']>;
-  remark?: Maybe<Scalars['String']>;
-  sort?: Maybe<Scalars['Float']>;
-  parentId?: Maybe<Scalars['String']>;
-  fullParentId?: Maybe<Scalars['String']>;
-  number?: Maybe<Scalars['Float']>;
-  userId?: Maybe<Scalars['String']>;
-  imgUrl?: Maybe<Scalars['String']>;
-  parentCategory?: Maybe<CategoryItemInput>;
-  childCategories?: Maybe<Array<Maybe<CategoryItemInput>>>;
-  categoryParent?: Maybe<CategoryItemInput>;
-};
-
 export type PageInput = {
   rows_per_page?: Maybe<Scalars['Float']>;
   page?: Maybe<Scalars['Float']>;
@@ -610,26 +640,6 @@ export type CategoryPage = {
    __typename?: 'CategoryPage';
   total?: Maybe<Scalars['Float']>;
   list?: Maybe<Array<Maybe<Category>>>;
-};
-
-export type Category = {
-   __typename?: 'Category';
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  createTime?: Maybe<Scalars['Timestamp']>;
-  updateTime?: Maybe<Scalars['Timestamp']>;
-  isDelete?: Maybe<Scalars['Float']>;
-  isEnable?: Maybe<Scalars['Float']>;
-  remark?: Maybe<Scalars['String']>;
-  sort?: Maybe<Scalars['Float']>;
-  parentId?: Maybe<Scalars['String']>;
-  fullParentId?: Maybe<Scalars['String']>;
-  number?: Maybe<Scalars['Float']>;
-  userId?: Maybe<Scalars['String']>;
-  imgUrl?: Maybe<Scalars['String']>;
-  parentCategory?: Maybe<Category>;
-  childCategories?: Maybe<Array<Maybe<Category>>>;
-  categoryParent?: Maybe<Category>;
 };
 
 export type PromoCodeItemInput = {

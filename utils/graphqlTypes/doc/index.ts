@@ -103,7 +103,7 @@ export const categoryList = gql`
             }
         }
     }
-    ${fragment.category}
+    ${fragment.CategoryFields}
 `
 
 export const doc = {
@@ -182,86 +182,86 @@ export const doc = {
       ${fragment.ImgFields}
   `,
   orderDetail: gql`
-    query orderDetail($id: String) {
-        orderDetail(id: $id) {
-            ...OrderInfoFields
-            rOrderProduct {
-                ...ROrderProductFields
-                product {
-                    ...ProductFields
-                    img {
-                        ...ImgFields
-                    }
-                }
-            }
-            user {
-                ...UserFields
-                userInfo {
-                    ...UserInfoFields
-                }
-            }
-            userAddress {
-                ...UserAddressFields
-            }
-            userPayCard {
-                ...UserPayCardFields
-            }
-        }
-    }
-    ${fragment.OrderInfoFields}
-    ${fragment.ROrderProductFields}
-    ${fragment.ProductFields}
-    ${fragment.ImgFields}
-    ${fragment.UserFields}
-    ${fragment.UserInfoFields}
-    ${fragment.UserPayCardFields}
-    ${fragment.UserAddressFields}
+      query orderDetail($id: String) {
+          orderDetail(id: $id) {
+              ...OrderInfoFields
+              rOrderProduct {
+                  ...ROrderProductFields
+                  product {
+                      ...ProductFields
+                      img {
+                          ...ImgFields
+                      }
+                  }
+              }
+              user {
+                  ...UserFields
+                  userInfo {
+                      ...UserInfoFields
+                  }
+              }
+              userAddress {
+                  ...UserAddressFields
+              }
+              userPayCard {
+                  ...UserPayCardFields
+              }
+          }
+      }
+      ${fragment.OrderInfoFields}
+      ${fragment.ROrderProductFields}
+      ${fragment.ProductFields}
+      ${fragment.ImgFields}
+      ${fragment.UserFields}
+      ${fragment.UserInfoFields}
+      ${fragment.UserPayCardFields}
+      ${fragment.UserAddressFields}
   `,
   updatePassword: gql`
-    mutation ($data: UpdatePasswordInput) {
-        updatePassword (data: $data) {
-            user {
-                ...UserFields
-            }
-            authBody {
-                token
-                refreshtoken
-            }
-        }
-    }
-    ${fragment.UserFields}
+      mutation ($data: UpdatePasswordInput) {
+          updatePassword (data: $data) {
+              user {
+                  ...UserFields
+              }
+              authBody {
+                  token
+                  refreshtoken
+              }
+          }
+      }
+      ${fragment.UserFields}
   `,
   payCardListOneUser: gql`
-    query {
-        payCardListOneUser {
-            ...UserPayCardFields
-        }
-    }
-    ${fragment.UserPayCardFields}
+      query {
+          payCardListOneUser {
+              ...UserPayCardFields
+          }
+      }
+      ${fragment.UserPayCardFields}
   `,
   userPayCard: gql`
-    query ($data: UserPayCardItemInput) {
-        userPayCard (userPayCard: $data) {
-            ...UserPayCardFields
-        }
-    }
-    ${fragment.UserPayCardFields}
+      query ($data: UserPayCardItemInput) {
+          userPayCard (userPayCard: $data) {
+              ...UserPayCardFields
+          }
+      }
+      ${fragment.UserPayCardFields}
   `,
   saveUserPayCard: gql`
-    mutation ($data: UserPayCardItemInput){
-        saveUserPayCard (userPayCard: $data) {
-            ...UserPayCardFields
-        }
-    }
-    ${fragment.UserPayCardFields}
+      mutation ($data: UserPayCardItemInput){
+          saveUserPayCard (userPayCard: $data) {
+              ...UserPayCardFields
+          }
+      }
+      ${fragment.UserPayCardFields}
   `,
   setUserPayCardDefault: gql`
-    mutation ($data: UserPayCardItemInput) {
-        setUserPayCardDefault (userPayCard: $data) {
-            ...UserPayCardFields
-        }
-    }
-    ${fragment.UserPayCardFields}
+      mutation ($data: UserPayCardItemInput) {
+          setUserPayCardDefault (userPayCard: $data) {
+              ...UserPayCardFields
+          }
+      }
+      ${fragment.UserPayCardFields}
   `,
   pickupAddress: gql`
       query {
@@ -288,20 +288,20 @@ export const doc = {
       ${fragment.UserFields}
   `,
   updateUserInfo: gql`
-    mutation ($userInfo: UserInfoItemInput) {
-        updateUserInfo (userInfo: $userInfo) {
-            ...UserInfoFields
-        }
-    }
-    ${fragment.UserInfoFields}
+      mutation ($userInfo: UserInfoItemInput) {
+          updateUserInfo (userInfo: $userInfo) {
+              ...UserInfoFields
+          }
+      }
+      ${fragment.UserInfoFields}
   `,
   userAddressListOneUser: gql`
-    query {
-        userAddressListOneUser {
-            ...UserAddressFields
-        }
-    }
-    ${fragment.UserAddressFields}
+      query {
+          userAddressListOneUser {
+              ...UserAddressFields
+          }
+      }
+      ${fragment.UserAddressFields}
   `,
   userAddress: gql`
       query ($data: UserAddressItemInput) {
@@ -326,6 +326,29 @@ export const doc = {
           }
       }
       ${fragment.UserAddressFields}
+  `,
+  productsInCategory: gql`
+      query ($data: CategoryItemInput) {
+          productsInCategory(categoryItemInput: $data) {
+              ...ProductFields
+              img {
+                  ...ImgFields
+              }
+          }
+          categoryList(data: {
+              category: {
+                  parentCategory: $data
+              }
+          }) {
+              total
+              list {
+                  ...Category
+              }
+          }
+      }
+      ${fragment.ProductFields}
+      ${fragment.ImgFields}
+      ${fragment.CategoryFields}
   `,
 }
 

@@ -12,6 +12,7 @@ import {dealImgUrl} from '../../../../tools/img'
 import {CategoryRootName} from '../../../../ss_common/enum'
 import {bScrollModel} from '../../../../components/BScroll/BScroller'
 import {modelFactory} from '../../../../ModelAction/modelUtil'
+import {useRouter} from 'next/router'
 
 export const homeCategorySelectionModel = modelFactory('HomeCategorySelection', {
   listData: [] as Category[],
@@ -20,7 +21,7 @@ export const homeCategorySelectionModel = modelFactory('HomeCategorySelection', 
   getList: async (value, option) => {
     const res = await option.query(categoryList, {
       data: {
-        category: {
+        CategoryFields: {
           parentCategory: {
             id: CategoryRootName,
           },
@@ -34,6 +35,7 @@ export const homeCategorySelectionModel = modelFactory('HomeCategorySelection', 
 })
 
 export const CategorySelection = () => {
+  const router = useRouter()
   const {state: bsState, actions: bsActions} = useStoreModel(bScrollModel)
   const {state: homeTabsState, actions: homeTabsActions} = useStoreModel(homeTabsModel)
   const {state: homeCategorySelectionState, actions: homeCategorySelectionActions, getLoad: hsGetLoad} = useStoreModel(homeCategorySelectionModel)
@@ -49,6 +51,7 @@ export const CategorySelection = () => {
             <ButtonBase
                 className={'main'}
                 onClick={() => {
+                  router.push('/category/[id]', `/category/${value.id}`)
                 }}
                 key={`homeCategorySelectionState_${value.id}`}
             >

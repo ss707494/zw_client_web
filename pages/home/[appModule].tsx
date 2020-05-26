@@ -28,7 +28,7 @@ const init = async () => {
 
   const categoryRes = await serverQuery(categoryList, {
     data: {
-      category: {
+      CategoryFields: {
         parentCategory: {
           id: CategoryRootName,
         },

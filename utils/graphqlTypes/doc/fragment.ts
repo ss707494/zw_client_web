@@ -1,7 +1,7 @@
 import {gql} from 'apollo-boost'
 
 export const fragment = {
-  category: gql`
+  CategoryFields: gql`
       fragment Category on Category {
           id
           name
