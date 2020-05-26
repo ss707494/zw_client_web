@@ -21,7 +21,7 @@ export const homeCategorySelectionModel = modelFactory('HomeCategorySelection', 
   getList: async (value, option) => {
     const res = await option.query(categoryList, {
       data: {
-        CategoryFields: {
+        category: {
           parentCategory: {
             id: CategoryRootName,
           },
