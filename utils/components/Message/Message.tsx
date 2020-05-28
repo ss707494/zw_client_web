@@ -61,7 +61,7 @@ export const Message = () => {
   return <CusSnackbar
       open={mState.open}
       autoHideDuration={mState.autoHideDuration}
-      message={ls(mState.message)}
+      message={ls(mState.message as string)}
       msg_type={mState.msg_type}
       onClose={() => actions.onClose()}
   />
