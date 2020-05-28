@@ -30,11 +30,13 @@ export type Query = {
   categoryList?: Maybe<CategoryPage>;
   oneCategory?: Maybe<Category>;
   productsInCategory?: Maybe<Array<Maybe<Product>>>;
+  categoryLevel?: Maybe<Scalars['Float']>;
   promoCodeList?: Maybe<Array<Maybe<PromoCode>>>;
   payCardListOneUser?: Maybe<Array<Maybe<UserPayCard>>>;
   userPayCard?: Maybe<UserPayCard>;
   userAddressListOneUser?: Maybe<Array<Maybe<UserAddress>>>;
   userAddress?: Maybe<UserAddress>;
+  shopCartList?: Maybe<Array<Maybe<ShopCart>>>;
 };
 
 
@@ -104,6 +106,11 @@ export type QueryProductsInCategoryArgs = {
 };
 
 
+export type QueryCategoryLevelArgs = {
+  categoryItemInput?: Maybe<CategoryItemInput>;
+};
+
+
 export type QueryPromoCodeListArgs = {
   promoCodeItemInput?: Maybe<PromoCodeItemInput>;
 };
@@ -134,6 +141,7 @@ export type UserItemInput = {
   orderCoinNextMonth?: Maybe<Scalars['Float']>;
   orderCoinCurrentMonth?: Maybe<Scalars['Float']>;
   orderAmountCurrentYear?: Maybe<Scalars['Float']>;
+  shopCart?: Maybe<Array<Maybe<ShopCartItemInput>>>;
 };
 
 
@@ -239,6 +247,7 @@ export type ProductItemInput = {
   rOrderProduct?: Maybe<Array<ROrderProductItemInput>>;
   img?: Maybe<Array<Maybe<ProductImgItemInput>>>;
   category?: Maybe<CategoryItemInput>;
+  shopCart?: Maybe<Array<Maybe<ShopCartItemInput>>>;
 };
 
 export type ProductImgItemInput = {
@@ -271,6 +280,20 @@ export type CategoryItemInput = {
   childCategories?: Maybe<Array<Maybe<CategoryItemInput>>>;
   categoryParent?: Maybe<CategoryItemInput>;
   product?: Maybe<Array<Maybe<ProductItemInput>>>;
+};
+
+export type ShopCartItemInput = {
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  createTime?: Maybe<Scalars['Timestamp']>;
+  updateTime?: Maybe<Scalars['Timestamp']>;
+  isDelete?: Maybe<Scalars['Float']>;
+  userId?: Maybe<Scalars['String']>;
+  productId?: Maybe<Scalars['String']>;
+  number?: Maybe<Scalars['Float']>;
+  isNext?: Maybe<Scalars['Float']>;
+  user?: Maybe<UserItemInput>;
+  product?: Maybe<ProductItemInput>;
 };
 
 export type UserAddressItemInput = {
@@ -351,6 +374,7 @@ export type User = {
   orderCoinNextMonth?: Maybe<Scalars['Float']>;
   orderCoinCurrentMonth?: Maybe<Scalars['Float']>;
   orderAmountCurrentYear?: Maybe<Scalars['Float']>;
+  shopCart?: Maybe<Array<Maybe<ShopCart>>>;
 };
 
 export type UserInfo = {
@@ -460,6 +484,7 @@ export type Product = {
   rOrderProduct?: Maybe<Array<ROrderProduct>>;
   img?: Maybe<Array<Maybe<ProductImg>>>;
   category?: Maybe<Category>;
+  shopCart?: Maybe<Array<Maybe<ShopCart>>>;
 };
 
 export type ProductImg = {
@@ -494,6 +519,21 @@ export type Category = {
   childCategories?: Maybe<Array<Maybe<Category>>>;
   categoryParent?: Maybe<Category>;
   product?: Maybe<Array<Maybe<Product>>>;
+};
+
+export type ShopCart = {
+   __typename?: 'ShopCart';
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  createTime?: Maybe<Scalars['Timestamp']>;
+  updateTime?: Maybe<Scalars['Timestamp']>;
+  isDelete?: Maybe<Scalars['Float']>;
+  userId?: Maybe<Scalars['String']>;
+  productId?: Maybe<Scalars['String']>;
+  number?: Maybe<Scalars['Float']>;
+  isNext?: Maybe<Scalars['Float']>;
+  user?: Maybe<User>;
+  product?: Maybe<Product>;
 };
 
 export type UserAddress = {
@@ -701,6 +741,7 @@ export type Mutation = {
   setUserPayCardDefault?: Maybe<UserPayCard>;
   saveUserAddress?: Maybe<UserAddress>;
   setUserAddressDefault?: Maybe<UserAddress>;
+  updateNumShopCart?: Maybe<ShopCart>;
 };
 
 
@@ -761,6 +802,12 @@ export type MutationSaveUserAddressArgs = {
 
 export type MutationSetUserAddressDefaultArgs = {
   userAddress?: Maybe<UserAddressItemInput>;
+};
+
+
+export type MutationUpdateNumShopCartArgs = {
+  updateNum?: Maybe<Scalars['Float']>;
+  shopCart?: Maybe<ShopCartItemInput>;
 };
 
 export type UserInRegister = {

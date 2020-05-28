@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import StorefrontIcon from '@material-ui/icons/Storefront'
 import AccountBoxIcon from '@material-ui/icons/AccountBox'
 import RedeemIcon from '@material-ui/icons/Redeem'
@@ -7,9 +7,17 @@ import PeopleIcon from '@material-ui/icons/People'
 import { useRouter } from 'next/router'
 import red from '@material-ui/core/colors/red'
 import {AppFootBar} from '../../ss_common/enum'
+import {useStoreModel} from '../../ModelAction/useStore'
+import {meModel} from '../../view/me/model'
 
 export const FootBar = () => {
   const router = useRouter()
+  const {state: stateMe, actions: actionsMe} = useStoreModel(meModel)
+  useEffect(() => {
+    if (!stateMe.user.id) {
+      actionsMe.getLoginUser()
+    }
+  }, [])
 
   const isAct = (path: any) => router.pathname.includes(path as string)
   return (

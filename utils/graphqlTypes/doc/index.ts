@@ -350,5 +350,62 @@ export const doc = {
       ${fragment.ImgFields}
       ${fragment.CategoryFields}
   `,
+  categoryLevel: gql`
+      query ($data: CategoryItemInput) {
+          categoryLevel(categoryItemInput: $data)
+      }
+  `,
+  oneCategory: gql`
+      query ($data: CategoryItemInput) {
+          oneCategory(data: $data) {
+              ...Category
+          }
+      }
+      ${fragment.CategoryFields}
+  `,
+  productsList: gql`
+    query ($data: CategoryItemInput) {
+        productsInCategory(categoryItemInput: $data) {
+            ...ProductFields
+            img {
+                ...ImgFields
+            }
+        }
+    }
+    ${fragment.ProductFields}
+    ${fragment.ImgFields}
+  `,
+  updateNumShopCart: gql`
+    mutation ($shopCart: ShopCartItemInput, $updateNum: Float) {
+        updateNumShopCart (shopCart: $shopCart, updateNum: $updateNum) {
+            id
+            number
+            product {
+                ...ProductFields
+            }
+            user {
+                ...UserFields
+            }
+        }
+    }
+    ${fragment.ProductFields}
+    ${fragment.UserFields}
+  `,
+  userShopCartList: gql`
+    query {
+        shopCartList {
+            ...ShopCartFields
+            product {
+                ...ProductFields
+                img {
+                    ...ImgFields
+                }
+            }
+        }
+    }
+    ${fragment.ShopCartFields}
+    ${fragment.ProductFields}
+    ${fragment.ImgFields}
+  `
 }
 

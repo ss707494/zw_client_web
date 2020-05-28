@@ -4,6 +4,7 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
 import {IconButton} from '@material-ui/core'
 import {ls} from '../../tools/dealKey'
 import {useRouter} from 'next/router'
+import {Maybe} from '../../graphqlTypes/types'
 
 const Box = styled.div`
   display: grid;
@@ -12,7 +13,7 @@ const Box = styled.div`
   height: 60px;
   align-items: center;
 `
-export const HeaderTitle = ({title = '', backCall = () => {}}: {title?: string, backCall?: Function}) => {
+export const HeaderTitle = ({title = '', backCall = () => {}}: {title?: Maybe<string>, backCall?: Function}) => {
   const router = useRouter()
   return <Box>
     <IconButton

@@ -164,4 +164,17 @@ export const fragment = {
           zipCode
       }
   `,
+  ShopCartFields: gql`
+      fragment ShopCartFields on ShopCart {
+          createTime
+          id
+          isDelete
+          isNext
+          name
+          number
+          productId
+          updateTime
+          userId
+      }
+  `,
 }

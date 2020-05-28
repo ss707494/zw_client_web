@@ -84,6 +84,7 @@ type Mutation {
     saveUserPayCard(userPayCard: UserPayCardItemInput): UserPayCard
     setUserAddressDefault(userAddress: UserAddressItemInput): UserAddress
     setUserPayCardDefault(userPayCard: UserPayCardItemInput): UserPayCard
+    updateNumShopCart(shopCart: ShopCartItemInput, updateNum: Float = 1.0): ShopCart
     updatePassword(data: UpdatePasswordInput): UpdatePasswordRes
     updateUserInfo(userInfo: UserInfoItemInput): UserInfo
 }
@@ -155,6 +156,7 @@ type Product {
     rOrderProduct: [ROrderProduct!]
     remark: String
     shelvesTypes: String
+    shopCart: [ShopCart]
     sort: Float
     stock: Float
     unit: String
@@ -197,6 +199,7 @@ type PromoCode {
 }
 
 type Query {
+    categoryLevel(categoryItemInput: CategoryItemInput): Float
     categoryList(data: CategoryListInput): CategoryPage
     getDataConfig(dataConfigInput: DataConfigItemInput): DataConfig
     getDictList(dictInput: DictInput): [Dict]
@@ -213,6 +216,7 @@ type Query {
     productsInCategory(categoryItemInput: CategoryItemInput): [Product]
     promoCodeList(promoCodeItemInput: PromoCodeItemInput): [PromoCode]
     refreshToken(refreshtoken: String!): AuthBody
+    shopCartList: [ShopCart]
     testLongApi: String
     userAddress(userAddress: UserAddressItemInput): UserAddress
     userAddressListOneUser: [UserAddress]
@@ -246,6 +250,20 @@ type ROrderUser {
     userId: String
 }
 
+type ShopCart {
+    createTime: Timestamp
+    id: String
+    isDelete: Float
+    isNext: Float
+    name: String
+    number: Float
+    product: Product
+    productId: String
+    updateTime: Timestamp
+    user: User
+    userId: String
+}
+
 type UpdatePasswordRes {
     authBody: AuthBody
     user: User
@@ -262,6 +280,7 @@ type User {
     orderInfo: [OrderInfo!]
     password: String
     rOrderUser: [ROrderUser!]
+    shopCart: [ShopCart]
     type: Float
     updateTime: Timestamp
     userAddress: [UserAddress]
@@ -506,6 +525,7 @@ input ProductItemInput {
     rOrderProduct: [ROrderProductItemInput!]
     remark: String
     shelvesTypes: String
+    shopCart: [ShopCartItemInput]
     sort: Float
     stock: Float
     unit: String
@@ -556,6 +576,20 @@ input ROrderUserItemInput {
     name: String
     orderId: String
     orderInfo: OrderInfoItemInput
+    updateTime: Timestamp
+    user: UserItemInput
+    userId: String
+}
+
+input ShopCartItemInput {
+    createTime: Timestamp
+    id: String
+    isDelete: Float
+    isNext: Float
+    name: String
+    number: Float
+    product: ProductItemInput
+    productId: String
     updateTime: Timestamp
     user: UserItemInput
     userId: String
@@ -612,6 +646,7 @@ input UserItemInput {
     orderInfo: [OrderInfoItemInput!]
     password: String
     rOrderUser: [ROrderUserItemInput!]
+    shopCart: [ShopCartItemInput]
     type: Float
     updateTime: Timestamp
     userAddress: [UserAddressItemInput]

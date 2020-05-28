@@ -151,3 +151,14 @@ export const ProvinceData = [
   ['WI', 'Wisconsin'],
   ['WY', 'Wyoming'],
 ]
+
+export const getPickUpTypeName = (type: string | 'Self' | 'Delivery') => {
+  return ({
+    Self: '自取',
+    Delivery: '配送',
+  })[type as 'Self' | 'Delivery'] ?? ''
+}
+export const PickUpTypeEnum = {
+  Self: 'Self',
+  Delivery: 'Delivery',
+}

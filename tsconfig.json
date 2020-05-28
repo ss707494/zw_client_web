@@ -27,6 +27,7 @@
     "**/*.ts",
     "**/*.tsx",
     "node_modules/@types/shelljs/make.d.ts",
+    "node_modules/@types/shelljs/make.d.ts",
     "node_modules/@types/shelljs/make.d.ts"
   ]
 }

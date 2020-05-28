@@ -3,12 +3,10 @@ import {useStoreModel} from '../../ModelAction/useStore'
 import {RegisterHeader} from '../../components/RegisterHeader/RegisterHeader'
 import {loginModel} from './model'
 import {Box} from '../../components/Box/Box'
-import {useTheme} from '@material-ui/core'
 import {ls} from '../../tools/dealKey'
 import {SigninInput, SigninLabel, SigninSubButton} from '../register'
 
 export function Login() {
-  const theme = useTheme()
   const {state, actions} = useStoreModel(loginModel)
 
   return <Box>

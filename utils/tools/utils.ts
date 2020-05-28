@@ -1,6 +1,7 @@
 import format from 'date-fns/format'
 import set from 'lodash/set'
 import {cloneDeep, PropertyPath, isFunction, get, isArray, mergeWith, isString} from 'lodash'
+import {Maybe} from '../graphqlTypes/types'
 
 export const getObjectURL = (file: any) => {
   // @ts-ignore
@@ -108,6 +109,8 @@ export const formatMoney = (amount: any, decimalCount = 2, decimal = ".", thousa
 }
 
 export const dealMoney = (amount: any, pre = '') => `${pre}$ ${formatMoney(amount)}`
+
+export const dealMaybeNumber = (num: Maybe<number> | undefined) => num ?? 0
 
 export default {
   getObjectURL,
