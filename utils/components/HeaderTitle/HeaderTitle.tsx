@@ -1,12 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
-import {IconButton} from '@material-ui/core'
+import {Box, IconButton} from '@material-ui/core'
 import {ls} from '../../tools/dealKey'
 import {useRouter} from 'next/router'
 import {Maybe} from '../../graphqlTypes/types'
+import {BoxProps} from '@material-ui/core/Box/Box'
 
-const Box = styled.div`
+const Contain = styled(Box)<BoxProps>`
   display: grid;
   grid-template-columns: 40px 1fr 40px;
   justify-items: center;
@@ -15,11 +16,14 @@ const Box = styled.div`
 `
 export const HeaderTitle = ({title = '', backCall = () => {}}: {title?: Maybe<string>, backCall?: Function}) => {
   const router = useRouter()
-  return <Box>
+
+  return <Contain
+      boxShadow={1}>
     <IconButton
         onClick={() => {
-          backCall && backCall()
-          router.back()
+          if (!(backCall && backCall())) {
+            router.back()
+          }
         }}
     >
       <ArrowBackIosIcon/>
@@ -27,5 +31,5 @@ export const HeaderTitle = ({title = '', backCall = () => {}}: {title?: Maybe<st
     <main>
       {ls(title)}
     </main>
-  </Box>
+  </Contain>
 }

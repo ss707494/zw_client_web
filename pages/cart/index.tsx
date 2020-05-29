@@ -1,3 +1,3 @@
-import {ShopCartPage} from '../../utils/view/cart'
+import {CartPage} from '../../utils/view/cart'
 
-export default ShopCartPage
+export default CartPage

@@ -86,6 +86,7 @@ type Mutation {
     setUserPayCardDefault(userPayCard: UserPayCardItemInput): UserPayCard
     updateNumShopCart(shopCart: ShopCartItemInput, updateNum: Float = 1.0): ShopCart
     updatePassword(data: UpdatePasswordInput): UpdatePasswordRes
+    updateShopCart(shopCart: ShopCartItemInput): ShopCart
     updateUserInfo(userInfo: UserInfoItemInput): UserInfo
 }
 

@@ -177,4 +177,16 @@ export const fragment = {
           userId
       }
   `,
+  DataConfigFields: gql`
+    fragment DataConfigFields on DataConfig {
+        createTime
+        id
+        isDelete
+        name
+        remark
+        type
+        updateTime
+        value
+    }
+  `,
 }

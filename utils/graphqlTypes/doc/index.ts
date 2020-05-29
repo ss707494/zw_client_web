@@ -268,14 +268,7 @@ export const doc = {
           getDataConfig(dataConfigInput: {
               type: "${DictTypeEnum.SelfAddress}"
           }) {
-              id
-              name
-              createTime
-              updateTime
-              isDelete
-              type
-              value
-              remark
+              ...DataConfigFields
           }
           oneUser {
               ...UserFields
@@ -285,6 +278,7 @@ export const doc = {
           }
       }
       ${fragment.UserInfoFields}
+      ${fragment.DataConfigFields}
       ${fragment.UserFields}
   `,
   updateUserInfo: gql`
@@ -364,48 +358,82 @@ export const doc = {
       ${fragment.CategoryFields}
   `,
   productsList: gql`
-    query ($data: CategoryItemInput) {
-        productsInCategory(categoryItemInput: $data) {
-            ...ProductFields
-            img {
-                ...ImgFields
-            }
-        }
-    }
-    ${fragment.ProductFields}
-    ${fragment.ImgFields}
+      query ($data: CategoryItemInput) {
+          productsInCategory(categoryItemInput: $data) {
+              ...ProductFields
+              img {
+                  ...ImgFields
+              }
+          }
+      }
+      ${fragment.ProductFields}
+      ${fragment.ImgFields}
   `,
   updateNumShopCart: gql`
-    mutation ($shopCart: ShopCartItemInput, $updateNum: Float) {
-        updateNumShopCart (shopCart: $shopCart, updateNum: $updateNum) {
-            id
-            number
-            product {
-                ...ProductFields
-            }
-            user {
-                ...UserFields
-            }
-        }
-    }
-    ${fragment.ProductFields}
-    ${fragment.UserFields}
+      mutation ($shopCart: ShopCartItemInput, $updateNum: Float) {
+          updateNumShopCart (shopCart: $shopCart, updateNum: $updateNum) {
+              id
+              number
+              product {
+                  ...ProductFields
+              }
+              user {
+                  ...UserFields
+              }
+          }
+      }
+      ${fragment.ProductFields}
+      ${fragment.UserFields}
   `,
   userShopCartList: gql`
+      query {
+          shopCartList {
+              ...ShopCartFields
+              product {
+                  ...ProductFields
+                  img {
+                      ...ImgFields
+                  }
+              }
+          }
+      }
+      ${fragment.ShopCartFields}
+      ${fragment.ProductFields}
+      ${fragment.ImgFields}
+  `,
+  updateShopCart: gql`
+      mutation ($shopCart: ShopCartItemInput){
+          updateShopCart (shopCart: $shopCart) {
+              ...ShopCartFields
+          }
+      }
+      ${fragment.ShopCartFields}
+  `,
+  orderConfirmInfo: gql`
     query {
-        shopCartList {
-            ...ShopCartFields
-            product {
-                ...ProductFields
-                img {
-                    ...ImgFields
-                }
+        getDataConfig(dataConfigInput: {
+            type: "${DictTypeEnum.SelfAddress}"
+        }) {
+            ...DataConfigFields
+        }
+        oneUser {
+            ...UserFields
+            userInfo {
+                ...UserInfoFields
             }
         }
+        payCardListOneUser {
+            ...UserPayCardFields
+        }
+        userAddressListOneUser {
+            ...UserAddressFields
+        }
     }
-    ${fragment.ShopCartFields}
-    ${fragment.ProductFields}
-    ${fragment.ImgFields}
-  `
+    ${fragment.UserAddressFields}
+    ${fragment.UserPayCardFields}
+    ${fragment.UserInfoFields}
+    ${fragment.UserFields}
+    ${fragment.DataConfigFields}
+  `,
 }
 

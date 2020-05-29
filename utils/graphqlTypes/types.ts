@@ -742,6 +742,7 @@ export type Mutation = {
   saveUserAddress?: Maybe<UserAddress>;
   setUserAddressDefault?: Maybe<UserAddress>;
   updateNumShopCart?: Maybe<ShopCart>;
+  updateShopCart?: Maybe<ShopCart>;
 };
 
 
@@ -807,6 +808,11 @@ export type MutationSetUserAddressDefaultArgs = {
 
 export type MutationUpdateNumShopCartArgs = {
   updateNum?: Maybe<Scalars['Float']>;
+  shopCart?: Maybe<ShopCartItemInput>;
+};
+
+
+export type MutationUpdateShopCartArgs = {
   shopCart?: Maybe<ShopCartItemInput>;
 };
 

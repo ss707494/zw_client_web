@@ -8,19 +8,20 @@ import {grey} from '@material-ui/core/colors'
 import {productModel, ProductPrice} from '../../components/ProductItem/ProductItem'
 import {Button, IconButton} from '@material-ui/core'
 import {useStoreModel} from '../../ModelAction/useStore'
+import {ls} from '../../tools/dealKey'
 import {shopCartModel} from './index'
-import { ls } from '../../tools/dealKey'
 
 const Box = styled.div`
   margin-bottom: 16px;
   display: grid;
-  grid-template-columns: 66px 1fr;
-  grid-template-rows: repeat(2, 22px) 26px;
+  grid-template-columns: minmax(20px, 72px) 1fr;
+  grid-template-rows: repeat(2, 22px) 30px;
   grid-column-gap: 10px;
   > img {
     grid-area: 1/1/4/2;
     width: 100%;
     height: 100%;
+    border-radius: 8px;
   }
   > section {
     color: ${grey[600]}
@@ -31,9 +32,12 @@ const Box = styled.div`
     > main {
       flex-grow: 1;
     }
+    > button {
+      flex-shrink: 0;
+      font-size: 12px;
+    }
   }
 `
-
 
 export const CartProduct = ({shopCart}: { shopCart: ShopCart }) => {
   const {actions: actionsSCM} = useStoreModel(shopCartModel)
@@ -47,11 +51,20 @@ export const CartProduct = ({shopCart}: { shopCart: ShopCart }) => {
     <section>{product?.remark}</section>
     <footer>
       <ProductPrice product={product}/>
-      <Button
-          size={'small'}
-          variant={'outlined'}
-      >{ls('下次购买')}</Button>
-      {(shopCart?.number ?? 0) > 1 && <IconButton
+      {(shopCart.isNext === 0 && <>
+        <Button
+            size={'small'}
+            variant={'outlined'}
+            onClick={async () => {
+              await actionsPM.updateShopCart({
+                isNext: 1,
+                id: shopCart.id,
+              })
+              actionsSCM.getList()
+            }}
+        >{ls('下次购买')}</Button>
+        {<IconButton
+            disabled={(shopCart?.number ?? 0) <= 1}
             size={'small'}
             onClick={async () => {
               await actionsPM.updateNumShopCart({
@@ -61,18 +74,44 @@ export const CartProduct = ({shopCart}: { shopCart: ShopCart }) => {
               actionsSCM.getList()
             }}
         ><RemoveIcon/></IconButton>}
-      {shopCart.number}
-      <IconButton
-          size={'small'}
-          onClick={async () => {
-            await actionsPM.updateNumShopCart({
-              product,
-            })
-            actionsSCM.getList()
-          }}
-      >
-        <AddIcon/>
-      </IconButton>
+        {shopCart.number}
+        <IconButton
+            size={'small'}
+            onClick={async () => {
+              await actionsPM.updateNumShopCart({
+                product,
+              })
+              actionsSCM.getList()
+            }}
+        >
+          <AddIcon/>
+        </IconButton>
+      </>) || <>
+        <Button
+            style={{marginRight: '8px'}}
+            size={'small'}
+            variant={'outlined'}
+            color={'secondary'}
+            onClick={async () => {
+              await actionsPM.updateShopCart({
+                isDelete: 1,
+                id: shopCart.id,
+              })
+              actionsSCM.getList()
+            }}
+        >{ls('删除')}</Button>
+        <Button
+            size={'small'}
+            variant={'outlined'}
+            onClick={async () => {
+              await actionsPM.updateShopCart({
+                isNext: 0,
+                id: shopCart.id,
+              })
+              actionsSCM.getList()
+            }}
+        >{ls('加入购物车')}</Button>
+      </>}
     </footer>
   </Box>
 }

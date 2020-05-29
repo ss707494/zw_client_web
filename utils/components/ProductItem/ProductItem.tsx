@@ -21,6 +21,11 @@ export const productModel = modelFactory('productModel', {}, {
       } : {}),
     })
   },
+  updateShopCart: async (value: ShopCartItemInput, option) => {
+    return await option.mutate(doc.updateShopCart, {
+      shopCart: value,
+    })
+  },
 })
 
 const Box = styled(Card)`
@@ -53,10 +58,10 @@ const Box = styled(Card)`
 export const ProductPrice = ({product}: { product?: Maybe<Product> }) => {
   return <>
     <aside
-        style={{display: 'inline-block', fontSize: '12px', textDecoration: 'line-through'}}
+        style={{display: 'inline-block', fontSize: '12px', textDecoration: 'line-through', flexShrink: 0}}
     >{dealMoney(product?.priceMarket)}</aside>
     <main
-        style={{display: 'inline-block', fontSize: '14px', marginLeft: '6px', color: mpStyle.red}}
+        style={{display: 'inline-block', fontSize: '14px', marginLeft: '6px', color: mpStyle.red, flexShrink: 0}}
     >{dealMoney(product?.priceOut)}</main>
   </>
 }

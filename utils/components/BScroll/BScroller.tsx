@@ -14,7 +14,7 @@ export const bScrollModel = modelFactory('bScrollModel', {
   },
 })
 
-export const BScroller = ({children, boxHeight}: {children?: any, boxHeight?: any}) => {
+export const BScroller = ({children, boxHeight}: { children?: any, boxHeight?: any }) => {
   const {state: bsState, actions: bsActions} = useStoreModel(bScrollModel)
   const scrollRef = useRef(null)
   useEffect(() => {
@@ -22,11 +22,16 @@ export const BScroller = ({children, boxHeight}: {children?: any, boxHeight?: an
     const scroll = new BetterScroll(scrollRef.current, {
       click: true,
       scrollY: true,
+      taps: true,
+      preventDefaultException: {
+        tagName: /^(INPUT|TEXTAREA|BUTTON|SELECT)$/,
+        className: /(^|\s).*(MuiTextField-root|MuiSelect-select).*(\s|$)/,
+      },
     })
     bsActions.setScroll(scroll)
     return () => {
-      scroll.stop();
-      scroll.destroy();
+      scroll.stop()
+      scroll.destroy()
     }
   }, [])
 
