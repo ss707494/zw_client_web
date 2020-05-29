@@ -16,5 +16,5 @@ shelljs.exec('git pull')
 
 shelljs.exec('npm run build')
 
-shelljs.exec('cross-env NODE_ENV=production node server.js', {}, callback)
+shelljs.exec('npm run prod_start', {}, callback)
 
