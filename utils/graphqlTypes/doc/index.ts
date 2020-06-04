@@ -182,7 +182,12 @@ export const doc = {
       ${fragment.ImgFields}
   `,
   orderDetail: gql`
-      query orderDetail($id: String) {
+      query ($id: String) {
+          selfAddress: getDataConfig(dataConfigInput: {
+              type: "${DictTypeEnum.SelfAddress}"
+          }) {
+              ...DataConfigFields
+          }
           orderDetail(id: $id) {
               ...OrderInfoFields
               rOrderProduct {
@@ -208,6 +213,7 @@ export const doc = {
               }
           }
       }
+      ${fragment.DataConfigFields}
       ${fragment.OrderInfoFields}
       ${fragment.ROrderProductFields}
       ${fragment.ProductFields}
@@ -357,12 +363,15 @@ export const doc = {
       }
       ${fragment.CategoryFields}
   `,
-  productsList: gql`
-      query ($data: CategoryItemInput) {
-          productsInCategory(categoryItemInput: $data) {
-              ...ProductFields
-              img {
-                  ...ImgFields
+  productList: gql`
+      query ($productInput: ProductItemInput, $orderByInput: OrderByInput) {
+          productList(productInput: $productInput, orderByInput: $orderByInput) {
+              total
+              list {
+                  ...ProductFields
+                  img {
+                      ...ImgFields
+                  }
               }
           }
       }
@@ -410,30 +419,57 @@ export const doc = {
       ${fragment.ShopCartFields}
   `,
   orderConfirmInfo: gql`
-    query {
-        getDataConfig(dataConfigInput: {
-            type: "${DictTypeEnum.SelfAddress}"
-        }) {
-            ...DataConfigFields
-        }
-        oneUser {
-            ...UserFields
-            userInfo {
-                ...UserInfoFields
-            }
-        }
-        payCardListOneUser {
-            ...UserPayCardFields
-        }
-        userAddressListOneUser {
-            ...UserAddressFields
-        }
-    }
-    ${fragment.UserAddressFields}
-    ${fragment.UserPayCardFields}
-    ${fragment.UserInfoFields}
-    ${fragment.UserFields}
-    ${fragment.DataConfigFields}
+      query {
+          getDataConfig(dataConfigInput: {
+              type: "${DictTypeEnum.SelfAddress}"
+          }) {
+              ...DataConfigFields
+          }
+          oneUser {
+              ...UserFields
+              userInfo {
+                  ...UserInfoFields
+              }
+          }
+          payCardListOneUser {
+              ...UserPayCardFields
+          }
+          userAddressListOneUser {
+              ...UserAddressFields
+          }
+          freightConfig: getDataConfig (dataConfigInput: {
+              type: "${DictTypeEnum.Freight}"
+          }) {
+              ...DataConfigFields
+          }
+          userLevelList: getDictList (dictInput: {
+              dictTypeCode: "UserLevel"
+          }) {
+              ...DictFields
+          }
+      }
+      ${fragment.UserAddressFields}
+      ${fragment.UserPayCardFields}
+      ${fragment.UserInfoFields}
+      ${fragment.UserFields}
+      ${fragment.DataConfigFields}
+      ${fragment.DictFields}
+  `,
+  saveOrder: gql`
+      mutation ($orderInfoItemInput: OrderInfoItemInput) {
+          saveOrder (orderInfoItemInput: $orderInfoItemInput) {
+              ...OrderInfoFields
+          }
+      }
+      ${fragment.OrderInfoFields}
+  `,
+  dictList: gql`
+      query ($data: DictInput) {
+          getDictList (dictInput: $data) {
+              ...DictFields
+          }
+      }
+      ${fragment.DictFields}
   `,
 }
 

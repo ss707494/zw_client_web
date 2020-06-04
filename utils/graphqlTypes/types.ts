@@ -37,6 +37,7 @@ export type Query = {
   userAddressListOneUser?: Maybe<Array<Maybe<UserAddress>>>;
   userAddress?: Maybe<UserAddress>;
   shopCartList?: Maybe<Array<Maybe<ShopCart>>>;
+  productList?: Maybe<ProductPage>;
 };
 
 
@@ -123,6 +124,11 @@ export type QueryUserPayCardArgs = {
 
 export type QueryUserAddressArgs = {
   userAddress?: Maybe<UserAddressItemInput>;
+};
+
+
+export type QueryProductListArgs = {
+  productInput?: Maybe<ProductItemInput>;
 };
 
 export type UserItemInput = {
@@ -727,6 +733,12 @@ export type PromoCode = {
   isDisable?: Maybe<Scalars['Float']>;
 };
 
+export type ProductPage = {
+   __typename?: 'ProductPage';
+  total?: Maybe<Scalars['Float']>;
+  list?: Maybe<Array<Maybe<Product>>>;
+};
+
 export type Mutation = {
    __typename?: 'Mutation';
   saveUserList?: Maybe<Array<Maybe<User>>>;
@@ -734,6 +746,7 @@ export type Mutation = {
   updatePassword?: Maybe<UpdatePasswordRes>;
   updateUserInfo?: Maybe<UserInfo>;
   saveOrderList?: Maybe<Array<Maybe<OrderInfo>>>;
+  saveOrder?: Maybe<OrderInfo>;
   saveDataConfig?: Maybe<DataConfig>;
   saveDictTypeFirst?: Maybe<Array<Maybe<DictTypeFirst>>>;
   saveCategory?: Maybe<Category>;
@@ -768,6 +781,11 @@ export type MutationUpdateUserInfoArgs = {
 
 export type MutationSaveOrderListArgs = {
   orderInfoItemInput?: Maybe<Array<Maybe<OrderInfoItemInput>>>;
+};
+
+
+export type MutationSaveOrderArgs = {
+  orderInfoItemInput?: Maybe<OrderInfoItemInput>;
 };
 
 

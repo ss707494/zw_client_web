@@ -9,7 +9,7 @@ import {dealMoney, formatDate, fpMergePre} from '../../../tools/utils'
 import {useStoreModel} from '../../../ModelAction/useStore'
 import {useRouter} from 'next/router'
 import {ls} from '../../../tools/dealKey'
-import {orderStateToString} from '../../../ss_common/enum'
+import {orderStateToString, PickUpTypeEnum} from '../../../ss_common/enum'
 import {mpStyle} from '../../../style/common'
 import {grey} from '@material-ui/core/colors'
 import {dealImgUrl} from '../../../tools/img'
@@ -17,11 +17,13 @@ import {Button} from '@material-ui/core'
 
 export const orderDetailModel = modelFactory('orderDetail', {
   orderInfo: {} as OrderInfo,
+  selfAddress: [] as any[],
 }, {
   getDetail: async (value: string, option) => {
     const res = await option.query(doc.orderDetail, {id: value})
     option.setData(fpMergePre({
       orderInfo: res?.orderDetail,
+      selfAddress: res?.selfAddress?.value?.list || [],
     }))
   },
 })
@@ -104,9 +106,7 @@ const Sum = styled.div`
 export const OrderDetail = () => {
   const router = useRouter()
   const {state: stateOD, actions: actionsOD} = useStoreModel(orderDetailModel)
-
   const orderInfo = stateOD.orderInfo
-  console.log(orderInfo)
 
   useEffect(() => {
     if (router.query.id && !stateOD.orderInfo?.id) {
@@ -126,7 +126,11 @@ export const OrderDetail = () => {
         </Top>
         <InfoLabel>
           <aside>{ls('送货地址')} :</aside>
-          <section>{orderInfo.userAddress?.combineAddress}</section>
+          <section>
+            {(orderInfo.pickUpType === PickUpTypeEnum.Self &&
+                (v => `${v.province} ${v.city} ${v.streetAddress}`)(stateOD.selfAddress.find(v => v.id === orderInfo.selfAddressId))
+            ) || orderInfo.userAddress?.combineAddress}
+          </section>
         </InfoLabel>
         <InfoLabel>
           <aside>{ls('订单编号')} :</aside>

@@ -8,14 +8,15 @@ import { useRouter } from 'next/router'
 import red from '@material-ui/core/colors/red'
 import {AppFootBar} from '../../ss_common/enum'
 import {useStoreModel} from '../../ModelAction/useStore'
-import {meModel} from '../../view/me/model'
+import {shopCartModel} from '../../view/cart'
+import {mpStyle} from '../../style/common'
 
 export const FootBar = () => {
   const router = useRouter()
-  const {state: stateMe, actions: actionsMe} = useStoreModel(meModel)
+  const {state: stateShopCart, actions: actionsShopCart} = useStoreModel(shopCartModel)
   useEffect(() => {
-    if (!stateMe.user.id) {
-      actionsMe.getLoginUser()
+    if (!stateShopCart.user.id) {
+      actionsShopCart.getList()
     }
   }, [])
 
@@ -27,7 +28,7 @@ export const FootBar = () => {
           ['逛店', <StorefrontIcon/>, `/${AppFootBar.home}`],
           ['拼团', <PeopleIcon/>, `/${AppFootBar.group}`],
           ['达人卡', <RedeemIcon/>, `/${AppFootBar.card}`],
-          ['购物车', <ShoppingCartIcon/>, `/${AppFootBar.cart}`],
+          ['购物车', <ShoppingCartIcon/>, `/${AppFootBar.cart}`, stateShopCart.dealProductNumber(stateShopCart)],
           ['我', <AccountBoxIcon/>, `/${AppFootBar.me}`],
         ].map(v => (
             <section
@@ -37,6 +38,7 @@ export const FootBar = () => {
             >
               {v[1]}
               <span>{v[0]}</span>
+              {v[3] && <aside>{v[3]}</aside>}
             </section>
         ))}
         <style jsx>{`
@@ -55,6 +57,20 @@ export const FootBar = () => {
               align-items: center;
               justify-content: center;
               flex-direction: column;
+              position: relative;
+              > aside {
+                position: absolute;
+                top: 0;
+                right: 20%;
+                border-radius: 50%;
+                width: 16px;
+                height: 16px;
+                background: ${mpStyle.red};
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #fff;
+              }
             }
           }
           .act {

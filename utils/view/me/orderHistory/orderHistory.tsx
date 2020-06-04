@@ -13,7 +13,7 @@ import styled from 'styled-components'
 import {grey} from '@material-ui/core/colors'
 import {dealImgUrl} from '../../../tools/img'
 import {mpStyle} from '../../../style/common'
-import {OrderState} from '../../../ss_common/enum'
+import {OrderState, orderStateToString} from '../../../ss_common/enum'
 import {useRouter} from 'next/router'
 
 const orderHistoryModel = modelFactory('orderHistoryModel', {
@@ -125,7 +125,7 @@ export const OrderHistory = () => {
             <Item>
               <header>
                 <span>{formatDate(value?.createTime)}</span>
-                <aside>{value?.state}</aside>
+                <aside>{orderStateToString(value?.state)}</aside>
               </header>
               <ImgList
                   onClick={() => router.push('/me/orderDetail/[id]', `/me/orderDetail/${value?.id}`)}

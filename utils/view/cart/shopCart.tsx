@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react'
 import {doc} from '../../graphqlTypes/doc'
-import {dealMaybeNumber, dealMoney} from '../../tools/utils'
+import {dealMoney, fpMerge} from '../../tools/utils'
 import {useStoreModel} from '../../ModelAction/useStore'
 import {ls} from '../../tools/dealKey'
 import {HeaderTitle} from '../../components/HeaderTitle/HeaderTitle'
@@ -40,8 +40,8 @@ export const ShopCartPage = () => {
       actionsSCM.getList()
     }
   }, [])
-  const productNumber = stateSCM.shopCartList.reduce((pre, cur) => pre + (cur?.number ?? 0), 0)
-  const productSubtotal = dealMoney(stateSCM.shopCartList.reduce((pre, cur) => pre + (dealMaybeNumber(cur?.number) * dealMaybeNumber(cur?.product?.priceOut)), 0))
+  const productNumber = stateSCM.dealProductNumber(stateSCM)
+  const productSubtotal = dealMoney(stateSCM.dealProductTotal(stateSCM))
   const allTotal = productSubtotal + 0
 
   return <div>
@@ -77,7 +77,14 @@ export const ShopCartPage = () => {
             label={ls('运送方式')}
             select={true}
             value={stateSCM.form.pickUpType}
-            onChange={event => actionsSCM.setForm(['pickUpType', event.target.value])}
+            onChange={event => {
+              actionsSCM.setForm(['pickUpType', event.target.value])
+              actionsSCM.setForm(['addressId', stateSCM.initAddressId(fpMerge(stateSCM, {
+                form: {
+                  pickUpType: event.target.value,
+                },
+              }))])
+            }}
         >
           <MenuItem
               value={PickUpTypeEnum.Self}

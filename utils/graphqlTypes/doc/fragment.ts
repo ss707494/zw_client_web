@@ -189,4 +189,18 @@ export const fragment = {
         value
     }
   `,
+  DictFields: gql`
+    fragment DictFields on Dict {
+        code
+        createTime
+        dictTypeCode
+        id
+        isDelete
+        isDisable
+        name
+        remark
+        sort
+        updateTime
+    }
+  `,
 }

@@ -78,6 +78,7 @@ type Mutation {
     saveCategory(categoryItemInput: CategoryItemInput): Category
     saveDataConfig(dataConfigInput: DataConfigItemInput): DataConfig
     saveDictTypeFirst(dictTypeFirstItemInput: [DictTypeFirstItemInput]): [DictTypeFirst]
+    saveOrder(orderInfoItemInput: OrderInfoItemInput): OrderInfo
     saveOrderList(orderInfoItemInput: [OrderInfoItemInput]): [OrderInfo]
     saveUserAddress(userAddress: UserAddressItemInput): UserAddress
     saveUserList(userItemInput: [UserItemInput]): [User]
@@ -177,6 +178,11 @@ type ProductImg {
     url: String
 }
 
+type ProductPage {
+    list: [Product]
+    total: Float
+}
+
 type PromoCode {
     code: String
     createTime: Timestamp
@@ -214,6 +220,7 @@ type Query {
     orderListTotal(orderInput: OrderInput): Float
     passwordCode(password: String): String
     payCardListOneUser: [UserPayCard]
+    productList(orderByInput: OrderByInput, productInput: ProductItemInput): ProductPage
     productsInCategory(categoryItemInput: CategoryItemInput): [Product]
     promoCodeList(promoCodeItemInput: PromoCodeItemInput): [PromoCode]
     refreshToken(refreshtoken: String!): AuthBody
