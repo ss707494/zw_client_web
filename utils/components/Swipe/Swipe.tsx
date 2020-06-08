@@ -2,7 +2,7 @@ import React from 'react'
 import {Carousel} from 'react-responsive-carousel'
 import {dealImgUrl} from '../../tools/img'
 
-const CusCarousel = ({dataList, onClickItem}: { dataList: any[], onClickItem?: (index: number, item: React.ReactNode) => void }) => (
+const CusCarousel = ({dataList, onClickItem, height}: { height?: string, dataList: any[], onClickItem?: (index: number, item: React.ReactNode) => void }) => (
     <Carousel
         autoPlay={true}
         showThumbs={false}
@@ -16,6 +16,7 @@ const CusCarousel = ({dataList, onClickItem}: { dataList: any[], onClickItem?: (
               key={`Carousel_${item.id}`}
           >
             <img
+                style={{height: height}}
                 src={dealImgUrl(item.imgUrl)}
                 alt=""/>
           </div>

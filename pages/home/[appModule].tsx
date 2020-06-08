@@ -2,12 +2,12 @@ import React from 'react'
 import {serverQuery} from '../../utils/client'
 import {categoryList, getDataConfig, homeCarouselImgs} from '../../utils/graphqlTypes/doc'
 import {CategoryListInput, DataConfigItemInput} from '../../utils/graphqlTypes/types'
-import {CategoryRootName, DictTypeEnum} from '../../utils/ss_common/enum'
+import {AppModuleTypeEnum, CategoryRootName, DictTypeEnum} from '../../utils/ss_common/enum'
 import {HomeAppModule} from '../../utils/view/home/appModule'
 
 export default HomeAppModule
 
-const init = async () => {
+const init = async ({params}: {params: any}) => {
   const appModuleConfig = await serverQuery(getDataConfig, {
     data: {
       type: DictTypeEnum.AppModule,
@@ -26,7 +26,7 @@ const init = async () => {
     } as DataConfigItemInput
   }, {})
 
-  const categoryRes = await serverQuery(categoryList, {
+  const categoryRes = (params.appModule === AppModuleTypeEnum.categorySelection && await serverQuery(categoryList, {
     data: {
       category: {
         parentCategory: {
@@ -34,11 +34,11 @@ const init = async () => {
         },
       },
     } as CategoryListInput
-  })
+  })) || {}
 
   return {
     props: {
-      homeCategorySelection_listData: categoryRes?.categoryList?.list,
+      homeCategorySelection_listData: categoryRes?.categoryList?.list ?? [],
       ...homeCarouselDataComfig,
       appModuleConfig: appModuleConfig?.getDataConfig,
     },
@@ -49,7 +49,23 @@ export const getStaticPaths = () => {
   return {
     paths: [{
       params: {
-        appModule: 'categorySelection',
+        appModule: AppModuleTypeEnum.categorySelection,
+      },
+    }, {
+      params: {
+        appModule: AppModuleTypeEnum.limitTime,
+      },
+    }, {
+      params: {
+        appModule: AppModuleTypeEnum.mayLike,
+      },
+    }, {
+      params: {
+        appModule: AppModuleTypeEnum.salesRank,
+      },
+    }, {
+      params: {
+        appModule: AppModuleTypeEnum.themeSelection,
       },
     }],
     fallback: true,

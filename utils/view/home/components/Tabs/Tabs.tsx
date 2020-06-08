@@ -6,6 +6,7 @@ import {modelFactory} from '../../../../ModelAction/modelUtil'
 import {useStoreModel} from '../../../../ModelAction/useStore'
 import {AppModuleTypeEnum} from '../../../../ss_common/enum'
 import {ls} from '../../../../tools/dealKey'
+import {PromotionFlashSale} from '../PromotionFlashSale/PromotionFlashSale'
 
 export const homeTabsModel = modelFactory('HomeTabs', {
   appModuleConfig: {} as any,
@@ -52,6 +53,8 @@ export const HomeTabs = () => {
         >
           {router.query.appModule === AppModuleTypeEnum.categorySelection
           && <CategorySelection/>}
+          {router.query.appModule === AppModuleTypeEnum.limitTime
+          && <PromotionFlashSale/>}
         </main>
         <style jsx>{`
           div :global(.MuiButtonBase-root) {

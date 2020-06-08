@@ -48,6 +48,7 @@ export const HomeAppModule = function ({
             </div>
             <div className={'cusCarousel'}>
               <CusCarousel
+                  height={'160px'}
                   dataList={homeCarouselImgs?.value?.list as []}
               />
             </div>
@@ -78,7 +79,6 @@ export const HomeAppModule = function ({
             }
           }
           .cusCarousel {
-            max-height: 230px;
             border-radius: 10px;
             overflow: hidden;
           }

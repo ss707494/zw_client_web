@@ -38,7 +38,7 @@ export const FootBar = () => {
             >
               {v[1]}
               <span>{v[0]}</span>
-              {v[3] && <aside>{v[3]}</aside>}
+              {~~v[3] > 0 && <aside>{v[3]}</aside>}
             </section>
         ))}
         <style jsx>{`

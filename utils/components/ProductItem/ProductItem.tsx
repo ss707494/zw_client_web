@@ -96,3 +96,7 @@ export const ProductItem = ({product}: { product: Product }) => {
     </footer>
   </Box>
 }
+
+export const ProductItemOneRow = ({product}: { product: Product }) => {
+
+}

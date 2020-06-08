@@ -471,5 +471,15 @@ export const doc = {
       }
       ${fragment.DictFields}
   `,
+  limitTimeData: gql`
+    query {
+        limitTimeData: getDataConfig (dataConfigInput: {
+            type: "${DictTypeEnum.PromotionFlashSale}"
+        }) {
+            ...DataConfigFields
+        }
+    }
+    ${fragment.DataConfigFields}
+  `,
 }
 

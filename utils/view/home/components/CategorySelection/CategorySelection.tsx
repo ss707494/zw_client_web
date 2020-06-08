@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react'
-import {homeTabsModel} from '../Tabs/Tabs'
 import {grey} from '@material-ui/core/colors'
 import {KeyboardArrowRight} from '@material-ui/icons'
 import {ButtonBase} from '@material-ui/core'
@@ -10,7 +9,6 @@ import {Loading} from '../../../../components/Loading/Loading'
 import {categoryList} from '../../../../graphqlTypes/doc'
 import {dealImgUrl} from '../../../../tools/img'
 import {CategoryRootName} from '../../../../ss_common/enum'
-import {bScrollModel} from '../../../../components/BScroll/BScroller'
 import {modelFactory} from '../../../../ModelAction/modelUtil'
 import {useRouter} from 'next/router'
 
@@ -36,8 +34,6 @@ export const homeCategorySelectionModel = modelFactory('HomeCategorySelection', 
 
 export const CategorySelection = () => {
   const router = useRouter()
-  const {state: bsState, actions: bsActions} = useStoreModel(bScrollModel)
-  const {state: homeTabsState, actions: homeTabsActions} = useStoreModel(homeTabsModel)
   const {state: homeCategorySelectionState, actions: homeCategorySelectionActions, getLoad: hsGetLoad} = useStoreModel(homeCategorySelectionModel)
 
   useEffect(() => {
