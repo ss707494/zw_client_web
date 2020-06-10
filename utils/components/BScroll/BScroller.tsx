@@ -14,7 +14,7 @@ export const bScrollModel = modelFactory('bScrollModel', {
   },
 })
 
-export const BScroller = ({children, boxHeight}: { children?: any, boxHeight?: any }) => {
+export const BScroller = ({isX, children, boxHeight, boxWidth}: { children?: any, boxHeight?: any, boxWidth?: any, isX?: boolean }) => {
   const {state: bsState, actions: bsActions} = useStoreModel(bScrollModel)
   const scrollRef = useRef(null)
   useEffect(() => {
@@ -23,6 +23,10 @@ export const BScroller = ({children, boxHeight}: { children?: any, boxHeight?: a
       click: true,
       scrollY: true,
       taps: true,
+      ...(isX ? {
+        scrollX: true,
+        scrollY: false,
+      } : {}),
       preventDefaultException: {
         tagName: /^(INPUT|TEXTAREA|BUTTON|SELECT)$/,
         className: /(^|\s).*(MuiTextField-root|MuiSelect-select).*(\s|$)/,
@@ -39,10 +43,15 @@ export const BScroller = ({children, boxHeight}: { children?: any, boxHeight?: a
       <div
           ref={scrollRef}
           className={'box'}>
-        <div>{children}</div>
+        <div
+            style={isX ? {
+              display: 'inline-block',
+            } : {}}
+        >{children}</div>
         <style jsx>{`
           .box {
             height: ${boxHeight || '100vh'};
+            width: ${(isX && boxWidth) ? `${boxWidth}` : 'auto' };
             overflow: hidden;
           }
         `}</style>

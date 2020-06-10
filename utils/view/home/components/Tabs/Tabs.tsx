@@ -7,6 +7,7 @@ import {useStoreModel} from '../../../../ModelAction/useStore'
 import {AppModuleTypeEnum} from '../../../../ss_common/enum'
 import {ls} from '../../../../tools/dealKey'
 import {PromotionFlashSale} from '../PromotionFlashSale/PromotionFlashSale'
+import {ThemeSelection} from '../ThemeSelection/ThemeSelection'
 
 export const homeTabsModel = modelFactory('HomeTabs', {
   appModuleConfig: {} as any,
@@ -39,9 +40,9 @@ export const HomeTabs = () => {
           />
           {[
             [AppModuleTypeEnum.limitTime, '限时选购'],
-            [AppModuleTypeEnum.mayLike, '猜你喜欢'],
             [AppModuleTypeEnum.salesRank, '热销排行'],
             [AppModuleTypeEnum.themeSelection, '主题甄选'],
+            [AppModuleTypeEnum.mayLike, '猜你喜欢'],
           ].filter(v => (homeTabsState?.appModuleConfig?.[v[0]])).map(v => <Tab
               key={`AppModuleTypeEnum_${v[0]}`}
               value={v[0]}
@@ -55,6 +56,8 @@ export const HomeTabs = () => {
           && <CategorySelection/>}
           {router.query.appModule === AppModuleTypeEnum.limitTime
           && <PromotionFlashSale/>}
+          {router.query.appModule === AppModuleTypeEnum.themeSelection
+          && <ThemeSelection/>}
         </main>
         <style jsx>{`
           div :global(.MuiButtonBase-root) {

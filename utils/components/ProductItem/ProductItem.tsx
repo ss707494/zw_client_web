@@ -3,7 +3,7 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 import React, {useEffect} from 'react'
 import {Maybe, Product, ShopCartItemInput} from '../../graphqlTypes/types'
 import {dealImgUrl} from '../../tools/img'
-import {Card, IconButton} from '@material-ui/core'
+import {Button, Card, IconButton} from '@material-ui/core'
 import {dealMoney} from '../../tools/utils'
 import {mpStyle} from '../../style/common'
 import {modelFactory} from '../../ModelAction/modelUtil'
@@ -11,6 +11,9 @@ import {useStoreModel} from '../../ModelAction/useStore'
 import {meModel} from '../../view/me/model'
 import {doc} from '../../graphqlTypes/doc'
 import {showMessage} from '../Message/Message'
+import { ls } from '../../tools/dealKey'
+import {grey} from '@material-ui/core/colors'
+import { shopCartModel } from '../../view/cart'
 
 export const productModel = modelFactory('productModel', {}, {
   updateNumShopCart: async (value: ShopCartItemInput, option) => {
@@ -97,6 +100,87 @@ export const ProductItem = ({product}: { product: Product }) => {
   </Box>
 }
 
+const RowBox = styled.div`
+  display: flex;
+  padding: 8px;
+  box-shadow: ${mpStyle.shadow['1']};
+  border-radius: 8px;
+  margin-bottom: 8px;
+`
+const Img = styled.div`
+  width: 35vw;
+  height: 35vw;
+  margin-right: 8px;
+  > img {
+    width: 35vw;
+    height: 35vw;
+  }
+  
+`
+const LeftBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+`
+const Stock = styled.div`
+  margin-top: 16px;
+  border-radius: 8px;
+  padding: 2px 6px;
+  background: ${grey[800]};
+  color: white;
+  width: max-content;
+`
+const Price = styled.div`
+  margin-top: 16px;
+  flex-grow: 1;
+`
+const Bun = styled.div`
+  &&& {
+    .MuiButtonBase-root {
+      padding: 4px 0;
+    }
+  }
+`
 export const ProductItemOneRow = ({product}: { product: Product }) => {
+  const {state: stateMe, actions: actionsMe} = useStoreModel(meModel)
+  const {actions: actionsPM} = useStoreModel(productModel)
+  const {actions: actionsShopCart} = useStoreModel(shopCartModel)
 
+  useEffect(() => {
+    if (!stateMe.user.id) {
+      actionsMe.getLoginUser()
+    }
+  }, [])
+
+  return <RowBox key={`ProductItemOneRow_${product.id}`}>
+    <Img>
+      <img src={dealImgUrl(product?.img?.[0]?.url)}
+           alt=""/>
+    </Img>
+    <LeftBox>
+      <main>{product.name}{product.weight}{product.unit}</main>
+      <Stock>{ls('当前剩余')}: {product.stock}</Stock>
+      <Price>
+        <ProductPrice product={product}/>
+      </Price>
+      {stateMe.user?.id && <Bun>
+        <Button
+            fullWidth={true}
+            color={'secondary'}
+            variant={'contained'}
+            onClick={async () => {
+              if ((await actionsPM.updateNumShopCart({
+                product,
+              }))?.updateNumShopCart?.id) {
+                showMessage('操作成功')
+                actionsShopCart.getList()
+              }
+            }}
+        >
+          <ShoppingCartIcon/>
+          {ls('加入购物车')}
+        </Button>
+      </Bun>}
+    </LeftBox>
+  </RowBox>
 }

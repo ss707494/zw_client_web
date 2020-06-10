@@ -221,6 +221,7 @@ type Query {
     passwordCode(password: String): String
     payCardListOneUser: [UserPayCard]
     productList(orderByInput: OrderByInput, productInput: ProductItemInput): ProductPage
+    productListByIds(ids: [String]): ProductPage
     productsInCategory(categoryItemInput: CategoryItemInput): [Product]
     promoCodeList(promoCodeItemInput: PromoCodeItemInput): [PromoCode]
     refreshToken(refreshtoken: String!): AuthBody

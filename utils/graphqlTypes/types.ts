@@ -38,6 +38,7 @@ export type Query = {
   userAddress?: Maybe<UserAddress>;
   shopCartList?: Maybe<Array<Maybe<ShopCart>>>;
   productList?: Maybe<ProductPage>;
+  productListByIds?: Maybe<ProductPage>;
 };
 
 
@@ -128,7 +129,13 @@ export type QueryUserAddressArgs = {
 
 
 export type QueryProductListArgs = {
+  orderByInput?: Maybe<OrderByInput>;
   productInput?: Maybe<ProductItemInput>;
+};
+
+
+export type QueryProductListByIdsArgs = {
+  ids?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 export type UserItemInput = {

@@ -481,5 +481,20 @@ export const doc = {
     }
     ${fragment.DataConfigFields}
   `,
+  productListByIds: gql`
+    query ($ids: [String]) {
+        productListByIds (ids: $ids) {
+            total
+            list {
+                ...ProductFields
+                img {
+                    ...ImgFields
+                }
+            }
+        }
+    }
+    ${fragment.ProductFields}
+    ${fragment.ImgFields}
+  `,
 }
 
