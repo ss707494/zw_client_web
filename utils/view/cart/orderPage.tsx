@@ -247,6 +247,8 @@ export const OrderPage = () => {
               if (res?.saveOrder?.id) {
                 showMessage('操作成功')
                 await router.replace('/cart/result')
+                actionsSCM.clearData()
+                actionsSCM.getList()
               }
             }}
             variant={'contained'}

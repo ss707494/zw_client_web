@@ -46,6 +46,12 @@ export const shopCartModel = modelFactory('shopCartModel', {
   initAddressId: (state: any) => (state.form.pickUpType === PickUpTypeEnum.Delivery && state.userAddressList?.find((v: UserAddress) => v.isDefault)?.id) || state.selfAddress?.[0]?.id,
   dealProductTotal: (state: any) => state.shopCartList.reduce((pre: any, cur: any) => pre + (dealMaybeNumber(cur?.number) * dealMaybeNumber(cur?.product?.priceOut)), 0),
 }, {
+  clearData: (value, option) => {
+    option.setData(fpMergePre({
+      form: initForm,
+      pageType: pageTypeEnum.shopCart,
+    }))
+  },
   clearForm: (value, option) => option.setData(fpMergePre({
     form: {
       ...initForm,
