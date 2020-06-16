@@ -94,7 +94,7 @@ export const ThemeSelection = () => {
 
   return <div>
     <Title>{ls('主题甄选')}</Title>
-    {statePromotionFlashSale.themeSelectionData.map(v => <React.Fragment
+    {statePromotionFlashSale.themeSelectionData?.map(v => <React.Fragment
         key={`themeSelectionDataImg${v.id}`}
     >
       <Theme>
@@ -111,7 +111,7 @@ export const ThemeSelection = () => {
           boxHeight={'auto'}
       >
         <ProductList>
-          {statePromotionFlashSale.productListForTheme[v.id].map(v => <ProductItem
+          {statePromotionFlashSale.productListForTheme[v.id]?.map(v => <ProductItem
               key={`statePromotionFlashSaleProductItem_${v.id}`}
               product={v}/>)}
         </ProductList>

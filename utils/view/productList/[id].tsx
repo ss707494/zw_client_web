@@ -11,11 +11,13 @@ import {HeaderTitle} from '../../components/HeaderTitle/HeaderTitle'
 import styled from 'styled-components'
 import {Button} from '@material-ui/core'
 import {ls} from '../../tools/dealKey'
-import {ProductItem} from '../../components/ProductItem/ProductItem'
+import {GroupProductItem, ProductItem} from '../../components/ProductItem/ProductItem'
 import {BScroller} from '../../components/BScroll/BScroller'
 import {SortDrawer} from './SortDrawer'
 import {FilterDrawer} from './FilterDrawer'
 import {ResolverFun} from '../../commonModel/dialog'
+import {HomeType} from '../home/appModule'
+import {homeTabsModel} from '../home/components/Tabs/Tabs'
 
 export const sortTypeEnum = {
   nomalSort: 'nomalSort',
@@ -112,17 +114,21 @@ const HeaderTab = styled.div`
   display: flex;
   justify-content: space-evenly;
 `
-const ListBox = styled.div`
+const ListBox = styled.div<{columns?: number}>`
   padding: 20px;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 15px;
+  grid-template-columns: repeat(${props => props.columns || 2}, 1fr);
+  grid-gap: 16px;
 `
 
 export const ProductList = () => {
   const router = useRouter()
   const id = (router.query?.id as string) ?? ''
   const {actions: actionsPLM, state: statePLM} = useStoreModel(productListModel)
+  const {state: stateHomeTabs, actions: actionsHomeTabs} = useStoreModel(homeTabsModel)
+  useEffect(() => {
+    actionsHomeTabs.setHomeType((router.query.homeType as string) ?? HomeType.home)
+  }, [router.query.homeType])
 
   useEffect(() => {
     if (!!id) {
@@ -161,11 +167,15 @@ export const ProductList = () => {
       </Button>
     </HeaderTab>
     <BScroller boxHeight={'calc(100vh - 100px)'}>
-      <ListBox>
-        {statePLM.productList.map(value => <ProductItem
-            key={`ProductItem_${value.id}`}
+      <ListBox
+          columns={stateHomeTabs.homeType === HomeType.group ? 1 : 2}
+      >
+        {statePLM.productList.map(value => (stateHomeTabs.homeType === HomeType.group && <GroupProductItem
             product={value}
-        />)}
+            key={`ProductItem_${value.id}`}
+        />) || <ProductItem
+            key={`ProductItem_${value.id}`}
+            product={value}/>)}
       </ListBox>
     </BScroller>
     <SortDrawer/>
