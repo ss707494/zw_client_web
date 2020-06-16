@@ -4,13 +4,14 @@ import {KeyboardArrowRight} from '@material-ui/icons'
 import {ButtonBase} from '@material-ui/core'
 import {useStoreModel} from '../../../../ModelAction/useStore'
 import {Category, CategoryListInput} from '../../../../graphqlTypes/types'
-import {fpMergePre} from '../../../../tools/utils'
+import {dealUrlQuery, fpMergePre} from '../../../../tools/utils'
 import {Loading} from '../../../../components/Loading/Loading'
 import {categoryList} from '../../../../graphqlTypes/doc'
 import {dealImgUrl} from '../../../../tools/img'
 import {CategoryRootName} from '../../../../ss_common/enum'
 import {modelFactory} from '../../../../ModelAction/modelUtil'
 import {useRouter} from 'next/router'
+import {homeTabsModel} from '../Tabs/Tabs'
 
 export const homeCategorySelectionModel = modelFactory('HomeCategorySelection', {
   listData: [] as Category[],
@@ -35,6 +36,8 @@ export const homeCategorySelectionModel = modelFactory('HomeCategorySelection', 
 export const CategorySelection = () => {
   const router = useRouter()
   const {state: homeCategorySelectionState, actions: homeCategorySelectionActions, getLoad: hsGetLoad} = useStoreModel(homeCategorySelectionModel)
+  const {state: homeTabsState} = useStoreModel(homeTabsModel)
+  console.log(homeTabsState.homeType)
 
   useEffect(() => {
     homeCategorySelectionActions.getList()
@@ -47,7 +50,7 @@ export const CategorySelection = () => {
             <ButtonBase
                 className={'main'}
                 onClick={() => {
-                  router.push('/category/[id]', `/category/${value.id}`)
+                  router.push(`/category/[id]${dealUrlQuery({homeType: homeTabsState.homeType})}`, `/category/${value.id}${dealUrlQuery({homeType: homeTabsState.homeType})}`)
                 }}
                 key={`homeCategorySelectionState_${value.id}`}
             >

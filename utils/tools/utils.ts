@@ -116,4 +116,8 @@ export default {
   getObjectURL,
 }
 
+export const dealUrlQuery = (queryObj: any) => {
+  return `?${Object.keys(queryObj).map(value => `${value}=${queryObj[value]}`).join('&')}`
+}
+
 

@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 import React, {useEffect} from 'react'
 import {Maybe, Product, ShopCartItemInput} from '../../graphqlTypes/types'
@@ -11,9 +12,10 @@ import {useStoreModel} from '../../ModelAction/useStore'
 import {meModel} from '../../view/me/model'
 import {doc} from '../../graphqlTypes/doc'
 import {showMessage} from '../Message/Message'
-import { ls } from '../../tools/dealKey'
+import {ls} from '../../tools/dealKey'
 import {grey} from '@material-ui/core/colors'
-import { shopCartModel } from '../../view/cart'
+import {shopCartModel} from '../../view/cart'
+import {useRouter} from 'next/router'
 
 export const productModel = modelFactory('productModel', {}, {
   updateNumShopCart: async (value: ShopCartItemInput, option) => {
@@ -184,3 +186,81 @@ export const ProductItemOneRow = ({product}: { product: Product }) => {
     </LeftBox>
   </RowBox>
 }
+
+const GroupBox = styled.div`
+  display: flex;
+`
+const GroupImg = styled.div`
+  width: 35vw;
+  height: 35vw;
+  margin-right: 16px;
+  > img {
+    width: 35vw;
+    height: 35vw;
+    border-radius: 8px;
+  }
+`
+const RightBox = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+const Title = styled.div`
+  font-weight: bold;
+`
+const MarketPrice = styled.div`
+  margin-top: 8px;
+  color: ${grey[700]};
+  > span {
+    text-decoration: line-through;
+  }
+`
+const OutPrice = styled.div`
+  margin-top: 8px;
+  color: ${mpStyle.red};
+  flex-grow: 1;
+`
+const Action = styled.div`
+`
+export const GroupProductItem = ({product}: { product: Product }) => {
+  const {state: stateMe, actions: actionsMe} = useStoreModel(meModel)
+  const router = useRouter()
+
+  useEffect(() => {
+    if (!stateMe.user.id) {
+      actionsMe.getLoginUser()
+    }
+  }, [])
+  console.log(product)
+
+  return <GroupBox key={`GroupBox_${product.id}`}>
+    <GroupImg>
+      <img src={dealImgUrl(product?.img?.[0]?.url)}
+           alt=""/>
+    </GroupImg>
+    <RightBox>
+      <Title>{product.name}({product.groupRemark}/{product.groupAmount}{product.groupAmountUnitString}/{product.groupPrecisionString})</Title>
+      <MarketPrice>
+        {ls('市场价')}
+        <span>{dealMoney(product.priceMarket)}</span>
+      </MarketPrice>
+      <OutPrice>
+        {ls('基准价格')}
+        <span>{dealMoney(product.priceOut)}</span>
+      </OutPrice>
+      <Action>
+        <Button
+            variant={'contained'}
+            color={'secondary'}
+            fullWidth={true}
+            onClick={() => {
+              router.push(`/groupProduct/[id]`, `/groupProduct/${product.id}`)
+            }}
+        >
+          <AddCircleOutlineIcon/>
+          {ls('拼一个')}
+        </Button>
+      </Action>
+    </RightBox>
+  </GroupBox>
+}
+

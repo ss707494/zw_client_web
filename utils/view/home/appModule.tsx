@@ -10,8 +10,14 @@ import {BorderedInputBase} from '../../components/HeaderSearch/HeaderSearch'
 import {FootBar} from '../../components/FootBar/FootBar'
 import {BScroller} from '../../components/BScroll/BScroller'
 import {grey} from '@material-ui/core/colors'
+import {useStoreModel} from '../../ModelAction/useStore'
 
-export const HomeAppModule = function ({
+export const HomeType = {
+  home: 'home',
+  group: 'group',
+}
+
+export const HomeAppModule = (type?: string) => function ({
                                          homeCarouselImgs,
                                          homeCategorySelection_listData,
                                          appModuleConfig,
@@ -22,7 +28,7 @@ export const HomeAppModule = function ({
 }) {
   const router = useRouter()
   useEffect(() => {
-    if (!([AppModuleTypeEnum.limitTime, AppModuleTypeEnum.mayLike, AppModuleTypeEnum.salesRank, AppModuleTypeEnum.themeSelection, AppModuleTypeEnum.categorySelection] as any[]).includes(router.query.appModule)
+    if (!([AppModuleTypeEnum.limitTime, AppModuleTypeEnum.mayLike, AppModuleTypeEnum.salesRank, AppModuleTypeEnum.themeSelection, AppModuleTypeEnum.categorySelection, AppModuleTypeEnum.lineRanking, AppModuleTypeEnum.topRanking] as any[]).includes(router.query.appModule)
     ) {
       router.replace('/home/[appModule]', '/home/categorySelection', {})
     }
@@ -30,10 +36,15 @@ export const HomeAppModule = function ({
 
   initModel(homeTabsModel, {
     appModuleConfig: appModuleConfig?.value,
+    homeType: type ?? HomeType.home,
   })
   initModel(homeCategorySelectionModel, {
     listData: homeCategorySelection_listData,
   })
+  const {actions: actionsHomeTabs} = useStoreModel(homeTabsModel)
+  useEffect(() => {
+    actionsHomeTabs.setHomeType((type) ?? HomeType.home)
+  }, [type])
 
   return (
       <div>
@@ -53,7 +64,7 @@ export const HomeAppModule = function ({
               />
             </div>
             <div>
-              <HomeTabs/>
+              <HomeTabs homeType={type ?? HomeType.home}/>
             </div>
           </div>
           <style jsx>{`

@@ -8,20 +8,28 @@ import {AppModuleTypeEnum} from '../../../../ss_common/enum'
 import {ls} from '../../../../tools/dealKey'
 import {PromotionFlashSale} from '../PromotionFlashSale/PromotionFlashSale'
 import {ThemeSelection} from '../ThemeSelection/ThemeSelection'
+import {HomeType} from '../../appModule'
+import {fpMergePre} from '../../../../tools/utils'
 
 export const homeTabsModel = modelFactory('HomeTabs', {
+  homeType: '',
   appModuleConfig: {} as any,
 }, {
-  onChange: (value, option) => {
+  setHomeType: (value: string, option) => {
+    option.setData(fpMergePre({
+      homeType: value,
+    }))
+  },
+  onChange: ([name, type], option) => {
     // @ts-ignore
-    Router.push(`/home/[appModule]`, `/home/${value}`, {shallow: true})
+    Router.push(`/${type}/[appModule]`, `/${type}/${name}`, {shallow: true})
     // option.setData(fpMergePre({
     //   value,
     // }))
   },
 })
 
-export const HomeTabs = () => {
+export const HomeTabs = ({homeType}: {homeType: string}) => {
   const router = useRouter()
   const {state: homeTabsState, actions: homeTabsActions} = useStoreModel(homeTabsModel)
 
@@ -32,18 +40,21 @@ export const HomeTabs = () => {
         <Tabs
             variant={'fullWidth'}
             value={router.query.appModule}
-            onChange={(event, value) => homeTabsActions.onChange(value)}
+            onChange={(event, value) => homeTabsActions.onChange([value, homeType])}
         >
           <Tab
               value={AppModuleTypeEnum.categorySelection}
-              label={ls('分类选择')}
+              label={ls(homeType === HomeType.group ? '分类拼团' : '分类选择')}
           />
-          {[
+          {((homeType === HomeType.home && [
             [AppModuleTypeEnum.limitTime, '限时选购'],
             [AppModuleTypeEnum.salesRank, '热销排行'],
             [AppModuleTypeEnum.themeSelection, '主题甄选'],
             [AppModuleTypeEnum.mayLike, '猜你喜欢'],
-          ].filter(v => (homeTabsState?.appModuleConfig?.[v[0]])).map(v => <Tab
+          ]) || (homeType === HomeType.group && [
+            [AppModuleTypeEnum.topRanking, '热门排行'],
+            [AppModuleTypeEnum.lineRanking, '冲线排行'],
+          ]) || []).filter(v => (homeTabsState?.appModuleConfig?.[v[0]])).map(v => <Tab
               key={`AppModuleTypeEnum_${v[0]}`}
               value={v[0]}
               label={ls(v[1])}

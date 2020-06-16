@@ -3,11 +3,11 @@ import {serverQuery} from '../../utils/client'
 import {categoryList, getDataConfig, homeCarouselImgs} from '../../utils/graphqlTypes/doc'
 import {CategoryListInput, DataConfigItemInput} from '../../utils/graphqlTypes/types'
 import {AppModuleTypeEnum, CategoryRootName, DictTypeEnum} from '../../utils/ss_common/enum'
-import {HomeAppModule} from '../../utils/view/home/appModule'
+import {HomeAppModule, HomeType} from '../../utils/view/home/appModule'
 
-export default HomeAppModule
+export default HomeAppModule(HomeType.home)
 
-const init = async ({params}: {params: any}) => {
+export const init = async ({params}: {params: any}) => {
   const appModuleConfig = await serverQuery(getDataConfig, {
     data: {
       type: DictTypeEnum.AppModule,

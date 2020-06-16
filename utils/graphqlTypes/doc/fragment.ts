@@ -112,6 +112,10 @@ export const fragment = {
           unit
           updateTime
           weight
+          unitString
+          groupPrecisionString
+          groupAmountUnitString
+          packingUnitString
       }
   `,
   ImgFields: gql`

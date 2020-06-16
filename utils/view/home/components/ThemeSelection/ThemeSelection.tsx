@@ -91,8 +91,6 @@ export const ThemeSelection = () => {
   useEffect(() => {
     actionsPromotionFlashSale.getData()
   }, [])
-  console.log(statePromotionFlashSale.productListForTheme)
-  console.log(statePromotionFlashSale.themeSelectionData)
 
   return <div>
     <Title>{ls('主题甄选')}</Title>

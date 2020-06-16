@@ -1,12 +1,12 @@
-import React from 'react'
-import {FootBar} from '../../utils/components/FootBar/FootBar'
-import { ls } from '../../utils/tools/dealKey'
+import React, {useEffect} from "react"
+import {useRouter} from "next/router"
 
-export default function Group() {
-  return (
-      <div>
-        {ls('网站建设中...')}
-        <FootBar/>
-      </div>
-  )
+const HomeIndex = () => {
+  const router = useRouter()
+  useEffect(() => {
+    router.replace('/group/[appModule]', '/group/categorySelection', {})
+  })
+  return <div/>
 }
+
+export default HomeIndex

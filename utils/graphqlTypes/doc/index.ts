@@ -328,8 +328,8 @@ export const doc = {
       ${fragment.UserAddressFields}
   `,
   productsInCategory: gql`
-      query ($data: CategoryItemInput) {
-          productsInCategory(categoryItemInput: $data) {
+      query ($data: CategoryItemInput, $productItemInput: ProductItemInput) {
+          productsInCategory(categoryItemInput: $data, productItemInput: $productItemInput) {
               ...ProductFields
               img {
                   ...ImgFields

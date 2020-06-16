@@ -27,6 +27,8 @@ export type Query = {
   homeCarouselImgs?: Maybe<DataConfig>;
   getDictTypeList?: Maybe<Array<Maybe<DictTypeFirst>>>;
   getDictList?: Maybe<Array<Maybe<Dict>>>;
+  productList?: Maybe<ProductPage>;
+  productListByIds?: Maybe<ProductPage>;
   categoryList?: Maybe<CategoryPage>;
   oneCategory?: Maybe<Category>;
   productsInCategory?: Maybe<Array<Maybe<Product>>>;
@@ -37,8 +39,6 @@ export type Query = {
   userAddressListOneUser?: Maybe<Array<Maybe<UserAddress>>>;
   userAddress?: Maybe<UserAddress>;
   shopCartList?: Maybe<Array<Maybe<ShopCart>>>;
-  productList?: Maybe<ProductPage>;
-  productListByIds?: Maybe<ProductPage>;
 };
 
 
@@ -93,6 +93,17 @@ export type QueryGetDictListArgs = {
 };
 
 
+export type QueryProductListArgs = {
+  orderByInput?: Maybe<OrderByInput>;
+  productInput?: Maybe<ProductItemInput>;
+};
+
+
+export type QueryProductListByIdsArgs = {
+  ids?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+
 export type QueryCategoryListArgs = {
   data?: Maybe<CategoryListInput>;
 };
@@ -104,6 +115,7 @@ export type QueryOneCategoryArgs = {
 
 
 export type QueryProductsInCategoryArgs = {
+  productItemInput?: Maybe<ProductItemInput>;
   categoryItemInput?: Maybe<CategoryItemInput>;
 };
 
@@ -125,17 +137,6 @@ export type QueryUserPayCardArgs = {
 
 export type QueryUserAddressArgs = {
   userAddress?: Maybe<UserAddressItemInput>;
-};
-
-
-export type QueryProductListArgs = {
-  orderByInput?: Maybe<OrderByInput>;
-  productInput?: Maybe<ProductItemInput>;
-};
-
-
-export type QueryProductListByIdsArgs = {
-  ids?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 export type UserItemInput = {
@@ -261,6 +262,10 @@ export type ProductItemInput = {
   img?: Maybe<Array<Maybe<ProductImgItemInput>>>;
   category?: Maybe<CategoryItemInput>;
   shopCart?: Maybe<Array<Maybe<ShopCartItemInput>>>;
+  unitString?: Maybe<Scalars['String']>;
+  packingUnitString?: Maybe<Scalars['String']>;
+  groupAmountUnitString?: Maybe<Scalars['String']>;
+  groupPrecisionString?: Maybe<Scalars['String']>;
 };
 
 export type ProductImgItemInput = {
@@ -498,6 +503,10 @@ export type Product = {
   img?: Maybe<Array<Maybe<ProductImg>>>;
   category?: Maybe<Category>;
   shopCart?: Maybe<Array<Maybe<ShopCart>>>;
+  unitString?: Maybe<Scalars['String']>;
+  packingUnitString?: Maybe<Scalars['String']>;
+  groupAmountUnitString?: Maybe<Scalars['String']>;
+  groupPrecisionString?: Maybe<Scalars['String']>;
 };
 
 export type ProductImg = {
@@ -674,6 +683,16 @@ export type DictInput = {
   isDisable?: Maybe<Scalars['Float']>;
 };
 
+export type OrderByInput = {
+  orderByObject?: Maybe<Array<Maybe<Array<Maybe<Scalars['String']>>>>>;
+};
+
+export type ProductPage = {
+   __typename?: 'ProductPage';
+  total?: Maybe<Scalars['Float']>;
+  list?: Maybe<Array<Maybe<Product>>>;
+};
+
 export type CategoryListInput = {
   category?: Maybe<CategoryItemInput>;
   pageInput?: Maybe<PageInput>;
@@ -683,10 +702,6 @@ export type CategoryListInput = {
 export type PageInput = {
   rows_per_page?: Maybe<Scalars['Float']>;
   page?: Maybe<Scalars['Float']>;
-};
-
-export type OrderByInput = {
-  orderByObject?: Maybe<Array<Maybe<Array<Maybe<Scalars['String']>>>>>;
 };
 
 export type CategoryPage = {
@@ -738,12 +753,6 @@ export type PromoCode = {
   reuseTimes?: Maybe<Scalars['Float']>;
   code?: Maybe<Scalars['String']>;
   isDisable?: Maybe<Scalars['Float']>;
-};
-
-export type ProductPage = {
-   __typename?: 'ProductPage';
-  total?: Maybe<Scalars['Float']>;
-  list?: Maybe<Array<Maybe<Product>>>;
 };
 
 export type Mutation = {

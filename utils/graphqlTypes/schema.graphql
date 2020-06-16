@@ -140,7 +140,9 @@ type Product {
     createTime: Timestamp
     groupAmount: Float
     groupAmountUnit: String
+    groupAmountUnitString: String
     groupPrecision: Float
+    groupPrecisionString: String
     groupRemark: String
     id: String
     img: [ProductImg]
@@ -152,6 +154,7 @@ type Product {
     name: String
     number: Float
     packingUnit: String
+    packingUnitString: String
     priceIn: Float
     priceMarket: Float
     priceOut: Float
@@ -162,6 +165,7 @@ type Product {
     sort: Float
     stock: Float
     unit: String
+    unitString: String
     updateTime: Timestamp
     weight: Float
 }
@@ -222,7 +226,7 @@ type Query {
     payCardListOneUser: [UserPayCard]
     productList(orderByInput: OrderByInput, productInput: ProductItemInput): ProductPage
     productListByIds(ids: [String]): ProductPage
-    productsInCategory(categoryItemInput: CategoryItemInput): [Product]
+    productsInCategory(categoryItemInput: CategoryItemInput, productItemInput: ProductItemInput): [Product]
     promoCodeList(promoCodeItemInput: PromoCodeItemInput): [PromoCode]
     refreshToken(refreshtoken: String!): AuthBody
     shopCartList: [ShopCart]
@@ -516,7 +520,9 @@ input ProductItemInput {
     createTime: Timestamp
     groupAmount: Float
     groupAmountUnit: String
+    groupAmountUnitString: String
     groupPrecision: Float
+    groupPrecisionString: String
     groupRemark: String
     id: String
     img: [ProductImgItemInput]
@@ -528,6 +534,7 @@ input ProductItemInput {
     name: String
     number: Float
     packingUnit: String
+    packingUnitString: String
     priceIn: Float
     priceMarket: Float
     priceOut: Float
@@ -538,6 +545,7 @@ input ProductItemInput {
     sort: Float
     stock: Float
     unit: String
+    unitString: String
     updateTime: Timestamp
     weight: Float
 }
