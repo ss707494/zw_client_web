@@ -72,6 +72,7 @@ export const ProductPrice = ({product}: { product?: Maybe<Product> }) => {
 }
 
 export const ProductItem = ({product}: { product: Product }) => {
+  const {actions: actionsShopCart} = useStoreModel(shopCartModel)
   const {state: stateMe, actions: actionsMe} = useStoreModel(meModel)
   useEffect(() => {
     if (!stateMe.user.id) {
@@ -93,6 +94,7 @@ export const ProductItem = ({product}: { product: Product }) => {
               product,
             }))?.updateNumShopCart?.id) {
               showMessage('操作成功')
+              actionsShopCart.getList()
             }
           }}
       >

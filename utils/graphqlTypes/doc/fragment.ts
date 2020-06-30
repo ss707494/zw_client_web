@@ -207,4 +207,15 @@ export const fragment = {
         updateTime
     }
   `,
+  GroupQueueFields: gql`
+      fragment GroupQueueFields on GroupQueue {
+          createTime
+          fillAmount
+          id
+          isDelete
+          name
+          productId
+          updateTime
+      }
+  `,
 }

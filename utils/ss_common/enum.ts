@@ -42,7 +42,7 @@ export enum OrderState {
 const _s: {
   [key in number]: string
 } = {
-  1: '代付款',
+  1: '待付款',
   2: '已付款',
   3: '已发货',
   4: '已收货',

@@ -3,7 +3,7 @@ import {HeaderTitle} from '../../../components/HeaderTitle/HeaderTitle'
 import {BScroller} from '../../../components/BScroll/BScroller'
 import styled from 'styled-components'
 import {modelFactory} from '../../../ModelAction/modelUtil'
-import {OrderInfo} from '../../../graphqlTypes/types'
+import {OrderInfo, OrderInfoItemInput} from '../../../graphqlTypes/types'
 import {doc} from '../../../graphqlTypes/doc'
 import {dealMoney, formatDate, fpMergePre} from '../../../tools/utils'
 import {useStoreModel} from '../../../ModelAction/useStore'
@@ -25,6 +25,11 @@ export const orderDetailModel = modelFactory('orderDetail', {
       orderInfo: res?.orderDetail,
       selfAddress: res?.selfAddress?.value?.list || [],
     }))
+  },
+  updateOrder: async (value: OrderInfoItemInput, option) => {
+    return await option.mutate(doc.updateOrder, {
+      orderInfoItemInput: value,
+    })
   },
 })
 

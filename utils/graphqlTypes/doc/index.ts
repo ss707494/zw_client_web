@@ -496,5 +496,21 @@ export const doc = {
     ${fragment.ProductFields}
     ${fragment.ImgFields}
   `,
+  groupQueueList: gql`
+    query ($groupQueueItemInput: GroupQueueItemInput) {
+        groupQueueList (groupQueueItemInput: $groupQueueItemInput) {
+            ...GroupQueueFields
+        }
+    }
+    ${fragment.GroupQueueFields}
+  `,
+  updateOrder: gql`
+    mutation ($orderInfoItemInput: OrderInfoItemInput) {
+        updateOrder (orderInfoItemInput: $orderInfoItemInput) {
+            ...OrderInfoFields
+        }
+    }
+    ${fragment.OrderInfoFields}
+  `,
 }
 

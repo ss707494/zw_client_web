@@ -39,6 +39,7 @@ export type Query = {
   userAddressListOneUser?: Maybe<Array<Maybe<UserAddress>>>;
   userAddress?: Maybe<UserAddress>;
   shopCartList?: Maybe<Array<Maybe<ShopCart>>>;
+  groupQueueList?: Maybe<Array<Maybe<GroupQueue>>>;
 };
 
 
@@ -137,6 +138,11 @@ export type QueryUserPayCardArgs = {
 
 export type QueryUserAddressArgs = {
   userAddress?: Maybe<UserAddressItemInput>;
+};
+
+
+export type QueryGroupQueueListArgs = {
+  groupQueueItemInput?: Maybe<GroupQueueItemInput>;
 };
 
 export type UserItemInput = {
@@ -266,6 +272,7 @@ export type ProductItemInput = {
   packingUnitString?: Maybe<Scalars['String']>;
   groupAmountUnitString?: Maybe<Scalars['String']>;
   groupPrecisionString?: Maybe<Scalars['String']>;
+  groupQueue?: Maybe<Array<Maybe<GroupQueueItemInput>>>;
 };
 
 export type ProductImgItemInput = {
@@ -311,6 +318,17 @@ export type ShopCartItemInput = {
   number?: Maybe<Scalars['Float']>;
   isNext?: Maybe<Scalars['Float']>;
   user?: Maybe<UserItemInput>;
+  product?: Maybe<ProductItemInput>;
+};
+
+export type GroupQueueItemInput = {
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  createTime?: Maybe<Scalars['Timestamp']>;
+  updateTime?: Maybe<Scalars['Timestamp']>;
+  isDelete?: Maybe<Scalars['Float']>;
+  productId?: Maybe<Scalars['String']>;
+  fillAmount?: Maybe<Scalars['Float']>;
   product?: Maybe<ProductItemInput>;
 };
 
@@ -507,6 +525,7 @@ export type Product = {
   packingUnitString?: Maybe<Scalars['String']>;
   groupAmountUnitString?: Maybe<Scalars['String']>;
   groupPrecisionString?: Maybe<Scalars['String']>;
+  groupQueue?: Maybe<Array<Maybe<GroupQueue>>>;
 };
 
 export type ProductImg = {
@@ -555,6 +574,18 @@ export type ShopCart = {
   number?: Maybe<Scalars['Float']>;
   isNext?: Maybe<Scalars['Float']>;
   user?: Maybe<User>;
+  product?: Maybe<Product>;
+};
+
+export type GroupQueue = {
+   __typename?: 'GroupQueue';
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  createTime?: Maybe<Scalars['Timestamp']>;
+  updateTime?: Maybe<Scalars['Timestamp']>;
+  isDelete?: Maybe<Scalars['Float']>;
+  productId?: Maybe<Scalars['String']>;
+  fillAmount?: Maybe<Scalars['Float']>;
   product?: Maybe<Product>;
 };
 

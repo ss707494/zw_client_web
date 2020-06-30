@@ -1,3 +1,4 @@
+const {createProxyMiddleware} = require('http-proxy-middleware')
 const express = require('express')
 const cp = require('child_process')
 const { parse } = require('url')
@@ -27,6 +28,14 @@ const handle = app.getRequestHandler()
 app.prepare()
     .then(() => {
       const server = express()
+
+      server.use(
+          '/pay/process-payment',
+          createProxyMiddleware({
+            target: process.env.server_host,
+            changeOrigin: true,
+          }),
+      )
 
       server.get('*', (req, res) => {
         return handle(req, res)

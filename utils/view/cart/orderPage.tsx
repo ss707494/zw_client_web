@@ -13,7 +13,7 @@ import {Space} from '../../components/Box/Box'
 import {SelectAddress, selectAddressModel} from './components/SelectAddress'
 import {grey} from '@material-ui/core/colors'
 import {SelectCard, selectCardModel} from './components/SelectCard'
-import {dealMaybeNumber, dealMoney} from '../../tools/utils'
+import {dealMaybeNumber, dealMoney, dealUrlQuery} from '../../tools/utils'
 import {mpStyle} from '../../style/common'
 import {ButtonLoad} from '../../components/ButtonLoad/ButtonLoad'
 import {showMessage} from '../../components/Message/Message'
@@ -245,8 +245,10 @@ export const OrderPage = () => {
                 ...submitData,
               })
               if (res?.saveOrder?.id) {
-                showMessage('操作成功')
-                await router.replace('/cart/result')
+                showMessage('操作成功 将前往付款')
+                // await router.replace('/cart/result')
+                const _query = dealUrlQuery({orderId: res?.saveOrder?.id})
+                await router.replace(`/pay${_query}`, `/pay${_query}`)
                 actionsSCM.clearData()
                 actionsSCM.getList()
               }
