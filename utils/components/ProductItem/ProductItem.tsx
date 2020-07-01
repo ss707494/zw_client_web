@@ -16,6 +16,7 @@ import {ls} from '../../tools/dealKey'
 import {grey} from '@material-ui/core/colors'
 import {shopCartModel} from '../../view/cart'
 import {useRouter} from 'next/router'
+import {UpdateShopCart, updateShopCartModel} from './UpdateShopCart'
 
 export const productModel = modelFactory('productModel', {}, {
   updateNumShopCart: async (value: ShopCartItemInput, option) => {
@@ -72,6 +73,7 @@ export const ProductPrice = ({product}: { product?: Maybe<Product> }) => {
 }
 
 export const ProductItem = ({product}: { product: Product }) => {
+  const {actions:actionsUpdateShopCartModel} = useStoreModel(updateShopCartModel)
   const {actions: actionsShopCart} = useStoreModel(shopCartModel)
   const {state: stateMe, actions: actionsMe} = useStoreModel(meModel)
   useEffect(() => {
@@ -90,17 +92,22 @@ export const ProductItem = ({product}: { product: Product }) => {
       <ProductPrice product={product}/>
       {stateMe.user?.id && <IconButton
           onClick={async () => {
-            if ((await actionsPM.updateNumShopCart({
-              product,
-            }))?.updateNumShopCart?.id) {
-              showMessage('操作成功')
-              actionsShopCart.getList()
+            const res = await actionsUpdateShopCartModel.openClick()
+            if (res?.num > 0) {
+              if ((await actionsPM.updateNumShopCart({
+                product,
+                number: ~~res?.num,
+              }))?.updateNumShopCart?.id) {
+                showMessage('操作成功')
+                actionsShopCart.getList()
+              }
             }
           }}
       >
         <ShoppingCartIcon color={'secondary'}/>
       </IconButton>}
     </footer>
+    <UpdateShopCart/>
   </Box>
 }
 
@@ -146,6 +153,7 @@ const Bun = styled.div`
   }
 `
 export const ProductItemOneRow = ({product}: { product: Product }) => {
+  const {actions:actionsUpdateShopCartModel} = useStoreModel(updateShopCartModel)
   const {state: stateMe, actions: actionsMe} = useStoreModel(meModel)
   const {actions: actionsPM} = useStoreModel(productModel)
   const {actions: actionsShopCart} = useStoreModel(shopCartModel)
@@ -173,11 +181,15 @@ export const ProductItemOneRow = ({product}: { product: Product }) => {
             color={'secondary'}
             variant={'contained'}
             onClick={async () => {
-              if ((await actionsPM.updateNumShopCart({
-                product,
-              }))?.updateNumShopCart?.id) {
-                showMessage('操作成功')
-                actionsShopCart.getList()
+              const res = await actionsUpdateShopCartModel.openClick()
+              if (res?.num > 0) {
+                if ((await actionsPM.updateNumShopCart({
+                  product,
+                  number: ~~res?.num,
+                }))?.updateNumShopCart?.id) {
+                  showMessage('操作成功')
+                  actionsShopCart.getList()
+                }
               }
             }}
         >
@@ -186,6 +198,7 @@ export const ProductItemOneRow = ({product}: { product: Product }) => {
         </Button>
       </Bun>}
     </LeftBox>
+    <UpdateShopCart/>
   </RowBox>
 }
 

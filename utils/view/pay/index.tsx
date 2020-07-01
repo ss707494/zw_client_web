@@ -26,7 +26,7 @@ export const Pay = () => {
 
   useEffect(() => {
     // @ts-ignore
-    if (SqPaymentForm && orderInfo.actuallyPaid) {
+    if (window.SqPaymentForm && orderInfo.actuallyPaid) {
       // @ts-ignore
       const paymentForm = new SqPaymentForm({
         // Initialize the payment form elements
@@ -129,7 +129,7 @@ export const Pay = () => {
     <Head>
       <title>pay</title>
       <script type="text/javascript"
-              src="https://js.squareup.com/v2/paymentform">
+              src={process.env.NODE_ENV === 'production' ? 'https://js.squareup.com/v2/paymentform' : 'https://js.squareupsandbox.com/v2/paymentform'}>
       </script>
     </Head>
     <HeaderTitle

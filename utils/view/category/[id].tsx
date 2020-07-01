@@ -3,7 +3,7 @@ import Router, {useRouter} from 'next/router'
 import {useStoreModel} from '../../ModelAction/useStore'
 import {Category, CategoryItemInput, Product, ProductItemInput} from '../../graphqlTypes/types'
 import {KeyboardArrowRight} from '@material-ui/icons'
-import {ButtonBase, LinearProgress} from '@material-ui/core'
+import {Breadcrumbs, ButtonBase, LinearProgress, Link, Typography} from '@material-ui/core'
 import {dealUrlQuery, fpMergePre} from '../../tools/utils'
 import {HeaderTitle} from '../../components/HeaderTitle/HeaderTitle'
 import {doc} from '../../graphqlTypes/doc'
@@ -17,6 +17,7 @@ import {ls} from '../../tools/dealKey'
 import {NoData} from '../../components/NoData/NoData'
 import {homeTabsModel} from '../home/components/Tabs/Tabs'
 import {HomeType} from '../home/appModule'
+import {CategoryRootName} from '../../ss_common/enum'
 
 export const CategoryPageModel = modelFactory('CategoryPage', {
   productList: [] as Product[],
@@ -74,13 +75,19 @@ const CategoryItemStyle = styled(ButtonBase)`
 
 const categoryItemModel = modelFactory('categoryItemModel', {
   test: '',
+  category: {} as Category,
 }, {
   getLevel: async (value: CategoryItemInput, option) => {
     return await option.query(doc.categoryLevel, {
       data: value,
     })
   },
-
+  getCategory: async (value: CategoryItemInput, option) => {
+    const res = await option.query(doc.oneCategory, {data: value})
+    option.setData(fpMergePre({
+      category: res?.oneCategory ?? {},
+    }))
+  },
 })
 
 
@@ -94,7 +101,7 @@ export const CategoryPage = () => {
   const router = useRouter()
   const id = (router.query?.id as string) ?? ''
   const {state: stateCPM, actions: actionsCPM, getLoad} = useStoreModel(CategoryPageModel)
-  const {actions: actionsCI} = useStoreModel(categoryItemModel)
+  const {actions: actionsCI, state: stateCategoryItemModel} = useStoreModel(categoryItemModel)
   const {state: stateHomeTabs, actions: actionsHomeTabs} = useStoreModel(homeTabsModel)
   useEffect(() => {
     actionsHomeTabs.setHomeType((router.query.homeType as string) ?? HomeType.home)
@@ -130,6 +137,7 @@ export const CategoryPage = () => {
           isGroup: router.query.homeType === HomeType.group ? 1 : 0,
         },
       })
+      actionsCI.getCategory({id})
     }
   }, [id])
 
@@ -138,6 +146,21 @@ export const CategoryPage = () => {
         title={''}
     />
     {!!getLoad(doc.productsInCategory) && <LinearProgress/>}
+    <Breadcrumbs
+        style={{margin: '8px 0 0 8px'}}
+        separator="›" aria-label="breadcrumb">
+      {[stateCategoryItemModel.category?.parentCategory?.parentCategory, stateCategoryItemModel.category?.parentCategory].filter(v => !!v?.name && v?.name !== CategoryRootName).map(e => <Link
+          key={`Breadcrumbs${e?.id}`}
+          color="inherit"
+          href="#"
+          onClick={async () => {
+            const _query = dealUrlQuery({homeType: router.query.homeType})
+            await Router.push(`/category/[id]${_query}`, `/category/${e?.id}${_query}`)
+          }}>
+        {e?.name}
+      </Link>)}
+      <Typography color="textPrimary">{stateCategoryItemModel.category.name}</Typography>
+    </Breadcrumbs>
     <BScroller boxHeight={'calc(100vh - 60px)'}>
       <Box>
         {((stateCPM.categoryList.length === 0 && stateCPM.productList.length === 0) && <NoData/>) ||

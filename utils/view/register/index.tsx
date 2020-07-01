@@ -99,11 +99,11 @@ export default function Register() {
           >账号密码登录</Button>
         </>}
         {rState.step === 1 && <>
-          <SigninLabel>{ls('用户名昵称')}</SigninLabel>
-          <SigninInput
-              value={rState.userForm.userInfo?.name}
-              onChange={event => rActions.setUserForm(['userInfo.name', event.target.value])}
-          />
+          {/*<SigninLabel>{ls('用户名昵称')}</SigninLabel>*/}
+          {/*<SigninInput*/}
+          {/*    value={rState.userForm.userInfo?.name}*/}
+          {/*    onChange={event => rActions.setUserForm(['userInfo.name', event.target.value])}*/}
+          {/*/>*/}
           <SigninLabel>{ls('手机号码')}</SigninLabel>
           <SigninInput
               value={rState.userForm.userInfo?.phone}

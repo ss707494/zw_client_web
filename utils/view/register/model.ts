@@ -10,13 +10,13 @@ import { ls } from '../../tools/dealKey'
 export const registerModel = modelFactory('register', {
   step: 0,
   userForm: {
-    name: '1',
-    password: '123',
-    confirmPassword: '123',
+    name: '',
+    password: '',
+    confirmPassword: '',
     userInfo: {
-      name: 'ss',
-      email: 'ss',
-      phone: 'ss',
+      name: '',
+      email: '',
+      phone: '',
     },
   } as User & { confirmPassword?: string },
 }, {
@@ -39,7 +39,7 @@ export const registerModel = modelFactory('register', {
   },
   submit: async (value, option) => {
     const userInfo = option.data.userForm?.userInfo || {}
-    if (!userInfo.name || !userInfo.phone || !userInfo.email) {
+    if (!userInfo.phone || !userInfo.email) {
       showMessage(ls('请填写表单'))
       return
     }
@@ -47,6 +47,10 @@ export const registerModel = modelFactory('register', {
     const res = await option.mutate(doc.registerUser, {
       data: {
         ...params,
+        userInfo: {
+          ...params.userInfo,
+          name: params.name,
+        },
       },
     })
     const registerUser = res?.registerUser as UserInRegister
@@ -54,7 +58,7 @@ export const registerModel = modelFactory('register', {
       showMessage(ls('注册成功,即将登录'))
       setToken(registerUser.token as string)
       setToken(registerUser.refreshtoken as string, 'refreshtoken')
-      await Router.replace(`/home`, ``, {shallow: true})
+      await Router.replace(`/home`, `/home`, {shallow: true})
     }
   },
   goToSignup: (value, option) => {

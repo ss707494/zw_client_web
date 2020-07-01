@@ -359,6 +359,12 @@ export const doc = {
       query ($data: CategoryItemInput) {
           oneCategory(data: $data) {
               ...Category
+              parentCategory {
+                  ...Category
+                  parentCategory {
+                      ...Category
+                  }
+              }
           }
       }
       ${fragment.CategoryFields}
