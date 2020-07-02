@@ -17,6 +17,7 @@ import {grey} from '@material-ui/core/colors'
 export const groupProductModel = modelFactory('groupProductModel', {
   product: {} as Product,
   groupQueneList: [] as GroupQueue[],
+  selectNum: 0,
 }, {
   getData: async (value: string, option) => {
     const res = await option.query(doc.productListByIds, {
@@ -34,7 +35,11 @@ export const groupProductModel = modelFactory('groupProductModel', {
       groupQueneList: groupQueneList?.groupQueueList ?? [],
     }))
   },
-
+  updateSelectNum: (value: number, option) => {
+    option.setData(fpMergePre({
+      selectNum: value === option.data.selectNum ? 0 : value
+    }))
+  },
 })
 
 const PriceRed = styled.div`
@@ -77,6 +82,43 @@ const Name = styled.div`
 
 const YellowStar = () => <StarRoundedIcon fontSize={'small'} style={{color: '#FDD334'}}/>
 
+const Title = styled.header`
+  font-size: 20px;
+`
+const GroupQuene = styled.div`
+  padding: 16px;
+`
+
+const SmartMatch = styled.div`
+  padding: 16px;
+  > section {
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+  }
+  > main {
+  }
+`
+
+const Price = styled.div`
+  margin-top: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  > main {
+    //font-size: 18px;
+    font-weight: bold;
+  }
+  > main, section {
+    > * {
+      text-align: center;
+    }
+  }
+`
+
+const Submit = styled.div`
+`
+
 export const GroupProduct = () => {
   const router = useRouter()
   const id = (router.query?.id as string) ?? ''
@@ -87,7 +129,7 @@ export const GroupProduct = () => {
 
   const product = stateGroupProduct.product
 
-  console.log()
+  console.log(stateGroupProduct.groupQueneList)
   return <div>
     <HeaderTitle
         title={'产品详情'}
@@ -110,12 +152,57 @@ export const GroupProduct = () => {
     <Name>
       <main>{product.name}</main>
       <section>{product.groupRemark}/{product.groupAmount}{product.groupAmountUnitString}<br/>{ls('分团精度')}
-      <span>{[...Array(4)].map((v, i) => i).map(value => <YellowStar key={value} />)}</span>
+      <span>{[...Array(product.groupPrecision)].map((v, i) => i).map(value => <YellowStar key={value} />)}</span>
       </section>
     </Name>
-    <YellowStar/>
-    <StarBorderRoundedIcon />
-    {id}
-    groupProduct
+    <GroupQuene>
+      <Title>{ls('拼团中')}</Title>
+    </GroupQuene>
+    <SmartMatch>
+      <header>
+        <Title>{ls('智能匹配')}</Title>
+      </header>
+      <section>
+        {ls('请点击')}
+        <StarBorderRoundedIcon />
+        {ls('确定您需要的份数')}
+      </section>
+      <main>
+        {[...Array(product.groupPrecision)].map((v, i) => i).map(value => value + 1 > stateGroupProduct.selectNum ? <StarBorderRoundedIcon
+            key={`clickStar${value}`}
+            fontSize={'large'}
+            onClick={() => actionsGroupProduct.updateSelectNum(value + 1)}
+        /> : <StarRoundedIcon
+            key={`clickStar${value}`}
+            style={{color: '#FDD334'}}
+            fontSize={'large'}
+            onClick={() => actionsGroupProduct.updateSelectNum(value + 1)}
+        />)}
+      </main>
+      <Price>
+        <main>
+          <header>{dealMoney((product.priceOut ?? 0) * stateGroupProduct.selectNum)}</header>
+          <footer>{ls('折后价格')}</footer>
+        </main>
+        <div>=</div>
+        <section>
+          <header>{dealMoney((product.priceOut ?? 0) * stateGroupProduct.selectNum)}</header>
+          <footer>{ls('基准价格')}</footer>
+        </section>
+        <div>x</div>
+        <section>
+          <header>1</header>
+          <footer>{ls('份数折扣')}</footer>
+        </section>
+        <div>x</div>
+        <section>
+          <header>1</header>
+          <footer>{ls('成团折上折')}</footer>
+        </section>
+      </Price>
+    </SmartMatch>
+    <Submit>
+      去结算
+    </Submit>
   </div>
 }

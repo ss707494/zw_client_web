@@ -1,21 +1,43 @@
 import React, {useEffect} from 'react'
 import {useRouter} from 'next/router'
-import {AppModuleTypeEnum} from '../../ss_common/enum'
-import {Category, DataConfig} from '../../graphqlTypes/types'
-import {initModel} from '../../ModelAction/modelUtil'
+import {AppModuleTypeEnum, DictTypeEnum} from '../../ss_common/enum'
+import {Category, DataConfig, DataConfigItemInput} from '../../graphqlTypes/types'
+import {modelFactory} from '../../ModelAction/modelUtil'
 import {HomeTabs, homeTabsModel} from './components/Tabs/Tabs'
-import {homeCategorySelectionModel} from './components/CategorySelection/CategorySelection'
 import CusCarousel from '../../components/Swipe/Swipe'
 import {BorderedInputBase} from '../../components/HeaderSearch/HeaderSearch'
 import {FootBar} from '../../components/FootBar/FootBar'
 import {BScroller} from '../../components/BScroll/BScroller'
 import {grey} from '@material-ui/core/colors'
 import {useStoreModel} from '../../ModelAction/useStore'
+import {getDataConfig, homeCarouselImgs} from '../../graphqlTypes/doc'
+import {fpMergePre} from '../../tools/utils'
 
 export const HomeType = {
   home: 'home',
   group: 'group',
 }
+
+export const homeCarouselModel = modelFactory('homeCarouselModel', {
+  homeCarouselImgs: [] as DataConfig,
+}, {
+  getHomeCarousel: async (value, option) => {
+    const res2 = await option.query(getDataConfig, {
+      data: {
+        type: DictTypeEnum.HomeCarousel,
+      } as DataConfigItemInput
+    }, {})
+    const {__typename, ...rest} = res2?.getDataConfig
+    const homeCarouselDataComfig = await option.query(homeCarouselImgs, {
+      data: {
+        ...rest,
+      } as DataConfigItemInput
+    }, {})
+    option.setData(fpMergePre({
+      homeCarouselImgs: homeCarouselDataComfig.homeCarouselImgs,
+    }))
+  },
+})
 
 export const HomeAppModule = (type?: string) => function ({
                                          homeCarouselImgs,
@@ -34,14 +56,12 @@ export const HomeAppModule = (type?: string) => function ({
     }
   })
 
-  initModel(homeTabsModel, {
-    appModuleConfig: appModuleConfig?.value,
-    homeType: type ?? HomeType.home,
-  })
-  initModel(homeCategorySelectionModel, {
-    listData: homeCategorySelection_listData,
-  })
+  const {actions: actionsHomeCarouselModel, state: stateHomeCarouselModel} = useStoreModel(homeCarouselModel)
   const {actions: actionsHomeTabs} = useStoreModel(homeTabsModel)
+  useEffect(() => {
+    actionsHomeCarouselModel.getHomeCarousel()
+    actionsHomeTabs.getData()
+  }, [])
   useEffect(() => {
     actionsHomeTabs.setHomeType((type) ?? HomeType.home)
   }, [type])
@@ -60,7 +80,7 @@ export const HomeAppModule = (type?: string) => function ({
             <div className={'cusCarousel'}>
               <CusCarousel
                   height={'160px'}
-                  dataList={homeCarouselImgs?.value?.list as []}
+                  dataList={stateHomeCarouselModel.homeCarouselImgs?.value?.list as []}
               />
             </div>
             <div>

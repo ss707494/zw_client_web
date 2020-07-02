@@ -37,7 +37,6 @@ export const CategorySelection = () => {
   const router = useRouter()
   const {state: homeCategorySelectionState, actions: homeCategorySelectionActions, getLoad: hsGetLoad} = useStoreModel(homeCategorySelectionModel)
   const {state: homeTabsState} = useStoreModel(homeTabsModel)
-  console.log(homeTabsState.homeType)
 
   useEffect(() => {
     homeCategorySelectionActions.getList()
