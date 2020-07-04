@@ -13,6 +13,8 @@ import styled from 'styled-components'
 import {ls} from '../../tools/dealKey'
 import {mpStyle} from '../../style/common'
 import {grey} from '@material-ui/core/colors'
+import {Button} from '@material-ui/core'
+import {GroupOrderPage, groupOrderPageModel} from './groupOrderPage'
 
 export const groupProductModel = modelFactory('groupProductModel', {
   product: {} as Product,
@@ -90,7 +92,7 @@ const GroupQuene = styled.div`
 `
 
 const SmartMatch = styled.div`
-  padding: 16px;
+  padding: 16px 16px 90px;
   > section {
     margin-top: 8px;
     display: flex;
@@ -117,6 +119,20 @@ const Price = styled.div`
 `
 
 const Submit = styled.div`
+  position: fixed;
+  height: 60px;
+  bottom: 0;
+  width: 100vw;
+  background: white;
+  border-top: 1px solid ${mpStyle.red};
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: ${mpStyle.shadow['1']};
+  > aside {
+    padding-left: 16px;
+    color: ${mpStyle.red};
+  }
 `
 
 export const GroupProduct = () => {
@@ -126,10 +142,10 @@ export const GroupProduct = () => {
   useEffect(() => {
     actionsGroupProduct.getData(id)
   }, [id])
+  const {actions: actionsGroupOrderPageModel} = useStoreModel(groupOrderPageModel)
 
   const product = stateGroupProduct.product
 
-  console.log(stateGroupProduct.groupQueneList)
   return <div>
     <HeaderTitle
         title={'产品详情'}
@@ -202,7 +218,18 @@ export const GroupProduct = () => {
       </Price>
     </SmartMatch>
     <Submit>
-      去结算
+      <aside>{ls('选择了')}{stateGroupProduct.selectNum}{ls('份')}</aside>
+      <Button
+          style={{height: '100%', padding: '0 32px', borderRadius: '0', fontSize: '18px'}}
+          color={'secondary'}
+          variant={'contained'}
+          onClick={() => {
+            actionsGroupOrderPageModel.open()
+          }}
+      >
+        {ls('去结算')}
+      </Button>
     </Submit>
+    <GroupOrderPage/>
   </div>
 }

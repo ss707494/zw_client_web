@@ -68,6 +68,12 @@ export const shopCartModel = modelFactory('shopCartModel', {
   updatePageType: (value: string, option) => option.setData(fpMergePre({
     pageType: value,
   })),
+  updatePayCardList: async (value, option) => {
+    const res = await option.query(doc.orderConfirmInfo)
+    option.setData(fpMergePre({
+      payCardList: res?.payCardListOneUser,
+    }))
+  },
   getOrderInfo: async (value, option) => {
     const res = await option.query(doc.orderConfirmInfo)
     option.setData(fpMergePre({

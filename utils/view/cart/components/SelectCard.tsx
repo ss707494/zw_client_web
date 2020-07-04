@@ -32,12 +32,11 @@ export const SelectCard = () => {
   const {state: stateSelectCard, actions: actionsSelectCard} = useStoreModel(selectCardModel)
   const {state: stateShopCartModel, actions: actionsShopCartModel} = useStoreModel(shopCartModel)
 
-
   return <Dialog
       open={stateSelectCard.open}
       onClose={actionsSelectCard.onClose}
   >
-    <DialogTitle>{ls('选择地址')}</DialogTitle>
+    <DialogTitle>{ls('选择信用卡')}</DialogTitle>
     <DialogContent>
       {stateShopCartModel.payCardList.map(v => <CardBox key={`DialogTitleAddressBox_${v.id}`}>
         <header>{v.name}</header>

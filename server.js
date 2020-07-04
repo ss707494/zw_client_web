@@ -1,20 +1,7 @@
 const {createProxyMiddleware} = require('http-proxy-middleware')
 const express = require('express')
-const cp = require('child_process')
-const { parse } = require('url')
 const next = require('next')
 
-const path = require('path')
-const setEnv = require('dotenv')
-;['.env.local', '.env'].forEach(e => {
-  setEnv.config({
-    path: path.resolve(process.cwd(), e)
-  })
-})
-
-const port = parseInt(process.env.PORT, 10) || 3006
-// console.log('process.env.NODE_ENV')
-// console.log(process.env.img_domain)
 // 判断开发环境和生产环境
 process.env.NODE_ENV = (typeof process.env.NODE_ENV !== 'undefined')
     ? process.env.NODE_ENV.trim()
@@ -27,6 +14,9 @@ const handle = app.getRequestHandler()
 
 app.prepare()
     .then(() => {
+      const port = parseInt(process.env.PORT, 10) || 3006
+// console.log('process.env.NODE_ENV')
+// console.log(process.env.img_domain)
       const server = express()
 
       server.use(
