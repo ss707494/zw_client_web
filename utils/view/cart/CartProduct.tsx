@@ -11,7 +11,7 @@ import {useStoreModel} from '../../ModelAction/useStore'
 import {ls} from '../../tools/dealKey'
 import {shopCartModel} from './index'
 
-const Box = styled.div`
+export const ShopCartProductBox = styled.div`
   margin-bottom: 16px;
   display: grid;
   grid-template-columns: minmax(20px, 72px) 1fr;
@@ -44,7 +44,7 @@ export const CartProduct = ({shopCart}: { shopCart: ShopCart }) => {
   const {actions: actionsPM} = useStoreModel(productModel)
   const product = shopCart.product
 
-  return <Box>
+  return <ShopCartProductBox>
     <img src={dealImgUrl(shopCart.product?.img?.[0]?.url)}
          alt=""/>
     <main>{product?.name}{product?.weight}{product?.unit}</main>
@@ -113,5 +113,5 @@ export const CartProduct = ({shopCart}: { shopCart: ShopCart }) => {
         >{ls('加入购物车')}</Button>
       </>}
     </footer>
-  </Box>
+  </ShopCartProductBox>
 }

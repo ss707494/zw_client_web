@@ -3,7 +3,13 @@ import StarRoundedIcon from '@material-ui/icons/StarRounded'
 import StarBorderRoundedIcon from '@material-ui/icons/StarBorderRounded'
 import {useRouter} from 'next/router'
 import {modelFactory} from '../../ModelAction/modelUtil'
-import {GroupQueue, GroupQueueItemInput, Product} from '../../graphqlTypes/types'
+import {
+  GroupOrderItemInput,
+  GroupQueue,
+  GroupQueueItemInput,
+  OrderInfoItemInput,
+  Product
+} from '../../graphqlTypes/types'
 import {doc} from '../../graphqlTypes/doc'
 import {useStoreModel} from '../../ModelAction/useStore'
 import {dealMoney, fpMergePre} from '../../tools/utils'
@@ -18,14 +24,17 @@ import {GroupOrderPage, groupOrderPageModel} from './groupOrderPage'
 
 export const groupProductModel = modelFactory('groupProductModel', {
   product: {} as Product,
-  groupQueneList: [] as GroupQueue[],
+  groupQueueList: [] as GroupQueue[],
   selectNum: 0,
+  selectQueueId: '',
+  numDiscount: 1,
+  groupDiscount: 1,
 }, {
   getData: async (value: string, option) => {
     const res = await option.query(doc.productListByIds, {
       ids: [value],
     })
-    const groupQueneList = await option.query(doc.groupQueueList, {
+    const groupQueueList = await option.query(doc.groupQueueList, {
       groupQueueItemInput: {
         product: {
           id: value,
@@ -34,13 +43,27 @@ export const groupProductModel = modelFactory('groupProductModel', {
     })
     option.setData(fpMergePre({
       product: res?.productListByIds?.list[0] ?? {},
-      groupQueneList: groupQueneList?.groupQueueList ?? [],
+      groupQueueList: groupQueueList?.groupQueueList ?? [],
     }))
   },
   updateSelectNum: (value: number, option) => {
     option.setData(fpMergePre({
       selectNum: value === option.data.selectNum ? 0 : value
     }))
+  },
+  submit: async ({orderInfoItemInput}: { orderInfoItemInput: OrderInfoItemInput }, option) => {
+    option.mutate(doc.saveGroupOrder, {
+      orderInfoItemInput: {
+          ...orderInfoItemInput,
+      } as OrderInfoItemInput,
+      groupOrderItemInput: {
+        orderGroupAmount: option.data.selectNum,
+      } as GroupOrderItemInput,
+      groupQueueItemInput: {
+        product: option.data.product,
+        ...(option.data.selectQueueId ? {id: option.data.selectQueueId} : {}),
+      } as GroupQueueItemInput,
+    })
   },
 })
 
@@ -82,12 +105,13 @@ const Name = styled.div`
   }
 `
 
-const YellowStar = () => <StarRoundedIcon fontSize={'small'} style={{color: '#FDD334'}}/>
+const YellowStar = () => <StarRoundedIcon fontSize={'small'}
+                                          style={{color: '#FDD334'}}/>
 
 const Title = styled.header`
   font-size: 20px;
 `
-const GroupQuene = styled.div`
+const GroupQueueBox = styled.div`
   padding: 16px;
 `
 
@@ -145,6 +169,10 @@ export const GroupProduct = () => {
   const {actions: actionsGroupOrderPageModel} = useStoreModel(groupOrderPageModel)
 
   const product = stateGroupProduct.product
+  useEffect(() => {
+    actionsGroupProduct.updateSelectNum(2)
+    actionsGroupOrderPageModel.open()
+  }, [])
 
   return <div>
     <HeaderTitle
@@ -168,36 +196,38 @@ export const GroupProduct = () => {
     <Name>
       <main>{product.name}</main>
       <section>{product.groupRemark}/{product.groupAmount}{product.groupAmountUnitString}<br/>{ls('分团精度')}
-      <span>{[...Array(product.groupPrecision)].map((v, i) => i).map(value => <YellowStar key={value} />)}</span>
+        <span>{[...Array(product.groupPrecision)].map((v, i) => i).map(value =>
+            <YellowStar key={value}/>)}</span>
       </section>
     </Name>
-    <GroupQuene>
+    <GroupQueueBox>
       <Title>{ls('拼团中')}</Title>
-    </GroupQuene>
+    </GroupQueueBox>
     <SmartMatch>
       <header>
         <Title>{ls('智能匹配')}</Title>
       </header>
       <section>
         {ls('请点击')}
-        <StarBorderRoundedIcon />
+        <StarBorderRoundedIcon/>
         {ls('确定您需要的份数')}
       </section>
       <main>
-        {[...Array(product.groupPrecision)].map((v, i) => i).map(value => value + 1 > stateGroupProduct.selectNum ? <StarBorderRoundedIcon
-            key={`clickStar${value}`}
-            fontSize={'large'}
-            onClick={() => actionsGroupProduct.updateSelectNum(value + 1)}
-        /> : <StarRoundedIcon
-            key={`clickStar${value}`}
-            style={{color: '#FDD334'}}
-            fontSize={'large'}
-            onClick={() => actionsGroupProduct.updateSelectNum(value + 1)}
-        />)}
+        {[...Array(product.groupPrecision)].map((v, i) => i).map(value => value + 1 > stateGroupProduct.selectNum ?
+            <StarBorderRoundedIcon
+                key={`clickStar${value}`}
+                fontSize={'large'}
+                onClick={() => actionsGroupProduct.updateSelectNum(value + 1)}
+            /> : <StarRoundedIcon
+                key={`clickStar${value}`}
+                style={{color: '#FDD334'}}
+                fontSize={'large'}
+                onClick={() => actionsGroupProduct.updateSelectNum(value + 1)}
+            />)}
       </main>
       <Price>
         <main>
-          <header>{dealMoney((product.priceOut ?? 0) * stateGroupProduct.selectNum)}</header>
+          <header>{dealMoney((product.priceOut ?? 0) * stateGroupProduct.selectNum * stateGroupProduct.numDiscount * stateGroupProduct.groupDiscount)}</header>
           <footer>{ls('折后价格')}</footer>
         </main>
         <div>=</div>
@@ -207,12 +237,12 @@ export const GroupProduct = () => {
         </section>
         <div>x</div>
         <section>
-          <header>1</header>
+          <header>{stateGroupProduct.numDiscount}</header>
           <footer>{ls('份数折扣')}</footer>
         </section>
         <div>x</div>
         <section>
-          <header>1</header>
+          <header>{stateGroupProduct.groupDiscount}</header>
           <footer>{ls('成团折上折')}</footer>
         </section>
       </Price>
@@ -220,6 +250,7 @@ export const GroupProduct = () => {
     <Submit>
       <aside>{ls('选择了')}{stateGroupProduct.selectNum}{ls('份')}</aside>
       <Button
+          disabled={stateGroupProduct.selectNum === 0}
           style={{height: '100%', padding: '0 32px', borderRadius: '0', fontSize: '18px'}}
           color={'secondary'}
           variant={'contained'}

@@ -518,5 +518,13 @@ export const doc = {
     }
     ${fragment.OrderInfoFields}
   `,
+  saveGroupOrder: gql`
+    mutation ($orderInfoItemInput: OrderInfoItemInput, $groupOrderItemInput: GroupOrderItemInput, $groupQueueItemInput: GroupQueueItemInput) {
+        saveGroupOrder (orderInfoItemInput: $orderInfoItemInput, groupOrderItemInput: $groupOrderItemInput, groupQueueItemInput: $groupQueueItemInput) {
+            ...OrderInfoFields
+        }
+    }
+    ${fragment.OrderInfoFields}
+  `,
 }
 

@@ -19,7 +19,7 @@ import {ButtonLoad} from '../../components/ButtonLoad/ButtonLoad'
 import {showMessage} from '../../components/Message/Message'
 import {useRouter} from 'next/router'
 
-const Title = styled.div`
+export const ShopTitle = styled.div`
   font-size: 18px;
   font-weight: bold;
   display: flex;
@@ -29,7 +29,7 @@ const Title = styled.div`
     color: ${mpStyle.red};
   }
 `
-const AddressBox = styled.div`
+export const AddressBox = styled.div`
   padding: 20px;
   display: flex;
   align-items: center;
@@ -42,7 +42,7 @@ const AddressBox = styled.div`
     }
   }
 `
-const CardBox = styled.div`
+export const CardBox = styled.div`
   padding: 16px 20px;
   display: grid;
   grid-template-columns: 1fr min-content;
@@ -56,7 +56,7 @@ const CardBox = styled.div`
     grid-area: 1/2/3/3;
   }
 `
-const Total = styled.div`
+export const ShopTotal = styled.div`
   padding: 0 20px;
   display: flex;
   justify-content: space-between;
@@ -122,10 +122,10 @@ export const OrderPage = () => {
         boxHeight={'calc(100vh - 65px)'}
     >
       <Space h={10}/>
-      <Title>
+      <ShopTitle>
         <Space w={20}/>
         {ls((stateSCM.form.pickUpType === PickUpTypeEnum.Self && '自取地址') || '送货地址')}
-      </Title>
+      </ShopTitle>
       <AddressBox>
         <main>
           <header>
@@ -151,10 +151,10 @@ export const OrderPage = () => {
       <Space c={grey[200]}
              h={16}/>
       <Space h={16}/>
-      <Title>
+      <ShopTitle>
         <Space w={20}/>
         {ls('付款方式')}
-      </Title>
+      </ShopTitle>
       <CardBox>
         <header>{cardData.name}</header>
         <footer>{cardData.number}</footer>
@@ -174,12 +174,12 @@ export const OrderPage = () => {
       <Space c={grey[200]}
              h={16}/>
       <Space h={16}/>
-      <Title>
+      <ShopTitle>
         <Space w={20}/>
         {ls('使用达人币')}
         <Space w={16}/>
         <footer>{ls('当月可用余额')}{dealMoney(stateSCM.user.orderCoinCurrentMonth)}</footer>
-      </Title>
+      </ShopTitle>
       <div>
         <Space w={20}/>
         <TextField
@@ -194,28 +194,28 @@ export const OrderPage = () => {
       <Space c={grey[200]}
              h={16}/>
       <Space h={16}/>
-      <Total>
+      <ShopTotal>
         <header>{ls('购物车总计')}</header>
         <footer>{dealMoney(productTotal)}</footer>
-      </Total>
-      {transportationCosts > 0 && <Total>
+      </ShopTotal>
+      {transportationCosts > 0 && <ShopTotal>
         <header>{ls('运费')}</header>
         <footer>{dealMoney(transportationCosts)}</footer>
-      </Total>}
-      <Total>
+      </ShopTotal>}
+      <ShopTotal>
         <header>{ls('达人币抵扣')}</header>
         <footer>{dealMoney(stateSCM.form.deductCoin, '-')}</footer>
-      </Total>
-      <Total>
+      </ShopTotal>
+      <ShopTotal>
         <header>{ls('消费税')}</header>
         <footer>{dealMoney(stateSCM.form.saleTax)}</footer>
-      </Total>
-      <Total
+      </ShopTotal>
+      <ShopTotal
           style={{fontSize: '18px'}}
       >
         <header>{ls('订单总额')}</header>
         <footer>{dealMoney(actuallyPaid)}</footer>
-      </Total>
+      </ShopTotal>
     </BScroller>
     <FooterFit>
       <header>{ls('本次订单')}
