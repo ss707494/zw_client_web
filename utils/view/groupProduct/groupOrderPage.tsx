@@ -7,7 +7,7 @@ import {groupProductModel} from './[id]'
 import {ShopCartProductBox} from "../cart/CartProduct"
 import {dealImgUrl} from "../../tools/img"
 import {ProductPrice} from "../../components/ProductItem/ProductItem"
-import {IconButton, MenuItem, TextField} from "@material-ui/core"
+import {Button, IconButton, MenuItem, TextField} from "@material-ui/core"
 import {ls} from "../../tools/dealKey"
 import {Space} from "../../components/Box/Box"
 import {getPickUpTypeName, PickUpTypeEnum} from "../../ss_common/enum"
@@ -182,6 +182,13 @@ export const GroupOrderPage = () => {
     </ShopTotal>
     <Space h={60}/>
     <footer>
+      <Button
+          style={{marginRight: '8px'}}
+          variant={'contained'}
+          onClick={() => {
+            actionsOrderPageModel.close()
+          }}
+      >{ls('取消')}</Button>
       <ButtonLoad
           variant={'contained'}
           color={'secondary'}
