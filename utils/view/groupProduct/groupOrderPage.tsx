@@ -29,6 +29,11 @@ export const groupOrderPageModel = modelFactory('orderPageModel', {
       show: true,
     }))
   },
+  close: (value, option) => {
+    option.setData(fpMergePre({
+      show: false,
+    }))
+  },
 })
 
 const OrderPageBox = styled.div`
@@ -50,7 +55,7 @@ const OrderPageBox = styled.div`
 
 export const GroupOrderPage = () => {
   const router = useRouter()
-  const {state: stateOrderPageModel} = useStoreModel(groupOrderPageModel)
+  const {state: stateOrderPageModel, actions: actionsOrderPageModel} = useStoreModel(groupOrderPageModel)
   const {actions: actionsGroupProduct, state: stateGroupProduct} = useStoreModel(groupProductModel)
   const product = stateGroupProduct.product
   const {state: stateSCM, actions: actionsSCM} = useStoreModel(shopCartModel)
@@ -203,6 +208,7 @@ export const GroupOrderPage = () => {
               await router.replace(`/pay${_query}`, `/pay${_query}`)
               actionsSCM.clearData()
               actionsSCM.getList()
+              actionsOrderPageModel.close()
             }
           }}
       >{ls('提交订单')}</ButtonLoad>
