@@ -22,7 +22,7 @@ export const orderDetailModel = modelFactory('orderDetail', {
   getDetail: async (value: string, option) => {
     const res = await option.query(doc.orderDetail, {id: value})
     option.setData(fpMergePre({
-      orderInfo: res?.orderDetail,
+      orderInfo: res?.orderDetail || {},
       selfAddress: res?.selfAddress?.value?.list || [],
     }))
   },

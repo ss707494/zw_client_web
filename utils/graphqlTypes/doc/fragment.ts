@@ -216,6 +216,20 @@ export const fragment = {
           name
           productId
           updateTime
+          sumFillAmount
+      }
+  `,
+  GroupOrderFields: gql`
+      fragment GroupOrderFields on GroupOrder {
+          createTime
+          groupQueueId
+          id
+          isDelete
+          name
+          orderGroupAmount
+          orderId
+          updateTime
+          userId
       }
   `,
 }

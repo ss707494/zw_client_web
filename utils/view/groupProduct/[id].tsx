@@ -8,7 +8,7 @@ import {
   GroupQueue,
   GroupQueueItemInput,
   OrderInfoItemInput,
-  Product
+  Product,
 } from '../../graphqlTypes/types'
 import {doc} from '../../graphqlTypes/doc'
 import {useStoreModel} from '../../ModelAction/useStore'
@@ -43,16 +43,20 @@ export const groupProductModel = modelFactory('groupProductModel', {
     })
     option.setData(fpMergePre({
       product: res?.productListByIds?.list[0] ?? {},
-      groupQueueList: groupQueueList?.groupQueueList ?? [],
+      groupQueueList: groupQueueList?.groupQueueList?.sort((a: GroupQueue, b: GroupQueue) => (a.sumFillAmount ?? 0) - (b.sumFillAmount ?? 0)) ?? [],
     }))
   },
   updateSelectNum: (value: number, option) => {
-    option.setData(fpMergePre({
-      selectNum: value === option.data.selectNum ? 0 : value
+    option.setData(fpMergePre(value === option.data.selectNum ? {
+      selectNum: 0,
+      selectQueueId: '',
+    } : {
+      selectNum: value,
+      selectQueueId: [...option.data.groupQueueList].reverse()?.find(v => (v.sumFillAmount ?? 0) + value <= (option.data?.product?.groupPrecision ?? 0))?.id ?? '',
     }))
   },
   submit: async ({orderInfoItemInput}: { orderInfoItemInput: OrderInfoItemInput }, option) => {
-    option.mutate(doc.saveGroupOrder, {
+    return await option.mutate(doc.saveGroupOrder, {
       orderInfoItemInput: {
           ...orderInfoItemInput,
       } as OrderInfoItemInput,
@@ -158,6 +162,17 @@ const Submit = styled.div`
     color: ${mpStyle.red};
   }
 `
+const GroupQueueListBox = styled.div<{select: boolean}>`
+  margin-top: 16px;
+  border-radius: 8px;
+  background: ${prop => prop.select
+    ? `linear-gradient(to right, ${mpStyle.red}, #FC7361)` 
+    : grey['200']};
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 8px;
+`
 
 export const GroupProduct = () => {
   const router = useRouter()
@@ -169,11 +184,12 @@ export const GroupProduct = () => {
   const {actions: actionsGroupOrderPageModel} = useStoreModel(groupOrderPageModel)
 
   const product = stateGroupProduct.product
-  useEffect(() => {
-    actionsGroupProduct.updateSelectNum(2)
-    actionsGroupOrderPageModel.open()
-  }, [])
+  // useEffect(() => {
+  //   actionsGroupProduct.updateSelectNum(2)
+  //   actionsGroupOrderPageModel.open()
+  // }, [])
 
+  console.log(stateGroupProduct.groupQueueList)
   return <div>
     <HeaderTitle
         title={'产品详情'}
@@ -190,8 +206,8 @@ export const GroupProduct = () => {
         {ls('基准价格')}
         <span>{dealMoney(product.priceOut)}/{product.packingUnitString}</span>
       </main>
-      <aside>{ls('已成团')}{23}{ls('单')}</aside>
-      <aside>{ls('拼团中')}{2}{ls('单')}</aside>
+      <aside>{ls('已成团')}{stateGroupProduct.groupQueueList.filter(v => v.sumFillAmount === product?.groupPrecision).length}{ls('单')}</aside>
+      <aside>{ls('拼团中')}{stateGroupProduct.groupQueueList.filter(v => (v.sumFillAmount ?? 0) < (product?.groupPrecision ?? 0)).length}{ls('单')}</aside>
     </PriceRed>
     <Name>
       <main>{product.name}</main>
@@ -202,6 +218,29 @@ export const GroupProduct = () => {
     </Name>
     <GroupQueueBox>
       <Title>{ls('拼团中')}</Title>
+      {stateGroupProduct.groupQueueList.map(groupQueue => {
+        const select = groupQueue.id === stateGroupProduct.selectQueueId
+        return <GroupQueueListBox
+            select={select}
+            key={`GroupQueueListBox${groupQueue.id}`}
+        >
+          <aside>
+            {[...Array(product.groupPrecision)].map((v, i) => i).map(value => value + 1 > ((groupQueue.sumFillAmount ?? 0) + (select ? stateGroupProduct.selectNum : 0)) ?
+                <StarBorderRoundedIcon
+                    key={`clickStar${value}`}
+                    fontSize={'large'}
+                    onClick={() => actionsGroupProduct.updateSelectNum(value + 1)}
+                    style={{color: select ? '#fff' : '#000'}}
+                /> : <StarRoundedIcon
+                    key={`clickStar${value}`}
+                    style={{color: '#FDD334'}}
+                    fontSize={'large'}
+                    onClick={() => actionsGroupProduct.updateSelectNum(value + 1)}
+                />)}
+          </aside>
+          <footer>{ls((groupQueue.sumFillAmount ?? 0) + (select ? stateGroupProduct.selectNum : 0) === product.groupPrecision ? '成团啦' : '未成团')}</footer>
+        </GroupQueueListBox>
+      })}
     </GroupQueueBox>
     <SmartMatch>
       <header>

@@ -2,22 +2,24 @@ import React, {useEffect} from 'react'
 import {modelFactory} from '../../ModelAction/modelUtil'
 import styled from 'styled-components'
 import {useStoreModel} from '../../ModelAction/useStore'
-import {dealMaybeNumber, dealMoney, fpMerge, fpMergePre} from '../../tools/utils'
+import {dealMaybeNumber, dealMoney, dealUrlQuery, fpMerge, fpMergePre} from '../../tools/utils'
 import {groupProductModel} from './[id]'
-import {ShopCartProductBox} from "../cart/CartProduct";
-import {dealImgUrl} from "../../tools/img";
-import {ProductPrice} from "../../components/ProductItem/ProductItem";
-import {IconButton, MenuItem, TextField} from "@material-ui/core";
-import {ls} from "../../tools/dealKey";
-import {Space} from "../../components/Box/Box";
-import {getPickUpTypeName, PickUpTypeEnum} from "../../ss_common/enum";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import {AddressBox, CardBox, ShopTitle, ShopTotal} from "../cart/orderPage";
-import {shopCartModel} from "../cart";
-import {SelectAddress, selectAddressModel} from "../cart/components/SelectAddress";
-import {SelectCard, selectCardModel} from "../cart/components/SelectCard";
-import {ButtonLoad} from "../../components/ButtonLoad/ButtonLoad";
-import {mpStyle} from "../../style/common";
+import {ShopCartProductBox} from "../cart/CartProduct"
+import {dealImgUrl} from "../../tools/img"
+import {ProductPrice} from "../../components/ProductItem/ProductItem"
+import {IconButton, MenuItem, TextField} from "@material-ui/core"
+import {ls} from "../../tools/dealKey"
+import {Space} from "../../components/Box/Box"
+import {getPickUpTypeName, PickUpTypeEnum} from "../../ss_common/enum"
+import ChevronRightIcon from "@material-ui/icons/ChevronRight"
+import {AddressBox, CardBox, ShopTitle, ShopTotal} from "../cart/orderPage"
+import {shopCartModel} from "../cart"
+import {SelectAddress, selectAddressModel} from "../cart/components/SelectAddress"
+import {SelectCard, selectCardModel} from "../cart/components/SelectCard"
+import {ButtonLoad} from "../../components/ButtonLoad/ButtonLoad"
+import {mpStyle} from "../../style/common"
+import {showMessage} from '../../components/Message/Message'
+import {useRouter} from 'next/router'
 
 export const groupOrderPageModel = modelFactory('orderPageModel', {
   show: false,
@@ -47,6 +49,7 @@ const OrderPageBox = styled.div`
 `
 
 export const GroupOrderPage = () => {
+  const router = useRouter()
   const {state: stateOrderPageModel} = useStoreModel(groupOrderPageModel)
   const {actions: actionsGroupProduct, state: stateGroupProduct} = useStoreModel(groupProductModel)
   const product = stateGroupProduct.product
@@ -177,9 +180,10 @@ export const GroupOrderPage = () => {
       <ButtonLoad
           variant={'contained'}
           color={'secondary'}
-          onClick={() => {
-            actionsGroupProduct.submit({
+          onClick={async () => {
+            const res = await actionsGroupProduct.submit({
               orderInfoItemInput: {
+                ...stateSCM.form,
                 generateCoin,
                 actuallyPaid,
                 transportationCosts,
@@ -192,6 +196,14 @@ export const GroupOrderPage = () => {
                 }],
               }
             })
+            if (res?.saveGroupOrder?.id) {
+              showMessage('操作成功 将前往付款')
+              // await router.replace('/cart/result')
+              const _query = dealUrlQuery({orderId: res?.saveGroupOrder?.id})
+              await router.replace(`/pay${_query}`, `/pay${_query}`)
+              actionsSCM.clearData()
+              actionsSCM.getList()
+            }
           }}
       >{ls('提交订单')}</ButtonLoad>
     </footer>

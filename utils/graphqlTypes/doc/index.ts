@@ -506,9 +506,17 @@ export const doc = {
     query ($groupQueueItemInput: GroupQueueItemInput) {
         groupQueueList (groupQueueItemInput: $groupQueueItemInput) {
             ...GroupQueueFields
+            product {
+                ...ProductFields
+            }
+            groupOrder {
+                ...GroupOrderFields
+            }
         }
     }
     ${fragment.GroupQueueFields}
+    ${fragment.ProductFields}
+    ${fragment.GroupOrderFields}
   `,
   updateOrder: gql`
     mutation ($orderInfoItemInput: OrderInfoItemInput) {

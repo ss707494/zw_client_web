@@ -16,7 +16,7 @@ export const Pay = () => {
   const orderId = (router.query?.orderId as string) ?? ''
 
   const {state: stateOD, actions: actionsOD} = useStoreModel(orderDetailModel)
-  const orderInfo = stateOD.orderInfo
+  const orderInfo = stateOD.orderInfo || {}
 
   useEffect(() => {
     if (orderId) {
@@ -140,6 +140,7 @@ export const Pay = () => {
         }}
     />
     <div id="form-container">
+      {!orderInfo.actuallyPaid && '未找到订单信息'}
       <div id="sq-card-number"/>
       <div className="third"
            id="sq-expiration-date"/>

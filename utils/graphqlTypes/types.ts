@@ -332,7 +332,8 @@ export type GroupQueueItemInput = {
   productId?: Maybe<Scalars['String']>;
   fillAmount?: Maybe<Scalars['Float']>;
   product?: Maybe<ProductItemInput>;
-  groupOrder?: Maybe<GroupOrderItemInput>;
+  groupOrder?: Maybe<Array<Maybe<GroupOrderItemInput>>>;
+  sumFillAmount?: Maybe<Scalars['Float']>;
 };
 
 export type GroupOrderItemInput = {
@@ -607,7 +608,8 @@ export type GroupQueue = {
   productId?: Maybe<Scalars['String']>;
   fillAmount?: Maybe<Scalars['Float']>;
   product?: Maybe<Product>;
-  groupOrder?: Maybe<GroupOrder>;
+  groupOrder?: Maybe<Array<Maybe<GroupOrder>>>;
+  sumFillAmount?: Maybe<Scalars['Float']>;
 };
 
 export type GroupOrder = {
