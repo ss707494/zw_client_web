@@ -55,6 +55,14 @@ export const groupProductModel = modelFactory('groupProductModel', {
       selectQueueId: [...option.data.groupQueueList].reverse()?.find(v => (v.sumFillAmount ?? 0) + value <= (option.data?.product?.groupPrecision ?? 0))?.id ?? '',
     }))
   },
+  clearData: (value, option) => {
+    option.setData(fpMergePre({
+      selectNum: 0,
+      selectQueueId: '',
+      numDiscount: 1,
+      groupDiscount: 1,
+    }))
+  },
   submit: async ({orderInfoItemInput}: { orderInfoItemInput: OrderInfoItemInput }, option) => {
     return await option.mutate(doc.saveGroupOrder, {
       orderInfoItemInput: {

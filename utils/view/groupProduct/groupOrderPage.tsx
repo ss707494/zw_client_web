@@ -215,6 +215,7 @@ export const GroupOrderPage = () => {
               await router.replace(`/pay${_query}`, `/pay${_query}`)
               actionsSCM.clearData()
               actionsSCM.getList()
+              actionsGroupProduct.clearData()
               actionsOrderPageModel.close()
             }
           }}
