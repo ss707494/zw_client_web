@@ -6,6 +6,9 @@ function callback (code, stdout, stderr) {
   console.log('Program stderr:', stderr)
 }
 
+shelljs.rm('-rf', '.next')
+shelljs.rm('-rf', '../zw_server_api/client_build/.next')
+
 shelljs.exec('npm run build')
 
 shelljs.cp("-Rf", ".next", '../zw_server_api/client_build');

@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "node server.js",
     "build": "next build",
+    "export": "next export",
     "buildCopy": "node ./scripts/startPro.js",
     "start": "next dev",
     "graphql-codegen": "graphql-codegen",
