@@ -4,13 +4,14 @@ import StarBorderRoundedIcon from '@material-ui/icons/StarBorderRounded'
 import {useRouter} from 'next/router'
 import {modelFactory} from '../../ModelAction/modelUtil'
 import {
+  DataConfigItemInput,
   GroupOrderItemInput,
   GroupQueue,
   GroupQueueItemInput,
   OrderInfoItemInput,
   Product,
 } from '../../graphqlTypes/types'
-import {doc} from '../../graphqlTypes/doc'
+import {doc, getDataConfig} from '../../graphqlTypes/doc'
 import {useStoreModel} from '../../ModelAction/useStore'
 import {dealMoney, fpMergePre} from '../../tools/utils'
 import CusCarousel from '../../components/Swipe/Swipe'
@@ -21,6 +22,7 @@ import {mpStyle} from '../../style/common'
 import {grey} from '@material-ui/core/colors'
 import {Button} from '@material-ui/core'
 import {GroupOrderPage, groupOrderPageModel} from './groupOrderPage'
+import {DictTypeEnum} from '../../ss_common/enum'
 
 export const groupProductModel = modelFactory('groupProductModel', {
   product: {} as Product,
@@ -29,6 +31,7 @@ export const groupProductModel = modelFactory('groupProductModel', {
   selectQueueId: '',
   numDiscount: 1,
   groupDiscount: 1,
+  groupDiscountConfig: {} as any,
 }, {
   getData: async (value: string, option) => {
     const res = await option.query(doc.productListByIds, {
@@ -41,18 +44,30 @@ export const groupProductModel = modelFactory('groupProductModel', {
         },
       } as GroupQueueItemInput,
     })
+    const res2 = await option.query(getDataConfig, {
+      data: {
+        type: DictTypeEnum.GroupPrecision,
+      } as DataConfigItemInput
+    }, {})
+
     option.setData(fpMergePre({
       product: res?.productListByIds?.list[0] ?? {},
       groupQueueList: groupQueueList?.groupQueueList?.sort((a: GroupQueue, b: GroupQueue) => (a.sumFillAmount ?? 0) - (b.sumFillAmount ?? 0)) ?? [],
+      groupDiscountConfig: res2?.getDataConfig?.value,
     }))
   },
   updateSelectNum: (value: number, option) => {
-    option.setData(fpMergePre(value === option.data.selectNum ? {
-      selectNum: 0,
-      selectQueueId: '',
-    } : {
-      selectNum: value,
-      selectQueueId: [...option.data.groupQueueList].reverse()?.find(v => (v.sumFillAmount ?? 0) + value <= (option.data?.product?.groupPrecision ?? 0))?.id ?? '',
+    const groupDiscountConfig = option.data.groupDiscountConfig
+    const selectNum = value === option.data.selectNum ? 0 : value
+    const selectQueueId = value === option.data.selectNum ? '' : [...option.data.groupQueueList].reverse()?.find(v => (v.sumFillAmount ?? 0) + value <= (option.data?.product?.groupPrecision ?? 0))?.id ?? ''
+    console.log(groupDiscountConfig)
+    console.log(option.data.product.groupPrecision)
+
+    option.setData(fpMergePre({
+      selectNum,
+      selectQueueId,
+      groupDiscount: (option.data.groupQueueList.find(value1 => value1.id === selectQueueId)?.sumFillAmount ?? 0) + selectNum === option.data.product.groupPrecision ? groupDiscountConfig.groupDiscount : 1,
+      numDiscount: groupDiscountConfig?.[(option.data.product.groupPrecision ?? 0)]?.discount?.[selectNum] ?? 1,
     }))
   },
   clearData: (value, option) => {
@@ -197,7 +212,6 @@ export const GroupProduct = () => {
   //   actionsGroupOrderPageModel.open()
   // }, [])
 
-  console.log(stateGroupProduct.groupQueueList)
   return <div>
     <HeaderTitle
         title={'产品详情'}

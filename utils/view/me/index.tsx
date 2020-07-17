@@ -16,9 +16,9 @@ import {FootBar} from '../../components/FootBar/FootBar'
 import MonetizationOn from '@material-ui/icons/MonetizationOn'
 import PaymentIcon from '@material-ui/icons/Payment'
 import {BScroller} from '../../components/BScroll/BScroller'
-import {RegisterHeader} from '../../components/RegisterHeader/RegisterHeader'
 import {useRouter} from 'next/router'
 import {showMessage} from '../../components/Message/Message'
+import {dealNoAuth} from '../../components/NoAuth/NoAuth'
 
 const BasePadding = styled.div`
   padding: 0 20px;
@@ -110,143 +110,130 @@ export default function Me() {
     }
   }, [])
   return <Box>
-    {!stateMe.user.id
-        ? <Empty>
-          <RegisterHeader/>
-          <main>
-            <span>{ls('您未登录,请先登录')}</span>
-            <Button
-                fullWidth
-                variant={'contained'}
-                color={'secondary'}
-                onClick={actionsMe.toLogin}
-            >{ls('登录')}</Button>
-          </main>
-        </Empty>
-        : <BScroller>
-          <Header>
-            <header>{ls('您好,')}{stateMe.user.userInfo?.name}</header>
-            <section>{stateMe.user.userInfo?.phone}</section>
-            <section>{stateMe.user.userInfo?.email}</section>
-            <aside>
-              <Button
-                  color={'inherit'}
-                  variant={'outlined'}
-                  onClick={() => actionsMe.logout()}
-              >{ls('登出')}</Button>
-            </aside>
-          </Header>
-          <Tab>
-            <Card>
-              <MonetizationOn/>
-              <main>{stateMe.user.orderCoinCurrentMonth ?? 0}</main>
-              <footer>{ls('当前达人币')}</footer>
-            </Card>
-            <Parting/>
-            <Card>
-              <MonetizationOn/>
-              <main>{stateMe.user.orderCoinNextMonth ?? 0}</main>
-              <footer>{ls('当前达人币')}</footer>
-            </Card>
-            <Parting/>
-            <Card>
-              <PaymentIcon/>
-              <main>1021</main>
-              <footer>{ls('达人卡')}</footer>
-            </Card>
-          </Tab>
-          <ListItem
-              onClick={() => {
-                router.push('/me/orderHistory')
-              }}
-          >
-            <HistoryIcon/>
-            <main>
-              <section>{ls('我的订单历史')}</section>
-            </main>
-            <aside>
-              <ArrowForwardIosIcon/>
-            </aside>
-          </ListItem>
-          {/*<ListItem*/}
-          {/*    onClick={() => {showMessage('网站建设中...')}}*/}
-          {/*>*/}
-          {/*  <UpdateIcon/>*/}
-          {/*  <main>*/}
-          {/*    <section>{ls('下次买清单')}</section>*/}
-          {/*    <footer>{ls('')}</footer>*/}
-          {/*  </main>*/}
-          {/*  <aside>*/}
-          {/*    <ArrowForwardIosIcon/>*/}
-          {/*  </aside>*/}
-          {/*</ListItem>*/}
-          <ListItem
-              onClick={() => {
-                router.push('/me/myInfo')
-              }}
-          >
-            <CardMembershipIcon/>
-            <main>
-              <section>{ls('我的达人证')}</section>
-            </main>
-            <aside>
-              <ArrowForwardIosIcon/>
-            </aside>
-          </ListItem>
-          <ListItem
-              onClick={() => {
-                router.push('/me/myCreditCard')
-              }}
-          >
-            <CardGiftcardIcon/>
-            <main>
-              <section>{ls('我的信用卡')}</section>
-            </main>
-            <aside>
-              <ArrowForwardIosIcon/>
-            </aside>
-          </ListItem>
-          <ListItem
-              onClick={() => {
-                router.push('/me/pickupAddress')
-              }}
-          >
-            <PinDropIcon/>
-            <main>
-              <section>{ls('我的取货点')}</section>
-            </main>
-            <aside>
-              <ArrowForwardIosIcon/>
-            </aside>
-          </ListItem>
-          <ListItem
-              onClick={() => {
-                router.push('/me/myAddress')
-              }}
-          >
-            <PersonPinCircleIcon/>
-            <main>
-              <section>{ls('我的地址')}</section>
-            </main>
-            <aside>
-              <ArrowForwardIosIcon/>
-            </aside>
-          </ListItem>
-          <ListItem
-              onClick={() => {
-                showMessage('网站建设中...')
-              }}
-          >
-            <HelpOutlineIcon/>
-            <main>
-              <section>{ls('帮助中心')}</section>
-            </main>
-            <aside>
-              <ArrowForwardIosIcon/>
-            </aside>
-          </ListItem>
-          <section style={{height: '100px', width: '2px'}}/>
-        </BScroller>
+    {dealNoAuth(<BScroller>
+      <Header>
+        <header>{ls('您好,')}{stateMe.user.userInfo?.name}</header>
+        <section>{stateMe.user.userInfo?.phone}</section>
+        <section>{stateMe.user.userInfo?.email}</section>
+        <aside>
+          <Button
+              color={'inherit'}
+              variant={'outlined'}
+              onClick={() => actionsMe.logout()}
+          >{ls('登出')}</Button>
+        </aside>
+      </Header>
+      <Tab>
+        <Card>
+          <MonetizationOn/>
+          <main>{stateMe.user.orderCoinCurrentMonth ?? 0}</main>
+          <footer>{ls('当前达人币')}</footer>
+        </Card>
+        <Parting/>
+        <Card>
+          <MonetizationOn/>
+          <main>{stateMe.user.orderCoinNextMonth ?? 0}</main>
+          <footer>{ls('当前达人币')}</footer>
+        </Card>
+        <Parting/>
+        <Card>
+          <PaymentIcon/>
+          <main>1021</main>
+          <footer>{ls('达人卡')}</footer>
+        </Card>
+      </Tab>
+      <ListItem
+          onClick={() => {
+            router.push('/me/orderHistory')
+          }}
+      >
+        <HistoryIcon/>
+        <main>
+          <section>{ls('我的订单历史')}</section>
+        </main>
+        <aside>
+          <ArrowForwardIosIcon/>
+        </aside>
+      </ListItem>
+      {/*<ListItem*/}
+      {/*    onClick={() => {showMessage('网站建设中...')}}*/}
+      {/*>*/}
+      {/*  <UpdateIcon/>*/}
+      {/*  <main>*/}
+      {/*    <section>{ls('下次买清单')}</section>*/}
+      {/*    <footer>{ls('')}</footer>*/}
+      {/*  </main>*/}
+      {/*  <aside>*/}
+      {/*    <ArrowForwardIosIcon/>*/}
+      {/*  </aside>*/}
+      {/*</ListItem>*/}
+      <ListItem
+          onClick={() => {
+            router.push('/me/myInfo')
+          }}
+      >
+        <CardMembershipIcon/>
+        <main>
+          <section>{ls('我的达人证')}</section>
+        </main>
+        <aside>
+          <ArrowForwardIosIcon/>
+        </aside>
+      </ListItem>
+      <ListItem
+          onClick={() => {
+            router.push('/me/myCreditCard')
+          }}
+      >
+        <CardGiftcardIcon/>
+        <main>
+          <section>{ls('我的信用卡')}</section>
+        </main>
+        <aside>
+          <ArrowForwardIosIcon/>
+        </aside>
+      </ListItem>
+      <ListItem
+          onClick={() => {
+            router.push('/me/pickupAddress')
+          }}
+      >
+        <PinDropIcon/>
+        <main>
+          <section>{ls('我的取货点')}</section>
+        </main>
+        <aside>
+          <ArrowForwardIosIcon/>
+        </aside>
+      </ListItem>
+      <ListItem
+          onClick={() => {
+            router.push('/me/myAddress')
+          }}
+      >
+        <PersonPinCircleIcon/>
+        <main>
+          <section>{ls('我的地址')}</section>
+        </main>
+        <aside>
+          <ArrowForwardIosIcon/>
+        </aside>
+      </ListItem>
+      <ListItem
+          onClick={() => {
+            showMessage('网站建设中...')
+          }}
+      >
+        <HelpOutlineIcon/>
+        <main>
+          <section>{ls('帮助中心')}</section>
+        </main>
+        <aside>
+          <ArrowForwardIosIcon/>
+        </aside>
+      </ListItem>
+      <section style={{height: '100px', width: '2px'}}/>
+    </BScroller>)
     }
     <FootBar/>
   </Box>
