@@ -45,6 +45,15 @@ export const shopCartModel = modelFactory('shopCartModel', {
   dealAddressData: (state: any) => state.dealAddressList(state).find((v: UserAddress) => v.id === state.form.addressId) || {},
   initAddressId: (state: any) => (state.form.pickUpType === PickUpTypeEnum.Delivery && state.userAddressList?.find((v: UserAddress) => v.isDefault)?.id) || state.selfAddress?.[0]?.id,
   dealProductTotal: (state: any) => state.shopCartList.reduce((pre: any, cur: any) => pre + (dealMaybeNumber(cur?.number) * dealMaybeNumber(cur?.product?.priceOut)), 0),
+  dealTransportationCosts: (state: any, productTotal: any) => {
+    return (state.form.pickUpType === PickUpTypeEnum.Delivery && (state.freightConfig.reduce((pre: any, cur: any) => {
+      if (pre > parseFloat(cur?.freightPay) && productTotal < parseFloat(cur?.orderMax)) {
+        return parseFloat(cur?.freightPay)
+      } else {
+        return pre
+      }
+    }, parseFloat(state.freightConfig[state.freightConfig.length - 1]?.freightPay)))) || 0
+  },
 }, {
   clearData: (value, option) => {
     option.setData(fpMergePre({

@@ -99,13 +99,7 @@ export const OrderPage = () => {
   const addressData = stateSCM.dealAddressData(stateSCM)
   const cardData = stateSCM.payCardList?.find(v => v.id === stateSCM.form.paymentMethodCardId) || {}
   const productTotal = stateSCM.dealProductTotal(stateSCM)
-  const transportationCosts = (stateSCM.form.pickUpType === PickUpTypeEnum.Delivery && (stateSCM.freightConfig.reduce((pre, cur) => {
-    if (pre > parseFloat(cur?.freightPay) && productTotal < parseFloat(cur?.orderMax)) {
-      return parseFloat(cur?.freightPay)
-    } else {
-      return pre
-    }
-  }, parseFloat(stateSCM.freightConfig[stateSCM.freightConfig.length - 1]?.freightPay)))) || 0
+  const transportationCosts = stateSCM.dealTransportationCosts(stateSCM, productTotal)
   const actuallyPaid = productTotal + transportationCosts - dealMaybeNumber(stateSCM.form.deductCoin) + dealMaybeNumber(stateSCM.form.saleTax)
   const generateCoin = actuallyPaid * 0.01
 

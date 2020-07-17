@@ -32,6 +32,9 @@ export const groupProductModel = modelFactory('groupProductModel', {
   numDiscount: 1,
   groupDiscount: 1,
   groupDiscountConfig: {} as any,
+  dealDiscountAmount: (state: any) => {
+    return (state.product.priceOut ?? 0) * state.selectNum * state.numDiscount * state.groupDiscount
+  },
 }, {
   getData: async (value: string, option) => {
     const res = await option.query(doc.productListByIds, {
@@ -60,8 +63,6 @@ export const groupProductModel = modelFactory('groupProductModel', {
     const groupDiscountConfig = option.data.groupDiscountConfig
     const selectNum = value === option.data.selectNum ? 0 : value
     const selectQueueId = value === option.data.selectNum ? '' : [...option.data.groupQueueList].reverse()?.find(v => (v.sumFillAmount ?? 0) + value <= (option.data?.product?.groupPrecision ?? 0))?.id ?? ''
-    console.log(groupDiscountConfig)
-    console.log(option.data.product.groupPrecision)
 
     option.setData(fpMergePre({
       selectNum,
@@ -288,7 +289,7 @@ export const GroupProduct = () => {
       </main>
       <Price>
         <main>
-          <header>{dealMoney((product.priceOut ?? 0) * stateGroupProduct.selectNum * stateGroupProduct.numDiscount * stateGroupProduct.groupDiscount)}</header>
+          <header>{dealMoney(stateGroupProduct.dealDiscountAmount(stateGroupProduct))}</header>
           <footer>{ls('折后价格')}</footer>
         </main>
         <div>=</div>

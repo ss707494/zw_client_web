@@ -70,14 +70,8 @@ export const GroupOrderPage = () => {
   const addressData = stateSCM.dealAddressData(stateSCM)
   const cardData = stateSCM.payCardList?.find(v => v.id === stateSCM.form.paymentMethodCardId) || {}
   const productTotal = (product.priceOut ?? 0) * stateGroupProduct.selectNum
-  const transportationCosts = (stateSCM.form.pickUpType === PickUpTypeEnum.Delivery && (stateSCM.freightConfig.reduce((pre, cur) => {
-    if (pre > parseFloat(cur?.freightPay) && productTotal < parseFloat(cur?.orderMax)) {
-      return parseFloat(cur?.freightPay)
-    } else {
-      return pre
-    }
-  }, parseFloat(stateSCM.freightConfig[stateSCM.freightConfig.length - 1]?.freightPay)))) || 0
-  const actuallyPaid = productTotal + transportationCosts + dealMaybeNumber(stateSCM.form.saleTax)
+  const transportationCosts = stateSCM.dealTransportationCosts(stateSCM, productTotal)
+  const actuallyPaid = (stateGroupProduct.dealDiscountAmount(stateGroupProduct)) + transportationCosts + dealMaybeNumber(stateSCM.form.saleTax)
   const generateCoin = actuallyPaid * 0.01
 
   return stateOrderPageModel.show && <OrderPageBox
