@@ -245,7 +245,6 @@ export const GroupProductItem = ({product}: { product: Product }) => {
       actionsMe.getLoginUser()
     }
   }, [])
-  console.log(product)
 
   return <GroupBox key={`GroupBox_${product.id}`}>
     <GroupImg>

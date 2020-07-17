@@ -134,6 +134,7 @@ export const ProductList = () => {
     if (!!id) {
       actionsPLM.getCategory({id})
       actionsPLM.getData({
+        isGroup: router.query.homeType === HomeType.group ? 1 : 0,
         category: {
           id,
         },
@@ -151,6 +152,7 @@ export const ProductList = () => {
           onClick={async () => {
             await actionsPLM.openSort()
             actionsPLM.getData({
+              isGroup: router.query.homeType === HomeType.group ? 1 : 0,
               category: {
                 id,
               },

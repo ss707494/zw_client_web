@@ -45,23 +45,13 @@ export const HomeTabs = ({homeType}: {homeType: string}) => {
   const router = useRouter()
   const {state: homeTabsState, actions: homeTabsActions} = useStoreModel(homeTabsModel)
 
-  console.log(((homeType === HomeType.home && [
-    [AppModuleTypeEnum.limitTime, '限时选购'],
-    [AppModuleTypeEnum.salesRank, '热销排行'],
-    [AppModuleTypeEnum.themeSelection, '主题甄选'],
-    [AppModuleTypeEnum.mayLike, '猜你喜欢'],
-  ]) || (homeType === HomeType.group && [
-    [AppModuleTypeEnum.topRanking, '热门排行'],
-    [AppModuleTypeEnum.lineRanking, '冲线排行'],
-  ]) || []).filter(v => (homeTabsState?.appModuleConfig?.[v[0]])))
-  console.log(homeTabsState?.appModuleConfig)
   return (
       <div
           style={{marginTop: '10px'}}
       >
         <Tabs
             variant={'fullWidth'}
-            value={router.query.appModule}
+            value={router.query.appModule ?? AppModuleTypeEnum.categorySelection}
             onChange={(event, value) => homeTabsActions.onChange([value, homeType])}
         >
           <Tab
