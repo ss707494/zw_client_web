@@ -180,9 +180,7 @@ export const CategoryPage = () => {
                     product={value}/>)}
               </ListBox>
             </>
-        )
-        }
-
+        )}
       </Box>
     </BScroller>
   </div>

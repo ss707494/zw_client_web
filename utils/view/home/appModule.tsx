@@ -6,7 +6,6 @@ import {modelFactory} from '../../ModelAction/modelUtil'
 import {HomeTabs, homeTabsModel} from './components/Tabs/Tabs'
 import CusCarousel from '../../components/Swipe/Swipe'
 import {BorderedInputBase} from '../../components/HeaderSearch/HeaderSearch'
-import {FootBar} from '../../components/FootBar/FootBar'
 import {BScroller} from '../../components/BScroll/BScroller'
 import {grey} from '@material-ui/core/colors'
 import {useStoreModel} from '../../ModelAction/useStore'
@@ -118,7 +117,6 @@ export const HomeAppModule = (type?: string) => function ({
           }
         `}</style>
         </BScroller>
-        <FootBar/>
       </div>
   )
 }
