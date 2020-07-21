@@ -12,6 +12,7 @@ import {meModel} from './model'
 import {grey, red} from '@material-ui/core/colors'
 import {useStoreModel} from '../../ModelAction/useStore'
 import {ls} from '../../tools/dealKey'
+import {FootBar} from '../../components/FootBar/FootBar'
 import MonetizationOn from '@material-ui/icons/MonetizationOn'
 import PaymentIcon from '@material-ui/icons/Payment'
 import {BScroller} from '../../components/BScroll/BScroller'
@@ -234,5 +235,6 @@ export default function Me() {
       <section style={{height: '100px', width: '2px'}}/>
     </BScroller>)
     }
+    <FootBar/>
   </Box>
 }

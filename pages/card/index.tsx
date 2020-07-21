@@ -1,5 +1,6 @@
 import React from 'react'
-import {ls} from '../../utils/tools/dealKey'
+import {FootBar} from '../../utils/components/FootBar/FootBar'
+import { ls } from '../../utils/tools/dealKey'
 import {BScroller} from '../../utils/components/BScroll/BScroller'
 
 export default function Group() {
@@ -19,6 +20,7 @@ export default function Group() {
                 style={{display: 'inline-block', margin: '2vw'}}>{i}</div>)}
           </div>
         </BScroller>
+        <FootBar/>
       </div>
   )
 }
