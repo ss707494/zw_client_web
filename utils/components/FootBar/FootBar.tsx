@@ -27,7 +27,7 @@ export const FootBar = () => {
         {[
           ['逛店', <StorefrontIcon/>, `/${AppFootBar.home}`],
           ['拼团', <PeopleIcon/>, `/${AppFootBar.group}`],
-          ['达人卡', <RedeemIcon/>, `/${AppFootBar.card}`],
+          ['达人区', <RedeemIcon/>, `/${AppFootBar.card}`],
           ['购物车', <ShoppingCartIcon/>, `/${AppFootBar.cart}`, stateShopCart.dealProductNumber(stateShopCart)],
           ['我', <AccountBoxIcon/>, `/${AppFootBar.me}`],
         ].map(v => (

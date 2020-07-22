@@ -244,6 +244,7 @@ type PromoCode {
 type Query {
     categoryLevel(categoryItemInput: CategoryItemInput): Float
     categoryList(data: CategoryListInput): CategoryPage
+    categoryRootParent(categoryItemInput: CategoryItemInput): Category
     getDataConfig(dataConfigInput: DataConfigItemInput): DataConfig
     getDictList(dictInput: DictInput): [Dict]
     getDictTypeList: [DictTypeFirst]

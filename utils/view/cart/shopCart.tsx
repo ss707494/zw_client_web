@@ -41,6 +41,11 @@ export const ShopCartPage = () => {
       actionsSCM.getList()
     }
   }, [])
+  useEffect(() => {
+    if (stateSCM.user.id && localStorage.getItem(`promoCode_${stateSCM.user.id}`)) {
+      actionsSCM.dealPromoCode(`${localStorage.getItem(`promoCode_${stateSCM.user.id}`)}`)
+    }
+  }, [stateSCM.user.id])
   const productNumber = stateSCM.dealProductNumber(stateSCM)
   const productSubtotal = dealMoney(stateSCM.dealProductTotal(stateSCM))
   const allTotal = productSubtotal + 0

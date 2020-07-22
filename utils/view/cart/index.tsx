@@ -1,5 +1,14 @@
 import {modelFactory} from '../../ModelAction/modelUtil'
-import {Dict, OrderInfoItemInput, ShopCart, User, UserAddress, UserPayCard} from '../../graphqlTypes/types'
+import {
+  CategoryItemInput,
+  Dict,
+  OrderInfoItemInput, PromoCode,
+  PromoCodeItemInput,
+  ShopCart,
+  User,
+  UserAddress,
+  UserPayCard,
+} from '../../graphqlTypes/types'
 import {PickUpTypeEnum} from '../../ss_common/enum'
 import {dealMaybeNumber, fpMergePre} from '../../tools/utils'
 import {setForm} from '../../tools/commonAction'
@@ -24,6 +33,7 @@ const initForm: OrderInfoItemInput = {
 }
 export const shopCartModel = modelFactory('shopCartModel', {
   user: {} as User,
+  promoCode: {} as PromoCode,
   payCardList: [] as UserPayCard[],
   userAddressList: [] as UserAddress[],
   selfAddress: [] as any[],
@@ -68,11 +78,32 @@ export const shopCartModel = modelFactory('shopCartModel', {
   })),
   setForm: setForm,
   getList: async (value, option) => {
+    const userRes = await option.query(doc.oneUser)
     const res = await option.query(doc.userShopCartList)
     option.setData(fpMergePre({
+      user: userRes.oneUser ?? {},
       shopCartList: res?.shopCartList.filter((v: ShopCart) => !v.isNext) ?? [],
       shopCartListNext: res?.shopCartList.filter((v: ShopCart) => !!v.isNext) ?? [],
     }))
+  },
+  dealPromoCode: async (value: string, option) => {
+    const res = await option.query(doc.promoCodeList, {
+      promoCodeItemInput: {
+        code: value,
+      } as PromoCodeItemInput,
+    })
+    if (res?.promoCodeList?.length === 1) {
+      const promoCode: PromoCode = res.promoCodeList[0]
+      option.setData(fpMergePre({
+        promoCode,
+      }))
+      const category = await option.query(doc.categoryRootParent, {
+        categoryItemInput: {
+          id: promoCode?.productCategory,
+        } as CategoryItemInput,
+      })
+      console.log(category)
+    }
   },
   updatePageType: (value: string, option) => option.setData(fpMergePre({
     pageType: value,

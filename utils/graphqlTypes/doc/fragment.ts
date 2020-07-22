@@ -232,4 +232,27 @@ export const fragment = {
           userId
       }
   `,
+  PromoCodeFields: gql`
+      fragment PromoCodeFields on PromoCode {
+          code
+          createTime
+          discountAmount
+          discountCondition
+          discountConditionAmount
+          discountType
+          effectiveDateEnd
+          effectiveDateStart
+          id
+          imgUrl
+          isDelete
+          isDisable
+          name
+          productCategory
+          promoCodeType
+          remark
+          reuseTimes
+          title
+          updateTime
+      }
+  `,
 }
