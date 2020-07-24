@@ -406,6 +406,15 @@ export const doc = {
         ...ShopCartFields
         product {
           ...ProductFields
+          category {
+            id
+            parentCategory {
+              id
+              parentCategory {
+                id
+              }
+            }
+          }
           img {
             ...ImgFields
           }

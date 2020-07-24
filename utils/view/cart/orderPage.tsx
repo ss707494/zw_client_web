@@ -100,7 +100,7 @@ export const OrderPage = () => {
   const cardData = stateSCM.payCardList?.find(v => v.id === stateSCM.form.paymentMethodCardId) || {}
   const productTotal = stateSCM.dealProductTotal(stateSCM)
   const transportationCosts = stateSCM.dealTransportationCosts(stateSCM, productTotal)
-  const actuallyPaid = productTotal + transportationCosts - dealMaybeNumber(stateSCM.form.deductCoin) + dealMaybeNumber(stateSCM.form.saleTax)
+  const actuallyPaid = productTotal + transportationCosts - dealMaybeNumber(stateSCM.form.deductCoin) + dealMaybeNumber(stateSCM.form.saleTax) - dealMaybeNumber(stateSCM.form?.couponDiscount)
   const generateCoin = actuallyPaid * 0.01
 
   return <div>
@@ -192,6 +192,10 @@ export const OrderPage = () => {
         <header>{ls('购物车总计')}</header>
         <footer>{dealMoney(productTotal)}</footer>
       </ShopTotal>
+      {dealMaybeNumber(stateSCM.form?.couponDiscount) > 0 && <ShopTotal>
+        <header>{ls('优惠折扣')}</header>
+        <footer>{dealMoney(stateSCM.form?.couponDiscount)}</footer>
+      </ShopTotal>}
       {transportationCosts > 0 && <ShopTotal>
         <header>{ls('运费')}</header>
         <footer>{dealMoney(transportationCosts)}</footer>

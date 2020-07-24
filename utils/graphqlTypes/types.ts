@@ -33,6 +33,7 @@ export type Query = {
   oneCategory?: Maybe<Category>;
   productsInCategory?: Maybe<Array<Maybe<Product>>>;
   categoryLevel?: Maybe<Scalars['Float']>;
+  categoryRootParent?: Maybe<Category>;
   promoCodeList?: Maybe<Array<Maybe<PromoCode>>>;
   payCardListOneUser?: Maybe<Array<Maybe<UserPayCard>>>;
   userPayCard?: Maybe<UserPayCard>;
@@ -122,6 +123,11 @@ export type QueryProductsInCategoryArgs = {
 
 
 export type QueryCategoryLevelArgs = {
+  categoryItemInput?: Maybe<CategoryItemInput>;
+};
+
+
+export type QueryCategoryRootParentArgs = {
   categoryItemInput?: Maybe<CategoryItemInput>;
 };
 
@@ -305,7 +311,6 @@ export type CategoryItemInput = {
   imgUrl?: Maybe<Scalars['String']>;
   parentCategory?: Maybe<CategoryItemInput>;
   childCategories?: Maybe<Array<Maybe<CategoryItemInput>>>;
-  categoryParent?: Maybe<CategoryItemInput>;
   product?: Maybe<Array<Maybe<ProductItemInput>>>;
 };
 
@@ -579,7 +584,6 @@ export type Category = {
   imgUrl?: Maybe<Scalars['String']>;
   parentCategory?: Maybe<Category>;
   childCategories?: Maybe<Array<Maybe<Category>>>;
-  categoryParent?: Maybe<Category>;
   product?: Maybe<Array<Maybe<Product>>>;
 };
 

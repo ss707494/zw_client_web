@@ -1,8 +1,8 @@
 import {modelFactory} from '../../ModelAction/modelUtil'
 import {
-  CategoryItemInput,
   Dict,
-  OrderInfoItemInput, PromoCode,
+  OrderInfoItemInput,
+  PromoCode,
   PromoCodeItemInput,
   ShopCart,
   User,
@@ -17,6 +17,7 @@ import {ShopCartPage} from './shopCart'
 import React from 'react'
 import {useStoreModel} from '../../ModelAction/useStore'
 import {OrderPage} from './orderPage'
+import {ls} from '../../tools/dealKey'
 
 export const pageTypeEnum = {
   shopCart: 'shopCart',
@@ -30,10 +31,12 @@ const initForm: OrderInfoItemInput = {
   deductCoin: 0,
   saleTax: 0,
   transportationCosts: 0,
+  couponDiscount: 0,
 }
 export const shopCartModel = modelFactory('shopCartModel', {
   user: {} as User,
   promoCode: {} as PromoCode,
+  promoCodeError: '',
   payCardList: [] as UserPayCard[],
   userAddressList: [] as UserAddress[],
   selfAddress: [] as any[],
@@ -97,12 +100,9 @@ export const shopCartModel = modelFactory('shopCartModel', {
       option.setData(fpMergePre({
         promoCode,
       }))
-      const category = await option.query(doc.categoryRootParent, {
-        categoryItemInput: {
-          id: promoCode?.productCategory,
-        } as CategoryItemInput,
-      })
-      console.log(category)
+      return ''
+    } else {
+      return ls('未匹配到优惠码')
     }
   },
   updatePageType: (value: string, option) => option.setData(fpMergePre({
@@ -137,6 +137,9 @@ export const shopCartModel = modelFactory('shopCartModel', {
         ...value,
       } as OrderInfoItemInput,
     })
+  },
+  testPromoCode: async (value: string, option) => {
+    return '123'
   },
 })
 
