@@ -42,6 +42,7 @@ export const InputPromoCodeDialog = () => {
                 showMessage(testRes)
               } else {
                 actionsInputPromoCodeModel.onClose()
+                actionsInputPromoCodeModel.setForm(['promoCode', ''])
               }
             }}
         >{ls('确定')}</Button>
