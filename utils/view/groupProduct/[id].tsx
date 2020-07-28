@@ -222,9 +222,6 @@ export const GroupProduct = () => {
   //   actionsGroupOrderPageModel.open()
   // }, [])
 
-  console.log(product)
-
-  console.log(dealGroupNumbers(product))
   return <div>
     <HeaderTitle
         title={'产品详情'}
