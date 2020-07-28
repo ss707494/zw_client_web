@@ -24,6 +24,12 @@ import {Button} from '@material-ui/core'
 import {GroupOrderPage, groupOrderPageModel} from './groupOrderPage'
 import {DictTypeEnum} from '../../ss_common/enum'
 
+const dealDiscount = (num: number) => {
+  return (100 - num ?? 0) / 100
+}
+export const dealGroupNumbers = (product: Product) => {
+  return ~~((product.groupAmount ?? 0) / (product.groupPrecision ?? 1))
+}
 export const groupProductModel = modelFactory('groupProductModel', {
   product: {} as Product,
   groupQueueList: [] as GroupQueue[],
@@ -32,8 +38,11 @@ export const groupProductModel = modelFactory('groupProductModel', {
   numDiscount: 1,
   groupDiscount: 1,
   groupDiscountConfig: {} as any,
+  dealDiscountAmountUnit: (state: any) => {
+    return (state.product.priceOut ?? 0) * state.numDiscount * state.groupDiscount
+  },
   dealDiscountAmount: (state: any) => {
-    return (state.product.priceOut ?? 0) * state.selectNum * state.numDiscount * state.groupDiscount
+    return (state.product.priceOut ?? 0) * state.selectNum * dealGroupNumbers(state.product) * state.numDiscount * state.groupDiscount
   },
 }, {
   getData: async (value: string, option) => {
@@ -67,8 +76,8 @@ export const groupProductModel = modelFactory('groupProductModel', {
     option.setData(fpMergePre({
       selectNum,
       selectQueueId,
-      groupDiscount: (option.data.groupQueueList.find(value1 => value1.id === selectQueueId)?.sumFillAmount ?? 0) + selectNum === option.data.product.groupPrecision ? groupDiscountConfig.groupDiscount : 1,
-      numDiscount: groupDiscountConfig?.[(option.data.product.groupPrecision ?? 0)]?.discount?.[selectNum] ?? 1,
+      groupDiscount: (option.data.groupQueueList.find(value1 => value1.id === selectQueueId)?.sumFillAmount ?? 0) + selectNum === option.data.product.groupPrecision ? dealDiscount(groupDiscountConfig.groupDiscount) : 1,
+      numDiscount: dealDiscount(groupDiscountConfig?.[(option.data.product.groupPrecision ?? 0)]?.discount?.[selectNum]) ?? 1,
     }))
   },
   clearData: (value, option) => {
@@ -213,6 +222,9 @@ export const GroupProduct = () => {
   //   actionsGroupOrderPageModel.open()
   // }, [])
 
+  console.log(product)
+
+  console.log(dealGroupNumbers(product))
   return <div>
     <HeaderTitle
         title={'产品详情'}
@@ -234,14 +246,14 @@ export const GroupProduct = () => {
     </PriceRed>
     <Name>
       <main>{product.name}</main>
-      <section>{product.groupRemark}/{product.groupAmount}{product.groupAmountUnitString}<br/>{ls('分团精度')}
-        <span>{[...Array(product.groupPrecision)].map((v, i) => i).map(value =>
+      <section>{product.groupRemark}/{product.groupAmount}{product.groupAmountUnitString} {`每一份${dealGroupNumbers(product)}${product.groupAmountUnitString}`}<br/>
+      {ls('分团精度')}<span>{[...Array(product.groupPrecision)].map((v, i) => i).map(value =>
             <YellowStar key={value}/>)}</span>
       </section>
     </Name>
     <GroupQueueBox>
       <Title>{ls('拼团中')}</Title>
-      {stateGroupProduct.groupQueueList.map(groupQueue => {
+      {stateGroupProduct.groupQueueList.filter(v => (v.sumFillAmount ?? 0) < (product?.groupPrecision ?? 0)).map(groupQueue => {
         const select = groupQueue.id === stateGroupProduct.selectQueueId
         return <GroupQueueListBox
             select={select}
@@ -289,12 +301,12 @@ export const GroupProduct = () => {
       </main>
       <Price>
         <main>
-          <header>{dealMoney(stateGroupProduct.dealDiscountAmount(stateGroupProduct))}</header>
+          <header>{dealMoney(stateGroupProduct.dealDiscountAmountUnit(stateGroupProduct))}</header>
           <footer>{ls('折后价格')}</footer>
         </main>
         <div>=</div>
         <section>
-          <header>{dealMoney((product.priceOut ?? 0) * stateGroupProduct.selectNum)}</header>
+          <header>{dealMoney((product.priceOut ?? 0))}</header>
           <footer>{ls('基准价格')}</footer>
         </section>
         <div>x</div>

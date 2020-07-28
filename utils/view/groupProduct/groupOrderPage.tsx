@@ -3,7 +3,7 @@ import {modelFactory} from '../../ModelAction/modelUtil'
 import styled from 'styled-components'
 import {useStoreModel} from '../../ModelAction/useStore'
 import {dealMaybeNumber, dealMoney, dealUrlQuery, fpMerge, fpMergePre} from '../../tools/utils'
-import {groupProductModel} from './[id]'
+import {dealGroupNumbers, groupProductModel} from './[id]'
 import {ShopCartProductBox} from "../cart/CartProduct"
 import {dealImgUrl} from "../../tools/img"
 import {ProductPrice} from "../../components/ProductItem/ProductItem"
@@ -69,7 +69,7 @@ export const GroupOrderPage = () => {
 
   const addressData = stateSCM.dealAddressData(stateSCM)
   const cardData = stateSCM.payCardList?.find(v => v.id === stateSCM.form.paymentMethodCardId) || {}
-  const productTotal = (product.priceOut ?? 0) * stateGroupProduct.selectNum
+  const productTotal = (product.priceOut ?? 0) * dealGroupNumbers(product) * stateGroupProduct.selectNum
   const transportationCosts = stateSCM.dealTransportationCosts(stateSCM, productTotal)
   const actuallyPaid = (stateGroupProduct.dealDiscountAmount(stateGroupProduct)) + transportationCosts + dealMaybeNumber(stateSCM.form.saleTax)
   const generateCoin = actuallyPaid * 0.01
@@ -156,10 +156,6 @@ export const GroupOrderPage = () => {
       <header>{ls('购物车总计')}</header>
       <footer>{dealMoney(productTotal)}</footer>
     </ShopTotal>
-    {transportationCosts > 0 && <ShopTotal>
-      <header>{ls('运费')}</header>
-      <footer>{dealMoney(transportationCosts)}</footer>
-    </ShopTotal>}
     <ShopTotal>
       <header>{ls('份数折扣')}</header>
       <footer>{stateGroupProduct.numDiscount}</footer>
@@ -168,6 +164,10 @@ export const GroupOrderPage = () => {
       <header>{ls('成团折上折')}</header>
       <footer>{stateGroupProduct.groupDiscount}</footer>
     </ShopTotal>
+    {transportationCosts > 0 && <ShopTotal>
+      <header>{ls('运费')}</header>
+      <footer>{dealMoney(transportationCosts)}</footer>
+    </ShopTotal>}
     <ShopTotal
         style={{fontSize: '18px'}}
     >
