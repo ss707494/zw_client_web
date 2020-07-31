@@ -61,13 +61,13 @@ export const ShopCartPage = () => {
   const productSubtotal = dealMoney(stateSCM.dealProductTotal(stateSCM))
 
   const promoCode = stateSCM.promoCode
-  // 计算折扣
   const discountProduct = stateSCM.shopCartList.filter(v => [v.product?.category?.id, v.product?.category?.parentCategory?.id, v.product?.category?.parentCategory?.parentCategory?.id].includes(promoCode.productCategory))
+  const discountProductAmount = discountProduct.reduce((previousValue, currentValue) => {
+    return previousValue + dealMaybeNumber(currentValue.number) * dealMaybeNumber(currentValue.product?.priceOut)
+  }, 0)
+  // 计算折扣
   let discountAmountForPromoCode = 0
   if (discountProduct.length) {
-    const discountProductAmount = discountProduct.reduce((previousValue, currentValue) => {
-      return previousValue + dealMaybeNumber(currentValue.number) * dealMaybeNumber(currentValue.product?.priceOut)
-    }, 0)
     // 折扣条件
     if (promoCode.discountCondition === DiscountConditionEnum.No
         || (promoCode.discountCondition === DiscountConditionEnum.Amount && discountProductAmount > dealMaybeNumber(promoCode.discountConditionAmount))) {
@@ -79,7 +79,7 @@ export const ShopCartPage = () => {
       actionsSCM.setForm(['couponDiscount', discountAmountForPromoCode])
     }
   }, [discountAmountForPromoCode])
-  const allTotal = stateSCM.dealProductTotal(stateSCM) - discountAmountForPromoCode
+  const allTotal = stateSCM.dealProductTotal(stateSCM) - dealMaybeNumber(stateSCM.form.couponDiscount)
 
   return <div>
     <HeaderTitle
