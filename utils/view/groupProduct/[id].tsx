@@ -160,6 +160,9 @@ const SmartMatch = styled.div`
     align-items: center;
   }
   > main {
+    > svg {
+      font-size: 3.0rem;
+    }
   }
 `
 

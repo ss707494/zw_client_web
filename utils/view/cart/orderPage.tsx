@@ -113,7 +113,7 @@ export const OrderPage = () => {
     />
     {(!!getLoad(doc.orderConfirmInfo) && <LinearProgress/>) || <div style={{height: '4px'}}/>}
     <BScroller
-        boxHeight={'calc(100vh - 65px)'}
+        boxHeight={'calc(100vh - 135px)'}
     >
       <Space h={10}/>
       <ShopTitle>
@@ -214,6 +214,7 @@ export const OrderPage = () => {
         <header>{ls('订单总额')}</header>
         <footer>{dealMoney(actuallyPaid)}</footer>
       </ShopTotal>
+      <Space h={30}/>
     </BScroller>
     <FooterFit>
       <header>{ls('本次订单')}
