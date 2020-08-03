@@ -186,10 +186,10 @@ export const OrderDetail = () => {
           <aside>{ls('达人币抵扣')}</aside>
           <main>{dealMoney(orderInfo.deductCoin, '-')}</main>
         </Sum>
-        <Sum>
-          <aside>{ls('消费税')}</aside>
-          <main>{dealMoney(orderInfo.saleTax)}</main>
-        </Sum>
+        {/*<Sum>*/}
+        {/*  <aside>{ls('消费税')}</aside>*/}
+        {/*  <main>{dealMoney(orderInfo.saleTax)}</main>*/}
+        {/*</Sum>*/}
         <Sum>
           <aside>{ls('实际支付')}</aside>
           <main>{dealMoney(orderInfo.actuallyPaid)}</main>

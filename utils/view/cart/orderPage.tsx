@@ -62,9 +62,10 @@ export const ShopTotal = styled.div`
   justify-content: space-between;
   margin-bottom: 16px;
 `
-const FooterFit = styled.div`
+export const FooterFit = styled.div`
   position: fixed;
   box-sizing: border-box;
+  background: white;
   bottom: 0;
   width: 100vw;
   padding: 16px 24px;
@@ -102,6 +103,21 @@ export const OrderPage = () => {
   const transportationCosts = stateSCM.dealTransportationCosts(stateSCM, productTotal)
   const actuallyPaid = productTotal + transportationCosts - dealMaybeNumber(stateSCM.form.deductCoin) + dealMaybeNumber(stateSCM.form.saleTax) - dealMaybeNumber(stateSCM.form?.couponDiscount)
   const generateCoin = actuallyPaid * 0.01
+
+  useEffect(() => {
+    if (stateSCM.pageType === pageTypeEnum.order) {
+      window.history.pushState(null, '', document.URL);
+      window.addEventListener('popstate', (state) => {
+        // 监听到返回事件，注意，只有触发了返回才会执行这个方法
+        actionsSCM.updatePageType(pageTypeEnum.shopCart)
+      }, false)
+    }
+    return () => {
+      window.removeEventListener('popstate', (state) => {
+        actionsSCM.updatePageType(pageTypeEnum.shopCart)
+      })
+    }
+  }, [stateSCM.pageType])
 
   return <div>
     <HeaderTitle
@@ -190,12 +206,12 @@ export const OrderPage = () => {
       <Space h={16}/>
       <ShopTotal>
         <header>{ls('购物车总计')}</header>
-        <footer>{dealMoney(productTotal)}</footer>
+        <footer>{dealMoney(productTotal - (stateSCM.form?.couponDiscount ?? 0))}</footer>
       </ShopTotal>
-      {dealMaybeNumber(stateSCM.form?.couponDiscount) > 0 && <ShopTotal>
-        <header>{ls('优惠折扣')}</header>
-        <footer>{dealMoney(stateSCM.form?.couponDiscount)}</footer>
-      </ShopTotal>}
+      {/*{dealMaybeNumber(stateSCM.form?.couponDiscount) > 0 && <ShopTotal>*/}
+      {/*  <header>{ls('优惠折扣')}</header>*/}
+      {/*  <footer>{dealMoney(stateSCM.form?.couponDiscount)}</footer>*/}
+      {/*</ShopTotal>}*/}
       {transportationCosts > 0 && <ShopTotal>
         <header>{ls('运费')}</header>
         <footer>{dealMoney(transportationCosts)}</footer>
@@ -204,10 +220,10 @@ export const OrderPage = () => {
         <header>{ls('达人币抵扣')}</header>
         <footer>{dealMoney(stateSCM.form.deductCoin, '-')}</footer>
       </ShopTotal>
-      <ShopTotal>
-        <header>{ls('消费税')}</header>
-        <footer>{dealMoney(stateSCM.form.saleTax)}</footer>
-      </ShopTotal>
+      {/*<ShopTotal>*/}
+      {/*  <header>{ls('消费税')}</header>*/}
+      {/*  <footer>{dealMoney(stateSCM.form.saleTax)}</footer>*/}
+      {/*</ShopTotal>*/}
       <ShopTotal
           style={{fontSize: '18px'}}
       >
@@ -227,6 +243,11 @@ export const OrderPage = () => {
         <ButtonLoad
             loading={getLoad(doc.saveOrder)}
             onClick={async () => {
+              if (dealMaybeNumber(stateSCM.user?.orderCoinCurrentMonth) < dealMaybeNumber(stateSCM.form.deductCoin)) {
+                showMessage(ls('达人币余额不足'))
+                return
+              }
+
               const submitData = {
                 ...stateSCM.form,
                 generateCoin,
