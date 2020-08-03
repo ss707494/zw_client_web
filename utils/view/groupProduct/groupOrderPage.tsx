@@ -94,7 +94,7 @@ export const GroupOrderPage = () => {
   return stateOrderPageModel.show && <>
     <OrderPageBox>
       <HeaderTitle
-          title={'确认订单'}
+          title={'订单支付'}
           backCall={() => {
             actionsOrderPageModel.close()
             return true

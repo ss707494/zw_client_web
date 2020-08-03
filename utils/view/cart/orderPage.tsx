@@ -121,7 +121,7 @@ export const OrderPage = () => {
 
   return <div>
     <HeaderTitle
-        title={'确认订单'}
+        title={'订单支付'}
         backCall={() => {
           actionsSCM.updatePageType(pageTypeEnum.shopCart)
           return true
