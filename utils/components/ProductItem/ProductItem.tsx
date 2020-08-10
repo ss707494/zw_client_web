@@ -16,7 +16,7 @@ import {ls} from '../../tools/dealKey'
 import {grey} from '@material-ui/core/colors'
 import {shopCartModel} from '../../view/cart'
 import {useRouter} from 'next/router'
-import {UpdateShopCart, updateShopCartModel} from './UpdateShopCart'
+import {updateShopCartModel} from './UpdateShopCart'
 
 export const productModel = modelFactory('productModel', {}, {
   updateNumShopCart: async (value: ShopCartItemInput, option) => {
@@ -107,7 +107,6 @@ export const ProductItem = ({product}: { product: Product }) => {
         <ShoppingCartIcon color={'secondary'}/>
       </IconButton>}
     </footer>
-    <UpdateShopCart/>
   </Box>
 }
 
@@ -171,7 +170,7 @@ export const ProductItemOneRow = ({product}: { product: Product }) => {
     </Img>
     <LeftBox>
       <main>{product.name}{product.weight}{product.unit}</main>
-      <Stock>{ls('当前剩余')}: {product.stock}</Stock>
+      {/*<Stock>{ls('当前剩余')}: {product.stock}</Stock>*/}
       <Price>
         <ProductPrice product={product}/>
       </Price>
@@ -198,7 +197,6 @@ export const ProductItemOneRow = ({product}: { product: Product }) => {
         </Button>
       </Bun>}
     </LeftBox>
-    <UpdateShopCart/>
   </RowBox>
 }
 

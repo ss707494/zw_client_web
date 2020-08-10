@@ -259,6 +259,7 @@ type Query {
   payCardListOneUser: [UserPayCard]
   productList(orderByInput: OrderByInput, productInput: ProductItemInput): ProductPage
   productListByIds(ids: [String]): ProductPage
+  productListOrderByOrder(orderByType: String): ProductPage
   productsInCategory(categoryItemInput: CategoryItemInput, productItemInput: ProductItemInput): [Product]
   promoCodeList(promoCodeItemInput: PromoCodeItemInput): [PromoCode]
   refreshToken(refreshtoken: String!): AuthBody
@@ -544,6 +545,7 @@ input OrderInput {
   city: String
   district: String
   endTime: Timestamp
+  isGroup: Float
   number: String
   page: Float = 0.0
   pickUpTime: Timestamp

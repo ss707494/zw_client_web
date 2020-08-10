@@ -565,5 +565,24 @@ export const doc = {
     }
     ${fragment.CategoryFields}
   `,
+  productListOrderByOrder: gql`
+      query ($orderByType: String) {
+        productListOrderByOrder (orderByType: $orderByType) {
+          list {
+            rOrderProduct {
+              ...ROrderProductFields
+            }
+            ...ProductFields
+            img {
+              ...ImgFields
+            }
+          }
+          total
+        }
+      }
+      ${fragment.ProductFields}
+      ${fragment.ImgFields}
+      ${fragment.ROrderProductFields}
+  `,
 }
 

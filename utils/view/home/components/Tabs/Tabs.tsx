@@ -12,6 +12,9 @@ import {HomeType} from '../../appModule'
 import {fpMergePre} from '../../../../tools/utils'
 import {getDataConfig} from '../../../../graphqlTypes/doc'
 import {DataConfigItemInput} from '../../../../graphqlTypes/types'
+import { SalesRank } from '../SalesRank/SalesRank'
+import {UpdateShopCart} from '../../../../components/ProductItem/UpdateShopCart'
+import { isEmpty } from 'lodash'
 
 export const homeTabsModel = modelFactory('HomeTabs', {
   homeType: '',
@@ -49,7 +52,7 @@ export const HomeTabs = ({homeType}: {homeType: string}) => {
       <div
           style={{marginTop: '10px'}}
       >
-        <Tabs
+        {!isEmpty(homeTabsState?.appModuleConfig) && <Tabs
             variant={'fullWidth'}
             value={router.query.appModule ?? AppModuleTypeEnum.categorySelection}
             onChange={(event, value) => homeTabsActions.onChange([value, homeType])}
@@ -71,7 +74,7 @@ export const HomeTabs = ({homeType}: {homeType: string}) => {
               value={v[0]}
               label={ls(v[1])}
           />)}
-        </Tabs>
+        </Tabs>}
         <main
             style={{marginTop: '10px'}}
         >
@@ -81,7 +84,10 @@ export const HomeTabs = ({homeType}: {homeType: string}) => {
           && <PromotionFlashSale/>}
           {router.query.appModule === AppModuleTypeEnum.themeSelection
           && <ThemeSelection/>}
+          {router.query.appModule === AppModuleTypeEnum.salesRank
+          && <SalesRank/>}
         </main>
+        <UpdateShopCart/>
         <style jsx>{`
           div :global(.MuiButtonBase-root) {
             padding: 0;

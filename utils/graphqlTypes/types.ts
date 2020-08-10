@@ -29,6 +29,7 @@ export type Query = {
   getDictList?: Maybe<Array<Maybe<Dict>>>;
   productList?: Maybe<ProductPage>;
   productListByIds?: Maybe<ProductPage>;
+  productListOrderByOrder?: Maybe<ProductPage>;
   categoryList?: Maybe<CategoryPage>;
   oneCategory?: Maybe<Category>;
   productsInCategory?: Maybe<Array<Maybe<Product>>>;
@@ -103,6 +104,11 @@ export type QueryProductListArgs = {
 
 export type QueryProductListByIdsArgs = {
   ids?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+
+export type QueryProductListOrderByOrderArgs = {
+  orderByType?: Maybe<Scalars['String']>;
 };
 
 
@@ -691,6 +697,7 @@ export type OrderInput = {
   address?: Maybe<Scalars['String']>;
   pickUpTime?: Maybe<Scalars['Timestamp']>;
   pickUpType?: Maybe<Scalars['String']>;
+  isGroup?: Maybe<Scalars['Float']>;
 };
 
 export type OrderPage = {

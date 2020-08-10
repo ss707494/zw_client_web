@@ -50,7 +50,7 @@ export const HomeAppModule = (type?: string) => function ({
 }) {
   const router = useRouter()
   useEffect(() => {
-    if (!([AppModuleTypeEnum.limitTime, AppModuleTypeEnum.mayLike, AppModuleTypeEnum.salesRank, AppModuleTypeEnum.themeSelection, AppModuleTypeEnum.categorySelection, AppModuleTypeEnum.lineRanking, AppModuleTypeEnum.topRanking] as any[]).includes(router.query.appModule)
+    if (router.query.appModule && !([AppModuleTypeEnum.limitTime, AppModuleTypeEnum.mayLike, AppModuleTypeEnum.salesRank, AppModuleTypeEnum.themeSelection, AppModuleTypeEnum.categorySelection, AppModuleTypeEnum.lineRanking, AppModuleTypeEnum.topRanking] as any[]).includes(router.query.appModule)
     ) {
       router.replace('/home/[appModule]', '/home/categorySelection', {})
     }
