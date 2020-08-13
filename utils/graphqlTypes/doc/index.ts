@@ -517,6 +517,9 @@ export const doc = {
         ...GroupQueueFields
         product {
           ...ProductFields
+          img {
+            ...ImgFields
+          }
         }
         groupOrder {
           ...GroupOrderFields
@@ -525,6 +528,7 @@ export const doc = {
     }
     ${fragment.GroupQueueFields}
     ${fragment.ProductFields}
+    ${fragment.ImgFields}
     ${fragment.GroupOrderFields}
   `,
   updateOrder: gql`
@@ -566,8 +570,8 @@ export const doc = {
     ${fragment.CategoryFields}
   `,
   productListOrderByOrder: gql`
-      query ($orderByType: String) {
-        productListOrderByOrder (orderByType: $orderByType) {
+      query ($orderByType: String, $productInput: ProductItemInput) {
+        productListOrderByOrder (orderByType: $orderByType, productInput: $productInput) {
           list {
             rOrderProduct {
               ...ROrderProductFields

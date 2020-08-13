@@ -15,6 +15,7 @@ import {DataConfigItemInput} from '../../../../graphqlTypes/types'
 import { SalesRank } from '../SalesRank/SalesRank'
 import {UpdateShopCart} from '../../../../components/ProductItem/UpdateShopCart'
 import { isEmpty } from 'lodash'
+import {LineRanking} from '../LineRanking/LineRanking'
 
 export const homeTabsModel = modelFactory('HomeTabs', {
   homeType: '',
@@ -67,7 +68,7 @@ export const HomeTabs = ({homeType}: {homeType: string}) => {
             [AppModuleTypeEnum.themeSelection, '主题甄选'],
             [AppModuleTypeEnum.mayLike, '猜你喜欢'],
           ]) || (homeType === HomeType.group && [
-            [AppModuleTypeEnum.topRanking, '热门排行'],
+            [AppModuleTypeEnum.salesRank, '热门排行'],
             [AppModuleTypeEnum.lineRanking, '冲线排行'],
           ]) || []).filter(v => (homeTabsState?.appModuleConfig?.[v[0]])).map(v => <Tab
               key={`AppModuleTypeEnum_${v[0]}`}
@@ -86,6 +87,8 @@ export const HomeTabs = ({homeType}: {homeType: string}) => {
           && <ThemeSelection/>}
           {router.query.appModule === AppModuleTypeEnum.salesRank
           && <SalesRank/>}
+          {router.query.appModule === AppModuleTypeEnum.lineRanking
+          && <LineRanking/>}
         </main>
         <UpdateShopCart/>
         <style jsx>{`

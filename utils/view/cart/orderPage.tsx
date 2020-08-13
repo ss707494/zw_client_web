@@ -92,9 +92,7 @@ export const OrderPage = () => {
   const {state: stateSCM, actions: actionsSCM, getLoad} = useStoreModel(shopCartModel)
 
   useEffect(() => {
-    if (!stateSCM.user.id) {
-      actionsSCM.getOrderInfo()
-    }
+    actionsSCM.getOrderInfo()
   }, [])
 
   const addressData = stateSCM.dealAddressData(stateSCM)

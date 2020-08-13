@@ -1,8 +1,10 @@
 import styled from 'styled-components'
+import StarRoundedIcon from '@material-ui/icons/StarRounded'
+import StarBorderRoundedIcon from '@material-ui/icons/StarBorderRounded'
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 import React, {useEffect} from 'react'
-import {Maybe, Product, ShopCartItemInput} from '../../graphqlTypes/types'
+import {GroupQueue, Maybe, Product, ShopCartItemInput} from '../../graphqlTypes/types'
 import {dealImgUrl} from '../../tools/img'
 import {Button, Card, IconButton} from '@material-ui/core'
 import {dealMoney} from '../../tools/utils'
@@ -17,6 +19,7 @@ import {grey} from '@material-ui/core/colors'
 import {shopCartModel} from '../../view/cart'
 import {useRouter} from 'next/router'
 import {updateShopCartModel} from './UpdateShopCart'
+import {Space} from '../Box/Box'
 
 export const productModel = modelFactory('productModel', {}, {
   updateNumShopCart: async (value: ShopCartItemInput, option) => {
@@ -234,7 +237,7 @@ const OutPrice = styled.div`
 `
 const Action = styled.div`
 `
-export const GroupProductItem = ({product}: { product: Product }) => {
+export const GroupProductItem = ({product, groupQueue}: { product: Product, groupQueue?: GroupQueue }) => {
   const {state: stateMe, actions: actionsMe} = useStoreModel(meModel)
   const router = useRouter()
 
@@ -251,6 +254,19 @@ export const GroupProductItem = ({product}: { product: Product }) => {
     </GroupImg>
     <RightBox>
       <Title>{product.name}({product.groupRemark}/{product.groupAmount}{product.groupAmountUnitString}/{product.groupPrecisionString})</Title>
+      {groupQueue?.id && <div>
+        <Space h={8}/>
+        {[...Array(product.groupPrecision)].map((v, i) => i).map(value => value + 1 > (groupQueue.sumFillAmount ?? 0) ?
+            <StarBorderRoundedIcon
+                key={`clickStar${value}`}
+                fontSize={'small'}
+                style={{color: grey[700]}}
+            /> : <StarRoundedIcon
+                key={`clickStar${value}`}
+                style={{color: '#FDD334'}}
+                fontSize={'small'}
+            />)}
+      </div>}
       <MarketPrice>
         {ls('市场价')}
         <span>{dealMoney(product.priceMarket)}</span>

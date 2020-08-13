@@ -259,7 +259,7 @@ type Query {
   payCardListOneUser: [UserPayCard]
   productList(orderByInput: OrderByInput, productInput: ProductItemInput): ProductPage
   productListByIds(ids: [String]): ProductPage
-  productListOrderByOrder(orderByType: String): ProductPage
+  productListOrderByOrder(orderByType: String, productInput: ProductItemInput): ProductPage
   productsInCategory(categoryItemInput: CategoryItemInput, productItemInput: ProductItemInput): [Product]
   promoCodeList(promoCodeItemInput: PromoCodeItemInput): [PromoCode]
   refreshToken(refreshtoken: String!): AuthBody

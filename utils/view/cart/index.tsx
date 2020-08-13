@@ -10,7 +10,7 @@ import {
   UserPayCard,
 } from '../../graphqlTypes/types'
 import {PickUpTypeEnum} from '../../ss_common/enum'
-import {dealMaybeNumber, fpMergePre} from '../../tools/utils'
+import {dealMaybeNumber, fpMergePre, fpSetPre} from '../../tools/utils'
 import {setForm} from '../../tools/commonAction'
 import {doc} from '../../graphqlTypes/doc'
 import {ShopCartPage} from './shopCart'
@@ -116,8 +116,8 @@ export const shopCartModel = modelFactory('shopCartModel', {
   },
   getOrderInfo: async (value, option) => {
     const res = await option.query(doc.orderConfirmInfo)
+    option.setData(fpSetPre('user', res?.oneUser))
     option.setData(fpMergePre({
-      user: res?.oneUser,
       payCardList: res?.payCardListOneUser,
       userAddressList: res?.userAddressListOneUser,
       selfAddress: res?.getDataConfig?.value?.list ?? [],
