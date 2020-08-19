@@ -1,6 +1,13 @@
 import React, {useEffect} from 'react'
 import {HeaderTitle} from '../../../components/HeaderTitle/HeaderTitle'
-import {Button, ButtonProps, ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary} from '@material-ui/core'
+import {
+  Button,
+  ButtonProps,
+  ExpansionPanel,
+  ExpansionPanelDetails,
+  ExpansionPanelDetailsProps,
+  ExpansionPanelSummary,
+} from '@material-ui/core'
 import styled from 'styled-components'
 import {ExpandMore} from '@material-ui/icons'
 import {modelFactory} from '../../../ModelAction/modelUtil'
@@ -37,9 +44,16 @@ export const HelpCenterModel = modelFactory('HelpCenter', {
 const Box = styled.div`
   padding: 16px 0;
 `
+const ExpansionPanelDetailsCus = styled(ExpansionPanelDetails)<ExpansionPanelDetailsProps>`
+  &&& {
+    flex-direction: column;
+    padding: 0 16px;
+  }
+`
 const ListButton = styled(Button)<ButtonProps>`
   &&& {
     background: ${grey[300]};
+    margin-bottom: 16px;
     .MuiButton-label {
       justify-content: initial;
       padding-left: 8px;
@@ -75,7 +89,8 @@ export const HelpCenter = () => {
         <ExpansionPanelSummary
             expandIcon={<ExpandMore />}
         >{v?.name}</ExpansionPanelSummary>
-        <ExpansionPanelDetails>
+        <ExpansionPanelDetailsCus
+        >
           {stateHelpCenterModel?.problemListData?.[v?.id]?.map((pro: any) => <ListButton
               key={`problemListData${pro?.id}`}
               fullWidth={true}
@@ -86,7 +101,7 @@ export const HelpCenter = () => {
                 })
               }}
           >{pro?.problem}</ListButton>) }
-        </ExpansionPanelDetails>
+        </ExpansionPanelDetailsCus>
       </ExpansionPanel>)}
     </Box>
     <HelpDetail/>
