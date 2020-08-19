@@ -18,6 +18,7 @@ import {NoData} from '../../components/NoData/NoData'
 import {homeTabsModel} from '../home/components/Tabs/Tabs'
 import {HomeType} from '../home/appModule'
 import {CategoryRootName} from '../../ss_common/enum'
+import {UpdateShopCart} from '../../components/ProductItem/UpdateShopCart'
 
 export const CategoryPageModel = modelFactory('CategoryPage', {
   productList: [] as Product[],
@@ -144,6 +145,7 @@ export const CategoryPage = () => {
   return <div>
     <HeaderTitle
         title={''}
+        showCart={router.query.homeType === HomeType.home}
     />
     {!!getLoad(doc.productsInCategory) && <LinearProgress/>}
     <Breadcrumbs
@@ -185,5 +187,6 @@ export const CategoryPage = () => {
 
       </Box>
     </BScroller>
+    <UpdateShopCart/>
   </div>
 }

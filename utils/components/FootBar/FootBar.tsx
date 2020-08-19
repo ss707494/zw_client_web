@@ -1,24 +1,15 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import StorefrontIcon from '@material-ui/icons/Storefront'
 import AccountBoxIcon from '@material-ui/icons/AccountBox'
 import RedeemIcon from '@material-ui/icons/Redeem'
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 import PeopleIcon from '@material-ui/icons/People'
-import { useRouter } from 'next/router'
+import {useRouter} from 'next/router'
 import red from '@material-ui/core/colors/red'
 import {AppFootBar} from '../../ss_common/enum'
-import {useStoreModel} from '../../ModelAction/useStore'
-import {shopCartModel} from '../../view/cart'
 import {mpStyle} from '../../style/common'
 
 export const FootBar = () => {
   const router = useRouter()
-  const {state: stateShopCart, actions: actionsShopCart} = useStoreModel(shopCartModel)
-  useEffect(() => {
-    if (!stateShopCart.user.id) {
-      actionsShopCart.getList()
-    }
-  }, [])
 
   const isAct = (path: any) => router.pathname.includes(path as string)
   return (
@@ -28,7 +19,7 @@ export const FootBar = () => {
           ['逛店', <StorefrontIcon/>, `/${AppFootBar.home}`],
           ['拼团', <PeopleIcon/>, `/${AppFootBar.group}`],
           ['达人区', <RedeemIcon/>, `/${AppFootBar.card}`],
-          ['购物车', <ShoppingCartIcon/>, `/${AppFootBar.cart}`, stateShopCart.dealProductNumber(stateShopCart)],
+          // ['购物车', <ShoppingCartIcon/>, `/${AppFootBar.cart}`, stateShopCart.dealProductNumber(stateShopCart)],
           ['我', <AccountBoxIcon/>, `/${AppFootBar.me}`],
         ].map(v => (
             <section

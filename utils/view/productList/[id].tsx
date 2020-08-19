@@ -18,6 +18,7 @@ import {FilterDrawer} from './FilterDrawer'
 import {ResolverFun} from '../../commonModel/dialog'
 import {HomeType} from '../home/appModule'
 import {homeTabsModel} from '../home/components/Tabs/Tabs'
+import {UpdateShopCart} from '../../components/ProductItem/UpdateShopCart'
 
 export const sortTypeEnum = {
   nomalSort: 'nomalSort',
@@ -145,6 +146,7 @@ export const ProductList = () => {
   return <div>
     <HeaderTitle
         title={statePLM.category?.name}
+        showCart={router.query.homeType === HomeType.home}
     />
     <HeaderTab>
       <Button
@@ -182,5 +184,6 @@ export const ProductList = () => {
     </BScroller>
     <SortDrawer/>
     <FilterDrawer/>
+    <UpdateShopCart/>
   </div>
 }

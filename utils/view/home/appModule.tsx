@@ -5,7 +5,7 @@ import {Category, DataConfig, DataConfigItemInput} from '../../graphqlTypes/type
 import {modelFactory} from '../../ModelAction/modelUtil'
 import {HomeTabs, homeTabsModel} from './components/Tabs/Tabs'
 import CusCarousel from '../../components/Swipe/Swipe'
-import {BorderedInputBase} from '../../components/HeaderSearch/HeaderSearch'
+import {HeaderSearch} from '../../components/HeaderSearch/HeaderSearch'
 import {FootBar} from '../../components/FootBar/FootBar'
 import {BScroller} from '../../components/BScroll/BScroller'
 import {grey} from '@material-ui/core/colors'
@@ -68,11 +68,12 @@ export const HomeAppModule = (type?: string) => function ({
 
   return (
       <div>
+        <HeaderSearch/>
         <BScroller>
           <div className={'common_box'}>
-            <header>
-              <BorderedInputBase/>
-            </header>
+            {/*<header>*/}
+            {/*  <BorderedInputBase/>*/}
+            {/*</header>*/}
             <div className={'tip'}>
               <aside>热搜:</aside>
               {['薯条', '小龙虾'].map(value => <span key={`tip_${value}`}>{value}</span>)}

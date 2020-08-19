@@ -4,6 +4,10 @@ import {InputBaseProps} from '@material-ui/core/InputBase/InputBase'
 import {InputBase} from '@material-ui/core'
 import {Search} from '@material-ui/icons'
 import React from 'react'
+import styled from 'styled-components'
+import {mpStyle} from '../../style/common'
+import {ls} from '../../tools/dealKey'
+import { ShoppingCartIconButton } from '../ShoppingCartIconButton/ShoppingCartIconButton'
 
 export const borderedInputBaseStyles = ({palette}: any) => ({
   root: {
@@ -46,14 +50,50 @@ export const borderedInputBaseStyles = ({palette}: any) => ({
 })
 
 export const useBorderedInputBaseStyles = makeStyles(borderedInputBaseStyles, {
-  name: "BorderedInputBase",
+  name: 'BorderedInputBase',
 })
 
 export const BorderedInputBase: (props: InputBaseProps) => JSX.Element = () => {
   const styles = useBorderedInputBaseStyles()
   return <InputBase
       classes={styles}
-      placeholder={'Placeholder'}
+      placeholder={''}
       startAdornment={<Search/>}
   />
+}
+
+const Box = styled.div`
+  height: 45px;
+  box-shadow: ${mpStyle.shadow['1']};
+  display: flex;
+  justify-content: space-between;
+  padding: 0 16px;
+  align-items: center;
+`
+const Logo = styled.div`
+  > img {
+    display: none;
+    width: 20px;
+    height: 35px;
+  }
+`
+const Title = styled.div`
+  
+`
+export const HeaderSearch = () => {
+
+  return <Box>
+    <Logo>
+      <img
+          src={'/img/home/logo.png'}
+          alt=''
+      />
+    </Logo>
+    <Title>{ls('逛店')}</Title>
+    {/*<IconButton*/}
+    {/*>*/}
+    {/*  <SearchIcon/>*/}
+    {/*</IconButton>*/}
+    <ShoppingCartIconButton/>
+  </Box>
 }

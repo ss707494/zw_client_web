@@ -108,6 +108,7 @@ export type QueryProductListByIdsArgs = {
 
 
 export type QueryProductListOrderByOrderArgs = {
+  productInput?: Maybe<ProductItemInput>;
   orderByType?: Maybe<Scalars['String']>;
 };
 

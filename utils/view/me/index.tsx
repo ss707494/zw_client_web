@@ -17,7 +17,6 @@ import MonetizationOn from '@material-ui/icons/MonetizationOn'
 import PaymentIcon from '@material-ui/icons/Payment'
 import {BScroller} from '../../components/BScroll/BScroller'
 import {useRouter} from 'next/router'
-import {showMessage} from '../../components/Message/Message'
 import {dealNoAuth} from '../../components/NoAuth/NoAuth'
 
 const BasePadding = styled.div`
@@ -221,7 +220,7 @@ export default function Me() {
       </ListItem>
       <ListItem
           onClick={() => {
-            showMessage('网站建设中...')
+            router.push('/me/helpCenter')
           }}
       >
         <HelpOutlineIcon/>

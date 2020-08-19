@@ -10,6 +10,7 @@ import {Button, IconButton} from '@material-ui/core'
 import {useStoreModel} from '../../ModelAction/useStore'
 import {ls} from '../../tools/dealKey'
 import {shopCartModel} from './index'
+import {showMessage} from '../../components/Message/Message'
 
 export const ShopCartProductBox = styled.div`
   margin-bottom: 16px;
@@ -40,7 +41,7 @@ export const ShopCartProductBox = styled.div`
 `
 
 export const CartProduct = ({shopCart}: { shopCart: ShopCart }) => {
-  const {actions: actionsSCM} = useStoreModel(shopCartModel)
+  const {actions: actionsSCM, state: stateSCM} = useStoreModel(shopCartModel)
   const {actions: actionsPM} = useStoreModel(productModel)
   const product = shopCart.product
 
@@ -104,6 +105,9 @@ export const CartProduct = ({shopCart}: { shopCart: ShopCart }) => {
             size={'small'}
             variant={'outlined'}
             onClick={async () => {
+              if (stateSCM.shopCartList.findIndex(v => v.product?.id === shopCart.product?.id) > -1) {
+                return showMessage('该商品已在购物车中')
+              }
               await actionsPM.updateShopCart({
                 isNext: 0,
                 id: shopCart.id,

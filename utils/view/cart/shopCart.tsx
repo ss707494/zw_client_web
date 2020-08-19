@@ -14,6 +14,7 @@ import {pageTypeEnum, shopCartModel} from './index'
 import {dealNoAuth} from '../../components/NoAuth/NoAuth'
 import {Space} from '../../components/Box/Box'
 import {InputPromoCodeDialog, inputPromoCodeModel} from './components/InputPromoCode'
+import CloseIcon from '@material-ui/icons/Close'
 
 const BoxContain = styled.section`
   padding: 0 20px;
@@ -45,7 +46,7 @@ const FixFooter = styled(Box)`
 
 export const ShopCartPage = () => {
   const {state: stateSCM, actions: actionsSCM, getLoad} = useStoreModel(shopCartModel)
-  const {actions: actionsInputPromoCodeModel, state: stateInputPromoCodeModel} = useStoreModel(inputPromoCodeModel)
+  const {actions: actionsInputPromoCodeModel} = useStoreModel(inputPromoCodeModel)
 
   useEffect(() => {
     if (stateSCM.shopCartList.length === 0) {
@@ -84,6 +85,7 @@ export const ShopCartPage = () => {
   return <div>
     <HeaderTitle
         title={'购物车'}
+        LeftIcon={CloseIcon}
     />
     {dealNoAuth(<>
       {(!!getLoad(doc.userShopCartList) && <LinearProgress/>) || <div style={{height: '4px'}}/>}
