@@ -19,6 +19,7 @@ import {grey} from '@material-ui/core/colors'
 import {shopCartModel} from '../../view/cart'
 import {useRouter} from 'next/router'
 import {updateShopCartModel} from './UpdateShopCart'
+import {Space} from '../Box/Box'
 
 export const productModel = modelFactory('productModel', {}, {
   updateNumShopCart: async (value: ShopCartItemInput, option) => {
@@ -233,7 +234,9 @@ const MarketPrice = styled.div`
 const OutPrice = styled.div`
   margin-top: 8px;
   color: ${mpStyle.red};
-  flex-grow: 1;
+`
+const Star = styled.div`
+    flex-grow: 1;
 `
 const Action = styled.div`
 `
@@ -255,20 +258,7 @@ export const GroupProductItem = ({product, groupQueue}: { product: Product, grou
     <RightBox>
       <Title>
         {product.name}({product.groupRemark}/{product.groupAmount}{product.groupAmountUnitString}/{product.groupPrecisionString})
-          {groupQueue?.id && <>
-            {[...Array(product.groupPrecision)].map((v, i) => i).map(value => value + 1 > (groupQueue.sumFillAmount ?? 0) ?
-                <StarBorderRoundedIcon
-                    key={`clickStar${value}`}
-                    fontSize={'small'}
-                    style={{color: grey[700]}}
-                /> : <StarRoundedIcon
-                    key={`clickStar${value}`}
-                    style={{color: '#FDD334'}}
-                    fontSize={'small'}
-                />)}
-          </>}
       </Title>
-
       <MarketPrice>
         {ls('市场价')}
         <span>{dealMoney(product.priceMarket)}</span>
@@ -277,6 +267,21 @@ export const GroupProductItem = ({product, groupQueue}: { product: Product, grou
         {ls('基准价格')}
         <span>{dealMoney(product.priceOut)}</span>
       </OutPrice>
+      <Star>
+        {groupQueue?.id && <div>
+          <Space h={8}/>
+          {[...Array(product.groupPrecision)].map((v, i) => i).map(value => value + 1 > (groupQueue.sumFillAmount ?? 0) ?
+              <StarBorderRoundedIcon
+                  key={`clickStar${value}`}
+                  fontSize={'small'}
+                  style={{color: grey[700]}}
+              /> : <StarRoundedIcon
+                  key={`clickStar${value}`}
+                  style={{color: '#FDD334'}}
+                  fontSize={'small'}
+              />)}
+        </div>}
+      </Star>
       <Action>
         <Button
             variant={'contained'}

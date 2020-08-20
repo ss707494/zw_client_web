@@ -8,7 +8,7 @@ import styled from 'styled-components'
 import {ls} from '../../../../tools/dealKey'
 import {grey} from '@material-ui/core/colors'
 import {ProductItemOneRow} from '../../../../components/ProductItem/ProductItem'
-import {differenceInDays} from 'date-fns'
+import {differenceInHours, differenceInMinutes} from 'date-fns'
 
 const promotionFlashSaleModel = modelFactory('promotionFlashSaleModel', {
   limitTimeData: [] as any[],
@@ -59,8 +59,10 @@ export const PromotionFlashSale = () => {
     <Tip>
       <main>{ls('限时选购')}</main>
       <section>{ls('剩余')}</section>
-      <span>{differenceInDays(new Date(statePromotionFlashSale.limitTimeData?.[0]?.endTime), new Date())}</span>
-      <section>{ls('天')}</section>
+      <span>{`${differenceInHours(new Date(statePromotionFlashSale.limitTimeData?.[0]?.endTime ?? ''), new Date())}`}</span>
+      <section>{ls('小时')}</section>
+      <span>{`${differenceInMinutes(new Date(statePromotionFlashSale.limitTimeData?.[0]?.endTime ?? ''), new Date()) % 60}`}</span>
+      <section>{ls('分钟')}</section>
       {/*<span>0</span>*/}
       {/*:*/}
       {/*<span>0</span>*/}
