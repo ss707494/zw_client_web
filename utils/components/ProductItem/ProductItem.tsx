@@ -254,21 +254,19 @@ export const GroupProductItem = ({product, groupQueue}: { product: Product, grou
     </GroupImg>
     <RightBox>
       <Title>
-        <span>
         {product.name}({product.groupRemark}/{product.groupAmount}{product.groupAmountUnitString}/{product.groupPrecisionString})
-        </span>
-        {groupQueue?.id && <div>
-          {[...Array(product.groupPrecision)].map((v, i) => i).map(value => value + 1 > (groupQueue.sumFillAmount ?? 0) ?
-              <StarBorderRoundedIcon
-                  key={`clickStar${value}`}
-                  fontSize={'small'}
-                  style={{color: grey[700]}}
-              /> : <StarRoundedIcon
-                  key={`clickStar${value}`}
-                  style={{color: '#FDD334'}}
-                  fontSize={'small'}
-              />)}
-        </div>}
+          {groupQueue?.id && <>
+            {[...Array(product.groupPrecision)].map((v, i) => i).map(value => value + 1 > (groupQueue.sumFillAmount ?? 0) ?
+                <StarBorderRoundedIcon
+                    key={`clickStar${value}`}
+                    fontSize={'small'}
+                    style={{color: grey[700]}}
+                /> : <StarRoundedIcon
+                    key={`clickStar${value}`}
+                    style={{color: '#FDD334'}}
+                    fontSize={'small'}
+                />)}
+          </>}
       </Title>
 
       <MarketPrice>

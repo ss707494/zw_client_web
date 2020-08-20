@@ -5,10 +5,7 @@ import React, {useEffect} from 'react'
 import {useRouter} from 'next/router'
 import {useStoreModel} from '../../ModelAction/useStore'
 import {shopCartModel} from '../../view/cart'
-import styled from 'styled-components'
 
-const IconButtonCus = styled(IconButton)`
-`
 type Color = 'inherit' | 'primary' | 'secondary' | 'action' | 'disabled' | 'error'
 
 export const ShoppingCartIconButton = ({color, htmlColor}: {color?: Color, htmlColor?: string}) => {
@@ -20,7 +17,7 @@ export const ShoppingCartIconButton = ({color, htmlColor}: {color?: Color, htmlC
     }
   }, [])
 
-  return <IconButtonCus
+  return <IconButton
       onClick={() => {
         router.push(`/${AppFootBar.cart}`)
       }}
@@ -33,5 +30,5 @@ export const ShoppingCartIconButton = ({color, htmlColor}: {color?: Color, htmlC
           htmlColor={htmlColor}
       />
     </Badge>
-  </IconButtonCus>
+  </IconButton>
 }
