@@ -154,6 +154,7 @@ export const CardType = () => {
   return <div>
     <HeaderTitle
         title={ls('达人专区')}
+        showCart={true}
     />
     <Tabs
         variant={'fullWidth'}

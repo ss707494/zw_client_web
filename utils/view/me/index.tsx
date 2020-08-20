@@ -18,6 +18,7 @@ import PaymentIcon from '@material-ui/icons/Payment'
 import {BScroller} from '../../components/BScroll/BScroller'
 import {useRouter} from 'next/router'
 import {dealNoAuth} from '../../components/NoAuth/NoAuth'
+import {ShoppingCartIconButton} from '../../components/ShoppingCartIconButton/ShoppingCartIconButton'
 
 const BasePadding = styled.div`
   padding: 0 20px;
@@ -34,7 +35,7 @@ const Header = styled.div`
   color: #fff;
   > header {
     font-size: 28px;
-    grid-area: 1/1/2/3;
+    grid-area: 1/1/2/2;
     align-self: end;
     margin-bottom: 20px;
   }
@@ -99,6 +100,11 @@ const Empty = styled.div`
     }
   }
 `
+const ShopIcon = styled.div`
+  align-self: end;
+  justify-self: end;
+  margin: 0 16px 16px;
+`
 
 export default function Me() {
   const router = useRouter()
@@ -109,9 +115,12 @@ export default function Me() {
     }
   }, [])
   return <Box>
-    {dealNoAuth(<BScroller>
+    {dealNoAuth(<BScroller
+        boxHeight={'calc(100vh - 45px)'}
+    >
       <Header>
         <header>{ls('您好,')}{stateMe.user.userInfo?.name}</header>
+        <ShopIcon><ShoppingCartIconButton htmlColor={'white'}/></ShopIcon>
         <section>{stateMe.user.userInfo?.phone}</section>
         <section>{stateMe.user.userInfo?.email}</section>
         <aside>
@@ -231,7 +240,7 @@ export default function Me() {
           <ArrowForwardIosIcon/>
         </aside>
       </ListItem>
-      <section style={{height: '100px', width: '2px'}}/>
+      <section style={{height: '200px', width: '2px'}}/>
     </BScroller>)
     }
     <FootBar/>

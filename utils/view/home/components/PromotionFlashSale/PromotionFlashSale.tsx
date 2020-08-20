@@ -5,9 +5,10 @@ import {fpMergePre} from '../../../../tools/utils'
 import {useStoreModel} from '../../../../ModelAction/useStore'
 import {Product} from '../../../../graphqlTypes/types'
 import styled from 'styled-components'
-import { ls } from '../../../../tools/dealKey'
+import {ls} from '../../../../tools/dealKey'
 import {grey} from '@material-ui/core/colors'
 import {ProductItemOneRow} from '../../../../components/ProductItem/ProductItem'
+import {differenceInDays} from 'date-fns'
 
 const promotionFlashSaleModel = modelFactory('promotionFlashSaleModel', {
   limitTimeData: [] as any[],
@@ -49,18 +50,21 @@ export const PromotionFlashSale = () => {
   useEffect(() => {
     actionsPromotionFlashSale.getData()
   }, [])
+  // console.log(statePromotionFlashSale.limitTimeData?.[0]?.endTime)
+  // console.log(statePromotionFlashSale.productList)
+  // console.log(differenceInMilliseconds(new Date(statePromotionFlashSale.limitTimeData?.[0]?.endTime), new Date()))
+  // console.log(differenceInDays(new Date(statePromotionFlashSale.limitTimeData?.[0]?.endTime), new Date()))
 
   return <div>
     <Tip>
       <main>{ls('限时选购')}</main>
-      <span>0</span>
-      <span>0</span>
-      :
-      <span>0</span>
-      <span>0</span>
-      :
-      <span>0</span>
-      <span>0</span>
+      <section>{ls('剩余')}</section>
+      <span>{differenceInDays(new Date(statePromotionFlashSale.limitTimeData?.[0]?.endTime), new Date())}</span>
+      <section>{ls('天')}</section>
+      {/*<span>0</span>*/}
+      {/*:*/}
+      {/*<span>0</span>*/}
+      {/*<span>0</span>*/}
     </Tip>
     {statePromotionFlashSale.productList.map(product => <ProductItemOneRow
         key={`ProductItemOneRow_${product.id}`}

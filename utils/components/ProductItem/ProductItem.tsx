@@ -19,7 +19,6 @@ import {grey} from '@material-ui/core/colors'
 import {shopCartModel} from '../../view/cart'
 import {useRouter} from 'next/router'
 import {updateShopCartModel} from './UpdateShopCart'
-import {Space} from '../Box/Box'
 
 export const productModel = modelFactory('productModel', {}, {
   updateNumShopCart: async (value: ShopCartItemInput, option) => {
@@ -76,7 +75,7 @@ export const ProductPrice = ({product, priceOutTip}: { product?: Maybe<Product>,
 }
 
 export const ProductItem = ({product}: { product: Product }) => {
-  const {actions:actionsUpdateShopCartModel} = useStoreModel(updateShopCartModel)
+  const {actions: actionsUpdateShopCartModel} = useStoreModel(updateShopCartModel)
   const {actions: actionsShopCart} = useStoreModel(shopCartModel)
   const {state: stateMe, actions: actionsMe} = useStoreModel(meModel)
   useEffect(() => {
@@ -155,7 +154,7 @@ const Bun = styled.div`
   }
 `
 export const ProductItemOneRow = ({product}: { product: Product }) => {
-  const {actions:actionsUpdateShopCartModel} = useStoreModel(updateShopCartModel)
+  const {actions: actionsUpdateShopCartModel} = useStoreModel(updateShopCartModel)
   const {state: stateMe, actions: actionsMe} = useStoreModel(meModel)
   const {actions: actionsPM} = useStoreModel(productModel)
   const {actions: actionsShopCart} = useStoreModel(shopCartModel)
@@ -222,6 +221,7 @@ const RightBox = styled.div`
 `
 const Title = styled.div`
   font-weight: bold;
+  display: flex;
 `
 const MarketPrice = styled.div`
   margin-top: 8px;
@@ -253,20 +253,24 @@ export const GroupProductItem = ({product, groupQueue}: { product: Product, grou
            alt=""/>
     </GroupImg>
     <RightBox>
-      <Title>{product.name}({product.groupRemark}/{product.groupAmount}{product.groupAmountUnitString}/{product.groupPrecisionString})</Title>
-      {groupQueue?.id && <div>
-        <Space h={8}/>
-        {[...Array(product.groupPrecision)].map((v, i) => i).map(value => value + 1 > (groupQueue.sumFillAmount ?? 0) ?
-            <StarBorderRoundedIcon
-                key={`clickStar${value}`}
-                fontSize={'small'}
-                style={{color: grey[700]}}
-            /> : <StarRoundedIcon
-                key={`clickStar${value}`}
-                style={{color: '#FDD334'}}
-                fontSize={'small'}
-            />)}
-      </div>}
+      <Title>
+        <span>
+        {product.name}({product.groupRemark}/{product.groupAmount}{product.groupAmountUnitString}/{product.groupPrecisionString})
+        </span>
+        {groupQueue?.id && <div>
+          {[...Array(product.groupPrecision)].map((v, i) => i).map(value => value + 1 > (groupQueue.sumFillAmount ?? 0) ?
+              <StarBorderRoundedIcon
+                  key={`clickStar${value}`}
+                  fontSize={'small'}
+                  style={{color: grey[700]}}
+              /> : <StarRoundedIcon
+                  key={`clickStar${value}`}
+                  style={{color: '#FDD334'}}
+                  fontSize={'small'}
+              />)}
+        </div>}
+      </Title>
+
       <MarketPrice>
         {ls('市场价')}
         <span>{dealMoney(product.priceMarket)}</span>
