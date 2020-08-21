@@ -10,16 +10,26 @@ import {grey} from '@material-ui/core/colors'
 import {ProductItemOneRow} from '../../../../components/ProductItem/ProductItem'
 import {differenceInHours, differenceInMinutes} from 'date-fns'
 
+const getNowSale = (list: any[]) => {
+  const now = new Date().getTime()
+  return list?.find((v: any) => {
+    return now > new Date(v.startTime).getTime() &&
+        now < new Date(v.endTime).getTime()
+  }) ?? {}
+}
+
 const promotionFlashSaleModel = modelFactory('promotionFlashSaleModel', {
   limitTimeData: [] as any[],
+  nowLimitData: {} as any,
   productList: [] as Product[],
 }, {
   getData: async (value, option) => {
     const res = await option.query(doc.limitTimeData)
     const productRes = await option.query(doc.productListByIds, {
-      ids: res?.limitTimeData?.value?.list?.[0]?.selectProductList ?? [],
+      ids: getNowSale(res?.limitTimeData?.value?.list)?.selectProductList ?? [],
     })
     option.setData(fpMergePre({
+      nowLimitData: getNowSale(res?.limitTimeData?.value?.list),
       limitTimeData: res?.limitTimeData?.value?.list || [],
       productList: productRes?.productListByIds?.list ?? [],
     }))
@@ -56,21 +66,27 @@ export const PromotionFlashSale = () => {
   // console.log(differenceInDays(new Date(statePromotionFlashSale.limitTimeData?.[0]?.endTime), new Date()))
 
   return <div>
-    <Tip>
-      <main>{ls('限时选购')}</main>
-      <section>{ls('剩余')}</section>
-      <span>{`${differenceInHours(new Date(statePromotionFlashSale.limitTimeData?.[0]?.endTime ?? ''), new Date())}`}</span>
-      <section>{ls('小时')}</section>
-      <span>{`${differenceInMinutes(new Date(statePromotionFlashSale.limitTimeData?.[0]?.endTime ?? ''), new Date()) % 60}`}</span>
-      <section>{ls('分钟')}</section>
-      {/*<span>0</span>*/}
-      {/*:*/}
-      {/*<span>0</span>*/}
-      {/*<span>0</span>*/}
-    </Tip>
-    {statePromotionFlashSale.productList.map(product => <ProductItemOneRow
-        key={`ProductItemOneRow_${product.id}`}
-        product={product}
-    />)}
+    {statePromotionFlashSale.nowLimitData?.id &&
+    <>
+      <Tip>
+        <main>{ls('限时选购')}</main>
+        <section>{ls('剩余')}</section>
+        <span>{`${differenceInHours(new Date(statePromotionFlashSale.nowLimitData?.endTime ?? ''), new Date())}`}</span>
+        <section>{ls('小时')}</section>
+        <span>{`${differenceInMinutes(new Date(statePromotionFlashSale.nowLimitData?.endTime ?? ''), new Date()) % 60}`}</span>
+        <section>{ls('分钟')}</section>
+        {/*<span>0</span>*/}
+        {/*:*/}
+        {/*<span>0</span>*/}
+        {/*<span>0</span>*/}
+      </Tip>
+      {statePromotionFlashSale.productList.map(product => <ProductItemOneRow
+          key={`ProductItemOneRow_${product.id}`}
+          product={product}
+      />)}
+    </>
+    || <div>暂无限时抢购商品,敬请期待</div>
+    }
+
   </div>
 }
