@@ -1,13 +1,15 @@
 import {blue, blueGrey} from '@material-ui/core/colors'
 import makeStyles from '@material-ui/core/styles/makeStyles'
 import {InputBaseProps} from '@material-ui/core/InputBase/InputBase'
-import {InputBase} from '@material-ui/core'
+import {IconButton, InputBase} from '@material-ui/core'
 import {Search} from '@material-ui/icons'
 import React from 'react'
 import styled from 'styled-components'
 import {mpStyle} from '../../style/common'
 import {ls} from '../../tools/dealKey'
 import { ShoppingCartIconButton } from '../ShoppingCartIconButton/ShoppingCartIconButton'
+import {useRouter} from 'next/router'
+import {HomeType} from '../../view/home/appModule'
 
 export const borderedInputBaseStyles = ({palette}: any) => ({
   root: {
@@ -65,9 +67,8 @@ export const BorderedInputBase: (props: InputBaseProps) => JSX.Element = () => {
 const Box = styled.div`
   height: 45px;
   box-shadow: ${mpStyle.shadow['1']};
-  display: flex;
-  justify-content: space-between;
-  padding: 0 16px;
+  display: grid;
+  grid-template-columns: 96px 1fr 96px;
   align-items: center;
 `
 const Logo = styled.div`
@@ -78,10 +79,13 @@ const Logo = styled.div`
   }
 `
 const Title = styled.div`
-  
+  justify-self: center;
 `
-export const HeaderSearch = () => {
-
+const Action = styled.div`
+  display: flex;
+`
+export const HeaderSearch = ({homeType}: {homeType?: string}) => {
+  const router = useRouter()
   return <Box>
     <Logo>
       <img
@@ -89,11 +93,16 @@ export const HeaderSearch = () => {
           alt=''
       />
     </Logo>
-    <Title>{ls('逛店')}</Title>
-    {/*<IconButton*/}
-    {/*>*/}
-    {/*  <SearchIcon/>*/}
-    {/*</IconButton>*/}
-    <ShoppingCartIconButton/>
+    <Title>{ls(homeType === HomeType.group ? '拼团' : '逛店')}</Title>
+    <Action>
+      <IconButton
+          onClick={() => {
+            router.push('/searchPage')
+          }}
+      >
+        <Search />
+      </IconButton>
+      <ShoppingCartIconButton/>
+    </Action>
   </Box>
 }

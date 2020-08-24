@@ -42,15 +42,15 @@ export function Login() {
             actions.goToSignin()
           }}
       >{ls('注册')}</SigninSubButton>
-      <SigninSubButton
-          style={{marginTop: '10px'}}
-          size={'small'}
-          color={'secondary'}
-          variant={'text'}
-          onClick={() => {
-            actions.goHome()
-          }}
-      >{ls('游客访问')}</SigninSubButton>
+      {/*<SigninSubButton*/}
+      {/*    style={{marginTop: '10px'}}*/}
+      {/*    size={'small'}*/}
+      {/*    color={'secondary'}*/}
+      {/*    variant={'text'}*/}
+      {/*    onClick={() => {*/}
+      {/*      actions.goHome()*/}
+      {/*    }}*/}
+      {/*>{ls('游客访问')}</SigninSubButton>*/}
     </div>
   </Box>
 }

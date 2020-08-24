@@ -135,7 +135,7 @@ const LeftBox = styled.div`
   flex-direction: column;
   flex-grow: 1;
 `
-const Stock = styled.div`
+const Tip = styled.div`
   margin-top: 16px;
   border-radius: 8px;
   padding: 2px 6px;
@@ -154,7 +154,7 @@ const Bun = styled.div`
     }
   }
 `
-export const ProductItemOneRow = ({product}: { product: Product }) => {
+export const ProductItemOneRow = ({product, sumOrderTip = '', hideAction = false, showSumOrder = false}: { product: Product, sumOrderTip?: string, hideAction?: boolean, showSumOrder?: boolean }) => {
   const {actions: actionsUpdateShopCartModel} = useStoreModel(updateShopCartModel)
   const {state: stateMe, actions: actionsMe} = useStoreModel(meModel)
   const {actions: actionsPM} = useStoreModel(productModel)
@@ -174,10 +174,11 @@ export const ProductItemOneRow = ({product}: { product: Product }) => {
     <LeftBox>
       <main>{product.name}{product.weight}{product.unit}</main>
       {/*<Stock>{ls('当前剩余')}: {product.stock}</Stock>*/}
+      {showSumOrder && <Tip>{sumOrderTip}{ls('销量')}: {product.sumOrder}</Tip>}
       <Price>
         <ProductPrice product={product}/>
       </Price>
-      {stateMe.user?.id && <Bun>
+      {!hideAction && stateMe.user?.id && <Bun>
         <Button
             fullWidth={true}
             color={'secondary'}
@@ -240,7 +241,16 @@ const Star = styled.div`
 `
 const Action = styled.div`
 `
-export const GroupProductItem = ({product, groupQueue}: { product: Product, groupQueue?: GroupQueue }) => {
+const OrderTip = styled.div`
+  margin-top: 16px;
+  border-radius: 8px;
+  padding: 2px 6px;
+  background: ${grey[800]};
+  color: white;
+  width: max-content;
+`
+
+export const GroupProductItem = ({product, groupQueue, sumOrderTip = '', showSumOrder = false}: { product: Product, groupQueue?: GroupQueue, sumOrderTip?: string, showSumOrder?: boolean }) => {
   const {state: stateMe, actions: actionsMe} = useStoreModel(meModel)
   const router = useRouter()
 
@@ -259,6 +269,7 @@ export const GroupProductItem = ({product, groupQueue}: { product: Product, grou
       <Title>
         {product.name}({product.groupRemark}/{product.groupAmount}{product.groupAmountUnitString}/{product.groupPrecisionString})
       </Title>
+      {showSumOrder && <OrderTip>{sumOrderTip}{ls('销量')}: {product.sumOrder}</OrderTip>}
       <MarketPrice>
         {ls('市场价')}
         <span>{dealMoney(product.priceMarket)}</span>

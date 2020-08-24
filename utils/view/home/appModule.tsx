@@ -68,16 +68,16 @@ export const HomeAppModule = (type?: string) => function ({
 
   return (
       <div>
-        <HeaderSearch/>
+        <HeaderSearch homeType={type ?? HomeType.home}/>
         <BScroller>
           <div className={'common_box'}>
             {/*<header>*/}
             {/*  <BorderedInputBase/>*/}
             {/*</header>*/}
-            <div className={'tip'}>
-              <aside>热搜:</aside>
-              {['薯条', '小龙虾'].map(value => <span key={`tip_${value}`}>{value}</span>)}
-            </div>
+            {/*<div className={'tip'}>*/}
+            {/*  <aside>热搜:</aside>*/}
+            {/*  {['薯条', '小龙虾'].map(value => <span key={`tip_${value}`}>{value}</span>)}*/}
+            {/*</div>*/}
             <div className={'cusCarousel'}>
               <CusCarousel
                   height={'160px'}

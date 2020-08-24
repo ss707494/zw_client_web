@@ -11,6 +11,7 @@ import {useStoreModel} from '../../ModelAction/useStore'
 import {ls} from '../../tools/dealKey'
 import {shopCartModel} from './index'
 import {showMessage} from '../../components/Message/Message'
+import {updateShopCartModel} from '../../components/ProductItem/UpdateShopCart'
 
 export const ShopCartProductBox = styled.div`
   margin-bottom: 16px;
@@ -43,6 +44,7 @@ export const ShopCartProductBox = styled.div`
 export const CartProduct = ({shopCart}: { shopCart: ShopCart }) => {
   const {actions: actionsSCM, state: stateSCM} = useStoreModel(shopCartModel)
   const {actions: actionsPM} = useStoreModel(productModel)
+  const {actions: actionsUpdateShopCartModel} = useStoreModel(updateShopCartModel)
   const product = shopCart.product
 
   return <ShopCartProductBox>
@@ -104,15 +106,27 @@ export const CartProduct = ({shopCart}: { shopCart: ShopCart }) => {
         <Button
             size={'small'}
             variant={'outlined'}
+            // onClick={async () => {
+            //   if (stateSCM.shopCartList.findIndex(v => v.product?.id === shopCart.product?.id) > -1) {
+            //     return showMessage('该商品已在购物车中')
+            //   }
+            //   await actionsPM.updateShopCart({
+            //     isNext: 0,
+            //     id: shopCart.id,
+            //   })
+            //   actionsSCM.getList()
+            // }}
             onClick={async () => {
-              if (stateSCM.shopCartList.findIndex(v => v.product?.id === shopCart.product?.id) > -1) {
-                return showMessage('该商品已在购物车中')
+              const res = await actionsUpdateShopCartModel.openClick()
+              if (res?.num > 0) {
+                if ((await actionsPM.updateNumShopCart({
+                  product,
+                  number: ~~res?.num,
+                }))?.updateNumShopCart?.id) {
+                  showMessage('操作成功')
+                  actionsSCM.getList()
+                }
               }
-              await actionsPM.updateShopCart({
-                isNext: 0,
-                id: shopCart.id,
-              })
-              actionsSCM.getList()
             }}
         >{ls('加入购物车')}</Button>
       </>}

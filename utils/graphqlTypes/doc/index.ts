@@ -1,6 +1,6 @@
 import {gql} from 'apollo-boost'
 import {fragment} from './fragment'
-import {DictTypeEnum} from '../../ss_common/enum'
+import {DictTypeEnum, PromoCodeTypeEnum} from '../../ss_common/enum'
 
 export const getUserListDoc = gql`
   query refactored643($data: UserListInput!) {
@@ -570,23 +570,68 @@ export const doc = {
     ${fragment.CategoryFields}
   `,
   productListOrderByOrder: gql`
-      query ($orderByType: String, $productInput: ProductItemInput) {
-        productListOrderByOrder (orderByType: $orderByType, productInput: $productInput) {
-          list {
-            rOrderProduct {
-              ...ROrderProductFields
-            }
-            ...ProductFields
-            img {
-              ...ImgFields
-            }
+    query ($orderByType: String, $productInput: ProductItemInput) {
+      productListOrderByOrder (orderByType: $orderByType, productInput: $productInput) {
+        list {
+          rOrderProduct {
+            ...ROrderProductFields
           }
-          total
+          ...ProductFields
+          img {
+            ...ImgFields
+          }
+        }
+        total
+      }
+    }
+    ${fragment.ProductFields}
+    ${fragment.ImgFields}
+    ${fragment.ROrderProductFields}
+  `,
+  searchData: gql`
+    query ($keyword: String) {
+      productList(productInput: { name: $keyword }) {
+        total
+        list {
+          ...ProductFields
+          img {
+            ...ImgFields
+          }
         }
       }
-      ${fragment.ProductFields}
-      ${fragment.ImgFields}
-      ${fragment.ROrderProductFields}
+      groupProductList: productList(productInput: { name: $keyword, isGroup: 1 }) {
+        total
+        list {
+          ...ProductFields
+          img {
+            ...ImgFields
+          }
+        }
+      }
+      darenCardPromoCodeList: promoCodeList(promoCodeItemInput: {
+        promoCodeType: "${PromoCodeTypeEnum.DarenCard}",
+        title: $keyword,
+      }) {
+        ...PromoCodeFields
+      }
+      promoCodePromoCodeList: promoCodeList(promoCodeItemInput: {
+        promoCodeType: "${PromoCodeTypeEnum.PromoCode}",
+        title: $keyword,
+      }) {
+        ...PromoCodeFields
+      }
+      oneUser {
+        ...UserFields
+        userInfo {
+          ...UserInfoFields
+        }
+      }
+    }
+    ${fragment.UserFields}
+    ${fragment.UserInfoFields}
+    ${fragment.ProductFields}
+    ${fragment.ImgFields}
+    ${fragment.PromoCodeFields}
   `,
 }
 

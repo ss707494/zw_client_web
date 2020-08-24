@@ -8,20 +8,32 @@ import {Maybe} from '../../graphqlTypes/types'
 import {BoxProps} from '@material-ui/core/Box/Box'
 import {ReactComponentLike} from 'prop-types'
 import {ShoppingCartIconButton} from '../ShoppingCartIconButton/ShoppingCartIconButton'
+import {Search} from '@material-ui/icons'
 
 const Contain = styled(Box)<BoxProps>`
   display: grid;
-  grid-template-columns: 48px 1fr 48px;
+  grid-template-columns: 96px 1fr 96px;
   justify-items: center;
   height: 60px;
   align-items: center;
 `
-export const HeaderTitle = ({title = '', backCall = () => {}, showCart = false, LeftIcon = ArrowBackIosIcon}: {title?: Maybe<string>, backCall?: Function, showCart?: boolean, LeftIcon?: ReactComponentLike}) => {
+const LeftIconButton = styled(IconButton)`
+  justify-self: start;
+`
+const Action = styled.div`
+  justify-self: end;
+  display: flex;
+  
+`
+export const HeaderTitle = ({title = '', backCall = () => {}, showCart = false, LeftIcon = ArrowBackIosIcon, hideLeft = false, showSearch = false}: {title?: Maybe<string>, backCall?: Function, showCart?: boolean, showSearch?: boolean, LeftIcon?: ReactComponentLike, hideLeft?: boolean}) => {
   const router = useRouter()
 
   return <Contain
       boxShadow={1}>
-    <IconButton
+    <LeftIconButton
+        style={hideLeft && {
+          visibility: 'hidden',
+        } || {}}
         onClick={() => {
           if (!(backCall && backCall())) {
             router.back()
@@ -29,10 +41,16 @@ export const HeaderTitle = ({title = '', backCall = () => {}, showCart = false, 
         }}
     >
       <LeftIcon/>
-    </IconButton>
+    </LeftIconButton>
     <main>
       {ls(title)}
     </main>
-    {showCart && <ShoppingCartIconButton/>}
+    <Action>
+      {showSearch && <IconButton
+      >
+        <Search />
+      </IconButton>}
+      {showCart && <ShoppingCartIconButton/>}
+    </Action>
   </Contain>
 }

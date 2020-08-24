@@ -12,24 +12,39 @@ import {differenceInHours, differenceInMinutes} from 'date-fns'
 
 const getNowSale = (list: any[]) => {
   const now = new Date().getTime()
-  return list?.find((v: any) => {
+  const saleOne = list?.find((v: any) => {
     return now > new Date(v.startTime).getTime() &&
         now < new Date(v.endTime).getTime()
   }) ?? {}
+  if (saleOne?.id) {
+    return {
+      data: saleOne,
+      isNext: false,
+    }
+  } else {
+    return {
+      data: list?.filter(v => new Date(v.startTime).getTime() > now)?.sort((a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime())?.[0] ?? {},
+      isNext: true,
+    }
+  }
 }
 
 const promotionFlashSaleModel = modelFactory('promotionFlashSaleModel', {
   limitTimeData: [] as any[],
   nowLimitData: {} as any,
   productList: [] as Product[],
+  isNext: false,
 }, {
   getData: async (value, option) => {
     const res = await option.query(doc.limitTimeData)
+    const nowSaleData = getNowSale(res?.limitTimeData?.value?.list)
+    console.log(nowSaleData)
     const productRes = await option.query(doc.productListByIds, {
-      ids: getNowSale(res?.limitTimeData?.value?.list)?.selectProductList ?? [],
+      ids: nowSaleData?.data?.selectProductList ?? [],
     })
     option.setData(fpMergePre({
-      nowLimitData: getNowSale(res?.limitTimeData?.value?.list),
+      nowLimitData: nowSaleData.data,
+      isNext: nowSaleData.isNext,
       limitTimeData: res?.limitTimeData?.value?.list || [],
       productList: productRes?.productListByIds?.list ?? [],
     }))
@@ -60,16 +75,12 @@ export const PromotionFlashSale = () => {
   useEffect(() => {
     actionsPromotionFlashSale.getData()
   }, [])
-  // console.log(statePromotionFlashSale.limitTimeData?.[0]?.endTime)
-  // console.log(statePromotionFlashSale.productList)
-  // console.log(differenceInMilliseconds(new Date(statePromotionFlashSale.limitTimeData?.[0]?.endTime), new Date()))
-  // console.log(differenceInDays(new Date(statePromotionFlashSale.limitTimeData?.[0]?.endTime), new Date()))
 
   return <div>
     {statePromotionFlashSale.nowLimitData?.id &&
     <>
       <Tip>
-        <main>{ls('限时选购')}</main>
+        <main>{statePromotionFlashSale.isNext && ls('距离下次抢购') || ls('限时选购')}</main>
         <section>{ls('剩余')}</section>
         <span>{`${differenceInHours(new Date(statePromotionFlashSale.nowLimitData?.endTime ?? ''), new Date())}`}</span>
         <section>{ls('小时')}</section>
@@ -83,9 +94,10 @@ export const PromotionFlashSale = () => {
       {statePromotionFlashSale.productList.map(product => <ProductItemOneRow
           key={`ProductItemOneRow_${product.id}`}
           product={product}
+          hideAction={statePromotionFlashSale.isNext}
       />)}
     </>
-    || <div>暂无限时抢购商品,敬请期待</div>
+    || <div>暂无限时抢购，敬请期待</div>
     }
 
   </div>

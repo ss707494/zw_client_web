@@ -15,6 +15,7 @@ import {dealNoAuth} from '../../components/NoAuth/NoAuth'
 import {Space} from '../../components/Box/Box'
 import {InputPromoCodeDialog, inputPromoCodeModel} from './components/InputPromoCode'
 import CloseIcon from '@material-ui/icons/Close'
+import {UpdateShopCart} from '../../components/ProductItem/UpdateShopCart'
 
 const BoxContain = styled.section`
   padding: 0 20px;
@@ -179,6 +180,7 @@ export const ShopCartPage = () => {
             onClick={() => actionsSCM.updatePageType(pageTypeEnum.order)}
         >去结算</Button>
       </FixFooter>
+      <UpdateShopCart/>
     </>)}
   </div>
 }

@@ -195,6 +195,7 @@ type Product {
   shopCart: [ShopCart]
   sort: Float
   stock: Float
+  sumOrder: Float
   unit: String
   unitString: String
   updateTime: Timestamp
@@ -609,6 +610,7 @@ input ProductItemInput {
   shopCart: [ShopCartItemInput]
   sort: Float
   stock: Float
+  sumOrder: Float
   unit: String
   unitString: String
   updateTime: Timestamp

@@ -41,6 +41,11 @@ const Title = styled.div`
   font-weight: bold;
 `
 
+const SaleRankTypeEnumLabel: {[k: string]: string} = {
+  [SaleRankTypeEnum.OneDay]: '本日',
+  [SaleRankTypeEnum.OneWeek]: '本周',
+  [SaleRankTypeEnum.OneMonth]: '本月',
+}
 export const SalesRank = () => {
   const {state: homeTabsState} = useStoreModel(homeTabsModel)
   const router = useRouter()
@@ -87,9 +92,13 @@ export const SalesRank = () => {
     {stateSalesRankModel.listData.map(product => homeTabsState.homeType === HomeType.group ? <GroupProductItem
         product={product}
         key={`ProductItem_${product.id}`}
+        showSumOrder={true}
+        sumOrderTip={SaleRankTypeEnumLabel[`${router.query?.salesRankType}`]}
     /> : <ProductItemOneRow
         key={`ProductItemOneRow_${product.id}`}
         product={product}
+        showSumOrder={true}
+        sumOrderTip={SaleRankTypeEnumLabel[`${router.query?.salesRankType}`]}
     />)}
   </Box>
 }

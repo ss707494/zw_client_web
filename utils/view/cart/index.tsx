@@ -84,7 +84,7 @@ export const shopCartModel = modelFactory('shopCartModel', {
     const userRes = await option.query(doc.oneUser)
     const res = await option.query(doc.userShopCartList)
     option.setData(fpMergePre({
-      user: userRes.oneUser ?? {},
+      user: userRes?.oneUser ?? {},
       shopCartList: res?.shopCartList.filter((v: ShopCart) => !v.isNext) ?? [],
       shopCartListNext: res?.shopCartList.filter((v: ShopCart) => !!v.isNext) ?? [],
     }))

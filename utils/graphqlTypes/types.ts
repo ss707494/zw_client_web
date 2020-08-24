@@ -288,6 +288,7 @@ export type ProductItemInput = {
   groupAmountUnitString?: Maybe<Scalars['String']>;
   groupPrecisionString?: Maybe<Scalars['String']>;
   groupQueue?: Maybe<Array<Maybe<GroupQueueItemInput>>>;
+  sumOrder?: Maybe<Scalars['Float']>;
 };
 
 export type ProductImgItemInput = {
@@ -559,6 +560,7 @@ export type Product = {
   groupAmountUnitString?: Maybe<Scalars['String']>;
   groupPrecisionString?: Maybe<Scalars['String']>;
   groupQueue?: Maybe<Array<Maybe<GroupQueue>>>;
+  sumOrder?: Maybe<Scalars['Float']>;
 };
 
 export type ProductImg = {

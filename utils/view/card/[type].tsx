@@ -90,7 +90,7 @@ const CodeBox = styled.div`
 `
 
 
-const getItem = (item: PromoCode, user: User) => {
+export const getPromoCodeItem = (item: PromoCode, user: User) => {
   return item.promoCodeType === PromoCodeTypeEnum.DarenCard ? <CardBox
       key={`CardBox_${item.id}`}
   >
@@ -155,6 +155,8 @@ export const CardType = () => {
     <HeaderTitle
         title={ls('达人专区')}
         showCart={true}
+        hideLeft={true}
+        showSearch={true}
     />
     <Tabs
         variant={'fullWidth'}
@@ -174,7 +176,7 @@ export const CardType = () => {
         boxHeight={'calc(100vh - 188px)'}
     >
       <MainBox>
-        {stateCardModel.promoCodeList.filter(v => v.promoCodeType === promoCodeType).map(v => getItem(v, stateCardModel.user))}
+        {stateCardModel.promoCodeList.filter(v => v.promoCodeType === promoCodeType).map(v => getPromoCodeItem(v, stateCardModel.user))}
       </MainBox>
     </BScroller>
     <FootBar/>
