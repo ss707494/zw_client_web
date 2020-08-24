@@ -15,6 +15,7 @@ import {ls} from '../../tools/dealKey'
 import {GroupProductItem, ProductItemOneRow} from '../../components/ProductItem/ProductItem'
 import {Space} from '../../components/Box/Box'
 import {getPromoCodeItem} from '../card/[type]'
+import {UpdateShopCart} from '../../components/ProductItem/UpdateShopCart'
 
 export const SearchPageModel = modelFactory('SearchPage', {
   form: {
@@ -61,6 +62,7 @@ export const SearchPage = () => {
     <HeaderTitle
         title={'搜索'}
         LeftIcon={CloseIcon}
+        showCart={true}
     />
     <SearchInput>
       <Autocomplete
@@ -134,5 +136,6 @@ export const SearchPage = () => {
       <Space h={16}/>
       <Divider />
     </>}
+    <UpdateShopCart/>
   </div>
 }
