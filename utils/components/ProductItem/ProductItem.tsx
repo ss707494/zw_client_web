@@ -219,6 +219,7 @@ const GroupImg = styled.div`
 `
 const RightBox = styled.div`
   display: flex;
+  flex-grow: 1;
   flex-direction: column;
 `
 const Title = styled.div`
