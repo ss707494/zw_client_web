@@ -47,6 +47,9 @@ export const HeaderTitle = ({title = '', backCall = () => {}, showCart = false, 
     </main>
     <Action>
       {showSearch && <IconButton
+          onClick={() => {
+            router.push('/searchPage')
+          }}
       >
         <Search />
       </IconButton>}

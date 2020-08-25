@@ -83,6 +83,7 @@ const Title = styled.div`
 `
 const Action = styled.div`
   display: flex;
+  flex-direction: row-reverse;
 `
 export const HeaderSearch = ({homeType}: {homeType?: string}) => {
   const router = useRouter()
@@ -95,6 +96,7 @@ export const HeaderSearch = ({homeType}: {homeType?: string}) => {
     </Logo>
     <Title>{ls(homeType === HomeType.group ? '拼团' : '逛店')}</Title>
     <Action>
+      {homeType === HomeType.home && <ShoppingCartIconButton/>}
       <IconButton
           onClick={() => {
             router.push('/searchPage')
@@ -102,7 +104,6 @@ export const HeaderSearch = ({homeType}: {homeType?: string}) => {
       >
         <Search />
       </IconButton>
-      <ShoppingCartIconButton/>
     </Action>
   </Box>
 }

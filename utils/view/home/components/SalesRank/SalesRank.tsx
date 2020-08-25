@@ -77,7 +77,7 @@ export const SalesRank = () => {
         onChange={(event, value) => actionsSalesRankModel.tabChange([value, homeTabsState.homeType])}
     >
       {[
-        [SaleRankTypeEnum.OneDay, '24小时排行'],
+        [SaleRankTypeEnum.OneDay, '本日排行'],
         [SaleRankTypeEnum.OneWeek, '本周排行'],
         [SaleRankTypeEnum.OneMonth, '本月排行'],
       ].map(v =>

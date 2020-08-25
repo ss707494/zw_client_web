@@ -146,6 +146,7 @@ export const CategoryPage = () => {
     <HeaderTitle
         title={''}
         showCart={router.query.homeType === HomeType.home}
+        showSearch={true}
     />
     {!!getLoad(doc.productsInCategory) && <LinearProgress/>}
     <Breadcrumbs

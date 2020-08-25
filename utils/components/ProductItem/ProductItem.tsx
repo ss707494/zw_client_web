@@ -269,7 +269,7 @@ export const GroupProductItem = ({product, groupQueue, sumOrderTip = '', showSum
       <Title>
         {product.name}({product.groupRemark}/{product.groupAmount}{product.groupAmountUnitString}/{product.groupPrecisionString})
       </Title>
-      {showSumOrder && <OrderTip>{sumOrderTip}{ls('销量')}: {product.sumOrder}</OrderTip>}
+      {showSumOrder && <OrderTip>{sumOrderTip}{ls('拼团达人数')}: {product.sumOrder}</OrderTip>}
       <MarketPrice>
         {ls('市场价')}
         <span>{dealMoney(product.priceMarket)}</span>

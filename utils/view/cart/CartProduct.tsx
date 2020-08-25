@@ -59,10 +59,22 @@ export const CartProduct = ({shopCart}: { shopCart: ShopCart }) => {
             size={'small'}
             variant={'outlined'}
             onClick={async () => {
-              await actionsPM.updateShopCart({
-                isNext: 1,
-                id: shopCart.id,
-              })
+              const oldNext = stateSCM.shopCartListNext.find(value => value.product?.id === shopCart.product?.id)
+              if (oldNext?.id) {
+                await actionsPM.updateShopCart({
+                  isDelete: 1,
+                  id: oldNext.id,
+                })
+                await actionsPM.updateShopCart({
+                  isNext: 1,
+                  id: shopCart.id,
+                })
+              } else {
+                await actionsPM.updateShopCart({
+                  isNext: 1,
+                  id: shopCart.id,
+                })
+              }
               actionsSCM.getList()
             }}
         >{ls('下次购买')}</Button>
