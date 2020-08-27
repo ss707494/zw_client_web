@@ -4,7 +4,7 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 import React, {useEffect} from 'react'
 import {useRouter} from 'next/router'
 import {useStoreModel} from '../../ModelAction/useStore'
-import {shopCartModel} from '../../view/cart'
+import {shopCartModel} from '../../view/m/cart'
 
 type Color = 'inherit' | 'primary' | 'secondary' | 'action' | 'disabled' | 'error'
 
@@ -19,7 +19,7 @@ export const ShoppingCartIconButton = ({color, htmlColor}: {color?: Color, htmlC
 
   return <IconButton
       onClick={() => {
-        router.push(`/${AppFootBar.cart}`)
+        router.push(`/m/${AppFootBar.cart}`)
       }}
   >
     <Badge

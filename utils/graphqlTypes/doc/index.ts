@@ -1,8 +1,17 @@
 import {gql} from 'apollo-boost'
 import {fragment} from './fragment'
 import {DictTypeEnum, PromoCodeTypeEnum} from '../../ss_common/enum'
+import {UserInfoItemInput} from '../types'
 
-export const getUserListDoc = gql`
+export const docFactory: <T = any>(doc: any, variablesType?: T) => GraphqlDoc<T> = (doc: any, variablesType: any) => variablesType ? ({
+  doc,
+  variablesType,
+}) : ({
+  doc,
+  variablesType: {} as any,
+})
+
+export const getUserListDoc = docFactory(gql`
   query refactored643($data: UserListInput!) {
     userList(userListInput: $data) {
       list {
@@ -62,9 +71,9 @@ export const getUserListDoc = gql`
       userLevel
     }
   }
-`
+`)
 
-export const getDataConfig = gql`
+export const getDataConfig = docFactory(gql`
   query ($data: DataConfigItemInput) {
     getDataConfig(dataConfigInput: $data) {
       id
@@ -77,9 +86,9 @@ export const getDataConfig = gql`
       remark
     }
   }
-`
+`)
 
-export const homeCarouselImgs = gql`
+export const homeCarouselImgs = docFactory(gql`
   query query_query_testLong137($data: DataConfigItemInput) {
     homeCarouselImgs(dataConfigInput: $data) {
       id
@@ -92,9 +101,9 @@ export const homeCarouselImgs = gql`
       remark
     }
   }
-`
+`)
 
-export const categoryList = gql`
+export const categoryList = docFactory(gql`
   query query_query_testLong565($data: CategoryListInput) {
     categoryList(data: $data) {
       total
@@ -104,14 +113,14 @@ export const categoryList = gql`
     }
   }
   ${fragment.CategoryFields}
-`
+`)
 
 export const doc = {
   getUserListDoc,
   categoryList,
   getDataConfig,
   homeCarouselImgs,
-  registerUser: gql`
+  registerUser: docFactory(gql`
     mutation mutation_registerUse998($data: UserItemInput) {
       registerUser(data: $data) {
         token
@@ -130,24 +139,24 @@ export const doc = {
         }
       }
     }
-  `,
-  refreshToken: gql`
+  `),
+  refreshToken: docFactory(gql`
     query refreshToken($data: String!) {
       refreshToken(refreshtoken: $data) {
         refreshtoken
         token
       }
     }
-  `,
-  login: gql`
+  `),
+  login: docFactory(gql`
     query login($data: UserItemInput) {
       login(user: $data) {
         token
         refreshtoken
       }
     }
-  `,
-  oneUser: gql`
+  `),
+  oneUser: docFactory(gql`
     query oneUser {
       oneUser {
         ...UserFields
@@ -158,8 +167,8 @@ export const doc = {
     }
     ${fragment.UserInfoFields}
     ${fragment.UserFields}
-  `,
-  orderList: gql`
+  `),
+  orderList: docFactory(gql`
     query orderList($data: OrderInput){
       orderList (orderInput: $data, fromUser: true) {
         list {
@@ -180,8 +189,8 @@ export const doc = {
     ${fragment.ROrderProductFields}
     ${fragment.ProductFields}
     ${fragment.ImgFields}
-  `,
-  orderDetail: gql`
+  `),
+  orderDetail: docFactory(gql`
     query ($id: String) {
       selfAddress: getDataConfig(dataConfigInput: {
         type: "${DictTypeEnum.SelfAddress}"
@@ -222,8 +231,8 @@ export const doc = {
     ${fragment.UserInfoFields}
     ${fragment.UserPayCardFields}
     ${fragment.UserAddressFields}
-  `,
-  updatePassword: gql`
+  `),
+  updatePassword: docFactory(gql`
     mutation ($data: UpdatePasswordInput) {
       updatePassword (data: $data) {
         user {
@@ -236,40 +245,40 @@ export const doc = {
       }
     }
     ${fragment.UserFields}
-  `,
-  payCardListOneUser: gql`
+  `),
+  payCardListOneUser: docFactory(gql`
     query {
       payCardListOneUser {
         ...UserPayCardFields
       }
     }
     ${fragment.UserPayCardFields}
-  `,
-  userPayCard: gql`
+  `),
+  userPayCard: docFactory(gql`
     query ($data: UserPayCardItemInput) {
       userPayCard (userPayCard: $data) {
         ...UserPayCardFields
       }
     }
     ${fragment.UserPayCardFields}
-  `,
-  saveUserPayCard: gql`
+  `),
+  saveUserPayCard: docFactory(gql`
     mutation ($data: UserPayCardItemInput){
       saveUserPayCard (userPayCard: $data) {
         ...UserPayCardFields
       }
     }
     ${fragment.UserPayCardFields}
-  `,
-  setUserPayCardDefault: gql`
+  `),
+  setUserPayCardDefault: docFactory(gql`
     mutation ($data: UserPayCardItemInput) {
       setUserPayCardDefault (userPayCard: $data) {
         ...UserPayCardFields
       }
     }
     ${fragment.UserPayCardFields}
-  `,
-  pickupAddress: gql`
+  `),
+  pickupAddress: docFactory(gql`
     query {
       getDataConfig(dataConfigInput: {
         type: "${DictTypeEnum.SelfAddress}"
@@ -286,48 +295,50 @@ export const doc = {
     ${fragment.UserInfoFields}
     ${fragment.DataConfigFields}
     ${fragment.UserFields}
-  `,
-  updateUserInfo: gql`
+  `),
+  updateUserInfo: docFactory(gql`
     mutation ($userInfo: UserInfoItemInput) {
       updateUserInfo (userInfo: $userInfo) {
         ...UserInfoFields
       }
     }
     ${fragment.UserInfoFields}
-  `,
-  userAddressListOneUser: gql`
+  `, {
+    userInfo: {} as UserInfoItemInput,
+  }),
+  userAddressListOneUser: docFactory(gql`
     query {
       userAddressListOneUser {
         ...UserAddressFields
       }
     }
     ${fragment.UserAddressFields}
-  `,
-  userAddress: gql`
+  `),
+  userAddress: docFactory(gql`
     query ($data: UserAddressItemInput) {
       userAddress (userAddress: $data) {
         ...UserAddressFields
       }
     }
     ${fragment.UserAddressFields}
-  `,
-  saveUserAddress: gql`
+  `),
+  saveUserAddress: docFactory(gql`
     mutation ($data: UserAddressItemInput){
       saveUserAddress (userAddress: $data) {
         ...UserAddressFields
       }
     }
     ${fragment.UserAddressFields}
-  `,
-  setUserAddressDefault: gql`
+  `),
+  setUserAddressDefault: docFactory(gql`
     mutation ($data: UserAddressItemInput) {
       setUserAddressDefault (userAddress: $data) {
         ...UserAddressFields
       }
     }
     ${fragment.UserAddressFields}
-  `,
-  productsInCategory: gql`
+  `),
+  productsInCategory: docFactory(gql`
     query ($data: CategoryItemInput, $productItemInput: ProductItemInput) {
       productsInCategory(categoryItemInput: $data, productItemInput: $productItemInput) {
         ...ProductFields
@@ -349,13 +360,13 @@ export const doc = {
     ${fragment.ProductFields}
     ${fragment.ImgFields}
     ${fragment.CategoryFields}
-  `,
-  categoryLevel: gql`
+  `),
+  categoryLevel: docFactory(gql`
     query ($data: CategoryItemInput) {
       categoryLevel(categoryItemInput: $data)
     }
-  `,
-  oneCategory: gql`
+  `),
+  oneCategory: docFactory(gql`
     query ($data: CategoryItemInput) {
       oneCategory(data: $data) {
         ...Category
@@ -368,8 +379,8 @@ export const doc = {
       }
     }
     ${fragment.CategoryFields}
-  `,
-  productList: gql`
+  `),
+  productList: docFactory(gql`
     query ($productInput: ProductItemInput, $orderByInput: OrderByInput) {
       productList(productInput: $productInput, orderByInput: $orderByInput) {
         total
@@ -383,8 +394,8 @@ export const doc = {
     }
     ${fragment.ProductFields}
     ${fragment.ImgFields}
-  `,
-  updateNumShopCart: gql`
+  `),
+  updateNumShopCart: docFactory(gql`
     mutation ($shopCart: ShopCartItemInput, $updateNum: Float) {
       updateNumShopCart (shopCart: $shopCart, updateNum: $updateNum) {
         id
@@ -399,8 +410,8 @@ export const doc = {
     }
     ${fragment.ProductFields}
     ${fragment.UserFields}
-  `,
-  userShopCartList: gql`
+  `),
+  userShopCartList: docFactory(gql`
     query {
       shopCartList {
         ...ShopCartFields
@@ -424,16 +435,16 @@ export const doc = {
     ${fragment.ShopCartFields}
     ${fragment.ProductFields}
     ${fragment.ImgFields}
-  `,
-  updateShopCart: gql`
+  `),
+  updateShopCart: docFactory(gql`
     mutation ($shopCart: ShopCartItemInput){
       updateShopCart (shopCart: $shopCart) {
         ...ShopCartFields
       }
     }
     ${fragment.ShopCartFields}
-  `,
-  orderConfirmInfo: gql`
+  `),
+  orderConfirmInfo: docFactory(gql`
     query {
       getDataConfig(dataConfigInput: {
         type: "${DictTypeEnum.SelfAddress}"
@@ -469,24 +480,24 @@ export const doc = {
     ${fragment.UserFields}
     ${fragment.DataConfigFields}
     ${fragment.DictFields}
-  `,
-  saveOrder: gql`
+  `),
+  saveOrder: docFactory(gql`
     mutation ($orderInfoItemInput: OrderInfoItemInput) {
       saveOrder (orderInfoItemInput: $orderInfoItemInput) {
         ...OrderInfoFields
       }
     }
     ${fragment.OrderInfoFields}
-  `,
-  dictList: gql`
+  `),
+  dictList: docFactory(gql`
     query ($data: DictInput) {
       getDictList (dictInput: $data) {
         ...DictFields
       }
     }
     ${fragment.DictFields}
-  `,
-  limitTimeData: gql`
+  `),
+  limitTimeData: docFactory(gql`
     query {
       limitTimeData: getDataConfig (dataConfigInput: {
         type: "${DictTypeEnum.PromotionFlashSale}"
@@ -495,8 +506,8 @@ export const doc = {
       }
     }
     ${fragment.DataConfigFields}
-  `,
-  productListByIds: gql`
+  `),
+  productListByIds: docFactory(gql`
     query ($ids: [String]) {
       productListByIds (ids: $ids) {
         total
@@ -510,8 +521,8 @@ export const doc = {
     }
     ${fragment.ProductFields}
     ${fragment.ImgFields}
-  `,
-  groupQueueList: gql`
+  `),
+  groupQueueList: docFactory(gql`
     query ($groupQueueItemInput: GroupQueueItemInput) {
       groupQueueList (groupQueueItemInput: $groupQueueItemInput) {
         ...GroupQueueFields
@@ -530,32 +541,32 @@ export const doc = {
     ${fragment.ProductFields}
     ${fragment.ImgFields}
     ${fragment.GroupOrderFields}
-  `,
-  updateOrder: gql`
+  `),
+  updateOrder: docFactory(gql`
     mutation ($orderInfoItemInput: OrderInfoItemInput) {
       updateOrder (orderInfoItemInput: $orderInfoItemInput) {
         ...OrderInfoFields
       }
     }
     ${fragment.OrderInfoFields}
-  `,
-  saveGroupOrder: gql`
+  `),
+  saveGroupOrder: docFactory(gql`
     mutation ($orderInfoItemInput: OrderInfoItemInput, $groupOrderItemInput: GroupOrderItemInput, $groupQueueItemInput: GroupQueueItemInput) {
       saveGroupOrder (orderInfoItemInput: $orderInfoItemInput, groupOrderItemInput: $groupOrderItemInput, groupQueueItemInput: $groupQueueItemInput) {
         ...OrderInfoFields
       }
     }
     ${fragment.OrderInfoFields}
-  `,
-  promoCodeList: gql`
+  `),
+  promoCodeList: docFactory(gql`
     query ($promoCodeItemInput: PromoCodeItemInput) {
       promoCodeList (promoCodeItemInput: $promoCodeItemInput) {
         ...PromoCodeFields
       }
     }
     ${fragment.PromoCodeFields}
-  `,
-  categoryRootParent: gql`
+  `),
+  categoryRootParent: docFactory(gql`
     query ($categoryItemInput: CategoryItemInput) {
       categoryRootParent (categoryItemInput: $categoryItemInput) {
         ...Category
@@ -568,8 +579,8 @@ export const doc = {
       }
     }
     ${fragment.CategoryFields}
-  `,
-  productListOrderByOrder: gql`
+  `),
+  productListOrderByOrder: docFactory(gql`
     query ($orderByType: String, $productInput: ProductItemInput) {
       productListOrderByOrder (orderByType: $orderByType, productInput: $productInput) {
         list {
@@ -587,8 +598,8 @@ export const doc = {
     ${fragment.ProductFields}
     ${fragment.ImgFields}
     ${fragment.ROrderProductFields}
-  `,
-  searchData: gql`
+  `),
+  searchData: docFactory(gql`
     query ($keyword: String) {
       productList(productInput: { name: $keyword }) {
         total
@@ -632,6 +643,6 @@ export const doc = {
     ${fragment.ProductFields}
     ${fragment.ImgFields}
     ${fragment.PromoCodeFields}
-  `,
+  `),
 }
 

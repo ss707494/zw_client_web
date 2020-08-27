@@ -43,12 +43,12 @@ export const getClient = () => {
         Router.reload()
       } else {
         showMessage({message: '请重新登录'})
-        Router.push('/login')
+        Router.push('/m/login')
       }
     }).catch(err => {
       ssLog(err)
       showMessage({message: '请重新登录'})
-      Router.push('/login')
+      Router.push('/m/login')
     })
   }
   const onError: ErrorLink.ErrorHandler = ({response, operation, graphQLErrors, networkError}) => {
@@ -64,7 +64,7 @@ export const getClient = () => {
             refreshToken()
           } else {
             showMessage({message: '请重新登录'})
-            Router.push('/login')
+            Router.push('/m/login')
           }
         }
         if (message.includes('Unexpected error')) {
@@ -86,7 +86,7 @@ export const getClient = () => {
           refreshToken()
         } else {
           showMessage({message: '请重新登录'})
-          Router.push('/login')
+          Router.push('/m/login')
         }
       }
     }

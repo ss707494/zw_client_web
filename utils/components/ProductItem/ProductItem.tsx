@@ -11,12 +11,12 @@ import {dealMoney} from '../../tools/utils'
 import {mpStyle} from '../../style/common'
 import {modelFactory} from '../../ModelAction/modelUtil'
 import {useStoreModel} from '../../ModelAction/useStore'
-import {meModel} from '../../view/me/model'
+import {meModel} from '../../view/m/me/model'
 import {doc} from '../../graphqlTypes/doc'
 import {showMessage} from '../Message/Message'
 import {ls} from '../../tools/dealKey'
 import {grey} from '@material-ui/core/colors'
-import {shopCartModel} from '../../view/cart'
+import {shopCartModel} from '../../view/m/cart'
 import {useRouter} from 'next/router'
 import {updateShopCartModel} from './UpdateShopCart'
 import {Space} from '../Box/Box'
@@ -300,7 +300,7 @@ export const GroupProductItem = ({product, groupQueue, sumOrderTip = '', showSum
             color={'secondary'}
             fullWidth={true}
             onClick={() => {
-              router.push(`/groupProduct/[id]`, `/groupProduct/${product.id}`)
+              router.push(`/m/groupProduct/[id]`, `/m/groupProduct/${product.id}`)
             }}
         >
           <AddCircleOutlineIcon/>

@@ -16,11 +16,11 @@ export const FootBar = () => {
       <div
           className={'FootBar'}>
         {[
-          ['逛店', <StorefrontIcon/>, `/${AppFootBar.home}`],
-          ['拼团', <PeopleIcon/>, `/${AppFootBar.group}`],
-          ['达人区', <RedeemIcon/>, `/${AppFootBar.card}`],
+          ['逛店', <StorefrontIcon/>, `/m/${AppFootBar.home}`],
+          ['拼团', <PeopleIcon/>, `/m/${AppFootBar.group}`],
+          ['达人区', <RedeemIcon/>, `/m/${AppFootBar.card}`],
           // ['购物车', <ShoppingCartIcon/>, `/${AppFootBar.cart}`, stateShopCart.dealProductNumber(stateShopCart)],
-          ['我', <AccountBoxIcon/>, `/${AppFootBar.me}`],
+          ['我', <AccountBoxIcon/>, `/m/${AppFootBar.me}`],
         ].map(v => (
             <section
                 key={`FootBar_${v[0]}`}

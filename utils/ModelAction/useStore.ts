@@ -68,21 +68,23 @@ export const useStoreModel: UseModelState = (model, key?: string | [string, stri
     }))
   }, [setData])
 
-  const query: GraphqlQuery = useCallback(async (query, params, option) => {
-    setLoad(query, true)
-    const res = await graphQLQuery()(query, params, option).catch(e => {
-      setError(query, e)
+  const query: GraphqlQuery = useCallback(async (queryDoc, params, option) => {
+    const queryDocString = queryDoc.doc
+    setLoad(queryDocString, true)
+    const res = await graphQLQuery()(queryDocString, params, option).catch(e => {
+      setError(queryDocString, e)
     }).finally(() => {
-      setLoad(query, false)
+      setLoad(queryDocString, false)
     }) as any
     return res?.data
   }, [setError, setLoad])
-  const mutate: GraphqlMutate = useCallback(async (mutation, params, option) => {
-    setLoad(mutation, true)
-    const res = await graphQLMutate()(mutation, params, option).catch(e => {
-      setError(mutation, e)
+  const mutate: GraphqlMutate = useCallback(async (mutationDoc, params, option) => {
+    const mutationDocString = mutationDoc.doc
+    setLoad(mutationDocString, true)
+    const res = await graphQLMutate()(mutationDocString, params, option).catch(e => {
+      setError(mutationDocString, e)
     }).finally(() => {
-      setLoad(mutation, false)
+      setLoad(mutationDocString, false)
     }) as any
     return res?.data
   }, [setError, setLoad])

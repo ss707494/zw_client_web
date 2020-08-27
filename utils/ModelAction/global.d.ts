@@ -42,8 +42,12 @@ declare type DealFunObj<T extends ModelActionObjHelp> =  {
   [P in keyof T]: (ModelActionResult<Parameters<T[P]>[0]>)
 }
 
-declare type GraphqlQuery = <T = any>(query: any, params?: T, option?: any) => any
-declare type GraphqlMutate = (mutation: any, params?: any, option?: any) => any
+declare type GraphqlDoc<T = any> = {
+  doc: any,
+  variablesType: T
+}
+declare type GraphqlQuery = <T = any>(query: GraphqlDoc<T>, params?: T, option?: any) => any
+declare type GraphqlMutate = <T = any>(mutation: GraphqlDoc<T>, params?: T, option?: any) => any
 
 declare type BaseModelActionOption<T = any> = {
   data: T

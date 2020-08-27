@@ -6,14 +6,20 @@ import {ThemeProvider} from '@material-ui/core'
 import {theme} from '../utils/style/theme'
 import Head from 'next/head'
 import {Message} from '../utils/components/Message/Message'
+import {DateWrapperApollo} from '../utils/components/DateWarpper'
 
 export default function MyApp({Component, pageProps}: AppProps) {
-  return <ThemeProvider theme={theme}>
-    <Head>
-      <title>Market Payless</title>
-    </Head>
-    <Component {...pageProps} />
-    <Message/>
-  </ThemeProvider>
+  return [
+      DateWrapperApollo,
+  ].reduce((previousValue: any, currentValue: any) => currentValue(previousValue),
+      <>
+        <ThemeProvider theme={theme}>
+          <Head>
+            <title>Market Payless</title>
+          </Head>
+          <Component {...pageProps} />
+          <Message/>
+        </ThemeProvider>
+      </>,)
 }
 

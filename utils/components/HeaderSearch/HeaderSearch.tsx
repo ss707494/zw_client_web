@@ -9,7 +9,7 @@ import {mpStyle} from '../../style/common'
 import {ls} from '../../tools/dealKey'
 import { ShoppingCartIconButton } from '../ShoppingCartIconButton/ShoppingCartIconButton'
 import {useRouter} from 'next/router'
-import {HomeType} from '../../view/home/appModule'
+import {HomeType} from '../../view/m/home/appModule'
 
 export const borderedInputBaseStyles = ({palette}: any) => ({
   root: {
@@ -99,7 +99,7 @@ export const HeaderSearch = ({homeType}: {homeType?: string}) => {
       {homeType === HomeType.home && <ShoppingCartIconButton/>}
       <IconButton
           onClick={() => {
-            router.push('/searchPage')
+            router.push('/m/searchPage')
           }}
       >
         <Search />

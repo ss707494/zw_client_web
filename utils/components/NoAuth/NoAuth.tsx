@@ -1,5 +1,5 @@
 import {useStoreModel} from '../../ModelAction/useStore'
-import {meModel} from '../../view/me/model'
+import {meModel} from '../../view/m/me/model'
 import React, {useEffect} from 'react'
 import {RegisterHeader} from '../RegisterHeader/RegisterHeader'
 import {ls} from '../../tools/dealKey'
