@@ -33,7 +33,7 @@ export const getClient = () => {
   }
 
   const refreshToken = () => {
-    graphQLQuery()(doc.refreshToken, {
+    graphQLQuery()(doc.refreshToken.doc, {
       data: getToken('refreshtoken'),
     }).then(res => {
       if (res.data?.refreshToken?.token) {
