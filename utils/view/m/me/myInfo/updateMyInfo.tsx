@@ -46,8 +46,10 @@ export const UpdateMyInfo = () => {
   useEffect(() => {
     if (!stateMeModel.user.id) {
       init()
+    } else {
+      actionsUpdateMyInfoModel.initForm(stateMeModel.user?.userInfo ?? initForm)
     }
-  }, [stateMeModel.user.id])
+  }, [])
 
   return <div>
     <HeaderTitle
