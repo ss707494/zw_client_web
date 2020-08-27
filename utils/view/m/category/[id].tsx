@@ -15,10 +15,10 @@ import {dealImgUrl} from '../../../tools/img'
 import {GroupProductItem, ProductItem} from '../../../components/ProductItem/ProductItem'
 import {ls} from '../../../tools/dealKey'
 import {NoData} from '../../../components/NoData/NoData'
-import {homeTabsModel} from '../../home/components/Tabs/Tabs'
-import {HomeType} from '../../home/appModule'
 import {CategoryRootName} from '../../../ss_common/enum'
 import {UpdateShopCart} from '../../../components/ProductItem/UpdateShopCart'
+import {HomeType} from '../home/appModule'
+import { homeTabsModel } from '../home/components/Tabs/Tabs'
 
 export const CategoryPageModel = modelFactory('CategoryPage', {
   productList: [] as Product[],
