@@ -38,6 +38,7 @@ export const UpdateMyInfoModel = modelFactory('UpdateMyInfo', {
 export const UpdateMyInfo = () => {
   const {actions: actionsUpdateMyInfoModel, state: stateUpdateMyInfoModel} = useStoreModel(UpdateMyInfoModel)
   const {actions: actionsMeModel, state: stateMeModel} = useStoreModel(meModel)
+  const {actions: actionsMe} = useStoreModel(meModel)
 
   const init = useCallback(async () => {
     const res = await actionsMeModel.getLoginUser()
@@ -80,6 +81,7 @@ export const UpdateMyInfo = () => {
             const res = await actionsUpdateMyInfoModel.submit()
             if (res?.updateUserInfo?.id) {
               actionsUpdateMyInfoModel.clearForm()
+              actionsMe.getLoginUser()
               router.back()
             }
           }}

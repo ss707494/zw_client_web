@@ -24,6 +24,7 @@ const ContentBox = styled.div`
   > img {
     max-width: 70vw;
     max-height: 70vw;
+    margin: 0 auto;
   }
 `
 export const PickupAddressDetail = () => {
@@ -45,9 +46,9 @@ export const PickupAddressDetail = () => {
             alt={''}
         />
         <Space h={8}/>
-        <div>{dialogData?.city} {dialogData?.province}</div>
+        <div>{dialogData?.apartment} {dialogData?.streetAddress} </div>
         <Space h={8}/>
-        <div>{dialogData?.apartment} {dialogData?.streetAddress} {dialogData?.zip}</div>
+        <div>{dialogData?.city} {dialogData?.province} {dialogData?.zip}</div>
         <Space h={8}/>
         <div>{ls('营业时间')}:{dialogData?.openTime}</div>
         <Space h={8}/>

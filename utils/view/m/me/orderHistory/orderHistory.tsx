@@ -107,11 +107,11 @@ export const OrderHistory = () => {
       />
       <Tab
           value={OrderState.Picking}
-          label={ls('待收货/取货')}
+          label={orderStateToString(OrderState.Picking)}
       />
       <Tab
           value={OrderState.Paid}
-          label={ls('代付款')}
+          label={orderStateToString(OrderState.Paid)}
       />
     </Tabs>
     <BScroller

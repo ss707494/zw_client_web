@@ -162,9 +162,13 @@ export const doc = {
         ...UserFields
         userInfo {
           ...UserInfoFields
+          userLevelDict {
+            ...DictFields
+          }
         }
       }
     }
+    ${fragment.DictFields}
     ${fragment.UserInfoFields}
     ${fragment.UserFields}
   `),
@@ -562,9 +566,13 @@ export const doc = {
     query ($promoCodeItemInput: PromoCodeItemInput) {
       promoCodeList (promoCodeItemInput: $promoCodeItemInput) {
         ...PromoCodeFields
+        userLevel {
+          ...DictFields
+        }
       }
     }
     ${fragment.PromoCodeFields}
+    ${fragment.DictFields}
   `),
   categoryRootParent: docFactory(gql`
     query ($categoryItemInput: CategoryItemInput) {

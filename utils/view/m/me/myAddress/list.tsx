@@ -14,6 +14,7 @@ import {grey} from '@material-ui/core/colors'
 import {useRouter} from 'next/router'
 import {showMessage} from '../../../../components/Message/Message'
 import {mpStyle} from '../../../../style/common'
+import { Space } from '../../../../components/Box/Box'
 
 const myAddressModel = modelFactory('myAddressModel', {
   list: [] as UserAddress[],
@@ -60,6 +61,12 @@ export const DefaultBox = styled.div`
   border-radius: 14px;
   display: inline-flex;
 `
+const AddressBox = styled.main`
+  > footer {
+    font-size: small;
+    color: ${grey[400]};
+  }
+`
 
 export const MyAddress = () => {
   const router = useRouter()
@@ -75,10 +82,13 @@ export const MyAddress = () => {
     <ListBox>
       {stateMAM.list.map(value => <ListItem key={`myAddress_${value.id}`}>
         <StreetviewIcon fontSize={'large'}/>
-        <main>
+        <AddressBox>
           <header>{value.name}</header>
-          <footer>{value.combineAddress}</footer>
-        </main>
+          <Space h={4}/>
+          <footer>{value.address}</footer>
+          <Space h={4}/>
+          <footer>{value.city} {value.province} {value.zip}</footer>
+        </AddressBox>
         <aside>
           {(value.isDefault && <DefaultBox style={{fontSize: '14px'}}>{ls('默认')}</DefaultBox>) ||
           <Button

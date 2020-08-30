@@ -54,6 +54,7 @@ type Dict {
   isDelete: Float
   isDisable: Float
   name: String
+  promoCode: [PromoCode]
   remark: String
   sort: Float
   updateTime: Timestamp
@@ -239,6 +240,7 @@ type PromoCode {
   reuseTimes: Float
   title: String
   updateTime: Timestamp
+  userLevel: Dict
 }
 
 type Query {
@@ -375,6 +377,7 @@ type UserInfo {
   user: User
   userId: String
   userLevel: String
+  userLevelDict: Dict
 }
 
 type UserPage {
@@ -452,6 +455,7 @@ input DictItemInput {
   isDelete: Float
   isDisable: Float
   name: String
+  promoCode: [PromoCodeItemInput]
   remark: String
   sort: Float
   updateTime: Timestamp
@@ -637,6 +641,7 @@ input PromoCodeItemInput {
   reuseTimes: Float
   title: String
   updateTime: Timestamp
+  userLevel: DictItemInput
 }
 
 input ROrderProductItemInput {
@@ -717,6 +722,7 @@ input UserInfoItemInput {
   user: UserItemInput
   userId: String
   userLevel: String
+  userLevelDict: DictItemInput
 }
 
 input UserItemInput {

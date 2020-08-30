@@ -19,6 +19,8 @@ import {BScroller} from '../../../components/BScroll/BScroller'
 import {useRouter} from 'next/router'
 import {dealNoAuth} from '../../../components/NoAuth/NoAuth'
 import {ShoppingCartIconButton} from '../../../components/ShoppingCartIconButton/ShoppingCartIconButton'
+import {cardModel} from '../card/[type]'
+import {PromoCodeTypeEnum} from '../../../ss_common/enum'
 
 const BasePadding = styled.div`
   padding: 0 20px;
@@ -108,12 +110,17 @@ const ShopIcon = styled.div`
 
 export default function Me() {
   const router = useRouter()
+  const {actions: actionsCardModel, state: stateCardModel} = useStoreModel(cardModel)
   const {state: stateMe, actions: actionsMe} = useStoreModel(meModel)
   useEffect(() => {
     if (!stateMe.user.id) {
       actionsMe.getLoginUser()
     }
   }, [])
+  useEffect(() => {
+    actionsCardModel.getList()
+  }, [])
+  console.log(stateCardModel.promoCodeList)
   return <Box>
     {dealNoAuth(<BScroller
         boxHeight={'calc(100vh - 45px)'}
@@ -146,7 +153,7 @@ export default function Me() {
         <Parting/>
         <Card>
           <PaymentIcon/>
-          <main/>
+          <main>{stateCardModel.promoCodeList.filter(v => v.promoCodeType === PromoCodeTypeEnum.DarenCard).length}</main>
           <footer>{ls('达人卡')}</footer>
         </Card>
       </Tab>

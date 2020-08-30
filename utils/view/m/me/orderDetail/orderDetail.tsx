@@ -13,7 +13,6 @@ import {orderStateToString, PickUpTypeEnum} from '../../../../ss_common/enum'
 import {mpStyle} from '../../../../style/common'
 import {grey} from '@material-ui/core/colors'
 import {dealImgUrl} from '../../../../tools/img'
-import {Button} from '@material-ui/core'
 
 export const orderDetailModel = modelFactory('orderDetail', {
   orderInfo: {} as OrderInfo,
@@ -130,16 +129,22 @@ export const OrderDetail = () => {
           <aside>{orderStateToString(orderInfo?.state)}</aside>
         </Top>
         <InfoLabel>
+          <aside>{ls('订单编号')} :</aside>
+          <section>{orderInfo.number}</section>
+        </InfoLabel>
+        <InfoLabel>
           <aside>{ls('送货地址')} :</aside>
           <section>
             {(orderInfo.pickUpType === PickUpTypeEnum.Self &&
-                (v => `${v.province} ${v.city} ${v.streetAddress}`)(stateOD.selfAddress.find(v => v.id === orderInfo.selfAddressId))
-            ) || orderInfo.userAddress?.combineAddress}
+                (v => <>
+                  <header>{v.streetAddress}</header>
+                  <footer>{v.city} {v.province} {v.zip}</footer>
+                </>)(stateOD.selfAddress.find(v => v.id === orderInfo.selfAddressId))
+            ) || <>
+              <header>{orderInfo.userAddress?.address}</header>
+              <footer>{orderInfo.userAddress?.city} {orderInfo.userAddress?.province} {orderInfo.userAddress?.zip}</footer>
+            </>}
           </section>
-        </InfoLabel>
-        <InfoLabel>
-          <aside>{ls('订单编号')} :</aside>
-          <section>{orderInfo.number}</section>
         </InfoLabel>
         <InfoLabel>
           <aside>{ls('支付方式')} :</aside>
@@ -163,9 +168,9 @@ export const OrderDetail = () => {
                 <span>{dealMoney(rOrderProduct.product?.priceOut)}</span>
               </footer>
               <aside>
-                <Button
-                    variant={'contained'}
-                >{ls('加入购物车')}</Button>
+                {/*<Button*/}
+                {/*    variant={'contained'}*/}
+                {/*>{ls('加入购物车')}</Button>*/}
               </aside>
             </ProductBox>
         ))}

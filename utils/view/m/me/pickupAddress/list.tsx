@@ -5,7 +5,7 @@ import {doc} from '../../../../graphqlTypes/doc'
 import {useStoreModel} from '../../../../ModelAction/useStore'
 import {fpMergePre} from '../../../../tools/utils'
 import styled from 'styled-components'
-import {Button, ButtonBase} from '@material-ui/core'
+import {Button, ButtonBase, IconButton} from '@material-ui/core'
 import {dealImgUrl} from '../../../../tools/img'
 import {grey} from '@material-ui/core/colors'
 import {User, UserInfoItemInput} from '../../../../graphqlTypes/types'
@@ -13,6 +13,7 @@ import {ls} from '../../../../tools/dealKey'
 import {showMessage} from '../../../../components/Message/Message'
 import {DefaultBox} from '../myAddress/list'
 import {PickupAddressDetail, PickupAddressDetailModel} from './pickupAddressDetail'
+import InfoIcon from '@material-ui/icons/Info'
 
 const pickupAddressModel = modelFactory('pickupAddressModel', {
   list: [],
@@ -30,7 +31,7 @@ const pickupAddressModel = modelFactory('pickupAddressModel', {
       userInfo: {
         id: option.data.user.userInfo?.id,
         pickupAddressId: value.id,
-      } as UserInfoItemInput
+      } as UserInfoItemInput,
     })
     if (res?.updateUserInfo?.id) {
       showMessage('操作成功')
@@ -89,19 +90,21 @@ export const PickupAddress = () => {
                alt=""/>
           <section>
             <header>{value.fullName}</header>
-            <main>{`${value.province} ${value.city}`}</main>
             <footer>
               {`${value.streetAddress}`}
             </footer>
+            <main>{`${value.province} ${value.city} ${value.zip}`}</main>
           </section>
         </ItemBox>
         <RightBox>
-          <Button
+          <IconButton
               onClick={async () => {
                 const res = await actionsPickupAddressDetailModel.openClick(value)
                 console.log(res)
               }}
-          >{ls('查看')}</Button>
+          >
+            <InfoIcon/>
+          </IconButton>
           {(statePAM.user.userInfo?.pickupAddressId === value.id && <DefaultBox>{ls('默认地址')}</DefaultBox>) ||
           <Button
               color={'secondary'}
@@ -116,6 +119,6 @@ export const PickupAddress = () => {
         </RightBox>
       </React.Fragment>)}
     </Box>
-    <PickupAddressDetail />
+    <PickupAddressDetail/>
   </div>
 }
