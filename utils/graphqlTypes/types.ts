@@ -189,8 +189,60 @@ export type UserInfoItemInput = {
   phone?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   userLevel?: Maybe<Scalars['String']>;
+  userLevelDict?: Maybe<DictItemInput>;
   user?: Maybe<UserItemInput>;
   pickupAddressId?: Maybe<Scalars['String']>;
+};
+
+export type DictItemInput = {
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  createTime?: Maybe<Scalars['Timestamp']>;
+  updateTime?: Maybe<Scalars['Timestamp']>;
+  isDelete?: Maybe<Scalars['Float']>;
+  isDisable?: Maybe<Scalars['Float']>;
+  dictTypeCode?: Maybe<Scalars['String']>;
+  code?: Maybe<Scalars['String']>;
+  sort?: Maybe<Scalars['Float']>;
+  remark?: Maybe<Scalars['String']>;
+  dictTypeFirst?: Maybe<DictTypeFirstItemInput>;
+  promoCode?: Maybe<Array<Maybe<PromoCodeItemInput>>>;
+};
+
+export type DictTypeFirstItemInput = {
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  createTime?: Maybe<Scalars['Timestamp']>;
+  updateTime?: Maybe<Scalars['Timestamp']>;
+  isDelete?: Maybe<Scalars['Float']>;
+  parentCode?: Maybe<Scalars['String']>;
+  code?: Maybe<Scalars['String']>;
+  sort?: Maybe<Scalars['Float']>;
+  remark?: Maybe<Scalars['String']>;
+  dict?: Maybe<DictItemInput>;
+};
+
+export type PromoCodeItemInput = {
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  createTime?: Maybe<Scalars['Timestamp']>;
+  updateTime?: Maybe<Scalars['Timestamp']>;
+  isDelete?: Maybe<Scalars['Float']>;
+  remark?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  discountType?: Maybe<Scalars['String']>;
+  discountAmount?: Maybe<Scalars['Float']>;
+  discountCondition?: Maybe<Scalars['String']>;
+  discountConditionAmount?: Maybe<Scalars['Float']>;
+  productCategory?: Maybe<Scalars['String']>;
+  imgUrl?: Maybe<Scalars['String']>;
+  effectiveDateStart?: Maybe<Scalars['Timestamp']>;
+  effectiveDateEnd?: Maybe<Scalars['Timestamp']>;
+  promoCodeType?: Maybe<Scalars['String']>;
+  reuseTimes?: Maybe<Scalars['Float']>;
+  code?: Maybe<Scalars['String']>;
+  isDisable?: Maybe<Scalars['Float']>;
+  userLevel?: Maybe<DictItemInput>;
 };
 
 export type ROrderUserItemInput = {
@@ -457,8 +509,63 @@ export type UserInfo = {
   phone?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   userLevel?: Maybe<Scalars['String']>;
+  userLevelDict?: Maybe<Dict>;
   user?: Maybe<User>;
   pickupAddressId?: Maybe<Scalars['String']>;
+};
+
+export type Dict = {
+   __typename?: 'Dict';
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  createTime?: Maybe<Scalars['Timestamp']>;
+  updateTime?: Maybe<Scalars['Timestamp']>;
+  isDelete?: Maybe<Scalars['Float']>;
+  isDisable?: Maybe<Scalars['Float']>;
+  dictTypeCode?: Maybe<Scalars['String']>;
+  code?: Maybe<Scalars['String']>;
+  sort?: Maybe<Scalars['Float']>;
+  remark?: Maybe<Scalars['String']>;
+  dictTypeFirst?: Maybe<DictTypeFirst>;
+  promoCode?: Maybe<Array<Maybe<PromoCode>>>;
+};
+
+export type DictTypeFirst = {
+   __typename?: 'DictTypeFirst';
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  createTime?: Maybe<Scalars['Timestamp']>;
+  updateTime?: Maybe<Scalars['Timestamp']>;
+  isDelete?: Maybe<Scalars['Float']>;
+  parentCode?: Maybe<Scalars['String']>;
+  code?: Maybe<Scalars['String']>;
+  sort?: Maybe<Scalars['Float']>;
+  remark?: Maybe<Scalars['String']>;
+  dict?: Maybe<Dict>;
+};
+
+export type PromoCode = {
+   __typename?: 'PromoCode';
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  createTime?: Maybe<Scalars['Timestamp']>;
+  updateTime?: Maybe<Scalars['Timestamp']>;
+  isDelete?: Maybe<Scalars['Float']>;
+  remark?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  discountType?: Maybe<Scalars['String']>;
+  discountAmount?: Maybe<Scalars['Float']>;
+  discountCondition?: Maybe<Scalars['String']>;
+  discountConditionAmount?: Maybe<Scalars['Float']>;
+  productCategory?: Maybe<Scalars['String']>;
+  imgUrl?: Maybe<Scalars['String']>;
+  effectiveDateStart?: Maybe<Scalars['Timestamp']>;
+  effectiveDateEnd?: Maybe<Scalars['Timestamp']>;
+  promoCodeType?: Maybe<Scalars['String']>;
+  reuseTimes?: Maybe<Scalars['Float']>;
+  code?: Maybe<Scalars['String']>;
+  isDisable?: Maybe<Scalars['Float']>;
+  userLevel?: Maybe<Dict>;
 };
 
 export type ROrderUser = {
@@ -733,35 +840,6 @@ export type DataConfig = {
   remark?: Maybe<Scalars['String']>;
 };
 
-export type DictTypeFirst = {
-   __typename?: 'DictTypeFirst';
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  createTime?: Maybe<Scalars['Timestamp']>;
-  updateTime?: Maybe<Scalars['Timestamp']>;
-  isDelete?: Maybe<Scalars['Float']>;
-  parentCode?: Maybe<Scalars['String']>;
-  code?: Maybe<Scalars['String']>;
-  sort?: Maybe<Scalars['Float']>;
-  remark?: Maybe<Scalars['String']>;
-  dict?: Maybe<Dict>;
-};
-
-export type Dict = {
-   __typename?: 'Dict';
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  createTime?: Maybe<Scalars['Timestamp']>;
-  updateTime?: Maybe<Scalars['Timestamp']>;
-  isDelete?: Maybe<Scalars['Float']>;
-  isDisable?: Maybe<Scalars['Float']>;
-  dictTypeCode?: Maybe<Scalars['String']>;
-  code?: Maybe<Scalars['String']>;
-  sort?: Maybe<Scalars['Float']>;
-  remark?: Maybe<Scalars['String']>;
-  dictTypeFirst?: Maybe<DictTypeFirst>;
-};
-
 export type DictInput = {
   dictTypeCode?: Maybe<Scalars['String']>;
   isDisable?: Maybe<Scalars['Float']>;
@@ -792,51 +870,6 @@ export type CategoryPage = {
    __typename?: 'CategoryPage';
   total?: Maybe<Scalars['Float']>;
   list?: Maybe<Array<Maybe<Category>>>;
-};
-
-export type PromoCodeItemInput = {
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  createTime?: Maybe<Scalars['Timestamp']>;
-  updateTime?: Maybe<Scalars['Timestamp']>;
-  isDelete?: Maybe<Scalars['Float']>;
-  remark?: Maybe<Scalars['String']>;
-  title?: Maybe<Scalars['String']>;
-  discountType?: Maybe<Scalars['String']>;
-  discountAmount?: Maybe<Scalars['Float']>;
-  discountCondition?: Maybe<Scalars['String']>;
-  discountConditionAmount?: Maybe<Scalars['Float']>;
-  productCategory?: Maybe<Scalars['String']>;
-  imgUrl?: Maybe<Scalars['String']>;
-  effectiveDateStart?: Maybe<Scalars['Timestamp']>;
-  effectiveDateEnd?: Maybe<Scalars['Timestamp']>;
-  promoCodeType?: Maybe<Scalars['String']>;
-  reuseTimes?: Maybe<Scalars['Float']>;
-  code?: Maybe<Scalars['String']>;
-  isDisable?: Maybe<Scalars['Float']>;
-};
-
-export type PromoCode = {
-   __typename?: 'PromoCode';
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  createTime?: Maybe<Scalars['Timestamp']>;
-  updateTime?: Maybe<Scalars['Timestamp']>;
-  isDelete?: Maybe<Scalars['Float']>;
-  remark?: Maybe<Scalars['String']>;
-  title?: Maybe<Scalars['String']>;
-  discountType?: Maybe<Scalars['String']>;
-  discountAmount?: Maybe<Scalars['Float']>;
-  discountCondition?: Maybe<Scalars['String']>;
-  discountConditionAmount?: Maybe<Scalars['Float']>;
-  productCategory?: Maybe<Scalars['String']>;
-  imgUrl?: Maybe<Scalars['String']>;
-  effectiveDateStart?: Maybe<Scalars['Timestamp']>;
-  effectiveDateEnd?: Maybe<Scalars['Timestamp']>;
-  promoCodeType?: Maybe<Scalars['String']>;
-  reuseTimes?: Maybe<Scalars['Float']>;
-  code?: Maybe<Scalars['String']>;
-  isDisable?: Maybe<Scalars['Float']>;
 };
 
 export type Mutation = {
@@ -965,33 +998,6 @@ export type UpdatePasswordRes = {
    __typename?: 'UpdatePasswordRes';
   authBody?: Maybe<AuthBody>;
   user?: Maybe<User>;
-};
-
-export type DictTypeFirstItemInput = {
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  createTime?: Maybe<Scalars['Timestamp']>;
-  updateTime?: Maybe<Scalars['Timestamp']>;
-  isDelete?: Maybe<Scalars['Float']>;
-  parentCode?: Maybe<Scalars['String']>;
-  code?: Maybe<Scalars['String']>;
-  sort?: Maybe<Scalars['Float']>;
-  remark?: Maybe<Scalars['String']>;
-  dict?: Maybe<DictItemInput>;
-};
-
-export type DictItemInput = {
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  createTime?: Maybe<Scalars['Timestamp']>;
-  updateTime?: Maybe<Scalars['Timestamp']>;
-  isDelete?: Maybe<Scalars['Float']>;
-  isDisable?: Maybe<Scalars['Float']>;
-  dictTypeCode?: Maybe<Scalars['String']>;
-  code?: Maybe<Scalars['String']>;
-  sort?: Maybe<Scalars['Float']>;
-  remark?: Maybe<Scalars['String']>;
-  dictTypeFirst?: Maybe<DictTypeFirstItemInput>;
 };
 
 /** page type */

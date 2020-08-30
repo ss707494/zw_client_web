@@ -51,17 +51,19 @@ const Tab = styled(BasePadding)`
   display: flex;
   justify-content: space-between;
 `
-const Card = styled.div`
-  display: grid;
-  grid-template-columns: min-content 1fr;
-  align-items: center;
-  padding: 20px 0;
-  > svg {
-    grid-area: 1/1/3/2;
-    margin-right: 5px;
-  }
-  > footer {
-    font-size: 12px;
+const Card = styled(ButtonBase)`
+  &&& {
+    display: grid;
+    grid-template-columns: min-content 1fr;
+    align-items: center;
+    padding: 20px 0;
+    > svg {
+      grid-area: 1/1/3/2;
+      margin-right: 5px;
+    }
+    > footer {
+      font-size: 12px;
+    }
   }
 `
 const Parting = styled.div`
@@ -151,7 +153,11 @@ export default function Me() {
           <footer>{ls('下月积攒达人币')}</footer>
         </Card>
         <Parting/>
-        <Card>
+        <Card
+            onClick={() => {
+              router.push('/m/card/DarenCard')
+            }}
+        >
           <PaymentIcon/>
           <main>{stateCardModel.promoCodeList.filter(v => v.promoCodeType === PromoCodeTypeEnum.DarenCard).length}</main>
           <footer>{ls('达人卡')}</footer>
