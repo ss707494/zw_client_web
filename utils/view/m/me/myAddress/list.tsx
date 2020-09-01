@@ -14,9 +14,9 @@ import {grey} from '@material-ui/core/colors'
 import {useRouter} from 'next/router'
 import {showMessage} from '../../../../components/Message/Message'
 import {mpStyle} from '../../../../style/common'
-import { Space } from '../../../../components/Box/Box'
+import {Space} from '../../../../components/Box/Box'
 
-const myAddressModel = modelFactory('myAddressModel', {
+export const myAddressModel = modelFactory('myAddressModel', {
   list: [] as UserAddress[],
 }, {
   getList: async (value, option) => {

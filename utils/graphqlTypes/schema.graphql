@@ -386,11 +386,14 @@ type UserPage {
 }
 
 type UserPayCard {
+  address: String
   addressDetail: String
   city: String
   code: String
   contact: String
   createTime: Timestamp
+  creditAddressInputType: String
+  district: String
   expirationTime: Timestamp
   id: String
   isDefault: Float
@@ -398,10 +401,12 @@ type UserPayCard {
   name: String
   number: String
   orderInfo: [OrderInfo]
+  province: String
   updateTime: Timestamp
   user: User
   userId: String
   userName: String
+  zip: String
   zipCode: String
 }
 
@@ -755,11 +760,14 @@ input UserListInput {
 }
 
 input UserPayCardItemInput {
+  address: String
   addressDetail: String
   city: String
   code: String
   contact: String
   createTime: Timestamp
+  creditAddressInputType: String
+  district: String
   expirationTime: Timestamp
   id: String
   isDefault: Float
@@ -767,10 +775,12 @@ input UserPayCardItemInput {
   name: String
   number: String
   orderInfo: [OrderInfoItemInput]
+  province: String
   updateTime: Timestamp
   user: UserItemInput
   userId: String
   userName: String
+  zip: String
   zipCode: String
 }
 

@@ -167,6 +167,11 @@ export const fragment = {
       userId
       userName
       zipCode
+      address
+      creditAddressInputType
+      district
+      zip
+      province
     }
   `,
   ShopCartFields: gql`

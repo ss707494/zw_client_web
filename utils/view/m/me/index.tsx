@@ -122,7 +122,6 @@ export default function Me() {
   useEffect(() => {
     actionsCardModel.getList()
   }, [])
-  console.log(stateCardModel.promoCodeList)
   return <Box>
     {dealNoAuth(<BScroller
         boxHeight={'calc(100vh - 45px)'}

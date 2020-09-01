@@ -448,12 +448,17 @@ export type UserPayCardItemInput = {
   userName?: Maybe<Scalars['String']>;
   addressDetail?: Maybe<Scalars['String']>;
   zipCode?: Maybe<Scalars['String']>;
-  city?: Maybe<Scalars['String']>;
   contact?: Maybe<Scalars['String']>;
   isDefault?: Maybe<Scalars['Float']>;
   orderInfo?: Maybe<Array<Maybe<OrderInfoItemInput>>>;
   expirationTime?: Maybe<Scalars['Timestamp']>;
   user?: Maybe<UserItemInput>;
+  creditAddressInputType?: Maybe<Scalars['String']>;
+  zip?: Maybe<Scalars['String']>;
+  city?: Maybe<Scalars['String']>;
+  province?: Maybe<Scalars['String']>;
+  district?: Maybe<Scalars['String']>;
+  address?: Maybe<Scalars['String']>;
 };
 
 export type AuthBody = {
@@ -782,12 +787,17 @@ export type UserPayCard = {
   userName?: Maybe<Scalars['String']>;
   addressDetail?: Maybe<Scalars['String']>;
   zipCode?: Maybe<Scalars['String']>;
-  city?: Maybe<Scalars['String']>;
   contact?: Maybe<Scalars['String']>;
   isDefault?: Maybe<Scalars['Float']>;
   orderInfo?: Maybe<Array<Maybe<OrderInfo>>>;
   expirationTime?: Maybe<Scalars['Timestamp']>;
   user?: Maybe<User>;
+  creditAddressInputType?: Maybe<Scalars['String']>;
+  zip?: Maybe<Scalars['String']>;
+  city?: Maybe<Scalars['String']>;
+  province?: Maybe<Scalars['String']>;
+  district?: Maybe<Scalars['String']>;
+  address?: Maybe<Scalars['String']>;
 };
 
 export type OrderInput = {
