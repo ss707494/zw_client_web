@@ -74,8 +74,8 @@ export const MyCreditCardList = () => {
       {stateMCC.list.map(value => <ListItem key={`MyCreditCardList_${value.id}`}>
         <PaymentIcon fontSize={'large'}/>
         <main>
-          <header>{ls('卡号')}:{value.number}</header>
-          <footer>{ls('过期日')}{formatDate(value?.expirationTime, 'MM/yy')}</footer>
+          <header>{ls('卡号')}: {value.number}</header>
+          <footer>{ls('过期日')}: {formatDate(value?.expirationTime, 'MM/yy')}</footer>
           <footer>{value.name}</footer>
         </main>
         <aside>

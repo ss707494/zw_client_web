@@ -139,11 +139,11 @@ export const OrderHistory = () => {
                 </aside>
               </ImgList>
               <section>
-                共{value?.rOrderProduct?.reduce((pre, cur) => pre + (cur?.count ?? 0), 0)}件商品 实付
-                <span>{dealMoney(value?.actuallyPaid)}</span>
+                共{value?.rOrderProduct?.reduce((pre, cur) => pre + (cur?.count ?? 0), 0)}件商品, 实付
+                <span>{dealMoney(value?.actuallyPaid)}</span>,
               </section>
               <section>
-                {ls('抵扣')} {dealMoney(value?.deductCoin)} {ls('积攒')} {dealMoney(value?.generateCoin)}
+                {ls('抵扣')} {dealMoney(value?.deductCoin)}, {ls('积攒')} {dealMoney(value?.generateCoin)},
               </section>
               <footer>
                 <Button

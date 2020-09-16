@@ -172,6 +172,8 @@ export type UserItemInput = {
   userPayCard?: Maybe<Array<Maybe<UserPayCardItemInput>>>;
   userAddress?: Maybe<Array<Maybe<UserAddressItemInput>>>;
   orderCoinNextMonth?: Maybe<Scalars['Float']>;
+  orderCoinCurrentMonthCost?: Maybe<Scalars['Float']>;
+  orderCoinLastMonthGet?: Maybe<Scalars['Float']>;
   orderCoinCurrentMonth?: Maybe<Scalars['Float']>;
   orderAmountCurrentYear?: Maybe<Scalars['Float']>;
   shopCart?: Maybe<Array<Maybe<ShopCartItemInput>>>;
@@ -497,6 +499,8 @@ export type User = {
   userPayCard?: Maybe<Array<Maybe<UserPayCard>>>;
   userAddress?: Maybe<Array<Maybe<UserAddress>>>;
   orderCoinNextMonth?: Maybe<Scalars['Float']>;
+  orderCoinCurrentMonthCost?: Maybe<Scalars['Float']>;
+  orderCoinLastMonthGet?: Maybe<Scalars['Float']>;
   orderCoinCurrentMonth?: Maybe<Scalars['Float']>;
   orderAmountCurrentYear?: Maybe<Scalars['Float']>;
   shopCart?: Maybe<Array<Maybe<ShopCart>>>;

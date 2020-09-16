@@ -27,6 +27,11 @@ export const fragment = {
       isDelete
       password
       type
+      orderAmountCurrentYear
+      orderCoinCurrentMonth
+      orderCoinCurrentMonthCost
+      orderCoinLastMonthGet
+      orderCoinNextMonth
     }
   `,
   UserInfoFields: gql`

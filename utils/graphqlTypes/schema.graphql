@@ -327,6 +327,8 @@ type User {
   name: String
   orderAmountCurrentYear: Float
   orderCoinCurrentMonth: Float
+  orderCoinCurrentMonthCost: Float
+  orderCoinLastMonthGet: Float
   orderCoinNextMonth: Float
   orderInfo: [OrderInfo!]
   password: String
@@ -738,6 +740,8 @@ input UserItemInput {
   name: String
   orderAmountCurrentYear: Float = 0.0
   orderCoinCurrentMonth: Float = 0.0
+  orderCoinCurrentMonthCost: Float = 0.0
+  orderCoinLastMonthGet: Float = 0.0
   orderCoinNextMonth: Float = 0.0
   orderInfo: [OrderInfoItemInput!]
   password: String

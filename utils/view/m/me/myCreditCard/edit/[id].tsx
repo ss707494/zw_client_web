@@ -134,7 +134,7 @@ export const MyCreditCardEdit = () => {
             {ls('过期日')}
           </FormLabel>
           <DatePicker
-              format={'yyyy/MM'}
+              format={'MM/yy'}
               value={stateMCCE.form.expirationTime || null}
               onChange={(date) => {
                 actionsMCCE.setForm(['expirationTime', date])
@@ -142,7 +142,7 @@ export const MyCreditCardEdit = () => {
           />
         </FormControl>],
         ['验证码', 'code'],
-        ['姓名', 'userName'],
+        ['持卡人姓名', 'userName'],
         ['详细地址', 'addressDetail', () => <React.Fragment
             key={`addressDetail__box`}
         >
@@ -153,20 +153,20 @@ export const MyCreditCardEdit = () => {
           >
             <Space h={10}/>
             <FormLabel style={{fontSize: 'small'}}>
-              {ls('详细地址')}
+              {ls('账单地址')}
             </FormLabel>
             <RadioGroupBox
                 value={stateMCCE.form.creditAddressInputType}
                 onChange={((event, value) => actionsMCCE.setForm(['creditAddressInputType', value]))}
             >
               <FormControlLabel
-                  label={ls('收货地址选择')}
+                  label={ls('收货地址中选择')}
                   value={CreditAddressInputTypeEnum.Select}
                   control={<Radio/>}
               />
               <FormControlLabel
                   value={CreditAddressInputTypeEnum.Input}
-                  label={ls('手动输入')}
+                  label={ls('新地址手动输入')}
                   control={<Radio/>}
               />
             </RadioGroupBox>
@@ -192,7 +192,9 @@ export const MyCreditCardEdit = () => {
             </MenuItem>)}
           </TextField>}
           {[
-            ['邮政编码', 'zip'],
+            ['详细地址', 'address'],
+            ['地区', 'district'],
+            ['城市', 'city'],
             ['州', 'province',
               <TextField
                   key={'myAddressEdit_province'}
@@ -211,9 +213,7 @@ export const MyCreditCardEdit = () => {
                 </MenuItem>)}
               </TextField>,
             ],
-            ['城市', 'city'],
-            ['地区', 'district'],
-            ['详细地址', 'address'],
+            ['邮政编码', 'zip'],
           ].map(v => (v[2] && v[2]) || <SigninInput
               key={`myAddressEdit_${v[1]}`}
               label={ls(v[0] as string)}

@@ -21,6 +21,7 @@ import {dealNoAuth} from '../../../components/NoAuth/NoAuth'
 import {ShoppingCartIconButton} from '../../../components/ShoppingCartIconButton/ShoppingCartIconButton'
 import {cardModel} from '../card/[type]'
 import {PromoCodeTypeEnum} from '../../../ss_common/enum'
+import {CoinDetailDialog, CoinDetailDialogModel} from './coinDetailDialog/coinDetailDialog'
 
 const BasePadding = styled.div`
   padding: 0 20px;
@@ -112,6 +113,7 @@ const ShopIcon = styled.div`
 
 export default function Me() {
   const router = useRouter()
+  const {actions: actionsCoinDetailDialogModel, state: stateCoinDetailDialogModel} = useStoreModel(CoinDetailDialogModel)
   const {actions: actionsCardModel, state: stateCardModel} = useStoreModel(cardModel)
   const {state: stateMe, actions: actionsMe} = useStoreModel(meModel)
   useEffect(() => {
@@ -140,7 +142,11 @@ export default function Me() {
         </aside>
       </Header>
       <Tab>
-        <Card>
+        <Card
+            onClick={() => {
+              actionsCoinDetailDialogModel.openClick(stateMe.user)
+            }}
+        >
           <MonetizationOn/>
           <main>{stateMe.user.orderCoinCurrentMonth ?? 0}</main>
           <footer>{ls('本月可用达人币')}</footer>
@@ -256,5 +262,6 @@ export default function Me() {
     </BScroller>)
     }
     <FootBar/>
+    <CoinDetailDialog/>
   </Box>
 }

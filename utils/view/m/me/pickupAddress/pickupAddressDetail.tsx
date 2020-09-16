@@ -26,6 +26,13 @@ const ContentBox = styled.div`
     max-height: 70vw;
     margin: 0 auto;
   }
+  > section {
+    display: flex;
+    > aside {
+      flex-basis: 80px;
+      flex-shrink: 0;
+    }
+  }
 `
 export const PickupAddressDetail = () => {
   const {actions: actionsPickupAddressDetailModel, state: statePickupAddressDetailModel} = useStoreModel(PickupAddressDetailModel)
@@ -46,13 +53,25 @@ export const PickupAddressDetail = () => {
             alt={''}
         />
         <Space h={8}/>
-        <div>{dialogData?.apartment} {dialogData?.streetAddress} </div>
+        <section>
+          <aside>{ls('详细地址')}:</aside>
+          {dialogData?.apartment} {dialogData?.streetAddress}
+        </section>
         <Space h={8}/>
-        <div>{dialogData?.city} {dialogData?.province} {dialogData?.zip}</div>
+        <section>
+          <aside/>
+          {dialogData?.city} {dialogData?.province} {dialogData?.zip}
+        </section>
         <Space h={8}/>
-        <div>{ls('营业时间')}:{dialogData?.openTime}</div>
+        <section>
+          <aside>{ls('营业时间')}:</aside>
+          {dialogData?.openTime}
+        </section>
         <Space h={8}/>
-        <div>{ls('联系电话')}:{dialogData?.phone}</div>
+        <section>
+          <aside>{ls('联系电话')}:</aside>
+          {dialogData?.phone}
+        </section>
         <Space h={16}/>
       </ContentBox>
     </DialogContent>

@@ -125,7 +125,7 @@ export const OrderDetail = () => {
     {!orderInfo?.id ? <div/> : <BScroller boxHeight={'calc(100vh - 60px)'}>
       <Box>
         <Top>
-          <section>{ls(formatDate(orderInfo.createTime))}</section>
+          <section>{formatDate(orderInfo.createTime, 'YYYY/MM/dd')}</section>
           <aside>{orderStateToString(orderInfo?.state)}</aside>
         </Top>
         <InfoLabel>
@@ -141,6 +141,7 @@ export const OrderDetail = () => {
                   <footer>{v.city} {v.province} {v.zip}</footer>
                 </>)(stateOD.selfAddress.find(v => v.id === orderInfo.selfAddressId))
             ) || <>
+              <main>{orderInfo.userAddress?.name}</main>
               <header>{orderInfo.userAddress?.address}</header>
               <footer>{orderInfo.userAddress?.city} {orderInfo.userAddress?.province} {orderInfo.userAddress?.zip}</footer>
             </>}
@@ -150,8 +151,9 @@ export const OrderDetail = () => {
           <aside>{ls('支付方式')} :</aside>
           <section>
             <header>{orderInfo?.userPayCard?.code}</header>
-            <main>{ls('过期日')}{formatDate(orderInfo?.userPayCard?.expirationTime, 'MM/yy')}</main>
+            <main>{ls('过期日')} {formatDate(orderInfo?.userPayCard?.expirationTime, 'MM/yy')}</main>
             <footer>{orderInfo?.userPayCard?.userName}</footer>
+            <footer>{ls('卡号后四位')} {orderInfo.userPayCard?.number?.slice(orderInfo.userPayCard?.number?.length - 4)}</footer>
           </section>
         </InfoLabel>
         <GreyPart/>

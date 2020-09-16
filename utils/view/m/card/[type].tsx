@@ -15,6 +15,7 @@ import {dealImgUrl} from '../../../tools/img'
 import {grey} from '@material-ui/core/colors'
 import {BScroller} from '../../../components/BScroll/BScroller'
 import {Space} from '../../../components/Box/Box'
+import {showMessage} from '../../../components/Message/Message'
 
 export const cardModel = modelFactory('cardModel', {
   promoCodeList: [] as PromoCode[],
@@ -103,7 +104,7 @@ export const getPromoCodeItem = (item: PromoCode, user: User) => {
     </Title>
     <Remark>{item.remark}</Remark>
     <CodeBox>{ls('优惠码')}:{item.code}</CodeBox>
-    <Time>{ls('使用时间')}:{formatDate(item.effectiveDateStart, 'YYYY/MM/dd')}-{formatDate(item.effectiveDateEnd, 'YYYY/MM/dd')}</Time>
+    <Time>{ls('使用时间')}:{formatDate(item.effectiveDateStart, 'YYYY/MM/dd')} - {formatDate(item.effectiveDateEnd, 'YYYY/MM/dd')}</Time>
     <Action>
       <Button
           color={'secondary'}
@@ -112,6 +113,7 @@ export const getPromoCodeItem = (item: PromoCode, user: User) => {
           onClick={() => {
             if (item?.code) {
               localStorage.setItem(`promoCode_${user.id}`, `${item?.code ?? ''}`)
+              showMessage('操作成功')
             }
           }}
       >{ls('应用到购物车')}</Button>
@@ -125,9 +127,9 @@ export const getPromoCodeItem = (item: PromoCode, user: User) => {
     <Space h={8}/>
     <Remark>{item.remark}</Remark>
     <Space h={8}/>
-    <Time>{ls('使用时间')}:{formatDate(item.effectiveDateStart, 'YYYY/MM/dd')}-{formatDate(item.effectiveDateEnd, 'YYYY/MM/dd')}</Time>
+    <Time>{ls('使用时间')}: {formatDate(item.effectiveDateStart, 'YYYY/MM/dd')} - {formatDate(item.effectiveDateEnd, 'YYYY/MM/dd')}</Time>
     <Space h={8}/>
-    <CodeBox>{ls('优惠码')}:{item.code}</CodeBox>
+    <CodeBox>{ls('优惠码')}: {item.code}</CodeBox>
     <Space h={8}/>
     <Action>
       <Button
@@ -137,6 +139,7 @@ export const getPromoCodeItem = (item: PromoCode, user: User) => {
           onClick={() => {
             if (item?.code) {
               localStorage.setItem(`promoCode_${user.id}`, `${item?.code ?? ''}`)
+              showMessage('操作成功')
             }
           }}
       >{ls('应用到购物车')}</Button>

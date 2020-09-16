@@ -81,7 +81,9 @@ export const MyAddressEdit = () => {
     <FieldContain>
       {[
         ['姓名', 'name'],
-        ['邮政编码', 'zip'],
+        ['详细地址', 'address'],
+        ['地区', 'district'],
+        ['城市', 'city'],
         ['州', 'province',
           <TextField
               key={'myAddressEdit_province'}
@@ -99,9 +101,7 @@ export const MyAddressEdit = () => {
             </MenuItem>)}
           </TextField>
         ],
-        ['城市', 'city'],
-        ['地区', 'district'],
-        ['详细地址', 'address'],
+        ['邮政编码', 'zip'],
         ['联系方式', 'contactInformation'],
       ].map(v => (v[2] && v[2]) || <SigninInput
           key={`myAddressEdit_${v[1]}`}

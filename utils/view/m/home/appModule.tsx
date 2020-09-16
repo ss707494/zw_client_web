@@ -14,6 +14,7 @@ import {getDataConfig, homeCarouselImgs} from '../../../graphqlTypes/doc'
 import {formatDate, fpMergePre} from '../../../tools/utils'
 import styled from 'styled-components'
 import {dealImgUrl} from '../../../tools/img'
+import {Space} from '../../../components/Box/Box'
 
 export const HomeType = {
   home: 'home',
@@ -73,7 +74,6 @@ export const HomeAppModule = (type?: string) => function () {
     actionsHomeTabs.setHomeType((type) ?? HomeType.home)
   }, [type])
 
-  console.log(stateHomeCarouselModel.homeCarouselImgs?.value?.list)
   return (
       <div>
         <HeaderSearch homeType={type ?? HomeType.home}/>
@@ -82,6 +82,7 @@ export const HomeAppModule = (type?: string) => function () {
             <div className={'cusCarousel'}>
               {(() => {
                 const filterList = stateHomeCarouselModel.homeCarouselImgs?.value?.list?.filter((v: any) => !v.isDisabled) ?? []
+                console.log(filterList)
                 return <CusCarousel
                     height={'160px'}
                     dataList={filterList as []}
@@ -94,8 +95,11 @@ export const HomeAppModule = (type?: string) => function () {
                           alt=""/>
                       <aside>
                         <section>{item?.objData?.remark}</section>
+                        <Space w={4}/>
                         {item?.objData?.effectiveDateStart &&
-                        <main>{formatDate(item?.objData?.effectiveDateStart, 'YYYY/MM/dd')}-{formatDate(item?.objData?.effectiveDateEnd, 'YYYY/MM/dd')}</main>}
+                        <main>[ {formatDate(item?.objData?.effectiveDateStart, 'YYYY/MM/dd')} - {formatDate(item?.objData?.effectiveDateEnd, 'YYYY/MM/dd')} ]</main>}
+                        {item?.objData?.startTime &&
+                        <main>[ {formatDate(item?.objData?.startTime, 'YYYY/MM/dd')} - {formatDate(item?.objData?.endTime, 'YYYY/MM/dd')} ]</main>}
                       </aside>
                     </CusSwipeImg>}
                     onClickItem={(index) => {
