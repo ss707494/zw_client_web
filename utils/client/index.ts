@@ -60,12 +60,12 @@ export const getClient = () => {
             `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
         )
         if (extensions?.code === 'UNAUTHENTICATED') {
-          if (message.includes('first')) {
-            refreshToken()
-          } else {
-            showMessage({message: '请重新登录'})
-            Router.push('/m/login')
-          }
+          showMessage({message: '请重新登录'})
+          Router.push('/m/login')
+          // if (message.includes('first')) {
+          //   refreshToken()
+          // } else {
+          // }
         }
         if (message.includes('Unexpected error')) {
           showMessage({
@@ -82,12 +82,12 @@ export const getClient = () => {
       const errMsg = ('bodyText' in networkError) ? networkError?.bodyText : ('result' in networkError) ? networkError?.result?.error : ''
       ssLog(`[Network error]: ${errMsg}`)
       if ('statusCode' in networkError && networkError?.statusCode === 401) {
-        if (errMsg.includes('first') && getToken('refreshtoken')) {
-          refreshToken()
-        } else {
-          showMessage({message: '请重新登录'})
-          Router.push('/m/login')
-        }
+        showMessage({message: '请重新登录'})
+        Router.push('/m/login')
+        // if (errMsg.includes('first') && getToken('refreshtoken')) {
+        //   refreshToken()
+        // } else {
+        // }
       }
     }
   }

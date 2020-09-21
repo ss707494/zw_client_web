@@ -123,7 +123,13 @@ export const MyCreditCardEdit = () => {
     />
     <FieldContain>
       {[
-        ['信用卡号', 'number'],
+        ['信用卡号', 'number', () => <SigninInput
+            key={`numberKey`}
+            type="password"
+            label={ls('信用卡号')}
+            value={stateMCCE.form['number'] ?? ''}
+            onChange={event => actionsMCCE.setForm(['number', event.target.value])}
+        />],
         ['过期日', 'expirationTime', () => <FormControl
             key={`expirationTime`}
             fullWidth={true}
@@ -141,7 +147,13 @@ export const MyCreditCardEdit = () => {
               }}
           />
         </FormControl>],
-        ['验证码', 'code'],
+        ['验证码', 'code', () => <SigninInput
+            key={`codeKey`}
+            type="password"
+            label={ls('验证码')}
+            value={stateMCCE.form['code'] ?? ''}
+            onChange={event => actionsMCCE.setForm(['code', event.target.value])}
+        />],
         ['持卡人姓名', 'userName'],
         ['详细地址', 'addressDetail', () => <React.Fragment
             key={`addressDetail__box`}

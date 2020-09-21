@@ -13,6 +13,7 @@ import {orderStateToString, PickUpTypeEnum} from '../../../../ss_common/enum'
 import {mpStyle} from '../../../../style/common'
 import {grey} from '@material-ui/core/colors'
 import {dealImgUrl} from '../../../../tools/img'
+import {Space} from '../../../../components/Box/Box'
 
 export const orderDetailModel = modelFactory('orderDetail', {
   orderInfo: {} as OrderInfo,
@@ -124,6 +125,7 @@ export const OrderDetail = () => {
     />
     {!orderInfo?.id ? <div/> : <BScroller boxHeight={'calc(100vh - 60px)'}>
       <Box>
+        <Space h={16} />
         <Top>
           <section>{formatDate(orderInfo.createTime, 'YYYY/MM/dd')}</section>
           <aside>{orderStateToString(orderInfo?.state)}</aside>
@@ -152,8 +154,8 @@ export const OrderDetail = () => {
           <section>
             <header>{orderInfo?.userPayCard?.code}</header>
             <main>{ls('过期日')} {formatDate(orderInfo?.userPayCard?.expirationTime, 'MM/yy')}</main>
-            <footer>{orderInfo?.userPayCard?.userName}</footer>
             <footer>{ls('卡号后四位')} {orderInfo.userPayCard?.number?.slice(orderInfo.userPayCard?.number?.length - 4)}</footer>
+            <footer>{ls('持卡人')} {orderInfo?.userPayCard?.userName}</footer>
           </section>
         </InfoLabel>
         <GreyPart/>

@@ -103,8 +103,8 @@ export const getPromoCodeItem = (item: PromoCode, user: User) => {
       {item.title}
     </Title>
     <Remark>{item.remark}</Remark>
-    <CodeBox>{ls('优惠码')}:{item.code}</CodeBox>
-    <Time>{ls('使用时间')}:{formatDate(item.effectiveDateStart, 'YYYY/MM/dd')} - {formatDate(item.effectiveDateEnd, 'YYYY/MM/dd')}</Time>
+    <CodeBox>{ls('优惠码')}: {item.code}</CodeBox>
+    <Time>{ls('使用时间')}: {formatDate(item.effectiveDateStart, 'YYYY/MM/dd')} - {formatDate(item.effectiveDateEnd, 'YYYY/MM/dd')}</Time>
     <Action>
       <Button
           color={'secondary'}

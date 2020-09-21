@@ -1,5 +1,5 @@
 import {modelFactory} from '../ModelAction/modelUtil'
-import {fpMerge, fpSet} from '../tools/utils'
+import {fpMerge, fpMergePre, fpSet} from '../tools/utils'
 
 export interface DialogModel<T> {
   open: boolean
@@ -32,10 +32,14 @@ export const dialogModelFactory = <T>(name: string, initData: T) => modelFactory
   })),
   onClose: (value, {data, setData}) => {
     data.openResolve(false)
-    setData(pre => fpMerge(fpSet(pre, 'dialogData', {}), {
-      dialogData: initData,
+    setData(fpMergePre({
       open: false,
     }))
+    setTimeout(() => {
+      setData(pre => fpMerge(fpSet(pre, 'dialogData', {}), {
+        dialogData: initData,
+      }))
+    }, 500)
   },
   setdialog: (value: T | any, {setData}) => setData(data => fpMerge(data, {
     dialogData: value,

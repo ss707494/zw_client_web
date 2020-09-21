@@ -113,7 +113,7 @@ const ShopIcon = styled.div`
 
 export default function Me() {
   const router = useRouter()
-  const {actions: actionsCoinDetailDialogModel, state: stateCoinDetailDialogModel} = useStoreModel(CoinDetailDialogModel)
+  const {actions: actionsCoinDetailDialogModel} = useStoreModel(CoinDetailDialogModel)
   const {actions: actionsCardModel, state: stateCardModel} = useStoreModel(cardModel)
   const {state: stateMe, actions: actionsMe} = useStoreModel(meModel)
   useEffect(() => {
@@ -144,7 +144,10 @@ export default function Me() {
       <Tab>
         <Card
             onClick={() => {
-              actionsCoinDetailDialogModel.openClick(stateMe.user)
+              actionsCoinDetailDialogModel.openClick({
+                ...stateMe.user,
+                isNextMonth: false,
+              })
             }}
         >
           <MonetizationOn/>
@@ -152,7 +155,14 @@ export default function Me() {
           <footer>{ls('本月可用达人币')}</footer>
         </Card>
         <Parting/>
-        <Card>
+        <Card
+            onClick={() => {
+              actionsCoinDetailDialogModel.openClick({
+                ...stateMe.user,
+                isNextMonth: true,
+              })
+            }}
+        >
           <MonetizationOn/>
           <main>{stateMe.user.orderCoinNextMonth ?? 0}</main>
           <footer>{ls('下月积攒达人币')}</footer>

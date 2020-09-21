@@ -139,7 +139,7 @@ export const OrderHistory = () => {
                 </aside>
               </ImgList>
               <section>
-                共{value?.rOrderProduct?.reduce((pre, cur) => pre + (cur?.count ?? 0), 0)}件商品, 实付
+                共 {value?.rOrderProduct?.reduce((pre, cur) => pre + (cur?.count ?? 0), 0)} 件商品, 实付
                 <span>{dealMoney(value?.actuallyPaid)}</span>,
               </section>
               <section>
@@ -150,10 +150,10 @@ export const OrderHistory = () => {
                     color={'secondary'}
                     variant={'contained'}
                     onClick={e => {
-                      console.log('123')
                       e.stopPropagation()
+                      router.push('/m/me/orderDetail/[id]', `/m/me/orderDetail/${value?.id}`)
                     }}
-                >{ls('确认收货')}</Button>
+                >{ls('查看详情')}</Button>
               </footer>
             </Item>
           </React.Fragment>,

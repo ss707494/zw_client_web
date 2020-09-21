@@ -93,7 +93,7 @@ export const PickupAddress = () => {
             <footer>
               {`${value.streetAddress}`}
             </footer>
-            <main>{`${value.province} ${value.city} ${value.zip}`}</main>
+            <main>{`${value.city} ${value.province} ${value.zip}`}</main>
           </section>
         </ItemBox>
         <RightBox>

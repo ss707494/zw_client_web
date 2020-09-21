@@ -82,7 +82,6 @@ export const HomeAppModule = (type?: string) => function () {
             <div className={'cusCarousel'}>
               {(() => {
                 const filterList = stateHomeCarouselModel.homeCarouselImgs?.value?.list?.filter((v: any) => !v.isDisabled) ?? []
-                console.log(filterList)
                 return <CusCarousel
                     height={'160px'}
                     dataList={filterList as []}
