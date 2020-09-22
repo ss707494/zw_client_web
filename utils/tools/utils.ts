@@ -112,6 +112,8 @@ export const dealMoney = (amount: any, pre = '') => `${pre}$ ${formatMoney(amoun
 
 export const dealMaybeNumber = (num: Maybe<number> | undefined) => num ?? 0
 
+export const getLastNumber = (str: string, num: number) => str.slice(str.length - num)
+
 export default {
   getObjectURL,
 }

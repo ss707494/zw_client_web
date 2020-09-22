@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import {modelFactory} from '../../../../../ModelAction/modelUtil'
 import {useStoreModel} from '../../../../../ModelAction/useStore'
-import {fpMergePre} from '../../../../../tools/utils'
+import {fpMergePre, getLastNumber} from '../../../../../tools/utils'
 import {SigninInput} from '../../../register'
 import {FieldContain} from '../../myInfo/updatePassword'
 import {HeaderTitle} from '../../../../../components/HeaderTitle/HeaderTitle'
@@ -46,6 +46,7 @@ export const myCreditCardEditModel = modelFactory('myCreditCardEditModel', {
     expirationTime: null,
     creditAddressInputType: CreditAddressInputTypeEnum.Select,
   } as UserPayCard,
+  isEditNumber: true,
 }, {
   setForm: setForm,
   clearForm: (value, option) => option.setData(fpMergePre({
@@ -85,10 +86,21 @@ export const myCreditCardEditModel = modelFactory('myCreditCardEditModel', {
       },
     })
     option.setData(fpMergePre({
+      isEditNumber: false,
       form: {
         ...res?.userPayCard ?? {},
       },
     }))
+  },
+  numberFocus: (value, option) => {
+    if (!option.data.isEditNumber) {
+      option.setData(fpMergePre({
+        isEditNumber: true,
+        form: {
+          number: '',
+        },
+      }))
+    }
   },
 })
 
@@ -125,10 +137,10 @@ export const MyCreditCardEdit = () => {
       {[
         ['信用卡号', 'number', () => <SigninInput
             key={`numberKey`}
-            type="password"
             label={ls('信用卡号')}
-            value={stateMCCE.form['number'] ?? ''}
+            value={stateMCCE.isEditNumber ? stateMCCE.form['number'] : `************${getLastNumber(stateMCCE.form['number'] ?? '', 4)}` ?? ''}
             onChange={event => actionsMCCE.setForm(['number', event.target.value])}
+            onFocus={() => actionsMCCE.numberFocus()}
         />],
         ['过期日', 'expirationTime', () => <FormControl
             key={`expirationTime`}

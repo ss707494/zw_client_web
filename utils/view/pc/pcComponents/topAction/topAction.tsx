@@ -1,14 +1,15 @@
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 import React from 'react'
 import styled from 'styled-components'
 import {mpStyle} from '../../../../style/common'
 import {Autocomplete} from '@material-ui/lab'
-import {Button, InputAdornment, MenuItem, Select, TextField} from '@material-ui/core'
+import {Button, InputAdornment, MenuItem, Select, TextField, Avatar, IconButton, Badge} from '@material-ui/core'
 import {Space} from '../../../../components/Box/Box'
 import {ls} from '../../../../tools/dealKey'
 
 const Box = styled.div`
   display: flex;
-  padding: 24px 88px;
+  padding: 24px 122px;
 `
 const Title = styled.div`
   display: grid;
@@ -49,6 +50,18 @@ const SearchInput = styled.div`
     }
   }
 `
+const AvatarBox = styled.div`
+  display: flex;
+  align-items: center;
+  > h2 {
+    font-weight: bold;
+  }
+`
+const ShopCartBox = styled.div`
+  display: flex;
+  align-items: center;
+`
+
 export const TopAction = () => {
 
   return <Box>
@@ -85,9 +98,6 @@ export const TopAction = () => {
                           placeholder={ls('选择分类')}
                       >
                         <MenuItem value={0}>全部分类</MenuItem>
-                        <MenuItem value={10}>Ten</MenuItem>
-                        <MenuItem value={20}>Twenty</MenuItem>
-                        <MenuItem value={30}>Thirty</MenuItem>
                       </Select>
                       <Space w={8}/>
                       <Button
@@ -102,5 +112,20 @@ export const TopAction = () => {
           )}
       />
     </SearchInput>
+    <Space isGrow={true}/>
+    <AvatarBox>
+      <Avatar/>
+      <Space w={8}/>
+      <h2>{ls('我的账户')}</h2>
+    </AvatarBox>
+    <Space w={48}/>
+    <ShopCartBox>
+      <IconButton>
+        <Badge badgeContent={4}
+               color="secondary">
+          <ShoppingCartIcon/>
+        </Badge>
+      </IconButton>
+    </ShopCartBox>
   </Box>
 }
