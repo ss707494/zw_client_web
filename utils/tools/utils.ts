@@ -122,4 +122,7 @@ export const dealUrlQuery = (queryObj: any) => {
   return `?${Object.keys(queryObj).map(value => `${value}=${queryObj[value]}`).join('&')}`
 }
 
+export const isPc = () => {
+  return /\/pc\//.test(location.href)
+}
 

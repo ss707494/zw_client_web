@@ -1,11 +1,11 @@
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 import React from 'react'
 import styled from 'styled-components'
 import {mpStyle} from '../../../../style/common'
 import {Autocomplete} from '@material-ui/lab'
-import {Button, InputAdornment, MenuItem, Select, TextField, Avatar, IconButton, Badge} from '@material-ui/core'
+import {Avatar, Button, InputAdornment, TextField} from '@material-ui/core'
 import {Space} from '../../../../components/Box/Box'
 import {ls} from '../../../../tools/dealKey'
+import {ShoppingCartIconButton} from '../../../../components/ShoppingCartIconButton/ShoppingCartIconButton'
 
 const Box = styled.div`
   display: flex;
@@ -89,17 +89,6 @@ export const TopAction = () => {
                   variant="outlined"
                   InputProps={{
                     endAdornment: <InputAdornment position={'end'}>
-                      <Select
-                          labelId="demo-simple-select-label"
-                          id="demo-simple-select"
-                          value={0}
-                          onChange={() => {
-                          }}
-                          placeholder={ls('选择分类')}
-                      >
-                        <MenuItem value={0}>全部分类</MenuItem>
-                      </Select>
-                      <Space w={8}/>
                       <Button
                           variant={'contained'}
                           color={'secondary'}
@@ -120,12 +109,7 @@ export const TopAction = () => {
     </AvatarBox>
     <Space w={48}/>
     <ShopCartBox>
-      <IconButton>
-        <Badge badgeContent={4}
-               color="secondary">
-          <ShoppingCartIcon/>
-        </Badge>
-      </IconButton>
+      <ShoppingCartIconButton/>
     </ShopCartBox>
   </Box>
 }

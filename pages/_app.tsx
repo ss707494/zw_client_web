@@ -1,5 +1,5 @@
 import '../utils/style/reset.css'
-import "react-responsive-carousel/lib/styles/carousel.min.css"
+import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import {AppProps} from 'next/app'
 import React from 'react'
 import {ThemeProvider} from '@material-ui/core'
@@ -10,7 +10,7 @@ import {DateWrapperApollo} from '../utils/components/DateWarpper'
 
 export default function MyApp({Component, pageProps}: AppProps) {
   return [
-      DateWrapperApollo,
+    DateWrapperApollo,
   ].reduce((previousValue: any, currentValue: any) => currentValue(previousValue),
       <>
         <ThemeProvider theme={theme}>
@@ -20,6 +20,12 @@ export default function MyApp({Component, pageProps}: AppProps) {
           <Component {...pageProps} />
           <Message/>
         </ThemeProvider>
-      </>,)
+        {/*  <style*/}
+        {/*      global*/}
+        {/*      jsx*/}
+        {/*  >{`*/}
+        {/*  ${isPc && mpStyle.scrollbar}*/}
+        {/*`}</style>*/}
+      </>)
 }
 

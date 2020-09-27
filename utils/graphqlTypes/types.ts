@@ -32,7 +32,7 @@ export type Query = {
   productListOrderByOrder?: Maybe<ProductPage>;
   categoryList?: Maybe<CategoryPage>;
   oneCategory?: Maybe<Category>;
-  productsInCategory?: Maybe<Array<Maybe<Product>>>;
+  productsInCategory?: Maybe<ProductPage>;
   categoryLevel?: Maybe<Scalars['Float']>;
   categoryRootParent?: Maybe<Category>;
   promoCodeList?: Maybe<Array<Maybe<PromoCode>>>;
@@ -124,6 +124,7 @@ export type QueryOneCategoryArgs = {
 
 
 export type QueryProductsInCategoryArgs = {
+  orderByAndPageInput?: Maybe<OrderByAndPageInput>;
   productItemInput?: Maybe<ProductItemInput>;
   categoryItemInput?: Maybe<CategoryItemInput>;
 };
@@ -886,6 +887,12 @@ export type CategoryPage = {
   list?: Maybe<Array<Maybe<Category>>>;
 };
 
+export type OrderByAndPageInput = {
+  rows_per_page?: Maybe<Scalars['Float']>;
+  page?: Maybe<Scalars['Float']>;
+  orderByObject?: Maybe<Array<Maybe<Array<Maybe<Scalars['String']>>>>>;
+};
+
 export type Mutation = {
    __typename?: 'Mutation';
   saveUserList?: Maybe<Array<Maybe<User>>>;
@@ -1018,11 +1025,5 @@ export type UpdatePasswordRes = {
 export type PageResult = {
    __typename?: 'PageResult';
   total?: Maybe<Scalars['Float']>;
-};
-
-export type OrderByAndPageInput = {
-  rows_per_page?: Maybe<Scalars['Float']>;
-  page?: Maybe<Scalars['Float']>;
-  orderByObject?: Maybe<Array<Maybe<Array<Maybe<Scalars['String']>>>>>;
 };
 

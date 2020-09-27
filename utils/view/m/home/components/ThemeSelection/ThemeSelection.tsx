@@ -11,7 +11,7 @@ import styled from 'styled-components'
 import {dealImgUrl} from '../../../../../tools/img'
 import {BScroller} from '../../../../../components/BScroll/BScroller'
 
-const themeSelectionModel = modelFactory('themeSelectionModel', {
+export const themeSelectionModel = modelFactory('themeSelectionModel', {
   themeSelectionData: [] as any[],
   productListForTheme: {} as {
     [key in string]: Product[]

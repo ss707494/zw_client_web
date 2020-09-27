@@ -33,7 +33,7 @@ export const CategoryPageModel = modelFactory('CategoryPage', {
       productItemInput: value.productItemInput,
     })
     option.setData(fpMergePre({
-      productList: res?.productsInCategory ?? [],
+      productList: res?.productsInCategory?.list ?? [],
       categoryList: [
         ...res?.categoryList?.list ?? [],
       ],

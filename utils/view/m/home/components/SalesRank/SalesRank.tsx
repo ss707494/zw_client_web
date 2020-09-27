@@ -14,7 +14,7 @@ import {Space} from '../../../../../components/Box/Box'
 import {homeTabsModel} from '../Tabs/Tabs'
 import {HomeType} from '../../appModule'
 
-const SalesRankModel = modelFactory('SalesRank', {
+export const SalesRankModel = modelFactory('SalesRank', {
   listData: [] as Product[],
 }, {
   getList: async (value, option) => {

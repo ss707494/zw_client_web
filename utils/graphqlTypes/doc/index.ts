@@ -343,12 +343,15 @@ export const doc = {
     ${fragment.UserAddressFields}
   `),
   productsInCategory: docFactory(gql`
-    query ($data: CategoryItemInput, $productItemInput: ProductItemInput) {
-      productsInCategory(categoryItemInput: $data, productItemInput: $productItemInput) {
-        ...ProductFields
-        img {
-          ...ImgFields
+    query ($data: CategoryItemInput, $productItemInput: ProductItemInput, $orderByAndPageInput: OrderByAndPageInput) {
+      productsInCategory(categoryItemInput: $data, productItemInput: $productItemInput, orderByAndPageInput: $orderByAndPageInput) {
+        list {
+          ...ProductFields
+          img {
+            ...ImgFields
+          }
         }
+        total
       }
       categoryList(data: {
         category: {

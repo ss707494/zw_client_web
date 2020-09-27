@@ -2,12 +2,13 @@ import React from 'react'
 import {Carousel} from 'react-responsive-carousel'
 import {dealImgUrl} from '../../tools/img'
 
-const CusCarousel = ({dataList, onClickItem, height, renderItem}: { height?: string, dataList: any[], onClickItem?: (index: number, item: React.ReactNode) => void, renderItem?: (item: any) => React.ReactChild }) => (
+const CusCarousel = ({dataList, onClickItem, height, renderItem, showArrows = false, showIndicators = true}: { height?: string, dataList: any[], onClickItem?: (index: number, item: React.ReactNode) => void, renderItem?: (item: any) => React.ReactChild, showArrows?: boolean, showIndicators?: boolean }) => (
     <Carousel
         autoPlay={true}
         showThumbs={false}
-        showArrows={false}
+        showArrows={showArrows}
         showStatus={false}
+        showIndicators={showIndicators}
         infiniteLoop={true}
         onClickItem={onClickItem}
     >

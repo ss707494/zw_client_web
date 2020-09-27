@@ -29,16 +29,17 @@ const getNowSale = (list: any[]) => {
   }
 }
 
-const promotionFlashSaleModel = modelFactory('promotionFlashSaleModel', {
+export const promotionFlashSaleModel = modelFactory('promotionFlashSaleModel', {
   limitTimeData: [] as any[],
   nowLimitData: {} as any,
   productList: [] as Product[],
   isNext: false,
 }, {
+  calcDifferenceHours: (value, option) => differenceInHours(new Date(option.data?.nowLimitData?.endTime ?? ''), new Date()),
+  calcDifferenceMinutes: (value, option) => differenceInMinutes(new Date(option.data.nowLimitData?.endTime ?? ''), new Date()) % 60,
   getData: async (value, option) => {
     const res = await option.query(doc.limitTimeData)
     const nowSaleData = getNowSale(res?.limitTimeData?.value?.list)
-    console.log(nowSaleData)
     const productRes = await option.query(doc.productListByIds, {
       ids: nowSaleData?.data?.selectProductList ?? [],
     })
@@ -46,7 +47,11 @@ const promotionFlashSaleModel = modelFactory('promotionFlashSaleModel', {
       nowLimitData: nowSaleData.data,
       isNext: nowSaleData.isNext,
       limitTimeData: res?.limitTimeData?.value?.list || [],
-      productList: productRes?.productListByIds?.list ?? [],
+      productList: [
+        // ...productRes?.productListByIds?.list,
+        // ...productRes?.productListByIds?.list,
+        ...productRes?.productListByIds?.list,
+      ] ?? [],
     }))
   },
 
@@ -82,9 +87,9 @@ export const PromotionFlashSale = () => {
       <Tip>
         <main>{statePromotionFlashSale.isNext && ls('距离下次抢购') || ls('限时选购')}</main>
         <section>{ls('剩余')}</section>
-        <span>{`${differenceInHours(new Date(statePromotionFlashSale.nowLimitData?.endTime ?? ''), new Date())}`}</span>
+        <span>{`${actionsPromotionFlashSale.calcDifferenceHours()}`}</span>
         <section>{ls('小时')}</section>
-        <span>{`${differenceInMinutes(new Date(statePromotionFlashSale.nowLimitData?.endTime ?? ''), new Date()) % 60}`}</span>
+        <span>{`${actionsPromotionFlashSale.calcDifferenceMinutes()}`}</span>
         <section>{ls('分钟')}</section>
         {/*<span>0</span>*/}
         {/*:*/}

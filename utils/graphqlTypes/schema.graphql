@@ -263,7 +263,7 @@ type Query {
   productList(orderByInput: OrderByInput, productInput: ProductItemInput): ProductPage
   productListByIds(ids: [String]): ProductPage
   productListOrderByOrder(orderByType: String, productInput: ProductItemInput): ProductPage
-  productsInCategory(categoryItemInput: CategoryItemInput, productItemInput: ProductItemInput): [Product]
+  productsInCategory(categoryItemInput: CategoryItemInput, orderByAndPageInput: OrderByAndPageInput, productItemInput: ProductItemInput): ProductPage
   promoCodeList(promoCodeItemInput: PromoCodeItemInput): [PromoCode]
   refreshToken(refreshtoken: String!): AuthBody
   shopCartList: [ShopCart]

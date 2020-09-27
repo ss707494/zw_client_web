@@ -10,7 +10,7 @@ const HeaderBox = styled.div`
   height: 64px;
   background: #0D0D21;
   display: grid;
-  grid-template-columns: 360px 1fr 480px;
+  grid-template-columns: 360px 1fr 360px;
   color: white;
   align-items: center;
 `
@@ -36,11 +36,6 @@ export const PcHeader = () => {
       >{ls('登录/注册')}</Button>
     </Center>
     <Right>
-      <Button
-          variant={'text'}
-          color={'inherit'}
-      >{ls('个人中心')}</Button>
-      <Space w={48} />
       <Button
           variant={'text'}
           color={'inherit'}

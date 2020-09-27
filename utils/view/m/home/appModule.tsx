@@ -77,7 +77,7 @@ export const HomeAppModule = (type?: string) => function () {
   return (
       <div>
         <HeaderSearch homeType={type ?? HomeType.home}/>
-        <BScroller>
+        <BScroller boxHeight={'calc(100vh - 65px)'}>
           <div className={'common_box'}>
             <div className={'cusCarousel'}>
               {(() => {
