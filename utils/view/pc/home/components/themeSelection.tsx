@@ -13,30 +13,32 @@ const Box = styled.div`
 `
 const Title = styled.div`
   ${mpStyle.fontType.xxl};
+  grid-area: 1/1/2/4;
+  justify-self: start;
 `
 const Img = styled.div`
   display: grid;
-  grid-auto-flow: column;
+  grid-template-rows: 1fr 1fr;
+  justify-self: stretch;
+  padding-right: ${mpStyle.spacePx.s};
+  border-right: 1px solid ${mpStyle.grey};
   > img {
-    width: 12vw;
-    height: 18vw;
+    width: 100%;
+    height: 50%;
+  }
+  ${mpStyle.fontType.n}
+  > section {
+    > div {
+      margin-top: ${mpStyle.spacePx.xxs};
+    }
   }
 `
 const ThemeBox = styled.div`
   display: grid;
   grid-template-rows: max-content max-content;
-  grid-template-columns: max-content 1fr;
-  ${Title} {
-    grid-area: 1/1/2/3;
-  }
-`
-const ProductBox = styled.div`
-  display: grid;
-  grid-auto-flow: column;
-  justify-content: start;
-  grid-gap: ${mpStyle.spacePx.s};
-  overflow-x: auto;
-  ${mpStyle.scrollbar};
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
+  grid-gap: ${mpStyle.spacePx.xs};
 `
 
 export const ThemeSelection = () => {
@@ -44,8 +46,6 @@ export const ThemeSelection = () => {
   useEffect(() => {
     actionsPromotionFlashSale.getData()
   }, [])
-
-  console.log(statePromotionFlashSale)
 
   return <Box>
     {statePromotionFlashSale.themeSelectionData.map(themeData => <ThemeBox
@@ -59,16 +59,14 @@ export const ThemeSelection = () => {
         <img
             src={dealImgUrl(themeData.imgUrl)}
             alt=""/>
-        <Space w={mpStyle.space.xs}/>
+        <section>
+          {/*<div>{themeData.title}</div>*/}
+          <div>{themeData.remark}</div>
+        </section>
       </Img>
-      <ProductBox>
-        {statePromotionFlashSale.productListForTheme[themeData.id]?.map(v => <ProductItemBox
-            key={`statePromotionFlashSaleProductItem_${v.id}`}
-            product={v}/>)}
-        {statePromotionFlashSale.productListForTheme[themeData.id]?.map(v => <ProductItemBox
-            key={`statePromotionFlashSaleProductItem_2${v.id}`}
-            product={v}/>)}
-      </ProductBox>
+      {statePromotionFlashSale.productListForTheme[themeData.id]?.slice(0, 8)?.map(v => <ProductItemBox
+          key={`statePromotionFlashSaleProductItem_${v.id}`}
+          product={v}/>)}
     </ThemeBox>)}
   </Box>
 }

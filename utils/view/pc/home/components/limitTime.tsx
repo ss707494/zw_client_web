@@ -24,8 +24,9 @@ const Tip = styled.div`
 `
 const Content = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   grid-gap: 16px;
+  justify-items: center;
 `
 export const LimitTime = () => {
   const {state: statePromotionFlashSale, actions: actionsPromotionFlashSale} = useStoreModel(promotionFlashSaleModel)
@@ -47,7 +48,7 @@ export const LimitTime = () => {
       </Header>
       <Space h={24}/>
       <Content>
-        {statePromotionFlashSale.productList.map(product => <ProductItemBox
+        {statePromotionFlashSale.productList.slice(0, 9).map(product => <ProductItemBox
             key={`ProductItemOneRow_${product.id}`}
             product={product}
         />)}

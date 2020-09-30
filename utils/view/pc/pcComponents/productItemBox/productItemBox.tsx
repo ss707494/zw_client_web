@@ -11,16 +11,14 @@ import {ShoppingCart} from '@material-ui/icons'
 const Box = styled(Card)`
   display: flex;
   flex-direction: column;
-  width: 232px;
-  padding: 8px;
+  width: 322px;
+  padding: ${mpStyle.spacePx.xs};
 `
 const ImgBox = styled.div`
-  width: 200px;
-  height: 280px;
   align-self: center;
   > img {
-    width: 200px;
-    height: 280px;
+    width: 240px;
+    height: 360px;
   }
 `
 const Price = styled.div`

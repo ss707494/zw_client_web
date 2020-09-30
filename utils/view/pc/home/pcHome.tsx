@@ -11,7 +11,8 @@ import {ThemeSelection} from './components/themeSelection'
 import {mpStyle} from '../../../style/common'
 
 const Box = styled.div`
-  padding: 0 122px;
+  width: 1600px;
+  margin: 0 auto;
 `
 const TwoSide = styled.div`
   display: flex;
