@@ -9,6 +9,7 @@ import {SalesRank} from './components/salesRank'
 import {Divider} from '@material-ui/core'
 import {ThemeSelection} from './components/themeSelection'
 import {mpStyle} from '../../../style/common'
+import {Carousel} from './components/carousel'
 
 const Box = styled.div`
   width: 1600px;
@@ -31,8 +32,8 @@ export const PcHome = () => {
     <Box>
       <TopAction/>
       <HeaderTab/>
-      {/*<Space h={16}/>*/}
-      {/*<Carousel/>*/}
+      <Space h={16}/>
+      <Carousel/>
       <Space h={24}/>
       <TwoSide>
         <section>

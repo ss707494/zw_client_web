@@ -38,7 +38,7 @@ export const LimitTime = () => {
     {statePromotionFlashSale.nowLimitData?.id &&
     <>
       <Header>
-        <Title>{ls('限时抢购')}</Title>
+        <Title>{statePromotionFlashSale.isNext && ls('距离下次抢购') || ls('限时选购')}</Title>
         <Space w={8}/>
         <Tip>{`${actionsPromotionFlashSale.calcDifferenceHours()}`}</Tip>
         <Space w={6}/>
