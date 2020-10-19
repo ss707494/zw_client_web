@@ -11,8 +11,8 @@ import {ThemeSelection} from './components/themeSelection'
 import {mpStyle} from '../../../style/common'
 import {Carousel} from './components/carousel'
 
-const Box = styled.div`
-  width: 1600px;
+export const PcContentBox = styled.div`
+  max-width: 1600px;
   margin: 0 auto;
 `
 const TwoSide = styled.div`
@@ -29,7 +29,7 @@ export const PcHome = () => {
 
   return <div>
     <PcHeader/>
-    <Box>
+    <PcContentBox>
       <TopAction/>
       <HeaderTab/>
       <Space h={16}/>
@@ -50,7 +50,7 @@ export const PcHome = () => {
           <SalesRank/>
         </aside>
       </TwoSide>
-    </Box>
+    </PcContentBox>
     <Space h={120}/>
   </div>
 }

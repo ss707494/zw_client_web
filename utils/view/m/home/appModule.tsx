@@ -30,7 +30,7 @@ export const homeCarouselModel = modelFactory('homeCarouselModel', {
         type: DictTypeEnum.HomeCarousel,
       } as DataConfigItemInput,
     }, {})
-    const {__typename, ...rest} = res2?.getDataConfig
+    const {__typename, ...rest} = res2?.getDataConfig || {}
     const homeCarouselDataComfig = await option.query(homeCarouselImgs, {
       data: {
         ...rest,

@@ -34,7 +34,9 @@ export const SalesRank = () => {
     }
   }, [router.query.salesRankType])
 
-  return <Box>
+  return <Box
+      id={'SalesRank'}
+  >
     <Title>
       {ls('热门排行')}
     </Title>

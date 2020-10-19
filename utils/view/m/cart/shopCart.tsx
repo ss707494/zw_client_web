@@ -46,24 +46,24 @@ const FixFooter = styled(Box)`
 `
 
 export const ShopCartPage = () => {
-  const {state: stateSCM, actions: actionsSCM, getLoad} = useStoreModel(shopCartModel)
+  const {state: stateShopCartModel, actions: actionsShopCartModel, getLoad} = useStoreModel(shopCartModel)
   const {actions: actionsInputPromoCodeModel} = useStoreModel(inputPromoCodeModel)
 
   useEffect(() => {
-    if (stateSCM.shopCartList.length === 0) {
-      actionsSCM.getList()
+    if (stateShopCartModel.shopCartList.length === 0) {
+      actionsShopCartModel.getList()
     }
   }, [])
   useEffect(() => {
-    if (stateSCM.user.id && localStorage.getItem(`promoCode_${stateSCM.user.id}`)) {
-      actionsSCM.dealPromoCode(`${localStorage.getItem(`promoCode_${stateSCM.user.id}`)}`)
+    if (stateShopCartModel.user.id && localStorage.getItem(`promoCode_${stateShopCartModel.user.id}`)) {
+      actionsShopCartModel.dealPromoCode(`${localStorage.getItem(`promoCode_${stateShopCartModel.user.id}`)}`)
     }
-  }, [stateSCM.user.id])
-  const productNumber = stateSCM.dealProductNumber(stateSCM)
-  const productSubtotal = dealMoney(stateSCM.dealProductTotal(stateSCM))
+  }, [stateShopCartModel.user.id])
+  const productNumber = stateShopCartModel.dealProductNumber(stateShopCartModel)
+  const productSubtotal = dealMoney(stateShopCartModel.dealProductTotal(stateShopCartModel))
 
-  const promoCode = stateSCM.promoCode
-  const discountProduct = stateSCM.shopCartList.filter(v => [v.product?.category?.id, v.product?.category?.parentCategory?.id, v.product?.category?.parentCategory?.parentCategory?.id].includes(promoCode.productCategory))
+  const promoCode = stateShopCartModel.promoCode
+  const discountProduct = stateShopCartModel.shopCartList.filter(v => [v.product?.category?.id, v.product?.category?.parentCategory?.id, v.product?.category?.parentCategory?.parentCategory?.id].includes(promoCode.productCategory))
   const discountProductAmount = discountProduct.reduce((previousValue, currentValue) => {
     return previousValue + dealMaybeNumber(currentValue.number) * dealMaybeNumber(currentValue.product?.priceOut)
   }, 0)
@@ -78,10 +78,10 @@ export const ShopCartPage = () => {
   }
   useEffect(() => {
     if (discountAmountForPromoCode) {
-      actionsSCM.setForm(['couponDiscount', discountAmountForPromoCode])
+      actionsShopCartModel.setForm(['couponDiscount', discountAmountForPromoCode])
     }
   }, [discountAmountForPromoCode])
-  const allTotal = stateSCM.dealProductTotal(stateSCM) - dealMaybeNumber(stateSCM.form.couponDiscount)
+  const allTotal = stateShopCartModel.dealProductTotal(stateShopCartModel) - dealMaybeNumber(stateShopCartModel.form.couponDiscount)
 
   return <div>
     <HeaderTitle
@@ -108,7 +108,7 @@ export const ShopCartPage = () => {
           >
             {ls('小计')}:{productSubtotal}
           </div>
-          {stateSCM.shopCartList.map(value => <CartProduct
+          {stateShopCartModel.shopCartList.map(value => <CartProduct
               key={`CartProduct_${value.id}`}
               shopCart={value}/>)
           }
@@ -117,10 +117,10 @@ export const ShopCartPage = () => {
               fullWidth={true}
               label={ls('运送方式')}
               select={true}
-              value={stateSCM.form.pickUpType}
+              value={stateShopCartModel.form.pickUpType}
               onChange={event => {
-                actionsSCM.setForm(['pickUpType', event.target.value])
-                actionsSCM.setForm(['addressId', stateSCM.initAddressId(fpMerge(stateSCM, {
+                actionsShopCartModel.setForm(['pickUpType', event.target.value])
+                actionsShopCartModel.setForm(['addressId', stateShopCartModel.initAddressId(fpMerge(stateShopCartModel, {
                   form: {
                     pickUpType: event.target.value,
                   },
@@ -136,18 +136,18 @@ export const ShopCartPage = () => {
           </TextField>
           <Title>{ls('达人卡和优惠券')}</Title>
           <PromoCode>
-            <main>{stateSCM.promoCode.title}</main>
-            <aside>{ls('code')}: {stateSCM.promoCode.code}</aside>
+            <main>{stateShopCartModel.promoCode.title}</main>
+            <aside>{ls('code')}: {stateShopCartModel.promoCode.code}</aside>
           </PromoCode>
           <Space h={8}/>
           <Button
               variant={'outlined'}
               onClick={async () => {
                 await actionsInputPromoCodeModel.openClick((promoCode: string) => {
-                  return actionsSCM.dealPromoCode(promoCode)
+                  return actionsShopCartModel.dealPromoCode(promoCode)
                 })
               }}
-          >{ls(stateSCM.promoCode.code ? '重新输入' : '输入验证码')}</Button>
+          >{ls(stateShopCartModel.promoCode.code ? '重新输入' : '输入验证码')}</Button>
           <InputPromoCodeDialog/>
           <Title>{ls('预估价格')}</Title>
           <Money>
@@ -157,7 +157,7 @@ export const ShopCartPage = () => {
           <Space h={10}/>
           <Money>
             <aside>{ls('折扣')}</aside>
-            <main>{dealMoney(stateSCM.form.couponDiscount)}</main>
+            <main>{dealMoney(stateShopCartModel.form.couponDiscount)}</main>
           </Money>
           <div style={{width: '100%', height: '10px'}}/>
           <Money>
@@ -165,7 +165,7 @@ export const ShopCartPage = () => {
             <main>{dealMoney(allTotal)}</main>
           </Money>
           <Title>{ls('下次购买的商品')}</Title>
-          {stateSCM.shopCartListNext.map(value => <CartProduct
+          {stateShopCartModel.shopCartListNext.map(value => <CartProduct
               key={`CartProduct_${value.id}`}
               shopCart={value}/>)}
           <div style={{width: '100%', height: '100px'}}/>
@@ -177,8 +177,8 @@ export const ShopCartPage = () => {
             color={'secondary'}
             fullWidth={true}
             disabled={productNumber === 0}
-            onClick={() => actionsSCM.updatePageType(pageTypeEnum.order)}
-        >去结算</Button>
+            onClick={() => actionsShopCartModel.updatePageType(pageTypeEnum.order)}
+        >{ls('去结算')}</Button>
       </FixFooter>
       <UpdateShopCart/>
     </>)}

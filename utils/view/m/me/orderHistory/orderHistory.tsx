@@ -124,7 +124,7 @@ export const OrderHistory = () => {
             <Parting/>
             <Item>
               <header>
-                <span>{formatDate(value?.createTime)}</span>
+                <span>{formatDate(value?.createTime, 'YYYY-MM-dd HH:mm')}</span>
                 <aside>{orderStateToString(value?.state)}</aside>
               </header>
               <ImgList
@@ -140,7 +140,7 @@ export const OrderHistory = () => {
               </ImgList>
               <section>
                 共 {value?.rOrderProduct?.reduce((pre, cur) => pre + (cur?.count ?? 0), 0)} 件商品, 实付
-                <span>{dealMoney(value?.actuallyPaid)}</span>,
+                <span> {dealMoney(value?.actuallyPaid)}</span>,
               </section>
               <section>
                 {ls('抵扣')} {dealMoney(value?.deductCoin)}, {ls('积攒')} {dealMoney(value?.generateCoin)},

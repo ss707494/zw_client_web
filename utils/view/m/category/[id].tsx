@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import Router, {useRouter} from 'next/router'
 import {useStoreModel} from '../../../ModelAction/useStore'
-import {Category, CategoryItemInput, Product, ProductItemInput} from '../../../graphqlTypes/types'
+import {Category, CategoryItemInput, Maybe, Product, ProductItemInput} from '../../../graphqlTypes/types'
 import {KeyboardArrowRight} from '@material-ui/icons'
 import {Breadcrumbs, ButtonBase, LinearProgress, Link, Typography} from '@material-ui/core'
 import {dealUrlQuery, fpMergePre} from '../../../tools/utils'
@@ -18,11 +18,12 @@ import {NoData} from '../../../components/NoData/NoData'
 import {CategoryRootName} from '../../../ss_common/enum'
 import {UpdateShopCart} from '../../../components/ProductItem/UpdateShopCart'
 import {HomeType} from '../home/appModule'
-import { homeTabsModel } from '../home/components/Tabs/Tabs'
+import {homeTabsModel} from '../home/components/Tabs/Tabs'
 
 export const CategoryPageModel = modelFactory('CategoryPage', {
   productList: [] as Product[],
   categoryList: [] as Category[],
+  actCatId: '',
 }, {
   getProductList: async (value: {
     categoryItemInput?: CategoryItemInput,
@@ -39,7 +40,11 @@ export const CategoryPageModel = modelFactory('CategoryPage', {
       ],
     }))
   },
-
+  changeActCatId: async (value: Maybe<string>, option) => {
+    option.setData(fpMergePre({
+      actCatId: value ?? '',
+    }))
+  },
 })
 
 const Box = styled('div')`
@@ -74,25 +79,33 @@ const CategoryItemStyle = styled(ButtonBase)`
   }
 `
 
-const categoryItemModel = modelFactory('categoryItemModel', {
+export const categoryItemModel = modelFactory('categoryItemModel', {
   test: '',
   category: {} as Category,
 }, {
+  calcCatLevel: (value, option) => {
+    const dealLevel: (obj: Maybe<Category>, level?: number) => number = (obj, level = 1) => {
+      if (!obj?.parentCategory || obj?.parentCategory?.id === CategoryRootName) return level
+      return dealLevel(obj?.parentCategory, level + 1)
+    }
+    return dealLevel(option.data?.category)
+  },
   getLevel: async (value: CategoryItemInput, option) => {
     return await option.query(doc.categoryLevel, {
       data: value,
     })
   },
   getCategory: async (value: CategoryItemInput, option) => {
-    const res = await option.query(doc.oneCategory, {data: value})
+    const res = await option.query(doc.categoryRootParent, {categoryItemInput: value})
     option.setData(fpMergePre({
-      category: res?.oneCategory ?? {},
+      category: res?.categoryRootParent ?? {},
     }))
+    return res?.categoryRootParent
   },
 })
 
 
-const ListBox = styled.div<React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {columns?: number}>`
+const ListBox = styled.div<React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> & { columns?: number }>`
   display: grid;
   grid-template-columns: repeat(${props => props.columns || 2}, 1fr);
   grid-gap: 16px;
@@ -151,17 +164,19 @@ export const CategoryPage = () => {
     {!!getLoad(doc.productsInCategory) && <LinearProgress/>}
     <Breadcrumbs
         style={{margin: '8px 0 0 8px'}}
-        separator="›" aria-label="breadcrumb">
-      {[stateCategoryItemModel.category?.parentCategory?.parentCategory, stateCategoryItemModel.category?.parentCategory].filter(v => !!v?.name && v?.name !== CategoryRootName).map(e => <Link
-          key={`Breadcrumbs${e?.id}`}
-          color="inherit"
-          href="#"
-          onClick={async () => {
-            const _query = dealUrlQuery({homeType: router.query.homeType})
-            await Router.push(`/m/category/[id]${_query}`, `/m/category/${e?.id}${_query}`)
-          }}>
-        {e?.name}
-      </Link>)}
+        separator="›"
+        aria-label="breadcrumb">
+      {[stateCategoryItemModel.category?.parentCategory?.parentCategory, stateCategoryItemModel.category?.parentCategory].filter(v => !!v?.name && v?.name !== CategoryRootName).map(e =>
+          <Link
+              key={`Breadcrumbs${e?.id}`}
+              color="inherit"
+              href="#"
+              onClick={async () => {
+                const _query = dealUrlQuery({homeType: router.query.homeType})
+                await Router.push(`/m/category/[id]${_query}`, `/m/category/${e?.id}${_query}`)
+              }}>
+            {e?.name}
+          </Link>)}
       <Typography color="textPrimary">{stateCategoryItemModel.category.name}</Typography>
     </Breadcrumbs>
     <BScroller boxHeight={'calc(100vh - 60px)'}>

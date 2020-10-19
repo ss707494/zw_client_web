@@ -6,12 +6,15 @@ import {Avatar, Button, InputAdornment, TextField} from '@material-ui/core'
 import {Space} from '../../../../components/Box/Box'
 import {ls} from '../../../../tools/dealKey'
 import {ShoppingCartIconButton} from '../../../../components/ShoppingCartIconButton/ShoppingCartIconButton'
+import {useRouter} from 'next/router'
+import {usePcOrMobile} from '../../../../hooks/usePcOrMobile'
 
 const Box = styled.div`
   display: flex;
   padding: 24px 122px;
 `
 const Title = styled.div`
+  cursor: pointer;
   display: grid;
   grid-template-rows: repeat(2, 1fr);
   grid-template-columns: repeat(2, min-content);
@@ -63,9 +66,14 @@ const ShopCartBox = styled.div`
 `
 
 export const TopAction = () => {
+  const router = useRouter()
+  usePcOrMobile()
+
 
   return <Box>
-    <Title>
+    <Title
+        onClick={() => {router.push('/pc/home')}}
+    >
       <img
           src={'/img/home/logo.png'}
           alt=""/>

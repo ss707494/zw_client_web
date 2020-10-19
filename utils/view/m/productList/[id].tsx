@@ -49,6 +49,7 @@ export const sortTypeLabel: {
 export const productListModel = modelFactory('productListModel', {
   category: {} as Category,
   productList: [] as Product[],
+  total: 0,
   sortShow: false,
   params: {
     sortType: sortTypeEnum.nomalSort,
@@ -72,6 +73,7 @@ export const productListModel = modelFactory('productListModel', {
     })
     option.setData(fpMergePre({
       productList: res?.productList?.list ?? [],
+      total: res?.productList?.total ?? 0
     }))
   },
   openSort: (value, option) => {

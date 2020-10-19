@@ -5,10 +5,12 @@ import React, {useEffect} from 'react'
 import {useRouter} from 'next/router'
 import {useStoreModel} from '../../ModelAction/useStore'
 import {shopCartModel} from '../../view/m/cart'
+import {usePcOrMobile} from '../../hooks/usePcOrMobile'
 
 type Color = 'inherit' | 'primary' | 'secondary' | 'action' | 'disabled' | 'error'
 
-export const ShoppingCartIconButton = ({color, htmlColor}: {color?: Color, htmlColor?: string}) => {
+export const ShoppingCartIconButton = ({color, htmlColor}: { color?: Color, htmlColor?: string }) => {
+  const {isPc} = usePcOrMobile()
   const router = useRouter()
   const {state: stateShopCart, actions: actionsShopCart} = useStoreModel(shopCartModel)
   useEffect(() => {
@@ -19,7 +21,7 @@ export const ShoppingCartIconButton = ({color, htmlColor}: {color?: Color, htmlC
 
   return <IconButton
       onClick={() => {
-        router.push(`/m/${AppFootBar.cart}`)
+        router.push(`/${isPc ? 'pc' : 'm'}/${AppFootBar.cart}`)
       }}
   >
     <Badge

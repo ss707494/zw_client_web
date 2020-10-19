@@ -108,7 +108,7 @@ export const formatMoney = (amount: any, decimalCount = 2, decimal = ".", thousa
   }
 }
 
-export const dealMoney = (amount: any, pre = '') => `${pre}$ ${formatMoney(amount)}`
+export const dealMoney = (amount: any, pre = '') => `${pre}$${formatMoney(amount)}`
 
 export const dealMaybeNumber = (num: Maybe<number> | undefined) => num ?? 0
 

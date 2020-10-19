@@ -6,7 +6,7 @@ import {FootBar} from '../../../components/FootBar/FootBar'
 import {Button, Card, Tab, Tabs} from '@material-ui/core'
 import {modelFactory} from '../../../ModelAction/modelUtil'
 import {PromoCodeTypeEnum} from '../../../ss_common/enum'
-import {PromoCode, User} from '../../../graphqlTypes/types'
+import {PromoCode, PromoCodeItemInput, User} from '../../../graphqlTypes/types'
 import {doc} from '../../../graphqlTypes/doc'
 import {useStoreModel} from '../../../ModelAction/useStore'
 import {formatDate, fpMergePre} from '../../../tools/utils'
@@ -22,7 +22,11 @@ export const cardModel = modelFactory('cardModel', {
   user: {} as User,
 }, {
   getList: async (value: string, option) => {
-    const res = await option.query(doc.promoCodeList, {})
+    const res = await option.query(doc.promoCodeList, {
+      promoCodeItemInput: {
+        isDisable: 0,
+      } as PromoCodeItemInput
+    })
     const user = await option.query(doc.oneUser)
     option.setData(fpMergePre({
       promoCodeList: res?.promoCodeList ?? [],

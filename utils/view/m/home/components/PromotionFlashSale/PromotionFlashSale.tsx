@@ -50,7 +50,7 @@ export const promotionFlashSaleModel = modelFactory('promotionFlashSaleModel', {
       productList: [
         // ...productRes?.productListByIds?.list,
         // ...productRes?.productListByIds?.list,
-        ...productRes?.productListByIds?.list,
+        ...productRes?.productListByIds?.list || [],
       ] ?? [],
     }))
   },

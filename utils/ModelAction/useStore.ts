@@ -23,7 +23,8 @@ export const dealNameSpace = (key: string, nameSpace: string) => {
 }
 
 export const useStoreModel: UseModelState = (model, key?: string | [string, string]) => {
-  const _key = model.name ?? (!key ? '' : Array.isArray(key) ? dealNameSpace(key[0], key[1]) : key)
+  const _key = ((key && Array.isArray(key)) && dealNameSpace(key[0], key[1])
+      || key || model.name) as string
   const {actions, state} = model
   const [, setState] = useState(Object.create(null))
   if (!_key) {

@@ -34,7 +34,9 @@ export const LimitTime = () => {
     actionsPromotionFlashSale.getData()
   }, [])
 
-  return <Box>
+  return <Box
+      id={'LimitTime'}
+  >
     {statePromotionFlashSale.nowLimitData?.id &&
     <>
       <Header>

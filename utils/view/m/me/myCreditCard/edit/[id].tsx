@@ -148,7 +148,7 @@ export const MyCreditCardEdit = () => {
             size={'small'}
         >
           <Space h={4}/>
-          <FormLabel>
+          <FormLabel style={{fontSize: '0.75rem'}}>
             {ls('过期日')}
           </FormLabel>
           <DatePicker
@@ -212,7 +212,7 @@ export const MyCreditCardEdit = () => {
             {stateMyAddressModel.list.map(item => <MenuItem
                 key={`addressSelect_${item.id}`}
                 value={`${item.id}`}>
-              {item.name}
+              {item.name} {item.address}
             </MenuItem>)}
           </TextField>}
           {[

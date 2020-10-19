@@ -165,7 +165,7 @@ export const OrderDetail = () => {
             >
               <img src={dealImgUrl(rOrderProduct.product?.img?.[0]?.url)}
                    alt=""/>
-              <section>{rOrderProduct.product?.name}</section>
+              <section>{rOrderProduct.product?.name} {rOrderProduct.product?.number}{ls('份')}</section>
               <main>{rOrderProduct.product?.remark}</main>
               <footer>
                 <aside>{dealMoney(rOrderProduct.product?.priceMarket)}</aside>

@@ -47,7 +47,9 @@ export const ThemeSelection = () => {
     actionsPromotionFlashSale.getData()
   }, [])
 
-  return <Box>
+  return <Box
+      id={'ThemeSelection'}
+  >
     {statePromotionFlashSale.themeSelectionData.map(themeData => <ThemeBox
         key={`themeSelectionData_${themeData.id}`}
     >

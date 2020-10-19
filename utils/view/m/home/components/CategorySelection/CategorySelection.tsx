@@ -3,7 +3,7 @@ import {grey} from '@material-ui/core/colors'
 import {KeyboardArrowRight} from '@material-ui/icons'
 import {ButtonBase} from '@material-ui/core'
 import {useStoreModel} from '../../../../../ModelAction/useStore'
-import {Category, CategoryListInput} from '../../../../../graphqlTypes/types'
+import {Category, CategoryListInput, Maybe} from '../../../../../graphqlTypes/types'
 import {dealUrlQuery, fpMergePre} from '../../../../../tools/utils'
 import {Loading} from '../../../../../components/Loading/Loading'
 import {categoryList} from '../../../../../graphqlTypes/doc'
@@ -16,6 +16,7 @@ import {homeTabsModel} from '../Tabs/Tabs'
 export const homeCategorySelectionModel = modelFactory('HomeCategorySelection', {
   listData: [] as Category[],
   total: 0,
+  actId: '',
 }, {
   getList: async (value, option) => {
     const res = await option.query(categoryList, {
@@ -29,6 +30,11 @@ export const homeCategorySelectionModel = modelFactory('HomeCategorySelection', 
     })
     option.setData(fpMergePre({
       listData: res?.categoryList?.list,
+    }))
+  },
+  changeActId: async (value: Maybe<string>, option) => {
+    option.setData(fpMergePre({
+      actId: value ?? '',
     }))
   },
 })

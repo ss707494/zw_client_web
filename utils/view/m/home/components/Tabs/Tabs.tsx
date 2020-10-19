@@ -40,7 +40,7 @@ export const homeTabsModel = modelFactory('HomeTabs', {
       } as DataConfigItemInput
     }, {})
     option.setData(fpMergePre({
-      appModuleConfig: appModuleConfig.getDataConfig?.value ?? {},
+      appModuleConfig: appModuleConfig?.getDataConfig?.value ?? {},
     }))
   },
 })
