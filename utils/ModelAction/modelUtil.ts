@@ -3,6 +3,7 @@ type ModelFactory<N = ''> = <T, E extends ModelActionObjHelp<any, T & FetchObj>>
 
 export const baseActionOption: BaseModelActionOption = {
   data: null,
+  actions: {},
   mutate: () => {},
   notice: () => {},
   query: () => {},
