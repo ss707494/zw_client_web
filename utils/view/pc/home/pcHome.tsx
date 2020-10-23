@@ -10,6 +10,7 @@ import {Divider} from '@material-ui/core'
 import {ThemeSelection} from './components/themeSelection'
 import {mpStyle} from '../../../style/common'
 import {Carousel} from './components/carousel'
+import {MainBox} from '../pcComponents/mainBox/mainBox'
 
 export const PcContentBox = styled.div`
   max-width: 1600px;
@@ -27,7 +28,7 @@ const TwoSide = styled.div`
 
 export const PcHome = () => {
 
-  return <div>
+  return <MainBox>
     <PcHeader/>
     <PcContentBox>
       <TopAction/>
@@ -52,5 +53,5 @@ export const PcHome = () => {
       </TwoSide>
     </PcContentBox>
     <Space h={120}/>
-  </div>
+  </MainBox>
 }

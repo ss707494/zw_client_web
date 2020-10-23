@@ -51,6 +51,7 @@ declare type GraphqlMutate = <T = any>(mutation: GraphqlDoc<T>, params?: T, opti
 
 declare type BaseModelActionOption<T = any> = {
   data: T
+  actions: DealFunObj<any>
   setData: Dispatch<SetStateAction<T>>
   notice: (a: any) => any
   query: GraphqlQuery

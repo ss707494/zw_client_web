@@ -7,18 +7,23 @@ import {mpStyle} from '../../../../style/common'
 import {Space} from '../../../../components/Box/Box'
 import {Button, Card} from '@material-ui/core'
 import {ShoppingCart} from '@material-ui/icons'
+import {useStoreModel} from '../../../../ModelAction/useStore'
+import {updateShopCartModel} from '../../../../components/ProductItem/UpdateShopCart'
+import {showMessage} from '../../../../components/Message/Message'
+import {productModel} from '../../../../components/ProductItem/ProductItem'
+import {shopCartModel} from '../../../m/cart'
 
-const Box = styled(Card)`
+const Box = styled(Card)<{width?: number}>`
   display: flex;
   flex-direction: column;
-  width: 322px;
+  width: ${props => `${props.width ?? 322}px`};
   padding: ${mpStyle.spacePx.xs};
 `
-const ImgBox = styled.div`
+const ImgBox = styled.div<{width?: number}>`
   align-self: center;
   > img {
-    width: 240px;
-    height: 360px;
+    width: ${props => `${(props.width ?? 322) - 82}px`};
+    height: ${props => `${((props.width ?? 322) - 82) * 4/3}px`};
   }
 `
 const Price = styled.div`
@@ -41,13 +46,20 @@ const Name = styled.div`
   flex-grow: 1;
 `
 
-export const ProductItemBox = ({product}: {
-  product: Product
+export const ProductItemBox = ({product, width = 322}: {
+  product: Product,
+  width?: number
 }) => {
+  const {actions: actionsUpdateShopCartModel} = useStoreModel(updateShopCartModel)
+  const {actions: actionsProductModel} = useStoreModel(productModel)
+  const {actions: actionsShopCartModel, state: stateSCM} = useStoreModel(shopCartModel)
 
   return <Box
+      width={width}
   >
-    <ImgBox>
+    <ImgBox
+        width={width}
+    >
       <img
           src={dealImgUrl(product?.img?.[0]?.url)}
           alt={''}
@@ -67,6 +79,18 @@ export const ProductItemBox = ({product}: {
       <Button
           variant={'contained'}
           color={'secondary'}
+          onClick={async () => {
+            const res = await actionsUpdateShopCartModel.openClick()
+            if (res?.num > 0) {
+              if ((await actionsProductModel.updateNumShopCart({
+                product,
+                number: ~~res?.num,
+              }))?.updateNumShopCart?.id) {
+                showMessage('操作成功')
+                actionsShopCartModel.getList()
+              }
+            }
+          }}
       >
         <ShoppingCart />
       </Button>

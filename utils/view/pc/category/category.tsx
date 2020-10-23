@@ -13,7 +13,8 @@ import {Category} from '../../../graphqlTypes/types'
 import {homeCategorySelectionModel} from '../../m/home/components/CategorySelection/CategorySelection'
 import styled from 'styled-components'
 import {ProductItemBox} from '../pcComponents/productItemBox/productItemBox'
-import { ls } from '../../../tools/dealKey'
+import {ls} from '../../../tools/dealKey'
+import {MainBox} from '../pcComponents/mainBox/mainBox'
 
 const ProductBox = styled.div`
   display: grid;
@@ -75,7 +76,7 @@ export const PcCategory = () => {
     getCat()
   }, [id])
 
-  return <div>
+  return <MainBox>
     <PcHeader/>
     <PcContentBox>
       <TopAction/>
@@ -93,5 +94,5 @@ export const PcCategory = () => {
         />)}
       </ProductBox>
     </PcContentBox>
-  </div>
+  </MainBox>
 }

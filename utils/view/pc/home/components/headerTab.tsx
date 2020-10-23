@@ -73,7 +73,7 @@ export const HeaderTab = () => {
       ['主题甄选', 'ThemeSelection'],
     ].map(v => <React.Fragment key={`PointBox${v[0]}`}>
       <PointBox
-          href={stateHeaderTabModel.isCategory ? `/pc/home#${v[1]}` : `#${v[1]}`}
+          href={`/pc/home#${v[1]}`}
       >
         {ls(v[0])}
       </PointBox>

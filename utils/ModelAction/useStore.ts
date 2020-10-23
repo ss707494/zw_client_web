@@ -95,6 +95,7 @@ export const useStoreModel: UseModelState = (model, key?: string | [string, stri
       originStore[_key].actions[value] = (v: any) => actions[value](v, {
         ...baseActionOption,
         data: originStore[_key].state,
+        actions: originStore[_key].actions,
         notice,
         setData,
         query,
@@ -108,6 +109,7 @@ export const useStoreModel: UseModelState = (model, key?: string | [string, stri
       originStore[_key].actions[value] = (v: any) => actions[value](v, {
         ...baseActionOption,
         data: originStore[_key].state,
+        actions: originStore[_key].actions,
         notice,
         setData,
         query,

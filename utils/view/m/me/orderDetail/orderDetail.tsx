@@ -139,6 +139,7 @@ export const OrderDetail = () => {
           <section>
             {(orderInfo.pickUpType === PickUpTypeEnum.Self &&
                 (v => <>
+                  <main>{v.fullName}</main>
                   <header>{v.streetAddress}</header>
                   <footer>{v.city} {v.province} {v.zip}</footer>
                 </>)(stateOD.selfAddress.find(v => v.id === orderInfo.selfAddressId))

@@ -85,43 +85,69 @@ export const FooterFit = styled.div`
   }
 `
 
-export const OrderPage = () => {
-  const router = useRouter()
-  const {actions: actionsSAM} = useStoreModel(selectAddressModel)
-  const {actions: actionsSelectCard} = useStoreModel(selectCardModel)
-  const {state: stateSCM, actions: actionsSCM, getLoad} = useStoreModel(shopCartModel)
+export const useOrderPageHooks = () => {
+  const {state: stateShopCartModel, actions: actionsShopCartModel, getLoad} = useStoreModel(shopCartModel)
 
   useEffect(() => {
-    actionsSCM.getOrderInfo()
+    actionsShopCartModel.getOrderInfo()
   }, [])
 
-  const addressData = stateSCM.dealAddressData(stateSCM)
-  const cardData = stateSCM.payCardList?.find(v => v.id === stateSCM.form.paymentMethodCardId) || {}
-  const productTotal = stateSCM.dealProductTotal(stateSCM)
-  const transportationCosts = stateSCM.dealTransportationCosts(stateSCM, productTotal)
-  const actuallyPaid = productTotal + transportationCosts - dealMaybeNumber(stateSCM.form.deductCoin) + dealMaybeNumber(stateSCM.form.saleTax) - dealMaybeNumber(stateSCM.form?.couponDiscount)
+  const addressData = stateShopCartModel.dealAddressData(stateShopCartModel)
+  const cardData = stateShopCartModel.payCardList?.find(v => v.id === stateShopCartModel.form.paymentMethodCardId) || {}
+  const productTotal = stateShopCartModel.dealProductTotal(stateShopCartModel)
+  const transportationCosts = stateShopCartModel.dealTransportationCosts(stateShopCartModel, productTotal)
+  const actuallyPaid = productTotal + transportationCosts - dealMaybeNumber(stateShopCartModel.form.deductCoin) + dealMaybeNumber(stateShopCartModel.form.saleTax) - dealMaybeNumber(stateShopCartModel.form?.couponDiscount)
   const generateCoin = actuallyPaid * 0.01
 
+  return {
+    stateShopCartModel,
+    actionsShopCartModel,
+    getLoad,
+    addressData,
+    cardData,
+    productTotal,
+    transportationCosts,
+    actuallyPaid,
+    generateCoin,
+  }
+}
+
+export const OrderPage = () => {
+  const router = useRouter()
+  const {
+    stateShopCartModel,
+    actionsShopCartModel,
+    getLoad,
+    addressData,
+    cardData,
+    productTotal,
+    transportationCosts,
+    actuallyPaid,
+    generateCoin,
+  } = useOrderPageHooks()
+  const {actions: actionsSelectAddressModel} = useStoreModel(selectAddressModel)
+  const {actions: actionsSelectCardModel} = useStoreModel(selectCardModel)
+
   useEffect(() => {
-    if (stateSCM.pageType === pageTypeEnum.order) {
-      window.history.pushState(null, '', document.URL);
+    if (stateShopCartModel.pageType === pageTypeEnum.order) {
+      window.history.pushState(null, '', document.URL)
       window.addEventListener('popstate', (state) => {
         // 监听到返回事件，注意，只有触发了返回才会执行这个方法
-        actionsSCM.updatePageType(pageTypeEnum.shopCart)
+        actionsShopCartModel.updatePageType(pageTypeEnum.shopCart)
       }, false)
     }
     return () => {
       window.removeEventListener('popstate', (state) => {
-        actionsSCM.updatePageType(pageTypeEnum.shopCart)
+        actionsShopCartModel.updatePageType(pageTypeEnum.shopCart)
       })
     }
-  }, [stateSCM.pageType])
+  }, [stateShopCartModel.pageType])
 
   return <div>
     <HeaderTitle
         title={'订单支付'}
         backCall={() => {
-          actionsSCM.updatePageType(pageTypeEnum.shopCart)
+          actionsShopCartModel.updatePageType(pageTypeEnum.shopCart)
           return true
         }}
     />
@@ -132,7 +158,7 @@ export const OrderPage = () => {
       <Space h={10}/>
       <ShopTitle>
         <Space w={20}/>
-        {ls((stateSCM.form.pickUpType === PickUpTypeEnum.Self && '自取地址') || '送货地址')}
+        {ls((stateShopCartModel.form.pickUpType === PickUpTypeEnum.Self && '自取地址') || '送货地址')}
       </ShopTitle>
       <AddressBox>
         <main>
@@ -146,9 +172,9 @@ export const OrderPage = () => {
         <aside>
           <IconButton
               onClick={async () => {
-                const res = await actionsSAM.openClick()
+                const res = await actionsSelectAddressModel.openClick()
                 if (res) {
-                  actionsSCM.setForm(['addressId', res])
+                  actionsShopCartModel.setForm(['addressId', res])
                 }
               }}
           >
@@ -169,9 +195,9 @@ export const OrderPage = () => {
         <aside>
           <IconButton
               onClick={async () => {
-                const res = await actionsSelectCard.openClick()
+                const res = await actionsSelectCardModel.openClick()
                 if (res) {
-                  actionsSCM.setForm(['paymentMethodCardId', res])
+                  actionsShopCartModel.setForm(['paymentMethodCardId', res])
                 }
               }}
           >
@@ -186,29 +212,30 @@ export const OrderPage = () => {
         <Space w={20}/>
         {ls('使用达人币')}
         <Space w={16}/>
-        <footer>{ls('当月可用余额')}{dealMoney(stateSCM.user.orderCoinCurrentMonth)}</footer>
+        <footer>{ls('当月可用余额')}{dealMoney(stateShopCartModel.user.orderCoinCurrentMonth)}</footer>
       </ShopTitle>
       <div>
         <Space w={20}/>
         <TextField
             style={{marginTop: '8px', marginBottom: '24px'}}
             label={ls('')}
-            value={stateSCM.form.deductCoin}
+            value={stateShopCartModel.form.deductCoin}
             onChange={e => {
-              actionsSCM.setForm(['deductCoin', e.target.value])
+              actionsShopCartModel.setForm(['deductCoin', e.target.value])
             }}
         />
       </div>
-      <Space c={grey[200]}
-             h={16}/>
+      <Space
+          c={grey[200]}
+          h={16}/>
       <Space h={16}/>
       <ShopTotal>
         <header>{ls('购物车总计')}</header>
-        <footer>{dealMoney(productTotal - (stateSCM.form?.couponDiscount ?? 0))}</footer>
+        <footer>{dealMoney(productTotal - (stateShopCartModel.form?.couponDiscount ?? 0))}</footer>
       </ShopTotal>
-      {/*{dealMaybeNumber(stateSCM.form?.couponDiscount) > 0 && <ShopTotal>*/}
+      {/*{dealMaybeNumber(stateShopCartModel.form?.couponDiscount) > 0 && <ShopTotal>*/}
       {/*  <header>{ls('优惠折扣')}</header>*/}
-      {/*  <footer>{dealMoney(stateSCM.form?.couponDiscount)}</footer>*/}
+      {/*  <footer>{dealMoney(stateShopCartModel.form?.couponDiscount)}</footer>*/}
       {/*</ShopTotal>}*/}
       {transportationCosts > 0 && <ShopTotal>
         <header>{ls('运费')}</header>
@@ -216,11 +243,11 @@ export const OrderPage = () => {
       </ShopTotal>}
       <ShopTotal>
         <header>{ls('达人币抵扣')}</header>
-        <footer>{dealMoney(stateSCM.form.deductCoin, '-')}</footer>
+        <footer>{dealMoney(stateShopCartModel.form.deductCoin, '-')}</footer>
       </ShopTotal>
       {/*<ShopTotal>*/}
       {/*  <header>{ls('消费税')}</header>*/}
-      {/*  <footer>{dealMoney(stateSCM.form.saleTax)}</footer>*/}
+      {/*  <footer>{dealMoney(stateShopCartModel.form.saleTax)}</footer>*/}
       {/*</ShopTotal>*/}
       <ShopTotal
           style={{fontSize: '18px'}}
@@ -232,7 +259,7 @@ export const OrderPage = () => {
     </BScroller>
     <FooterFit>
       <header>{ls('本次订单')}
-        <span>{ls(stateSCM.userLevelList.find(v => v.code === stateSCM.user.userInfo?.userLevel)?.name)}</span>
+        <span>{ls(stateShopCartModel.userLevelList.find(v => v.code === stateShopCartModel.user.userInfo?.userLevel)?.name)}</span>
       </header>
       <footer>{ls('将获得下月使用达人币 ')}
         <span>{dealMoney(generateCoin)}</span>
@@ -241,33 +268,33 @@ export const OrderPage = () => {
         <ButtonLoad
             loading={getLoad(doc.saveOrder)}
             onClick={async () => {
-              if (dealMaybeNumber(stateSCM.user?.orderCoinCurrentMonth) < dealMaybeNumber(stateSCM.form.deductCoin)) {
+              if (dealMaybeNumber(stateShopCartModel.user?.orderCoinCurrentMonth) < dealMaybeNumber(stateShopCartModel.form.deductCoin)) {
                 showMessage(ls('达人币余额不足'))
                 return
               }
 
               const submitData = {
-                ...stateSCM.form,
+                ...stateShopCartModel.form,
                 generateCoin,
                 actuallyPaid,
                 transportationCosts,
                 subtotal: productTotal,
-                currentUserLevel: stateSCM.user.userInfo?.userLevel,
-                rOrderProduct: stateSCM.shopCartList.map(v => ({
+                currentUserLevel: stateShopCartModel.user.userInfo?.userLevel,
+                rOrderProduct: stateShopCartModel.shopCartList.map(v => ({
                   count: v.number,
                   productId: v.product?.id,
                   product: v.product,
                 })),
               }
-              const res = await actionsSCM.submit({
+              const res = await actionsShopCartModel.submit({
                 ...submitData,
               })
               if (res?.saveOrder?.id) {
                 showMessage('操作成功 将前往付款')
                 const _query = dealUrlQuery({orderId: res?.saveOrder?.id})
                 await router.replace(`/m/pay${_query}`, `/m/pay${_query}`)
-                actionsSCM.clearData()
-                actionsSCM.getList()
+                actionsShopCartModel.clearData()
+                actionsShopCartModel.getList()
               }
             }}
             variant={'contained'}

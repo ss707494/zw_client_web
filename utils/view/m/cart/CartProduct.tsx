@@ -42,8 +42,8 @@ export const ShopCartProductBox = styled.div`
 `
 
 export const CartProduct = ({shopCart}: { shopCart: ShopCart }) => {
-  const {actions: actionsSCM, state: stateSCM} = useStoreModel(shopCartModel)
-  const {actions: actionsPM} = useStoreModel(productModel)
+  const {actions: actionsShopCartModel, state: stateSCM} = useStoreModel(shopCartModel)
+  const {actions: actionsProductModel} = useStoreModel(productModel)
   const {actions: actionsUpdateShopCartModel} = useStoreModel(updateShopCartModel)
   const product = shopCart.product
 
@@ -59,44 +59,29 @@ export const CartProduct = ({shopCart}: { shopCart: ShopCart }) => {
             size={'small'}
             variant={'outlined'}
             onClick={async () => {
-              const oldNext = stateSCM.shopCartListNext.find(value => value.product?.id === shopCart.product?.id)
-              if (oldNext?.id) {
-                await actionsPM.updateShopCart({
-                  isDelete: 1,
-                  id: oldNext.id,
-                })
-                await actionsPM.updateShopCart({
-                  isNext: 1,
-                  id: shopCart.id,
-                })
-              } else {
-                await actionsPM.updateShopCart({
-                  isNext: 1,
-                  id: shopCart.id,
-                })
-              }
-              actionsSCM.getList()
+              await actionsShopCartModel.moveToNext({shopCart})
+              actionsShopCartModel.getList()
             }}
         >{ls('下次购买')}</Button>
         {<IconButton
             disabled={(shopCart?.number ?? 0) <= 1}
             size={'small'}
             onClick={async () => {
-              await actionsPM.updateNumShopCart({
+              await actionsProductModel.updateNumShopCart({
                 product,
                 number: -1,
               })
-              actionsSCM.getList()
+              actionsShopCartModel.getList()
             }}
         ><RemoveIcon/></IconButton>}
         {shopCart.number}
         <IconButton
             size={'small'}
             onClick={async () => {
-              await actionsPM.updateNumShopCart({
+              await actionsProductModel.updateNumShopCart({
                 product,
               })
-              actionsSCM.getList()
+              actionsShopCartModel.getList()
             }}
         >
           <AddIcon/>
@@ -108,11 +93,11 @@ export const CartProduct = ({shopCart}: { shopCart: ShopCart }) => {
             variant={'outlined'}
             color={'secondary'}
             onClick={async () => {
-              await actionsPM.updateShopCart({
+              await actionsProductModel.updateShopCart({
                 isDelete: 1,
                 id: shopCart.id,
               })
-              actionsSCM.getList()
+              actionsShopCartModel.getList()
             }}
         >{ls('删除')}</Button>
         <Button
@@ -122,21 +107,21 @@ export const CartProduct = ({shopCart}: { shopCart: ShopCart }) => {
             //   if (stateSCM.shopCartList.findIndex(v => v.product?.id === shopCart.product?.id) > -1) {
             //     return showMessage('该商品已在购物车中')
             //   }
-            //   await actionsPM.updateShopCart({
+            //   await actionsProductModel.updateShopCart({
             //     isNext: 0,
             //     id: shopCart.id,
             //   })
-            //   actionsSCM.getList()
+            //   actionsShopCartModel.getList()
             // }}
             onClick={async () => {
               const res = await actionsUpdateShopCartModel.openClick()
               if (res?.num > 0) {
-                if ((await actionsPM.updateNumShopCart({
+                if ((await actionsProductModel.updateNumShopCart({
                   product,
                   number: ~~res?.num,
                 }))?.updateNumShopCart?.id) {
                   showMessage('操作成功')
-                  actionsSCM.getList()
+                  actionsShopCartModel.getList()
                 }
               }
             }}

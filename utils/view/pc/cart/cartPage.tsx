@@ -13,7 +13,9 @@ import {useStoreModel} from '../../../ModelAction/useStore'
 import {getPickUpTypeName, PickUpTypeEnum} from '../../../ss_common/enum'
 import {dealMaybeNumber, dealMoney, fpMerge} from '../../../tools/utils'
 import {InputPromoCodeDialog, inputPromoCodeModel} from '../../m/cart/components/InputPromoCode'
-import {CartProduct} from '../../m/cart/CartProduct'
+import {CartProductTable} from './components/cartProductTable'
+import {ProductItemBox} from '../pcComponents/productItemBox/productItemBox'
+import {MainBox} from '../pcComponents/mainBox/mainBox'
 
 const Title = styled.div`
   ${mpStyle.fontType.l};
@@ -53,14 +55,25 @@ const ProductHeader = styled.div`
 const ProductFooter = styled.div`
   background: ${mpStyle.greyLite};
   display: flex;
+  align-items: center;
   > section {
     flex-grow: 1;
+  }
+`
+const Money = styled.div`
+`
+const NextBox = styled.div`
+  > header {
+    ${mpStyle.fontType.n}
+  }
+  > main {
+    height: 160px;
   }
 `
 
 const PickUpButton = ({pickUpType}: { pickUpType: string }) => {
   const {actions: actionsShopCartModel, state: stateShopCartModel} = useStoreModel(shopCartModel)
-  const isActPickUpType = (type: string) => pickUpType === stateShopCartModel.form.pickUpType
+  const isActPickUpType = (type: string) => type === stateShopCartModel.form.pickUpType
 
   return <Button
       variant={isActPickUpType(pickUpType) ? 'contained' : 'outlined'}
@@ -92,8 +105,9 @@ export const CartPage = () => {
 
   const productNumber = stateShopCartModel.dealProductNumber(stateShopCartModel)
   const allTotal = stateShopCartModel.dealProductTotal(stateShopCartModel) - dealMaybeNumber(stateShopCartModel.form.couponDiscount)
+  const productSubtotal = dealMoney(stateShopCartModel.dealProductTotal(stateShopCartModel))
 
-  return <div>
+  return <MainBox>
     <PcHeader/>
     <PcContentBox>
       <TopAction/>
@@ -131,21 +145,44 @@ export const CartPage = () => {
         <ProductHeader>
           {productNumber}{ls('件商品')}
         </ProductHeader>
-        {stateShopCartModel.shopCartList.map(value => <CartProduct
-            key={`CartProduct_${value.id}`}
-            shopCart={value}/>)
-        }
+        <CartProductTable/>
         <ProductFooter>
-          <section>
-            {ls('总计')}
-            {dealMoney(allTotal)}
-          </section>
+          <section style={{flexGrow: 1}}/>
+          <Money>
+            <aside>{ls('小计')}</aside>
+            <main>{productSubtotal}</main>
+          </Money>
+          <Space w={mpStyle.space.s}/>
+          <Money>
+            <aside>{ls('折扣')}</aside>
+            <main>{dealMoney(stateShopCartModel.form.couponDiscount)}</main>
+          </Money>
+          <Space w={mpStyle.space.s}/>
+          <Money>
+            <aside>{ls('总计')}</aside>
+            <main>{dealMoney(allTotal)}</main>
+          </Money>
+          <Space w={mpStyle.space.s}/>
           <Button
+              style={{height: mpStyle.spacePx.xxl}}
               variant={'contained'}
               color={'secondary'}
           >{ls('去结算')}</Button>
         </ProductFooter>
       </ProductBox>
+      <NextBox>
+        <Space h={mpStyle.space.n}/>
+        <header>{ls('下次购买的商品')}</header>
+        <Space h={mpStyle.space.s}/>
+        <main>
+          {stateShopCartModel.shopCartListNext.map(shopCart => <ProductItemBox
+              key={`stateShopCartModel.shopCartListNext${shopCart.product?.id}`}
+              product={shopCart.product || {}}
+              width={240}
+          />)}
+        </main>
+      </NextBox>
+      <Space h={mpStyle.space.xxl}/>
     </PcContentBox>
-  </div>
+  </MainBox>
 }

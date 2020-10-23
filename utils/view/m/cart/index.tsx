@@ -138,6 +138,30 @@ export const shopCartModel = modelFactory('shopCartModel', {
       } as OrderInfoItemInput,
     })
   },
+  moveToNext: async ({shopCart}: { shopCart: ShopCart }, option) => {
+    const oldNext = option.data.shopCartListNext.find(value => value.product?.id === shopCart.product?.id)
+    if (oldNext?.id) {
+      await option.mutate(doc.updateShopCart, {
+        shopCart: {
+          isDelete: 1,
+          id: oldNext.id,
+        },
+      })
+      await option.mutate(doc.updateShopCart, {
+        shopCart: {
+          isNext: 1,
+          id: shopCart.id,
+        },
+      })
+    } else {
+      await option.mutate(doc.updateShopCart, {
+        shopCart: {
+          isNext: 1,
+          id: shopCart.id,
+        },
+      })
+    }
+  },
   testPromoCode: async (value: string, option) => {
     return '123'
   },
