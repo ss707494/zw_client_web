@@ -3,7 +3,6 @@ import {useStoreModel} from '../../../../ModelAction/useStore'
 import {Dialog, DialogContent, DialogTitle} from '@material-ui/core'
 import React from 'react'
 import styled from 'styled-components'
-import { ls } from '../../../../tools/dealKey'
 import {Space} from '../../../../components/Box/Box'
 import {dealImgUrl} from '../../../../tools/img'
 
@@ -28,9 +27,14 @@ const ContentBox = styled.div`
   }
   > section {
     display: flex;
+    align-items: center;
     > aside {
-      flex-basis: 80px;
+      flex-basis: 30px;
       flex-shrink: 0;
+      > img {
+        width: 24px;
+        height: 24px;
+      }
     }
   }
 `
@@ -54,22 +58,39 @@ export const PickupAddressDetail = () => {
         />
         <Space h={8}/>
         <section>
-          <aside>{ls('详细地址')}:</aside>
-          {dialogData?.apartment} {dialogData?.streetAddress}
+          <aside>
+            <img
+                alt={''}
+                src={'/img/address/address.png'}
+            />
+          </aside>
+          <main>
+            <section>
+              {dialogData?.apartment} {dialogData?.streetAddress}
+            </section>
+            <section>
+              {dialogData?.city} {dialogData?.province} {dialogData?.zip}
+            </section>
+          </main>
         </section>
         <Space h={8}/>
         <section>
-          <aside/>
-          {dialogData?.city} {dialogData?.province} {dialogData?.zip}
-        </section>
-        <Space h={8}/>
-        <section>
-          <aside>{ls('营业时间')}:</aside>
+          <aside>
+            <img
+                alt={''}
+                src={'/img/address/phone.png'}
+            />
+          </aside>
           {dialogData?.openTime}
         </section>
         <Space h={8}/>
         <section>
-          <aside>{ls('联系电话')}:</aside>
+          <aside>
+            <img
+                alt={''}
+                src={'/img/address/clock.png'}
+            />
+          </aside>
           {dialogData?.phone}
         </section>
         <Space h={16}/>

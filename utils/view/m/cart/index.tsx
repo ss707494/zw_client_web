@@ -53,6 +53,7 @@ export const shopCartModel = modelFactory('shopCartModel', {
     ...v,
     combineAddress: `${v.province} ${v.city} ${v.streetAddress}`,
     name: v.fullName,
+    address: v.streetAddress,
     contactInformation: v.phone,
   }))) as (state: any) => UserAddress[],
   dealAddressData: (state: any) => state.dealAddressList(state).find((v: UserAddress) => v.id === state.form.addressId) || {},

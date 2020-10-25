@@ -13,7 +13,7 @@ export const selectAddressModel = dialogModelFactory('selectAddressModel', {})
 const AddressBox = styled.div`
   display: grid;
   grid-template-columns: 1fr min-content;
-  grid-template-rows: repeat(2, fr);
+  grid-template-rows: repeat(3, 1fr);
   grid-row-gap: 8px;
   margin-bottom: 16px;
   > header {
@@ -21,7 +21,7 @@ const AddressBox = styled.div`
     font-weight: bold;
   }
   > aside {
-    grid-area: 1/2/3/3;
+    grid-area: 1/2/4/3;
   }
 `
 const Footer = styled.div`
@@ -42,8 +42,9 @@ export const SelectAddress = () => {
     <DialogTitle>{ls('选择地址')}</DialogTitle>
     <DialogContent>
       {addressList.map(v => <AddressBox key={`DialogTitleAddressBox_${v.id}`}>
-        <header>{v.combineAddress}</header>
-        <footer>{`${v.name} ${v.contactInformation}`}</footer>
+        <header>{v.name}</header>
+        <main>{v.address}</main>
+        <footer>{`${v.city} ${v.province} ${v.zip}`}</footer>
         <aside>
           <Radio
               onChange={() => {

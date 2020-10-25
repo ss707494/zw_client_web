@@ -16,6 +16,7 @@ import {InputPromoCodeDialog, inputPromoCodeModel} from '../../m/cart/components
 import {CartProductTable} from './components/cartProductTable'
 import {ProductItemBox} from '../pcComponents/productItemBox/productItemBox'
 import {MainBox} from '../pcComponents/mainBox/mainBox'
+import {useRouter} from 'next/router'
 
 const Title = styled.div`
   ${mpStyle.fontType.l};
@@ -90,6 +91,7 @@ const PickUpButton = ({pickUpType}: { pickUpType: string }) => {
 }
 
 export const CartPage = () => {
+  const router = useRouter()
   const {actions: actionsShopCartModel, state: stateShopCartModel} = useStoreModel(shopCartModel)
   const {actions: actionsInputPromoCodeModel} = useStoreModel(inputPromoCodeModel)
   useEffect(() => {
@@ -167,6 +169,9 @@ export const CartPage = () => {
               style={{height: mpStyle.spacePx.xxl}}
               variant={'contained'}
               color={'secondary'}
+              onClick={() => {
+                router.push('/pc/cart/orderPage')
+              }}
           >{ls('去结算')}</Button>
         </ProductFooter>
       </ProductBox>

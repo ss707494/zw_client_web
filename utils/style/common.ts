@@ -1,4 +1,5 @@
 import grey from '@material-ui/core/colors/grey'
+import styled from 'styled-components'
 
 export const mpStyle = {
   red: '#F84033',
@@ -71,3 +72,7 @@ export const mpStyle = {
     }
   `,
 }
+
+export const RedBox = styled.div`
+  color: ${mpStyle.red};
+`

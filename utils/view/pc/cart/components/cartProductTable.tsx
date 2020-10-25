@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import {mpStyle} from '../../../../style/common'
+import {mpStyle, RedBox} from '../../../../style/common'
 import {useStoreModel} from '../../../../ModelAction/useStore'
 import {shopCartModel} from '../../../m/cart'
 import {productModel} from '../../../../components/ProductItem/ProductItem'
@@ -25,9 +25,6 @@ const TableHeader = styled.div`
   align-items: center;
 `
 const UpdateNumber = styled.div`
-`
-const RedBox = styled.div`
-  color: ${mpStyle.red};
 `
 const InfoBox = styled.div`
   height: 120px;

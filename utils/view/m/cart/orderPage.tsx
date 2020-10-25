@@ -161,14 +161,23 @@ export const OrderPage = () => {
         {ls((stateShopCartModel.form.pickUpType === PickUpTypeEnum.Self && '自取地址') || '送货地址')}
       </ShopTitle>
       <AddressBox>
-        <main>
+        {stateShopCartModel.form.pickUpType === PickUpTypeEnum.Self && <main>
           <header>
-            {`${addressData.combineAddress}`}
+            {`${addressData.fullName}`}
           </header>
+          <section>{addressData.streetAddress}</section>
           <footer>
-            {`${addressData.name} ${addressData.contactInformation}`}
+            {`${addressData.city} ${addressData.province} ${addressData.zip}`}
           </footer>
-        </main>
+        </main> || <main>
+          <header>
+            {`${addressData.name}`}
+          </header>
+          <section>{addressData.address}</section>
+          <footer>
+            {`${addressData.city} ${addressData.province} ${addressData.zip}`}
+          </footer>
+        </main>}
         <aside>
           <IconButton
               onClick={async () => {

@@ -90,7 +90,6 @@ export const CategorySelection = ({className}: { className?: string }) => {
               >
                 <Space w={16}/>
                 <main>
-                  {value.id === stateHomeCategorySelectionModel.actId ? '1' : '0'}
                   {value.name}
                 </main>
                 <KeyboardArrowRightIcon/>
