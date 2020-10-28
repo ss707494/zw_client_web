@@ -18,59 +18,16 @@ export const getUserListDoc = docFactory(gql`
         orderCoinNextMonth
         orderCoinCurrentMonth
         orderAmountCurrentYear
-        ...userInfo
+        ...UserInfoFields
         ...UserFields
-        ...orderInfo
+        ...OrderInfoFields
       }
       total
     }
   }
-  fragment orderInfo on User{
-    orderInfo{
-      id
-      name
-      createTime
-      updateTime
-      isDelete
-      number
-      state
-      actuallyPaid
-      addressId
-      paymentMethodCardId
-      subtotal
-      couponDiscount
-      vipDiscount
-      transportationCosts
-      saleTax
-      orderId
-      discountProductTotal
-      finishTime
-      pickUpTime
-      pickUpType
-    }
-  }
-  fragment UserFields on User {
-    id
-    name
-    createTime
-    updateTime
-    isDelete
-    password
-    type
-  }
-  fragment userInfo on User{
-    userInfo{
-      id
-      name
-      createTime
-      updateTime
-      isDelete
-      userId
-      phone
-      email
-      userLevel
-    }
-  }
+  ${fragment.UserFields}
+  ${fragment.UserInfoFields}
+  ${fragment.OrderInfoFields}
 `)
 
 export const getDataConfig = docFactory(gql`

@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import {mpStyle} from '../../../../style/common'
 import {Autocomplete} from '@material-ui/lab'
-import {Avatar, Button, InputAdornment, TextField} from '@material-ui/core'
+import {Avatar, Button, ButtonBase, InputAdornment, TextField} from '@material-ui/core'
 import {Space} from '../../../../components/Box/Box'
 import {ls} from '../../../../tools/dealKey'
 import {ShoppingCartIconButton} from '../../../../components/ShoppingCartIconButton/ShoppingCartIconButton'
@@ -53,7 +53,7 @@ const SearchInput = styled.div`
     }
   }
 `
-const AvatarBox = styled.div`
+const AvatarBox = styled(ButtonBase)`
   display: flex;
   align-items: center;
   > h2 {
@@ -110,7 +110,11 @@ export const TopAction = () => {
       />
     </SearchInput>
     <Space isGrow={true}/>
-    <AvatarBox>
+    <AvatarBox
+        onClick={() => {
+          router.push('/pc/me/myInfo')
+        }}
+    >
       <Avatar/>
       <Space w={8}/>
       <h2>{ls('我的账户')}</h2>

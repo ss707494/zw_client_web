@@ -30,14 +30,14 @@ const Footer = styled.div`
 
 export const SelectAddress = () => {
   const router = useRouter()
-  const {state: stateSAM, actions: actionsSAM} = useStoreModel(selectAddressModel)
+  const {state: stateSelectAddressModel, actions: actionsSelectAddressModel} = useStoreModel(selectAddressModel)
   const {state: stateShopCartModel, actions: actionsShopCartModel} = useStoreModel(shopCartModel)
   const addressList = stateShopCartModel.dealAddressList(stateShopCartModel)
 
 
   return <Dialog
-      open={stateSAM.open}
-      onClose={actionsSAM.onClose}
+      open={stateSelectAddressModel.open}
+      onClose={actionsSelectAddressModel.onClose}
   >
     <DialogTitle>{ls('选择地址')}</DialogTitle>
     <DialogContent>
@@ -48,8 +48,8 @@ export const SelectAddress = () => {
         <aside>
           <Radio
               onChange={() => {
-                stateSAM.openResolve(v.id)
-                actionsSAM.onClose()
+                stateSelectAddressModel.openResolve(v.id)
+                actionsSelectAddressModel.onClose()
               }}
               checked={v.id === stateShopCartModel.form.addressId}
           />

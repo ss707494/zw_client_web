@@ -126,3 +126,7 @@ export const isPc = () => {
   return /\/pc\//.test(location.href)
 }
 
+export const dealLastNumber = (num: string | null | undefined, length = 4) => {
+  return `**** **** **** ${num ? num?.slice(num?.length - length) : ''}`
+}
+

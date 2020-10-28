@@ -11,17 +11,20 @@ import {ls} from '../../../tools/dealKey'
 import {dealMaybeNumber, dealMoney, fpMergePre} from '../../../tools/utils'
 import {useOrderPageHooks} from '../../m/cart/orderPage'
 import {
-  Divider,
-  TextField,
   Button,
+  ButtonBase,
+  ButtonBaseProps,
+  Divider,
   ExpansionPanel,
-  ExpansionPanelSummary,
   ExpansionPanelDetails,
+  ExpansionPanelSummary,
+  TextField,
 } from '@material-ui/core'
-import {dealImgUrl} from '../../../tools/img'
 import {modelFactory} from '../../../ModelAction/modelUtil'
 import {useStoreModel} from '../../../ModelAction/useStore'
 import {useRouter} from 'next/router'
+import {grey} from '@material-ui/core/colors'
+import {showMessage} from '../../../components/Message/Message'
 
 const OrderContentBox = styled.div`
   display: grid;
@@ -57,7 +60,7 @@ const FillInputBox = styled.div`
     }
   }
 `
-const TabHeader = styled.div<{ isAct: boolean }>`
+const TabHeader = styled.div<{ isAct?: boolean }>`
   ${mpStyle.fontType.n};
   display: flex;
   align-items: center;
@@ -69,6 +72,7 @@ const TabHeader = styled.div<{ isAct: boolean }>`
     height: 28px;
     border-radius: 50%;
     border: 1px solid ${mpStyle.grey};
+    margin-right: ${mpStyle.spacePx.xxs};
     ${props => props.isAct && `
       background: ${mpStyle.red};
       border-color: ${mpStyle.red};
@@ -130,6 +134,26 @@ const ProductFooter = styled.div`
     width: 45%;
   }
 `
+const AddressBox = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: ${mpStyle.spacePx.xs};
+`
+const AddressBoxItem = styled(ButtonBase)<ButtonBaseProps & {isAct?: boolean}>`
+  &&& {
+    flex-direction: column;
+    align-items: flex-start;
+    border: 1px solid ${grey[800]};
+    border-radius: 4px;
+    padding: ${mpStyle.spacePx.xxs};
+    cursor: pointer;
+    ${props => props.isAct && `
+      background: ${mpStyle.red};
+      color: #fff;
+      border: none;
+    `};
+  }
+`
 
 const ActStepEnum = {
   product: 'product',
@@ -160,7 +184,9 @@ export const OrderPage = () => {
     generateCoin,
   } = useOrderPageHooks()
   const {actions: actionsPcOrderPageModel, state: statePcOrderPageModel} = useStoreModel(PcOrderPageModel)
+  const addressList = stateShopCartModel.dealAddressList(stateShopCartModel)
 
+  console.log(addressList)
   console.log(stateShopCartModel.form)
   return <MainBox>
     <PcHeader/>
@@ -170,85 +196,122 @@ export const OrderPage = () => {
       <Space h={mpStyle.space.s}/>
       <OrderContentBox>
         <ModifyBox>
+          {/*<ExpansionPanel*/}
+          {/*    elevation={0}*/}
+          {/*    expanded={statePcOrderPageModel.actStep === ActStepEnum.product}*/}
+          {/*>*/}
+          {/*  <ExpansionPanelSummary*/}
+          {/*  >*/}
+          {/*    <TabHeader*/}
+          {/*        isAct={statePcOrderPageModel.actStep === ActStepEnum.product}*/}
+          {/*    >*/}
+          {/*      <aside>1</aside>*/}
+          {/*      我的购物车*/}
+          {/*    </TabHeader>*/}
+          {/*  </ExpansionPanelSummary>*/}
+          {/*  <ExpansionPanelDetails>*/}
+          {/*    <ProductBox>*/}
+          {/*      <ProductBoxHeader>*/}
+          {/*        <Space w={mpStyle.space.xs}/>*/}
+          {/*        {ls('已选购的商品')}*/}
+          {/*      </ProductBoxHeader>*/}
+          {/*      {stateShopCartModel.shopCartList.map(shopCart => {*/}
+          {/*        const product = shopCart.product*/}
+          {/*        return <ProductRow*/}
+          {/*            key={`stateShopCartModel.shopCartList${shopCart.id}`}*/}
+          {/*        >*/}
+          {/*          <img*/}
+          {/*              alt={''}*/}
+          {/*              src={dealImgUrl(shopCart.product?.img?.[0]?.url)}*/}
+          {/*          />*/}
+          {/*          <section>{product?.name}</section>*/}
+          {/*          <div>*/}
+          {/*            <aside>{ls('数量')}</aside>*/}
+          {/*            <section>{shopCart.number}</section>*/}
+          {/*          </div>*/}
+          {/*          <div>*/}
+          {/*            <aside>{ls('重量')}</aside>*/}
+          {/*            <RedBox>{product?.weight}{product?.unit}</RedBox>*/}
+          {/*          </div>*/}
+          {/*          <aside>*/}
+          {/*            <header>{ls('小计')}</header>*/}
+          {/*            <RedBox>{dealMoney(dealMaybeNumber(product?.priceOut) * dealMaybeNumber(shopCart?.number))}</RedBox>*/}
+          {/*          </aside>*/}
+          {/*        </ProductRow>*/}
+          {/*      })}*/}
+          {/*    </ProductBox>*/}
+          {/*    <Space h={mpStyle.space.xs}/>*/}
+          {/*    <ProductFooter>*/}
+          {/*      <Button*/}
+          {/*          color={'secondary'}*/}
+          {/*          variant={'outlined'}*/}
+          {/*          onClick={() => {*/}
+          {/*            router.back()*/}
+          {/*          }}*/}
+          {/*      >{ls('返回')}</Button>*/}
+          {/*      <Button*/}
+          {/*          color={'secondary'}*/}
+          {/*          variant={'contained'}*/}
+          {/*          onClick={() => {*/}
+          {/*            actionsPcOrderPageModel.updateActStep(ActStepEnum.address)*/}
+          {/*          }}*/}
+          {/*      >{ls('下一步')}</Button>*/}
+          {/*    </ProductFooter>*/}
+          {/*    <Space h={mpStyle.space.xs}/>*/}
+          {/*  </ExpansionPanelDetails>*/}
+          {/*</ExpansionPanel>*/}
           <ExpansionPanel
               elevation={0}
-              expanded={statePcOrderPageModel.actStep === ActStepEnum.product}
-          >
-            <ExpansionPanelSummary
-            >
-              <TabHeader
-                  isAct={statePcOrderPageModel.actStep === ActStepEnum.product}
-              >
-                <aside>1</aside>
-                我的购物车
-              </TabHeader>
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
-              <ProductBox>
-                <ProductBoxHeader>
-                  <Space w={mpStyle.space.xs}/>
-                  {ls('已选购的商品')}
-                </ProductBoxHeader>
-                {stateShopCartModel.shopCartList.map(shopCart => {
-                  const product = shopCart.product
-                  return <ProductRow
-                      key={`stateShopCartModel.shopCartList${shopCart.id}`}
-                  >
-                    <img
-                        alt={''}
-                        src={dealImgUrl(shopCart.product?.img?.[0]?.url)}
-                    />
-                    <section>{product?.name}</section>
-                    <div>
-                      <aside>{ls('数量')}</aside>
-                      <section>{shopCart.number}</section>
-                    </div>
-                    <div>
-                      <aside>{ls('重量')}</aside>
-                      <RedBox>{product?.weight}{product?.unit}</RedBox>
-                    </div>
-                    <aside>
-                      <header>{ls('小计')}</header>
-                      <RedBox>{dealMoney(dealMaybeNumber(product?.priceOut) * dealMaybeNumber(shopCart?.number))}</RedBox>
-                    </aside>
-                  </ProductRow>
-                })}
-              </ProductBox>
-              <Space h={mpStyle.space.xs}/>
-              <ProductFooter>
-                <Button
-                    color={'secondary'}
-                    variant={'outlined'}
-                    onClick={() => {
-                      router.back()
-                    }}
-                >{ls('返回')}</Button>
-                <Button
-                    color={'secondary'}
-                    variant={'contained'}
-                    onClick={() => {
-                      actionsPcOrderPageModel.updateActStep(ActStepEnum.address)
-                    }}
-                >{ls('下一步')}</Button>
-              </ProductFooter>
-              <Space h={mpStyle.space.xs}/>
-            </ExpansionPanelDetails>
-          </ExpansionPanel>
-          <ExpansionPanel
-              elevation={0}
-              expanded={statePcOrderPageModel.actStep === ActStepEnum.address}
+              expanded={true}
           >
             <ExpansionPanelSummary
             >
               <TabHeader
                   isAct={statePcOrderPageModel.actStep === ActStepEnum.address}
               >
-                <aside>2</aside>
+                <aside>1</aside>
                 {ls('选择地址')}
               </TabHeader>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
-              123
+              <AddressBox>
+                {addressList.map(v => <AddressBoxItem
+                    key={`addressList.map${v.id}`}
+                    isAct={stateShopCartModel.form.addressId === v.id}
+                    onClick={() => {
+                      actionsShopCartModel.setForm(['addressId', v.id])
+                    }}
+                >
+                  <header>{v.name}</header>
+                  <main>{v.address}</main>
+                  <footer>{`${v.city} ${v.province} ${v.zip}`}</footer>
+                </AddressBoxItem>)}
+              </AddressBox>
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
+          <ExpansionPanel
+              elevation={0}
+              expanded={true}
+          >
+            <ExpansionPanelSummary>
+              <TabHeader>
+                <aside>2</aside>
+                {ls('选择付款方式')}
+              </TabHeader>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
+              <AddressBox>
+                {stateShopCartModel.payCardList.map(v => <AddressBoxItem
+                    key={`addressList.map${v.id}`}
+                    isAct={stateShopCartModel.form.paymentMethodCardId === v.id}
+                    onClick={() => {
+                      actionsShopCartModel.setForm(['paymentMethodCardId', v.id])
+                    }}
+                >
+                  <header>{v.name}</header>
+                  <footer>{`${v.number}`}</footer>
+                </AddressBoxItem>)}
+              </AddressBox>
             </ExpansionPanelDetails>
           </ExpansionPanel>
         </ModifyBox>
@@ -312,6 +375,36 @@ export const OrderPage = () => {
               fullWidth={true}
               variant={'contained'}
               color={'secondary'}
+              onClick={async () => {
+                if (dealMaybeNumber(stateShopCartModel.user?.orderCoinCurrentMonth) < dealMaybeNumber(stateShopCartModel.form.deductCoin)) {
+                  showMessage(ls('达人币余额不足'))
+                  return
+                }
+                const submitData = {
+                  ...stateShopCartModel.form,
+                  generateCoin,
+                  actuallyPaid,
+                  transportationCosts,
+                  subtotal: productTotal,
+                  currentUserLevel: stateShopCartModel.user.userInfo?.userLevel,
+                  rOrderProduct: stateShopCartModel.shopCartList.map(v => ({
+                    count: v.number,
+                    productId: v.product?.id,
+                    product: v.product,
+                  })),
+                }
+
+                const res = await actionsShopCartModel.submit({
+                  ...submitData,
+                })
+                if (res?.saveOrder?.id) {
+                  showMessage('操作成功')
+                  // const _query = dealUrlQuery({orderId: res?.saveOrder?.id})
+                  await router.replace(`/pc/home`)
+                  actionsShopCartModel.clearData()
+                  actionsShopCartModel.getList()
+                }
+              }}
           >
             {ls('提交订单')}
           </Button>

@@ -3,7 +3,7 @@ import PaymentIcon from '@material-ui/icons/Payment'
 import {HeaderTitle} from '../../../../components/HeaderTitle/HeaderTitle'
 import {modelFactory} from '../../../../ModelAction/modelUtil'
 import {doc} from '../../../../graphqlTypes/doc'
-import {formatDate, fpMergePre} from '../../../../tools/utils'
+import {dealLastNumber, formatDate, fpMergePre} from '../../../../tools/utils'
 import {useStoreModel} from '../../../../ModelAction/useStore'
 import styled from 'styled-components'
 import {UserPayCard} from '../../../../graphqlTypes/types'
@@ -74,7 +74,7 @@ export const MyCreditCardList = () => {
       {stateMCC.list.map(value => <ListItem key={`MyCreditCardList_${value.id}`}>
         <PaymentIcon fontSize={'large'}/>
         <main>
-          <header>{ls('卡号')}: **** **** **** {value.number?.slice(value.number?.length - 4)}</header>
+          <header>{ls('卡号')}: {dealLastNumber(value.number)}</header>
           <footer>{ls('过期日')}: {formatDate(value?.expirationTime, 'MM/yy')}</footer>
           <footer>{value.name}</footer>
         </main>

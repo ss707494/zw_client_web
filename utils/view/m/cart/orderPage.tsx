@@ -13,7 +13,7 @@ import {Space} from '../../../components/Box/Box'
 import {SelectAddress, selectAddressModel} from './components/SelectAddress'
 import {grey} from '@material-ui/core/colors'
 import {SelectCard, selectCardModel} from './components/SelectCard'
-import {dealMaybeNumber, dealMoney, dealUrlQuery} from '../../../tools/utils'
+import {dealLastNumber, dealMaybeNumber, dealMoney, dealUrlQuery} from '../../../tools/utils'
 import {mpStyle} from '../../../style/common'
 import {ButtonLoad} from '../../../components/ButtonLoad/ButtonLoad'
 import {showMessage} from '../../../components/Message/Message'
@@ -200,7 +200,7 @@ export const OrderPage = () => {
       </ShopTitle>
       <CardBox>
         <header>{cardData.name}</header>
-        <footer>{cardData.number}</footer>
+        <footer>{dealLastNumber(cardData.number)}</footer>
         <aside>
           <IconButton
               onClick={async () => {

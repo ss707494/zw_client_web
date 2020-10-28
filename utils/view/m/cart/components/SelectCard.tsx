@@ -6,6 +6,7 @@ import {ls} from '../../../../tools/dealKey'
 import {shopCartModel} from '../index'
 import styled from 'styled-components'
 import {useRouter} from 'next/router'
+import {dealLastNumber} from '../../../../tools/utils'
 
 export const selectCardModel = dialogModelFactory('selectCardModel', {})
 
@@ -40,7 +41,7 @@ export const SelectCard = () => {
     <DialogContent>
       {stateShopCartModel.payCardList.map(v => <CardBox key={`DialogTitleAddressBox_${v.id}`}>
         <header>{v.name}</header>
-        <footer>{`${v.number}`}</footer>
+        <footer>{`${dealLastNumber(v.number)}`}</footer>
         <aside>
           <Radio
               onChange={() => {

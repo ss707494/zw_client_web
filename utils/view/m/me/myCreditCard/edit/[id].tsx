@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import {modelFactory} from '../../../../../ModelAction/modelUtil'
 import {useStoreModel} from '../../../../../ModelAction/useStore'
-import {fpMergePre, getLastNumber} from '../../../../../tools/utils'
+import {dealLastNumber, fpMergePre} from '../../../../../tools/utils'
 import {SigninInput} from '../../../register'
 import {FieldContain} from '../../myInfo/updatePassword'
 import {HeaderTitle} from '../../../../../components/HeaderTitle/HeaderTitle'
@@ -138,7 +138,7 @@ export const MyCreditCardEdit = () => {
         ['信用卡号', 'number', () => <SigninInput
             key={`numberKey`}
             label={ls('信用卡号')}
-            value={stateMCCE.isEditNumber ? stateMCCE.form['number'] : `************${getLastNumber(stateMCCE.form['number'] ?? '', 4)}` ?? ''}
+            value={stateMCCE.isEditNumber ? stateMCCE.form['number'] : dealLastNumber(stateMCCE.form['number']) ?? ''}
             onChange={event => actionsMCCE.setForm(['number', event.target.value])}
             onFocus={() => actionsMCCE.numberFocus()}
         />],
