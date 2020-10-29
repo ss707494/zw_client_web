@@ -44,7 +44,7 @@ export const myCreditCardEditModel = modelFactory('myCreditCardEditModel', {
     address: '',
     contact: '',
     expirationTime: null,
-    creditAddressInputType: CreditAddressInputTypeEnum.Select,
+    creditAddressInputType: CreditAddressInputTypeEnum.Input,
   } as UserPayCard,
   isEditNumber: true,
 }, {
@@ -58,7 +58,13 @@ export const myCreditCardEditModel = modelFactory('myCreditCardEditModel', {
       addressDetail: '',
       zipCode: '',
       city: '',
+      zip: '',
+      province: '',
+      district: '',
+      address: '',
       contact: '',
+      expirationTime: null,
+      creditAddressInputType: CreditAddressInputTypeEnum.Input,
     },
   })),
   changeSelectId: (value: UserAddress, option) => option.setData(fpMergePre({
@@ -212,7 +218,7 @@ export const MyCreditCardEdit = () => {
             {stateMyAddressModel.list.map(item => <MenuItem
                 key={`addressSelect_${item.id}`}
                 value={`${item.id}`}>
-              {item.name} {item.address}
+              {item.name}, {item.address}
             </MenuItem>)}
           </TextField>}
           {[

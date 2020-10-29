@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import {modelFactory} from '../../../../ModelAction/modelUtil'
 import {OrderInfo, OrderInfoItemInput} from '../../../../graphqlTypes/types'
 import {doc} from '../../../../graphqlTypes/doc'
-import {dealMoney, formatDate, fpMergePre} from '../../../../tools/utils'
+import {dealLastNumber, dealMoney, formatDate, fpMergePre} from '../../../../tools/utils'
 import {useStoreModel} from '../../../../ModelAction/useStore'
 import {useRouter} from 'next/router'
 import {ls} from '../../../../tools/dealKey'
@@ -77,6 +77,10 @@ const ProductBox = styled.div`
   > section {
     grid-area: 1/2/2/4;
     font-size: 20px;
+    > span {
+      font-size: 16px;
+      color: ${mpStyle.grey};
+    }
   }
   > main {
     padding: 10px 0;
@@ -155,7 +159,7 @@ export const OrderDetail = () => {
           <section>
             <header>{orderInfo?.userPayCard?.code}</header>
             <main>{ls('过期日')} {formatDate(orderInfo?.userPayCard?.expirationTime, 'MM/yy')}</main>
-            <footer>{ls('卡号后四位')} {orderInfo.userPayCard?.number?.slice(orderInfo.userPayCard?.number?.length - 4)}</footer>
+            <footer>{ls('卡号')} {dealLastNumber(orderInfo.userPayCard?.number)}</footer>
             <footer>{ls('持卡人')} {orderInfo?.userPayCard?.userName}</footer>
           </section>
         </InfoLabel>
@@ -166,7 +170,13 @@ export const OrderDetail = () => {
             >
               <img src={dealImgUrl(rOrderProduct.product?.img?.[0]?.url)}
                    alt=""/>
-              <section>{rOrderProduct.product?.name} {rOrderProduct.product?.number}{ls('份')}</section>
+              <section>
+                {rOrderProduct.product?.name}
+                <Space w={mpStyle.space.xxs}/>
+                <span>
+                  {rOrderProduct.product?.number}{ls('份')}
+                </span>
+              </section>
               <main>{rOrderProduct.product?.remark}</main>
               <footer>
                 <aside>{dealMoney(rOrderProduct.product?.priceMarket)}</aside>

@@ -78,7 +78,7 @@ export const PickupAddressDetail = () => {
           <aside>
             <img
                 alt={''}
-                src={'/img/address/phone.png'}
+                src={'/img/address/clock.png'}
             />
           </aside>
           {dialogData?.openTime}
@@ -88,7 +88,7 @@ export const PickupAddressDetail = () => {
           <aside>
             <img
                 alt={''}
-                src={'/img/address/clock.png'}
+                src={'/img/address/phone.png'}
             />
           </aside>
           {dialogData?.phone}

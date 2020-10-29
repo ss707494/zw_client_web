@@ -1,11 +1,10 @@
 import React, {useEffect} from 'react'
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 import {HeaderTitle} from '../../../../components/HeaderTitle/HeaderTitle'
 import {Button, ButtonBase, Tab, Tabs} from '@material-ui/core'
 import {ls} from '../../../../tools/dealKey'
 import {modelFactory} from '../../../../ModelAction/modelUtil'
 import {useStoreModel} from '../../../../ModelAction/useStore'
-import {dealMoney, formatDate, fpMergePre} from '../../../../tools/utils'
+import {dealMaybeNumber, dealMoney, formatDate, fpMergePre} from '../../../../tools/utils'
 import {doc} from '../../../../graphqlTypes/doc'
 import {OrderInput, OrderPage} from '../../../../graphqlTypes/types'
 import {BScroller} from '../../../../components/BScroll/BScroller'
@@ -135,7 +134,7 @@ export const OrderHistory = () => {
                     src={dealImgUrl(value1?.product?.img?.[0]?.url)}
                     alt=""/>)}
                 <aside>
-                  <ArrowForwardIosIcon htmlColor={grey[400]}/>
+                  {dealMaybeNumber(value?.rOrderProduct?.length) >= 4 && `...`}
                 </aside>
               </ImgList>
               <section>
