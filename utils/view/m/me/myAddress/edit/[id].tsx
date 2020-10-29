@@ -70,6 +70,8 @@ export const MyAddressEdit = () => {
       actionsMAEM.getOne({
         id,
       })
+    } else {
+      actionsMAEM.setForm(['id', ''])
     }
   }, [id])
 

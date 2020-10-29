@@ -128,6 +128,8 @@ export const MyCreditCardEdit = () => {
       actionsMCCE.getOne({
         id,
       })
+    } else {
+      actionsMCCE.setForm(['id', ''])
     }
   }, [id])
   useEffect(() => {
