@@ -78,10 +78,13 @@ export const myCreditCardEditModel = modelFactory('myCreditCardEditModel', {
     },
   })),
   submit: (value, option) => {
-    const form = option.data.form
+    const {id, ...form} = option.data.form
     return option.mutate(doc.saveUserPayCard, {
       data: {
         ...form,
+        ...(id ? {
+          id,
+        } : {})
       },
     })
   },

@@ -39,10 +39,13 @@ export const myAddressEditModel = modelFactory('myAddressEditModel', {
     },
   })),
   submit: (value, option) => {
-    const form = option.data.form
+    const {id, ...form} = option.data.form
     return option.mutate(doc.saveUserAddress, {
       data: {
         ...form,
+        ...(id ? {
+          id,
+        } : {})
       },
     })
   },
