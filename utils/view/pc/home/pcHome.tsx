@@ -13,7 +13,7 @@ import {Carousel} from './components/carousel'
 import {MainBox} from '../pcComponents/mainBox/mainBox'
 
 export const PcContentBox = styled.div`
-  max-width: 1600px;
+  max-width: 1400px;
   margin: 0 auto;
 `
 const TwoSide = styled.div`

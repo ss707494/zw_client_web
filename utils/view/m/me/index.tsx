@@ -115,10 +115,10 @@ export default function Me() {
   const router = useRouter()
   const {actions: actionsCoinDetailDialogModel} = useStoreModel(CoinDetailDialogModel)
   const {actions: actionsCardModel, state: stateCardModel} = useStoreModel(cardModel)
-  const {state: stateMe, actions: actionsMe} = useStoreModel(meModel)
+  const {state: stateMeModel, actions: actionsMeModel} = useStoreModel(meModel)
   useEffect(() => {
-    if (!stateMe.user.id) {
-      actionsMe.getLoginUser()
+    if (!stateMeModel.user.id) {
+      actionsMeModel.getLoginUser()
     }
   }, [])
   useEffect(() => {
@@ -129,15 +129,15 @@ export default function Me() {
         boxHeight={'calc(100vh - 45px)'}
     >
       <Header>
-        <header>{ls('您好,')}{stateMe.user.userInfo?.name}</header>
+        <header>{ls('您好,')}{stateMeModel.user.userInfo?.name}</header>
         <ShopIcon><ShoppingCartIconButton htmlColor={'white'}/></ShopIcon>
-        <section>{stateMe.user.userInfo?.phone}</section>
-        <section>{stateMe.user.userInfo?.email}</section>
+        <section>{stateMeModel.user.userInfo?.phone}</section>
+        <section>{stateMeModel.user.userInfo?.email}</section>
         <aside>
           <Button
               color={'inherit'}
               variant={'outlined'}
-              onClick={() => actionsMe.logout()}
+              onClick={() => actionsMeModel.logout()}
           >{ls('登出')}</Button>
         </aside>
       </Header>
@@ -145,26 +145,26 @@ export default function Me() {
         <Card
             onClick={() => {
               actionsCoinDetailDialogModel.openClick({
-                ...stateMe.user,
+                ...stateMeModel.user,
                 isNextMonth: false,
               })
             }}
         >
           <MonetizationOn/>
-          <main>{stateMe.user.orderCoinCurrentMonth ?? 0}</main>
+          <main>{stateMeModel.user.orderCoinCurrentMonth ?? 0}</main>
           <footer>{ls('本月可用达人币')}</footer>
         </Card>
         <Parting/>
         <Card
             onClick={() => {
               actionsCoinDetailDialogModel.openClick({
-                ...stateMe.user,
+                ...stateMeModel.user,
                 isNextMonth: true,
               })
             }}
         >
           <MonetizationOn/>
-          <main>{stateMe.user.orderCoinNextMonth ?? 0}</main>
+          <main>{stateMeModel.user.orderCoinNextMonth ?? 0}</main>
           <footer>{ls('下月积攒达人币')}</footer>
         </Card>
         <Parting/>

@@ -63,7 +63,7 @@ const GreyPart = styled.div`
   height: 12px;
   background: ${grey[200]};
 `
-const ProductBox = styled.div`
+export const ProductBox = styled.div`
   display: grid;
   padding-top: 4vw;
   margin-bottom: 10px;
@@ -114,14 +114,14 @@ const Sum = styled.div`
 
 export const OrderDetail = () => {
   const router = useRouter()
-  const {state: stateOD, actions: actionsOD} = useStoreModel(orderDetailModel)
-  const orderInfo = stateOD.orderInfo
+  const {state: stateOrderDetailModel, actions: actionsOrderDetailModel} = useStoreModel(orderDetailModel)
+  const orderInfo = stateOrderDetailModel.orderInfo
 
   useEffect(() => {
-    if (router.query.id && !stateOD.orderInfo?.id) {
-      actionsOD.getDetail(`${router.query?.id}`)
+    if (router.query.id && !stateOrderDetailModel.orderInfo?.id) {
+      actionsOrderDetailModel.getDetail(`${router.query?.id}`)
     }
-  }, [router.query.id, stateOD.orderInfo])
+  }, [router.query.id, stateOrderDetailModel.orderInfo])
 
   return <div>
     <HeaderTitle
@@ -146,7 +146,7 @@ export const OrderDetail = () => {
                   <main>{v.fullName}</main>
                   <header>{v.streetAddress}</header>
                   <footer>{v.city} {v.province} {v.zip}</footer>
-                </>)(stateOD.selfAddress.find(v => v.id === orderInfo.selfAddressId))
+                </>)(stateOrderDetailModel.selfAddress.find(v => v.id === orderInfo.selfAddressId))
             ) || <>
               <main>{orderInfo.userAddress?.name}</main>
               <header>{orderInfo.userAddress?.address}</header>

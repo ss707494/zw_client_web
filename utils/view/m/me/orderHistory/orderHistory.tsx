@@ -15,9 +15,9 @@ import {mpStyle} from '../../../../style/common'
 import {OrderState, orderStateToString} from '../../../../ss_common/enum'
 import {useRouter} from 'next/router'
 
-const orderHistoryModel = modelFactory('orderHistoryModel', {
+export const orderHistoryModel = modelFactory('orderHistoryModel', {
   state: 0,
-  orderList: [] as OrderPage,
+  orderList: {} as OrderPage,
 }, {
   changeState: (value, option) => {
     option.setData(fpMergePre({state: value}))
@@ -83,9 +83,9 @@ const ImgList = styled(ButtonBase)`
 
 export const OrderHistory = () => {
   const router = useRouter()
-  const {state: ohState, actions: ohActions} = useStoreModel(orderHistoryModel)
+  const {state: stateOrderHistoryModel, actions: actionsOrderHistoryModel} = useStoreModel(orderHistoryModel)
   useEffect(() => {
-    ohActions.getList()
+    actionsOrderHistoryModel.getList()
   }, [])
 
   return <div>
@@ -94,10 +94,10 @@ export const OrderHistory = () => {
     />
     <Tabs
         variant={'fullWidth'}
-        value={ohState.state}
+        value={stateOrderHistoryModel.state}
         onChange={(e, value) => {
-          ohActions.changeState(value)
-          ohActions.getList()
+          actionsOrderHistoryModel.changeState(value)
+          actionsOrderHistoryModel.getList()
         }}
     >
       <Tab
@@ -116,7 +116,7 @@ export const OrderHistory = () => {
     <BScroller
         boxHeight={'calc(100vh - 108px)'}
     >
-      {ohState.orderList.list?.map(value =>
+      {stateOrderHistoryModel.orderList.list?.map(value =>
           <React.Fragment
               key={`ohState.orderList_${value?.id}`}
           >

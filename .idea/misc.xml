@@ -81,4 +81,11 @@
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="false">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
+  <component name="StyledComponentsInjections">
+    <option name="prefixes">
+      <array>
+        <option value="" />
+      </array>
+    </option>
+  </component>
 </project>

@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import {TopAction} from '../pcComponents/topAction/topAction'
 import {HeaderTab} from '../home/components/headerTab'
 import {Space} from '../../../components/Box/Box'
-import {mpStyle, RedBox} from '../../../style/common'
+import {mpStyle} from '../../../style/common'
 import {ls} from '../../../tools/dealKey'
 import {dealMaybeNumber, dealMoney, fpMergePre} from '../../../tools/utils'
 import {useOrderPageHooks} from '../../m/cart/orderPage'
@@ -80,60 +80,6 @@ const TabHeader = styled.div<{ isAct?: boolean }>`
     `};
   }
 `
-const ProductBox = styled.div`
-  width: 100%;
-  border: 1px solid ${mpStyle.greyLite};
-  border-radius: 4px;
-`
-const ProductBoxHeader = styled.div`
-  height: 60px;
-  background: ${mpStyle.greyLite};
-  display: flex;
-  align-items: center;
-`
-const ProductRow = styled.div`
-  margin: ${mpStyle.spacePx.n} 0;
-  display: grid;
-  grid-template-columns: 200px 1fr 200px;
-  grid-template-rows: 1fr 32px 32px;
-  grid-template-areas: 
-  "img a d"
-  "img b d"
-  "img c d";
-  > img {
-    grid-area: img;
-    justify-self: center;
-    width: 80px;
-    height: 120px;
-  }
-  > div {
-    display: flex;
-  }
-  > section {
-    grid-area: a;
-  }
-  > aside {
-    grid-area: d;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    > header {
-      height: 40px;
-      flex-basis: 70%;
-    }
-    ${RedBox} {
-      ${mpStyle.fontType.n};
-      flex-grow: 1;
-    }
-  }
-`
-const ProductFooter = styled.div`
-  display: flex;
-  justify-content: space-between;
-  .MuiButton-root {
-    width: 45%;
-  }
-`
 const AddressBox = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -186,8 +132,6 @@ export const OrderPage = () => {
   const {actions: actionsPcOrderPageModel, state: statePcOrderPageModel} = useStoreModel(PcOrderPageModel)
   const addressList = stateShopCartModel.dealAddressList(stateShopCartModel)
 
-  console.log(addressList)
-  console.log(stateShopCartModel.form)
   return <MainBox>
     <PcHeader/>
     <PcContentBox>

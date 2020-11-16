@@ -53,10 +53,10 @@ const Account = styled.div`
 
 export const MyInfo = () => {
   const router = useRouter()
-  const {state: stateMe, actions: actionsMe} = useStoreModel(meModel)
+  const {state: stateMeModel, actions: actionsMeModel} = useStoreModel(meModel)
   useEffect(() => {
-    if (!stateMe.user.id) {
-      actionsMe.getLoginUser()
+    if (!stateMeModel.user.id) {
+      actionsMeModel.getLoginUser()
     }
   }, [])
 
@@ -69,7 +69,7 @@ export const MyInfo = () => {
         <aside>
           {ls('姓名')}
         </aside>
-        <main>{stateMe.user.userInfo?.name}</main>
+        <main>{stateMeModel.user.userInfo?.name}</main>
         <footer>
           <Button
               variant={'outlined'}
@@ -81,20 +81,20 @@ export const MyInfo = () => {
         <aside>
           {ls('电话')}
         </aside>
-        <main>{stateMe.user.userInfo?.phone}</main>
+        <main>{stateMeModel.user.userInfo?.phone}</main>
       </section>
       <section>
         <aside>
           {ls('邮箱')}
         </aside>
-        <main>{stateMe.user.userInfo?.email}</main>
+        <main>{stateMeModel.user.userInfo?.email}</main>
       </section>
     </MyCard>
     <Part/>
     <Account>
       <header>{ls('账号设置')}</header>
       <section>{ls('账号')}</section>
-      <section>{stateMe.user.name}</section>
+      <section>{stateMeModel.user.name}</section>
       <section>{ls('密码')}</section>
       <section>
         <span>********</span>
