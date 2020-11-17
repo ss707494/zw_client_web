@@ -84,7 +84,7 @@ export const PickupAddress = () => {
         title={'我的取货点'}
     />
     <Box>
-      {statePAM.list.map((value: any) => <React.Fragment key={`PickupAddress_${value.id}`}>
+      {statePAM.list.sort((a: any, b: any) => statePAM.user.userInfo?.pickupAddressId === b?.id ? 1 : (b?.updateTime - a?.updateTime)).map((value: any) => <React.Fragment key={`PickupAddress_${value.id}`}>
         <ItemBox>
           <img src={dealImgUrl(value.imgUrl)}
                alt=""/>

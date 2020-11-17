@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import {modelFactory} from '../../../../ModelAction/modelUtil'
 import {OrderInfo, OrderInfoItemInput} from '../../../../graphqlTypes/types'
 import {doc} from '../../../../graphqlTypes/doc'
-import {dealLastNumber, dealMoney, formatDate, fpMergePre} from '../../../../tools/utils'
+import {dealMoney, formatDate, fpMergePre, getLastNumber} from '../../../../tools/utils'
 import {useStoreModel} from '../../../../ModelAction/useStore'
 import {useRouter} from 'next/router'
 import {ls} from '../../../../tools/dealKey'
@@ -48,6 +48,11 @@ const Top = styled.div`
 const InfoLabel = styled.div`
   display: flex;
   margin-top: 16px;
+  > section {
+    > * {
+      margin-bottom: 4px;
+    }
+  }
   > aside {
     color: ${grey[600]};
     width: 80px;
@@ -100,6 +105,7 @@ export const ProductBox = styled.div`
     }
   }
   > aside {
+    justify-self: end;
     > button {
       border-radius: 10px;
       padding: 2px 14px;
@@ -129,7 +135,7 @@ export const OrderDetail = () => {
     />
     {!orderInfo?.id ? <div/> : <BScroller boxHeight={'calc(100vh - 60px)'}>
       <Box>
-        <Space h={16} />
+        <Space h={16}/>
         <Top>
           <section>{formatDate(orderInfo.createTime, 'YYYY/MM/dd')}</section>
           <aside>{orderStateToString(orderInfo?.state)}</aside>
@@ -159,7 +165,7 @@ export const OrderDetail = () => {
           <section>
             <header>{orderInfo?.userPayCard?.code}</header>
             <main>{ls('过期日')} {formatDate(orderInfo?.userPayCard?.expirationTime, 'MM/yy')}</main>
-            <footer>{ls('卡号')} {dealLastNumber(orderInfo.userPayCard?.number)}</footer>
+            <footer>{ls('卡号后四位')} {getLastNumber(`${orderInfo.userPayCard?.number}`)}</footer>
             <footer>{ls('持卡人')} {orderInfo?.userPayCard?.userName}</footer>
           </section>
         </InfoLabel>
@@ -173,9 +179,6 @@ export const OrderDetail = () => {
               <section>
                 {rOrderProduct.product?.name}
                 <Space w={mpStyle.space.xxs}/>
-                <span>
-                  {rOrderProduct.product?.number}{ls('份')}
-                </span>
               </section>
               <main>{rOrderProduct.product?.remark}</main>
               <footer>
@@ -183,6 +186,9 @@ export const OrderDetail = () => {
                 <span>{dealMoney(rOrderProduct.product?.priceOut)}</span>
               </footer>
               <aside>
+                <span>
+                  {rOrderProduct.product?.number}{rOrderProduct.product?.unit ?? ls('件')}
+                </span>
                 {/*<Button*/}
                 {/*    variant={'contained'}*/}
                 {/*>{ls('加入购物车')}</Button>*/}

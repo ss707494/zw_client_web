@@ -75,6 +75,7 @@ export const myCreditCardEditModel = modelFactory('myCreditCardEditModel', {
       city: value.city,
       district: value.district,
       address: value.address,
+      contact: value.contactInformation,
     },
   })),
   submit: (value, option) => {
@@ -265,6 +266,7 @@ export const MyCreditCardEdit = () => {
           label={ls(v[0] as string)}
           value={stateMCCE.form[v[1] as keyof UserPayCard] ?? ''}
           onChange={event => actionsMCCE.setForm([v[1], event.target.value])}
+          disabled={stateMCCE.form.creditAddressInputType === CreditAddressInputTypeEnum.Select}
       />)}
       <section style={{width: '100%', height: '20px'}}/>
       <ButtonLoad
