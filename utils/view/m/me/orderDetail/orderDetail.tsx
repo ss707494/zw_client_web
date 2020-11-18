@@ -72,7 +72,7 @@ export const ProductBox = styled.div`
   display: grid;
   padding-top: 4vw;
   margin-bottom: 10px;
-  grid-template-columns: min-content 1fr 30vw;
+  grid-template-columns: min-content 1fr 20vw;
   > img {
     grid-area: 1/1/4/2;
     width: 20vw;
@@ -163,8 +163,8 @@ export const OrderDetail = () => {
         <InfoLabel>
           <aside>{ls('支付方式')} :</aside>
           <section>
-            <header>{orderInfo?.userPayCard?.code}</header>
-            <main>{ls('过期日')} {formatDate(orderInfo?.userPayCard?.expirationTime, 'MM/yy')}</main>
+            {/*<header>{orderInfo?.userPayCard?.code}</header>*/}
+            {/*<main>{ls('过期日')} {formatDate(orderInfo?.userPayCard?.expirationTime, 'MM/yy')}</main>*/}
             <footer>{ls('卡号后四位')} {getLastNumber(`${orderInfo.userPayCard?.number}`)}</footer>
             <footer>{ls('持卡人')} {orderInfo?.userPayCard?.userName}</footer>
           </section>
@@ -183,11 +183,11 @@ export const OrderDetail = () => {
               <main>{rOrderProduct.product?.remark}</main>
               <footer>
                 <aside>{dealMoney(rOrderProduct.product?.priceMarket)}</aside>
-                <span>{dealMoney(rOrderProduct.product?.priceOut)}</span>
+                <span>{dealMoney(rOrderProduct.product?.priceOut)}/{rOrderProduct.product?.packingUnitString ?? ls('件')}</span>
               </footer>
               <aside>
                 <span>
-                  {rOrderProduct.product?.number}{rOrderProduct.product?.unit ?? ls('件')}
+                  x {rOrderProduct.product?.number}
                 </span>
                 {/*<Button*/}
                 {/*    variant={'contained'}*/}
