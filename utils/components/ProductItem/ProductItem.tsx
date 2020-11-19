@@ -50,6 +50,8 @@ const Box = styled(Card)`
   }
   > main {
     margin-top: 10px;
+    line-height: 22px;
+    ${mpStyle.ellipsis};
   }
   > footer {
     margin-top: 4px;
@@ -90,7 +92,7 @@ export const ProductItem = ({product}: { product: Product }) => {
       <img src={dealImgUrl(product?.img?.[0]?.url)}
            alt=""/>
     </header>
-    <main>{product.name}{product.weight}{product.unit}</main>
+    <main>{product.name} {product.weight}{product.unit} {product.packingUnitString}</main>
     <footer>
       <ProductPrice product={product}/>
       {stateMe.user?.id && <IconButton
@@ -134,6 +136,10 @@ const LeftBox = styled.div`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  > main {
+    line-height: 22px;
+    ${mpStyle.ellipsis};
+  }
 `
 const Tip = styled.div`
   margin-top: 16px;
@@ -172,7 +178,7 @@ export const ProductItemOneRow = ({product, sumOrderTip = '', hideAction = false
            alt=""/>
     </Img>
     <LeftBox>
-      <main>{product.name}{product.weight}{product.unit}</main>
+      <main>{product.name} {product.weight}{product.unit} {product.packingUnitString}{console.log(product)}</main>
       {/*<Stock>{ls('当前剩余')}: {product.stock}</Stock>*/}
       {showSumOrder && <Tip>{sumOrderTip}{ls('销量')}: {product.sumOrder}</Tip>}
       <Price>

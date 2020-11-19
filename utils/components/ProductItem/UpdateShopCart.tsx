@@ -22,9 +22,13 @@ const Footer = styled.div`
 
 export const UpdateShopCart = () => {
   const {actions: actionsUpdateShopCartModel, state: stateUpdateShopCartModel} = useStoreModel(updateShopCartModel)
+  const closeUpdateShopCart = () => {
+    actionsUpdateShopCartModel.setForm(['num', 1])
+    actionsUpdateShopCartModel.onClose()
+  }
   return <Dialog
       open={stateUpdateShopCartModel.open}
-      onClose={actionsUpdateShopCartModel.onClose}
+      onClose={closeUpdateShopCart}
   >
     <DialogTitle>{ls('添加数量')}</DialogTitle>
     <DialogContent>
@@ -41,7 +45,7 @@ export const UpdateShopCart = () => {
               stateUpdateShopCartModel.openResolve({
                 num: stateUpdateShopCartModel.form.num,
               })
-              actionsUpdateShopCartModel.onClose()
+              closeUpdateShopCart()
             }}
         >{ls('确定')}</Button>
       </Footer>

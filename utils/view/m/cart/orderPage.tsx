@@ -92,6 +92,7 @@ export const useOrderPageHooks = () => {
     actionsShopCartModel.getOrderInfo()
   }, [])
 
+  console.log(stateShopCartModel.form)
   const addressData = stateShopCartModel.dealAddressData(stateShopCartModel)
   const cardData = stateShopCartModel.payCardList?.find(v => v.id === stateShopCartModel.form.paymentMethodCardId) || {}
   const productTotal = stateShopCartModel.dealProductTotal(stateShopCartModel)
@@ -163,19 +164,19 @@ export const OrderPage = () => {
       <AddressBox>
         {stateShopCartModel.form.pickUpType === PickUpTypeEnum.Self && <main>
           <header>
-            {`${addressData.fullName}`}
+            {`${addressData.fullName ?? ''}`}
           </header>
-          <section>{addressData.streetAddress}</section>
+          <section>{addressData.streetAddress ?? ''}</section>
           <footer>
-            {`${addressData.city} ${addressData.province} ${addressData.zip}`}
+            {`${addressData.city ?? ''} ${addressData.province ?? ''} ${addressData.zip ?? ''}`}
           </footer>
         </main> || <main>
           <header>
-            {`${addressData.name}`}
+            {`${addressData.name ?? ''}`}
           </header>
-          <section>{addressData.address}</section>
+          <section>{addressData.address ?? ''}</section>
           <footer>
-            {`${addressData.city} ${addressData.province} ${addressData.zip}`}
+            {`${addressData.city ?? ''} ${addressData.province ?? ''} ${addressData.zip ?? ''}`}
           </footer>
         </main>}
         <aside>
@@ -279,6 +280,14 @@ export const OrderPage = () => {
             onClick={async () => {
               if (dealMaybeNumber(stateShopCartModel.user?.orderCoinCurrentMonth) < dealMaybeNumber(stateShopCartModel.form.deductCoin)) {
                 showMessage(ls('达人币余额不足'))
+                return
+              }
+              if (!stateShopCartModel.form.addressId || !addressData.city) {
+                showMessage(ls('请选择送货地址'))
+                return
+              }
+              if (!cardData.number) {
+                showMessage(ls('请选择信用卡'))
                 return
               }
 

@@ -71,6 +71,11 @@ export const mpStyle = {
         -webkit-border-radius: 4PX;
     }
   `,
+  ellipsis: `
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  `,
 }
 
 export const RedBox = styled.div`

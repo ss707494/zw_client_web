@@ -127,6 +127,9 @@ export const isPc = () => {
 }
 
 export const dealLastNumber = (num: string | null | undefined, length = 4) => {
+  if (!num) {
+    return ''
+  }
   return `**** **** **** ${num ? num?.slice(num?.length - length) : ''}`
 }
 
