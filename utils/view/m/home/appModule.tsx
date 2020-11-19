@@ -8,7 +8,6 @@ import CusCarousel from '../../../components/Swipe/Swipe'
 import {HeaderSearch} from '../../../components/HeaderSearch/HeaderSearch'
 import {FootBar} from '../../../components/FootBar/FootBar'
 import {BScroller} from '../../../components/BScroll/BScroller'
-import {grey} from '@material-ui/core/colors'
 import {useStoreModel} from '../../../ModelAction/useStore'
 import {getDataConfig, homeCarouselImgs} from '../../../graphqlTypes/doc'
 import {formatDate, fpMergePre} from '../../../tools/utils'
@@ -55,6 +54,25 @@ const CusSwipeImg = styled.div`
     display: flex;
   }
 `
+const CommonBox = styled.div`
+  padding-top: 10px;
+  padding-bottom: 120px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  flex-shrink: 1;
+  overflow: auto;
+  > * {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+`
+
+const CusCarouselBox = styled.div`
+  border-radius: 10px;
+  overflow: hidden;
+`
+
 export const HomeAppModule = (type?: string) => function () {
   const router = useRouter()
   useEffect(() => {
@@ -78,8 +96,8 @@ export const HomeAppModule = (type?: string) => function () {
       <div>
         <HeaderSearch homeType={type ?? HomeType.home}/>
         <BScroller boxHeight={'calc(100vh - 65px)'}>
-          <div className={'common_box'}>
-            <div className={'cusCarousel'}>
+          <CommonBox>
+            <CusCarouselBox>
               {(() => {
                 const filterList = stateHomeCarouselModel.homeCarouselImgs?.value?.list?.filter((v: any) => !v.isDisabled) ?? []
                 return <CusCarousel
@@ -116,41 +134,11 @@ export const HomeAppModule = (type?: string) => function () {
                     }}
                 />
               })()}
-            </div>
+            </CusCarouselBox>
             <div>
               <HomeTabs homeType={type ?? HomeType.home}/>
             </div>
-          </div>
-          <style jsx>{`
-          .common_box {
-            padding-top: 10px;
-            padding-bottom: 120px;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-            flex-shrink: 1;
-            overflow: auto;
-            > * {
-              margin-left: 10px;
-              margin-right: 10px;
-            }
-          }
-          .tip {
-            display: flex;
-            color: ${grey[600]};
-            padding: 8px 0;
-            > span {
-              margin: 0 10px;
-            }
-          }
-          .cusCarousel {
-            border-radius: 10px;
-            overflow: hidden;
-          }
-          .footer {
-            height: 200px;
-          }
-        `}</style>
+          </CommonBox>
         </BScroller>
         <FootBar/>
       </div>

@@ -3,6 +3,19 @@ import BetterScroll from 'better-scroll'
 import {useStoreModel} from '../../ModelAction/useStore'
 import {fpMergePre} from '../../tools/utils'
 import {modelFactory} from '../../ModelAction/modelUtil'
+import styled from 'styled-components'
+
+const Box = styled.div<{
+  isX?: boolean,
+  boxHeight?: any,
+  boxWidth?: any,
+}>`
+  ${({boxHeight, isX, boxWidth}) => `
+    height: ${boxHeight || '100vh'};
+    width: ${(isX && boxWidth) ? `${boxWidth}` : 'auto' };
+    overflow: hidden;
+  `}
+`
 
 export const bScrollModel = modelFactory('bScrollModel', {
   scroll: {} as any,
@@ -40,21 +53,16 @@ export const BScroller = ({isX, children, boxHeight, boxWidth}: { children?: any
   }, [])
 
   return (
-      <div
-          ref={scrollRef}
-          className={'box'}>
+      <Box
+          isX={isX}
+          boxHeight={boxHeight}
+          boxWidth={boxWidth}
+          ref={scrollRef}>
         <div
             style={isX ? {
               display: 'inline-block',
             } : {}}
         >{children}</div>
-        <style jsx>{`
-          .box {
-            height: ${boxHeight || '100vh'};
-            width: ${(isX && boxWidth) ? `${boxWidth}` : 'auto' };
-            overflow: hidden;
-          }
-        `}</style>
-      </div>
+      </Box>
   )
 }

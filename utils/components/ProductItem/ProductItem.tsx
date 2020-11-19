@@ -136,6 +136,7 @@ const LeftBox = styled.div`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  width: 0;
   > main {
     line-height: 22px;
     ${mpStyle.ellipsis};
@@ -178,7 +179,7 @@ export const ProductItemOneRow = ({product, sumOrderTip = '', hideAction = false
            alt=""/>
     </Img>
     <LeftBox>
-      <main>{product.name} {product.weight}{product.unit} {product.packingUnitString}{console.log(product)}</main>
+      <main>{product.name} {product.weight}{product.unit} {product.packingUnitString}</main>
       {/*<Stock>{ls('当前剩余')}: {product.stock}</Stock>*/}
       {showSumOrder && <Tip>{sumOrderTip}{ls('销量')}: {product.sumOrder}</Tip>}
       <Price>

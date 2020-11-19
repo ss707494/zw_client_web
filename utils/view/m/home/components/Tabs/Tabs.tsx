@@ -12,10 +12,11 @@ import {HomeType} from '../../appModule'
 import {fpMergePre} from '../../../../../tools/utils'
 import {getDataConfig} from '../../../../../graphqlTypes/doc'
 import {DataConfigItemInput} from '../../../../../graphqlTypes/types'
-import { SalesRank } from '../SalesRank/SalesRank'
+import {SalesRank} from '../SalesRank/SalesRank'
 import {UpdateShopCart} from '../../../../../components/ProductItem/UpdateShopCart'
-import { isEmpty } from 'lodash'
+import {isEmpty} from 'lodash'
 import {LineRanking} from '../LineRanking/LineRanking'
+import styled from 'styled-components'
 
 export const homeTabsModel = modelFactory('HomeTabs', {
   homeType: '',
@@ -37,7 +38,7 @@ export const homeTabsModel = modelFactory('HomeTabs', {
     const appModuleConfig = await option.query(getDataConfig, {
       data: {
         type: DictTypeEnum.AppModule,
-      } as DataConfigItemInput
+      } as DataConfigItemInput,
     }, {})
     option.setData(fpMergePre({
       appModuleConfig: appModuleConfig?.getDataConfig?.value ?? {},
@@ -45,14 +46,21 @@ export const homeTabsModel = modelFactory('HomeTabs', {
   },
 })
 
-export const HomeTabs = ({homeType}: {homeType: string}) => {
+const Box = styled.div`
+  margin-top: 10px;
+  &&& {
+    .MuiButtonBase-root {
+      padding: 0;
+    }
+  }
+`
+
+export const HomeTabs = ({homeType}: { homeType: string }) => {
   const router = useRouter()
   const {state: homeTabsState, actions: homeTabsActions} = useStoreModel(homeTabsModel)
 
   return (
-      <div
-          style={{marginTop: '10px'}}
-      >
+      <Box>
         {!isEmpty(homeTabsState?.appModuleConfig) && <Tabs
             variant={'fullWidth'}
             value={router.query.appModule ?? AppModuleTypeEnum.categorySelection}
@@ -91,12 +99,7 @@ export const HomeTabs = ({homeType}: {homeType: string}) => {
           && <LineRanking/>}
         </main>
         <UpdateShopCart/>
-        <style jsx>{`
-          div :global(.MuiButtonBase-root) {
-            padding: 0;
-          }
-        `}</style>
-      </div>
+      </Box>
   )
 }
 

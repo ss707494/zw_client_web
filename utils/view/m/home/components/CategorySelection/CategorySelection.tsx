@@ -12,6 +12,7 @@ import {CategoryRootName} from '../../../../../ss_common/enum'
 import {modelFactory} from '../../../../../ModelAction/modelUtil'
 import {useRouter} from 'next/router'
 import {homeTabsModel} from '../Tabs/Tabs'
+import styled from 'styled-components'
 
 export const homeCategorySelectionModel = modelFactory('HomeCategorySelection', {
   listData: [] as Category[],
@@ -39,6 +40,29 @@ export const homeCategorySelectionModel = modelFactory('HomeCategorySelection', 
   },
 })
 
+const ButtonBaseBox = styled(ButtonBase)`
+  &&& {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 10px;
+    background: ${grey[700]};
+    > img {
+      height: 100%;
+      width: 70%;
+    }
+    > span {
+      flex: 1;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+`
+
 export const CategorySelection = () => {
   const router = useRouter()
   const {state: homeCategorySelectionState, actions: homeCategorySelectionActions, getLoad: hsGetLoad} = useStoreModel(homeCategorySelectionModel)
@@ -52,8 +76,7 @@ export const CategorySelection = () => {
       <div>
         {!!hsGetLoad(categoryList) && <Loading/>}
         {homeCategorySelectionState?.listData?.map(value => (
-            <ButtonBase
-                className={'main'}
+            <ButtonBaseBox
                 onClick={() => {
                   router.push(`/m/category/[id]${dealUrlQuery({homeType: homeTabsState.homeType})}`, `/m/category/${value.id}${dealUrlQuery({homeType: homeTabsState.homeType})}`)
                 }}
@@ -67,30 +90,8 @@ export const CategorySelection = () => {
                 {value.name}
                 <KeyboardArrowRight/>
               </span>
-            </ButtonBase>
+            </ButtonBaseBox>
         ))}
-        <style jsx>{`
-          div > :global(.main) {
-            width: 100%;
-            height: 60px;
-            display: flex;
-            border-radius: 8px;
-            overflow: hidden;
-            margin-bottom: 10px;
-            background: ${grey[700]};
-            > img {
-              height: 100%;
-              width: 70%;
-            }
-            > span {
-              flex: 1;
-              color: #fff;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-            }
-          }
-        `}</style>
       </div>
   )
 }

@@ -3,12 +3,58 @@ import {useRouter} from 'next/router'
 import {mpStyle} from '../../utils/style/common'
 import {ls} from '../../utils/tools/dealKey'
 import {Button} from '@material-ui/core'
+import styled from 'styled-components'
+
+const Box = styled.div`
+  height: 100vh;
+  background: ${mpStyle.red};
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+const Title = styled.div`
+  display: grid;
+  grid-template-columns: 80px min-content;
+  grid-template-rows: 40px;
+  align-items: center;
+  margin-top: 25vh;
+  color: #fff;
+  font-size: 20px;
+  > img {
+    width: 80px;
+    grid-area: 1/1/3/2;
+  }
+  > section {
+    align-self: end;
+  }
+  > main {
+    font-weight: bold;
+    align-self: start;
+  }
+`
+const Actions = styled.div`
+  width: calc(100vw - 40px);
+  margin-top: 30vh;
+  display: flex;
+  flex-direction: column;
+  &&& {
+    .MuiButton-outlined {
+      border-color: #fff;
+      color: #fff;
+    }
+    .MuiButton-contained {
+      color: ${mpStyle.red};
+    }
+  }
+`
 
 export const HomeRe = () => {
   const router = useRouter()
 
-  return <div className={'box'}>
-    <div className="title">
+  return <Box>
+    <Title>
       <img src={"/img/home/logo_white.png"}
            alt=""/>
       <section>
@@ -17,8 +63,8 @@ export const HomeRe = () => {
       <main>
         {ls('Payless')}
       </main>
-    </div>
-    <div className="actions">
+    </Title>
+    <Actions>
       <Button
           size={'large'}
           style={{marginBottom: '20px'}}
@@ -34,54 +80,8 @@ export const HomeRe = () => {
             await router.push('/m/register')
           }}
       >{ls('注册')}</Button>
-    </div>
-
-    <style jsx>{`
-      .box {
-        height: 100vh;
-        background: ${mpStyle.red};
-        box-sizing: border-box;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-      .title {
-        display: grid;
-        grid-template-columns: 80px min-content;
-        grid-template-rows: 40px;
-        align-items: center;
-        margin-top: 25vh;
-        color: #fff;
-        font-size: 20px;
-        > img {
-          width: 80px;
-          grid-area: 1/1/3/2;
-        }
-        > section {
-          align-self: end;
-        }
-        > main {
-          font-weight: bold;
-          align-self: start;
-        }
-      }
-      .actions {
-        width: calc(100vw - 40px);
-        margin-top: 30vh;
-        display: flex;
-        flex-direction: column;
-        :global(.MuiButton-outlined) {
-          border-color: #fff;
-          color: #fff;
-        }
-        :global(.MuiButton-contained) {
-          color: ${mpStyle.red};
-        }
-      }
-
-    `}</style>
-  </div>
+    </Actions>
+  </Box>
 }
 
 export default HomeRe

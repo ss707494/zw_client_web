@@ -21,12 +21,6 @@ export default function MyApp({Component, pageProps}: AppProps) {
           <Component {...pageProps} />
           <Message/>
         </ThemeProvider>
-        {/*  <style*/}
-        {/*      global*/}
-        {/*      jsx*/}
-        {/*  >{`*/}
-        {/*  ${isPc && mpStyle.scrollbar}*/}
-        {/*`}</style>*/}
       </>)
 }
 
