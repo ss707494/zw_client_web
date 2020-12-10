@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, {useEffect} from 'react'
 import {useRouter} from 'next/router'
 import {AppModuleTypeEnum, DictTypeEnum, RelatedObjTypeEnum} from '../../../ss_common/enum'
@@ -87,10 +88,10 @@ export const HomeAppModule = (type?: string) => function () {
   useEffect(() => {
     actionsHomeCarouselModel.getHomeCarousel()
     actionsHomeTabs.getData()
-  }, [])
+  }, [actionsHomeCarouselModel, actionsHomeTabs])
   useEffect(() => {
     actionsHomeTabs.setHomeType((type) ?? HomeType.home)
-  }, [type])
+  }, [actionsHomeTabs])
 
   return (
       <div>

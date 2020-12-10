@@ -9,10 +9,11 @@ import {ProductItemBox} from '../../pcComponents/productItemBox/productItemBox'
 
 const Box = styled.div`
   display: grid;
-  grid-gap: ${mpStyle.spacePx.n};
+  grid-gap: 50px;
 `
 const Title = styled.div`
   ${mpStyle.fontType.xxl};
+  color: ${mpStyle.black};
   grid-area: 1/1/2/4;
   justify-self: start;
 `
@@ -20,13 +21,13 @@ const Img = styled.div`
   display: grid;
   grid-template-rows: 1fr 1fr;
   justify-self: stretch;
-  padding-right: ${mpStyle.spacePx.s};
-  border-right: 1px solid ${mpStyle.grey};
+  ${mpStyle.fontType.n};
+  background: rgb(200, 200, 200, .2);
+  
   > img {
     width: 100%;
     height: 50%;
   }
-  ${mpStyle.fontType.n}
   > section {
     > div {
       margin-top: ${mpStyle.spacePx.xxs};
@@ -36,16 +37,15 @@ const Img = styled.div`
 const ThemeBox = styled.div`
   display: grid;
   grid-template-rows: max-content max-content;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 300px);
   justify-items: center;
-  grid-gap: ${mpStyle.spacePx.xs};
 `
 
 export const ThemeSelection = () => {
   const {state: statePromotionFlashSale, actions: actionsPromotionFlashSale} = useStoreModel(themeSelectionModel)
   useEffect(() => {
     actionsPromotionFlashSale.getData()
-  }, [])
+  }, [actionsPromotionFlashSale])
 
   return <Box
       id={'ThemeSelection'}
@@ -55,7 +55,7 @@ export const ThemeSelection = () => {
     >
       <Title>
         {themeData.title}
-        <Space h={mpStyle.space.s}/>
+        <Space h={19}/>
       </Title>
       <Img>
         <img
@@ -68,6 +68,7 @@ export const ThemeSelection = () => {
       </Img>
       {statePromotionFlashSale.productListForTheme[themeData.id]?.slice(0, 8)?.map(v => <ProductItemBox
           key={`statePromotionFlashSaleProductItem_${v.id}`}
+          width={290}
           product={v}/>)}
     </ThemeBox>)}
   </Box>

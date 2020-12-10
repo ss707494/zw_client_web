@@ -13,11 +13,33 @@ import {ProductItemBox} from '../../pcComponents/productItemBox/productItemBox'
 const Box = styled.div`
 `
 const Title = styled.div`
-  ${mpStyle.fontType.xxl};
+  ${mpStyle.fontType.xl};
 `
 const Content = styled.div`
   display: grid;
   grid-gap: 24px;
+`
+const Rank = styled.div`
+  position: relative;
+  > aside {
+    position: absolute;
+    top: -10px;
+    > main {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      align-items: center;
+      justify-items: center;
+      color: #fff;
+      background: ${mpStyle.red};
+      border-radius: 50%;
+      ${mpStyle.fontType.xl};
+    }
+    > img {
+      width: 40px;
+      height: 40px;
+    }
+  }
 `
 
 export const SalesRank = () => {
@@ -32,7 +54,7 @@ export const SalesRank = () => {
         orderByType: router.query.salesRankType ?? SaleRankTypeEnum.OneMonth,
       })
     }
-  }, [router.query.salesRankType])
+  }, [actionsSalesRankModel, router.query.salesRankType])
 
   return <Box
       id={'SalesRank'}
@@ -42,10 +64,27 @@ export const SalesRank = () => {
     </Title>
     <Space h={24}/>
     <Content>
-      {stateSalesRankModel.listData.map(product => <ProductItemBox
-          product={product}
+      {stateSalesRankModel.listData.map((product, index) => <Rank
           key={`ProductItem_${product.id}`}
-      />)}
+      >
+        <ProductItemBox
+            width={209}
+            hidePrice={true}
+            hideShopCartButton={true}
+            product={product}
+        />
+        <aside>
+          <main
+              style={(index === 0 && {
+                background: 'linear-gradient(144deg, #FFF0B1 0%, #B6883B 100%)',
+              }) || (index === 1 && {
+                background: 'linear-gradient(144deg, #E8E5E5 0%, #A5A3A3 100%)',
+              }) || (index === 2 && {
+                background: 'linear-gradient(144deg, #F8C8A9 0%, #C28753 100%)',
+              }) || {}}
+          >{index + 1}</main>
+        </aside>
+      </Rank>)}
     </Content>
   </Box>
 }

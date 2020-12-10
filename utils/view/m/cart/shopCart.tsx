@@ -11,7 +11,7 @@ import {DiscountConditionEnum, DiscountTypeEnum, getPickUpTypeName, PickUpTypeEn
 import {CartProduct} from './CartProduct'
 import {BScroller} from '../../../components/BScroll/BScroller'
 import {pageTypeEnum, shopCartModel} from './index'
-import {dealNoAuth} from '../../../components/NoAuth/NoAuth'
+import {DealNoAuth} from '../../../components/NoAuth/NoAuth'
 import {Space} from '../../../components/Box/Box'
 import {InputPromoCodeDialog, inputPromoCodeModel} from './components/InputPromoCode'
 import CloseIcon from '@material-ui/icons/Close'
@@ -53,12 +53,12 @@ export const ShopCartPage = () => {
     if (stateShopCartModel.shopCartList.length === 0) {
       actionsShopCartModel.getList()
     }
-  }, [])
+  }, [actionsShopCartModel, stateShopCartModel.shopCartList.length])
   useEffect(() => {
     if (stateShopCartModel.user.id && localStorage.getItem(`promoCode_${stateShopCartModel.user.id}`)) {
       actionsShopCartModel.dealPromoCode(`${localStorage.getItem(`promoCode_${stateShopCartModel.user.id}`)}`)
     }
-  }, [stateShopCartModel.user.id])
+  }, [actionsShopCartModel, stateShopCartModel.user.id])
   const productNumber = stateShopCartModel.dealProductNumber(stateShopCartModel)
   const productSubtotal = dealMoney(stateShopCartModel.dealProductTotal(stateShopCartModel))
 
@@ -80,7 +80,7 @@ export const ShopCartPage = () => {
     if (discountAmountForPromoCode) {
       actionsShopCartModel.setForm(['couponDiscount', discountAmountForPromoCode])
     }
-  }, [discountAmountForPromoCode])
+  }, [actionsShopCartModel, discountAmountForPromoCode])
   const allTotal = stateShopCartModel.dealProductTotal(stateShopCartModel) - dealMaybeNumber(stateShopCartModel.form.couponDiscount)
 
   return <div>
@@ -88,7 +88,7 @@ export const ShopCartPage = () => {
         title={'购物车'}
         LeftIcon={CloseIcon}
     />
-    {dealNoAuth(<>
+    {DealNoAuth(<>
       {(!!getLoad(doc.userShopCartList) && <LinearProgress/>) || <div style={{height: '4px'}}/>}
       <BScroller boxHeight={'calc(100vh - 65px)'}>
         <BoxContain>

@@ -6,14 +6,12 @@ import styled from 'styled-components'
 import {Space} from '../../../components/Box/Box'
 import {LimitTime} from './components/limitTime'
 import {SalesRank} from './components/salesRank'
-import {Divider} from '@material-ui/core'
 import {ThemeSelection} from './components/themeSelection'
-import {mpStyle} from '../../../style/common'
 import {Carousel} from './components/carousel'
 import {MainBox} from '../pcComponents/mainBox/mainBox'
 
 export const PcContentBox = styled.div`
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
 `
 const TwoSide = styled.div`
@@ -22,7 +20,7 @@ const TwoSide = styled.div`
     flex-grow: 1;
   }
   > aside {
-    flex-basis: 20vw;
+    flex-basis: 210px;
   }
 `
 
@@ -33,20 +31,13 @@ export const PcHome = () => {
     <PcContentBox>
       <TopAction/>
       <HeaderTab/>
-      <Space h={16}/>
       <Carousel/>
-      <Space h={24}/>
+      <Space h={50}/>
       <TwoSide>
         <section>
           <LimitTime/>
-          <Space h={mpStyle.space.l}/>
           <ThemeSelection/>
         </section>
-        <Space w={mpStyle.space.n}/>
-        <Divider
-            flexItem={true}
-            orientation={'vertical'}/>
-        <Space w={mpStyle.space.n}/>
         <aside>
           <SalesRank/>
         </aside>

@@ -85,7 +85,7 @@ const AddressBox = styled.div`
   grid-template-columns: repeat(3, 1fr);
   grid-gap: ${mpStyle.spacePx.xs};
 `
-const AddressBoxItem = styled(ButtonBase)<ButtonBaseProps & {isAct?: boolean}>`
+const AddressBoxItem = styled(ButtonBase)<ButtonBaseProps & { isAct?: boolean }>`
   &&& {
     flex-direction: column;
     align-items: flex-start;
@@ -121,15 +121,12 @@ export const OrderPage = () => {
   const {
     stateShopCartModel,
     actionsShopCartModel,
-    getLoad,
-    addressData,
-    cardData,
     productTotal,
     transportationCosts,
     actuallyPaid,
     generateCoin,
   } = useOrderPageHooks()
-  const {actions: actionsPcOrderPageModel, state: statePcOrderPageModel} = useStoreModel(PcOrderPageModel)
+  const {state: statePcOrderPageModel} = useStoreModel(PcOrderPageModel)
   const addressList = stateShopCartModel.dealAddressList(stateShopCartModel)
 
   return <MainBox>

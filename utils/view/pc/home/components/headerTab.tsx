@@ -7,6 +7,8 @@ import {CategorySelection, CategorySelectionModel} from './categorySelection'
 import {modelFactory} from '../../../../ModelAction/modelUtil'
 import {fpMergePre} from '../../../../tools/utils'
 import {useStoreModel} from '../../../../ModelAction/useStore'
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
+import { Button } from '@material-ui/core'
 
 export const HeaderTabModel = modelFactory('HeaderTabModel', {
   isCategory: false,
@@ -24,13 +26,16 @@ const Box = styled.div`
 const CategorySelectionBox = styled(CategorySelection)`
 `
 const CategoryBox = styled.div<{ isAct?: number }>`
-  ${mpStyle.fontType.xxl};
   position: relative;
-  > span {
-    cursor: pointer;
-    ${prop => prop.isAct ? `
-      color: ${mpStyle.red};
-    ` : ''};
+  &&& {
+    ${mpStyle.fontType.xxl};
+    .MuiButton-label {
+      ${mpStyle.fontType.l};
+      color: ${mpStyle.black};
+      ${prop => prop.isAct ? `
+        color: ${mpStyle.red};
+      ` : ''};
+    }
   }
   ${CategorySelectionBox} {
     position: absolute;
@@ -43,27 +48,34 @@ const CategoryBox = styled.div<{ isAct?: number }>`
   }
 `
 const PointBox = styled.a<React.DetailedHTMLProps<React.AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>>`
-  ${mpStyle.fontType.xxl};
-  color: #222;
+  ${mpStyle.fontType.l};
+  color: ${mpStyle.black};
   text-decoration: none;
+  height: 43px;
+  display: grid;
+  align-items: center;
 `
-const spaceNum = 88
+const spaceNum = 60
 
 export const HeaderTab = () => {
-  const {actions: actionsHeaderTabModel, state: stateHeaderTabModel} = useStoreModel(HeaderTabModel)
+  const {state: stateHeaderTabModel} = useStoreModel(HeaderTabModel)
   const {actions: actionsCategorySelectionModel, state: stateCategorySelectionModel} = useStoreModel(CategorySelectionModel)
+
 
   return <Box>
     <CategoryBox
-        isAct={stateHeaderTabModel.isCategory ? 1 : 0}
+        isAct={(stateHeaderTabModel.isCategory || stateCategorySelectionModel.isShow) ? 1 : 0}
     >
-      <span
+      <Button
           onClick={() => {
             actionsCategorySelectionModel.switchIsShow(true)
           }}
       >
         {ls('分类选择')}
-      </span>
+        <KeyboardArrowDownIcon
+            style={stateCategorySelectionModel.isShow ? {transform: 'rotate(180deg)'} : {}}
+        />
+      </Button>
       <CategorySelectionBox/>
     </CategoryBox>
     <Space w={spaceNum}/>

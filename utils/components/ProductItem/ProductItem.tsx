@@ -85,7 +85,7 @@ export const ProductItem = ({product}: { product: Product }) => {
     if (!stateMe.user.id) {
       actionsMe.getLoginUser()
     }
-  }, [])
+  }, [actionsMe, stateMe.user.id])
   const {actions: actionsPM} = useStoreModel(productModel)
   return <Box>
     <header>
@@ -171,7 +171,7 @@ export const ProductItemOneRow = ({product, sumOrderTip = '', hideAction = false
     if (!stateMe.user.id) {
       actionsMe.getLoginUser()
     }
-  }, [])
+  }, [actionsMe, stateMe.user.id])
 
   return <RowBox key={`ProductItemOneRow_${product.id}`}>
     <Img>
@@ -266,7 +266,7 @@ export const GroupProductItem = ({product, groupQueue, sumOrderTip = '', showSum
     if (!stateMe.user.id) {
       actionsMe.getLoginUser()
     }
-  }, [])
+  }, [actionsMe, stateMe.user.id])
 
   return <GroupBox key={`GroupBox_${product.id}`}>
     <GroupImg>

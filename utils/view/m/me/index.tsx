@@ -17,7 +17,7 @@ import MonetizationOn from '@material-ui/icons/MonetizationOn'
 import PaymentIcon from '@material-ui/icons/Payment'
 import {BScroller} from '../../../components/BScroll/BScroller'
 import {useRouter} from 'next/router'
-import {dealNoAuth} from '../../../components/NoAuth/NoAuth'
+import {DealNoAuth} from '../../../components/NoAuth/NoAuth'
 import {ShoppingCartIconButton} from '../../../components/ShoppingCartIconButton/ShoppingCartIconButton'
 import {cardModel} from '../card/[type]'
 import {PromoCodeTypeEnum} from '../../../ss_common/enum'
@@ -93,18 +93,6 @@ const ListItem = styled(ButtonBase)<ButtonBaseProps>`
     }
   }
 `
-const Empty = styled.div`
-  padding: 20px;
-  > main {
-    margin-top: 20vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    > span {
-      margin-bottom: 30px;
-    }
-  }
-`
 const ShopIcon = styled.div`
   align-self: end;
   justify-self: end;
@@ -120,12 +108,12 @@ export default function Me() {
     if (!stateMeModel.user.id) {
       actionsMeModel.getLoginUser()
     }
-  }, [])
+  }, [actionsMeModel, stateMeModel.user.id])
   useEffect(() => {
     actionsCardModel.getList()
-  }, [])
+  }, [actionsCardModel])
   return <Box>
-    {dealNoAuth(<BScroller
+    {DealNoAuth(<BScroller
         boxHeight={'calc(100vh - 45px)'}
     >
       <Header>

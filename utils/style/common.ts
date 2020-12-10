@@ -3,8 +3,9 @@ import styled from 'styled-components'
 
 export const mpStyle = {
   red: '#F84033',
-  grey: grey['400'],
+  grey: '#B9B9B9',
   greyLite: grey['200'],
+  black: '#0D0D21',
   shadow: {
     1: '0 1px 1px 0 rgba(0,0,0,0.14), 0 2px 1px -1px rgba(0,0,0,0.12), 0 1px 3px 0 rgba(0,0,0,0.20)',
   },
@@ -28,18 +29,24 @@ export const mpStyle = {
   },
   fontType: {
     xxl: `
+      font-size: 28px; 
+      font-weight: 600;
+    `,
+    xl: `
       font-size: 24px; 
-      font-weight: bold;
+      font-weight: 600;
     `,
     l: `
-      font-size: 22px; 
-      font-weight: bold;
+      font-size: 18px; 
+      font-weight: 600;
     `,
     n: `
-      font-size: 20px; 
+      font-size: 16px; 
+      font-weight: 400;
     `,
     s: `
-      font-size: 18px; 
+      font-size: 14px; 
+      font-weight: 400;
     `,
   },
   scrollbar: `

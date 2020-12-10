@@ -29,8 +29,10 @@ const MenuLeftBox = styled.div`
 `
 
 const meMenuEnum = {
+  myInfo: 'myInfo',
   orderHistory: 'orderHistory',
   myAddress: 'myAddress',
+  myCreditCard: 'myCreditCard',
 }
 const menuAct: any = {
   orderHistory: ['orderHistory', 'orderDetail'],
@@ -59,8 +61,10 @@ export const MenuBox = ({children}: { children: ReactNode }) => {
           }}
       >
         {[
+          ['我的达人证', meMenuEnum.myInfo],
           ['我的订单历史', meMenuEnum.orderHistory],
           ['我的地址', meMenuEnum.myAddress],
+          ['支付方式', meMenuEnum.myCreditCard],
         ].map(([label, value]) => <Tab
             key={`MeMenuRouterValue${value}`}
             label={ls(label)}

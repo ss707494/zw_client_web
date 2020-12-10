@@ -36,10 +36,6 @@ export const SalesRankModel = modelFactory('SalesRank', {
 
 const Box = styled.div`
 `
-const Title = styled.div`
-  font-size: 18px;
-  font-weight: bold;
-`
 
 const SaleRankTypeEnumLabel: {[k: string]: string} = {
   [SaleRankTypeEnum.OneDay]: '本日',
@@ -56,7 +52,7 @@ export const SalesRank = () => {
       })
       router.push(`/m/${homeTabsState.homeType}/[appModule]${query}`, `/m/${homeTabsState.homeType}/salesRank${query}`)
     }
-  }, [router.query.salesRankType, homeTabsState.homeType])
+  }, [router.query.salesRankType, homeTabsState.homeType, router])
   const {actions: actionsSalesRankModel, state: stateSalesRankModel} = useStoreModel(SalesRankModel)
   useEffect(() => {
     if (router.query.salesRankType) {
@@ -67,7 +63,7 @@ export const SalesRank = () => {
         orderByType: router.query.salesRankType,
       })
     }
-  }, [router.query.salesRankType])
+  }, [actionsSalesRankModel, homeTabsState.homeType, router.query.salesRankType])
 
   return <Box>
     {/*<Title>{ls('排行榜')}</Title>*/}

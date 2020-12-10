@@ -90,9 +90,8 @@ export const useOrderPageHooks = () => {
 
   useEffect(() => {
     actionsShopCartModel.getOrderInfo()
-  }, [])
+  }, [actionsShopCartModel])
 
-  console.log(stateShopCartModel.form)
   const addressData = stateShopCartModel.dealAddressData(stateShopCartModel)
   const cardData = stateShopCartModel.payCardList?.find(v => v.id === stateShopCartModel.form.paymentMethodCardId) || {}
   const productTotal = stateShopCartModel.dealProductTotal(stateShopCartModel)
@@ -142,7 +141,7 @@ export const OrderPage = () => {
         actionsShopCartModel.updatePageType(pageTypeEnum.shopCart)
       })
     }
-  }, [stateShopCartModel.pageType])
+  }, [actionsShopCartModel, stateShopCartModel.pageType])
 
   return <div>
     <HeaderTitle
@@ -162,7 +161,7 @@ export const OrderPage = () => {
         {ls((stateShopCartModel.form.pickUpType === PickUpTypeEnum.Self && '自取地址') || '送货地址')}
       </ShopTitle>
       <AddressBox>
-        {stateShopCartModel.form.pickUpType === PickUpTypeEnum.Self && <main>
+        {(stateShopCartModel.form.pickUpType === PickUpTypeEnum.Self && <main>
           <header>
             {`${addressData.fullName ?? ''}`}
           </header>
@@ -170,7 +169,7 @@ export const OrderPage = () => {
           <footer>
             {`${addressData.city ?? ''} ${addressData.province ?? ''} ${addressData.zip ?? ''}`}
           </footer>
-        </main> || <main>
+        </main>) || <main>
           <header>
             {`${addressData.name ?? ''}`}
           </header>

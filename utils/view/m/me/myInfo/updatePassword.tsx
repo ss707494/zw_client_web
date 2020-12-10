@@ -13,7 +13,7 @@ import router from 'next/router'
 import {setToken} from '../../../../tools/token'
 import {setForm} from '../../../../tools/commonAction'
 
-const updatePasswordModel = modelFactory('updatePasswordModel', {
+export const updatePasswordModel = modelFactory('updatePasswordModel', {
   form: {
     oldPassword: '',
     newPassword: '',
@@ -59,31 +59,31 @@ export const FieldContain = styled.div`
 `
 
 export const UpdatePassword = () => {
-  const {state: stateUPM, actions: actionsUPM} = useStoreModel(updatePasswordModel)
+  const {state: stateUpdatePasswordModel, actions: actionsUpdatePasswordModel} = useStoreModel(updatePasswordModel)
 
   return <div>
     <HeaderTitle
         title={'修改密码'}
-        backCall={actionsUPM.clearForm}
+        backCall={actionsUpdatePasswordModel.clearForm}
     />
     <FieldContain>
       <SigninInput
           label={ls('原始密码')}
           type={'password'}
-          value={stateUPM.form.oldPassword}
-          onChange={event => actionsUPM.setForm(['oldPassword', event.target.value])}
+          value={stateUpdatePasswordModel.form.oldPassword}
+          onChange={event => actionsUpdatePasswordModel.setForm(['oldPassword', event.target.value])}
       />
       <SigninInput
           label={ls('新密码')}
           type={'password'}
-          value={stateUPM.form.newPassword}
-          onChange={event => actionsUPM.setForm(['newPassword', event.target.value])}
+          value={stateUpdatePasswordModel.form.newPassword}
+          onChange={event => actionsUpdatePasswordModel.setForm(['newPassword', event.target.value])}
       />
       <SigninInput
           label={ls('确认密码')}
           type={'password'}
-          value={stateUPM.form.confirmPassword}
-          onChange={event => actionsUPM.setForm(['confirmPassword', event.target.value])}
+          value={stateUpdatePasswordModel.form.confirmPassword}
+          onChange={event => actionsUpdatePasswordModel.setForm(['confirmPassword', event.target.value])}
       />
       <ButtonLoad
           style={{marginTop: '20px'}}
@@ -91,9 +91,9 @@ export const UpdatePassword = () => {
           color={'secondary'}
           fullWidth
           onClick={async () => {
-            const res = await actionsUPM.submit()
+            const res = await actionsUpdatePasswordModel.submit()
             if (res?.updatePassword?.user?.id) {
-              actionsUPM.clearForm()
+              actionsUpdatePasswordModel.clearForm()
               router.back()
             }
           }}

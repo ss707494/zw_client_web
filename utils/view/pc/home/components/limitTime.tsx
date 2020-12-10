@@ -6,6 +6,7 @@ import {useStoreModel} from '../../../../ModelAction/useStore'
 import {promotionFlashSaleModel} from '../../../m/home/components/PromotionFlashSale/PromotionFlashSale'
 import {Space} from '../../../../components/Box/Box'
 import {ProductItemBox} from '../../pcComponents/productItemBox/productItemBox'
+import {padStart} from '../../../../tools/utils'
 
 const Box = styled.div`
 `
@@ -17,10 +18,15 @@ const Header = styled.div`
 const Title = styled.div`
 `
 const Tip = styled.div`
-  padding: 0 4px;
-  border-radius: 4px;
+  width: 28px;
+  height: 34px;
+  border-radius: 2px;
   background: #0D0D21;
   color: white;
+  ${mpStyle.fontType.xl};
+  display: grid;
+  align-items: center;
+  justify-items: center;
 `
 const Content = styled.div`
   display: grid;
@@ -32,7 +38,9 @@ export const LimitTime = () => {
   const {state: statePromotionFlashSale, actions: actionsPromotionFlashSale} = useStoreModel(promotionFlashSaleModel)
   useEffect(() => {
     actionsPromotionFlashSale.getData()
-  }, [])
+  }, [actionsPromotionFlashSale])
+  const calcDifferenceHours = actionsPromotionFlashSale.calcDifferenceHours()
+  const calcDifferenceMinutes = actionsPromotionFlashSale.calcDifferenceMinutes()
 
   return <Box
       id={'LimitTime'}
@@ -40,13 +48,17 @@ export const LimitTime = () => {
     {statePromotionFlashSale.nowLimitData?.id &&
     <>
       <Header>
-        <Title>{statePromotionFlashSale.isNext && ls('距离下次抢购') || ls('限时选购')}</Title>
-        <Space w={8}/>
-        <Tip>{`${actionsPromotionFlashSale.calcDifferenceHours()}`}</Tip>
+        <Title>{(statePromotionFlashSale.isNext && ls('距离下次抢购')) || ls('限时选购')}</Title>
+        <Space w={18}/>
+        <Tip>{padStart(calcDifferenceHours)[0]}</Tip>
+        <Space w={6}/>
+        <Tip>{padStart(calcDifferenceHours)[1]}</Tip>
         <Space w={6}/>
         :
         <Space w={6}/>
-        <Tip>{`${actionsPromotionFlashSale.calcDifferenceMinutes()}`}</Tip>
+        <Tip>{padStart(calcDifferenceMinutes)[0]}</Tip>
+        <Space w={6}/>
+        <Tip>{padStart(calcDifferenceMinutes)[1]}</Tip>
       </Header>
       <Space h={24}/>
       <Content>
@@ -55,6 +67,7 @@ export const LimitTime = () => {
             product={product}
         />)}
       </Content>
+      <Space h={46}/>
     </>
     }
   </Box>

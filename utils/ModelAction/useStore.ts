@@ -23,7 +23,7 @@ export const dealNameSpace = (key: string, nameSpace: string) => {
 }
 
 export const useStoreModel: UseModelState = (model, key?: string | [string, string]) => {
-  const _key = ((key && Array.isArray(key)) && dealNameSpace(key[0], key[1])
+  const _key = (((key && Array.isArray(key)) && dealNameSpace(key[0], key[1]))
       || key || model.name) as string
   const {actions, state} = model
   const [, setState] = useState(Object.create(null))
@@ -132,7 +132,7 @@ export const useStoreModel: UseModelState = (model, key?: string | [string, stri
     state: originStore[_key].state,
     actions: (originStore[_key].actions) as DealFunObj<typeof actions>,
     store: originStore,
-    getLoad: query => originStore[_key].state.fetchLoad[query?.loc?.source?.body] ? 1 : 0
+    getLoad: query => originStore[_key].state.fetchLoad[query?.doc?.loc?.source?.body] ? 1 : 0
   }
 }
 

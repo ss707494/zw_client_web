@@ -13,52 +13,73 @@ import {showMessage} from '../../../../components/Message/Message'
 import {productModel} from '../../../../components/ProductItem/ProductItem'
 import {shopCartModel} from '../../../m/cart'
 
-const Box = styled(Card)<{width?: number}>`
+const Box = styled(Card)<{ width?: number }>`
   display: flex;
   flex-direction: column;
   width: ${props => `${props.width ?? 322}px`};
-  padding: ${mpStyle.spacePx.xs};
-`
-const ImgBox = styled.div<{width?: number}>`
-  align-self: center;
-  > img {
-    width: ${props => `${(props.width ?? 322) - 82}px`};
-    height: ${props => `${((props.width ?? 322) - 82) * 4/3}px`};
+  padding: 14px 20px 16px;
+  &&& {
+    box-shadow: none;
   }
 `
-const Price = styled.div`
+const ImgBox = styled.div<{ width?: number }>`
+  align-self: center;
+  > img {
+    width: ${props => `${(props.width ?? 260) - 40}px`};
+    height: ${props => `${((props.width ?? 260) - 40) * 4 / 3}px`};
+  }
+`
+const Price = styled.div<{ width?: number }>`
   display: flex;
   align-items: center;
   > aside {
-    ${mpStyle.fontType.n};
+    ${mpStyle.fontType.xl};
+    font-size: ${props => `${(props.width ?? 260) / 10 - 2}px`};
     color: ${mpStyle.red};
   }
   > main {
-    ${mpStyle.fontType.s};
+    font-size: ${props => `${(props.width ?? 260) / 10 - 8}px`};
+    font-weight: 400;
     text-decoration: line-through;
     color: ${mpStyle.grey};
   }
 `
-const Footer = styled.div`
+const Footer = styled.div<{ width?: number }>`
   display: flex;
+  &&& {
+    .MuiButton-root {
+      width: ${props => `${(props.width ?? 260) * .17}px`};
+      min-width: ${props => `${(props.width ?? 260) * .17}px`};
+      height: ${props => `${(props.width ?? 260) * .17}px`};
+      padding: 0;
+    }
+    .MuiSvgIcon-root {
+      font-size: ${props => `${(props.width ?? 260) * .1}px`};
+    }
+  }
 `
-const Name = styled.div`
+const Name = styled.div<{ width?: number }>`
   flex-grow: 1;
+  ${mpStyle.fontType.n};
+  font-size: ${props => `${(props.width ?? 260) / 10 - 10}px`};
 `
 
-export const ProductItemBox = ({product, width = 322}: {
+export const ProductItemBox = ({hideShopCartButton = false, hidePrice = false, product, width = 300}: {
   product: Product,
-  width?: number
+  width?: number,
+  hidePrice?: boolean,
+  hideShopCartButton?: boolean,
 }) => {
   const {actions: actionsUpdateShopCartModel} = useStoreModel(updateShopCartModel)
   const {actions: actionsProductModel} = useStoreModel(productModel)
-  const {actions: actionsShopCartModel, state: stateSCM} = useStoreModel(shopCartModel)
+  const {actions: actionsShopCartModel} = useStoreModel(shopCartModel)
+  const _width = width - 40
 
   return <Box
-      width={width}
+      width={_width}
   >
     <ImgBox
-        width={width}
+        width={_width}
     >
       <img
           src={dealImgUrl(product?.img?.[0]?.url)}
@@ -66,19 +87,28 @@ export const ProductItemBox = ({product, width = 322}: {
       />
     </ImgBox>
     <Space h={8}/>
-    <Price>
-      <aside>{dealMoney(product?.priceOut)}</aside>
-      <Space w={16}/>
-      <main>{dealMoney(product?.priceMarket)}</main>
-    </Price>
-    <Space h={8}/>
-    <Footer>
-      <Name>
+    {!hidePrice && <>
+      <Price
+          width={_width}
+      >
+        <aside>{dealMoney(product?.priceOut)}</aside>
+        <Space w={16}/>
+        <main>{dealMoney(product?.priceMarket)}</main>
+      </Price>
+      <Space h={5}/>
+    </>}
+    <Footer
+        width={_width}
+    >
+      <Name
+          width={_width}
+      >
         {product.name}
       </Name>
-      <Button
+      {!hideShopCartButton && <Button
           variant={'contained'}
           color={'secondary'}
+          size={'small'}
           onClick={async () => {
             const res = await actionsUpdateShopCartModel.openClick()
             if (res?.num > 0) {
@@ -92,9 +122,8 @@ export const ProductItemBox = ({product, width = 322}: {
             }
           }}
       >
-        <ShoppingCart />
-      </Button>
+        <ShoppingCart/>
+      </Button>}
     </Footer>
-
   </Box>
 }

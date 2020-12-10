@@ -114,16 +114,12 @@ export const dealMaybeNumber = (num: Maybe<number> | undefined) => num ?? 0
 
 export const getLastNumber = (str: Maybe<string>, num: number = 4) => str?.slice(str?.length - num)
 
-export default {
-  getObjectURL,
-}
-
 export const dealUrlQuery = (queryObj: any) => {
   return `?${Object.keys(queryObj).map(value => `${value}=${queryObj[value]}`).join('&')}`
 }
 
 export const isPc = () => {
-  return /\/pc\//.test(location.href)
+  return /\/pc\//.test(window.location.href)
 }
 
 export const dealLastNumber = (num: string | null | undefined, length = 4) => {
@@ -133,3 +129,6 @@ export const dealLastNumber = (num: string | null | undefined, length = 4) => {
   return `**** **** **** ${num ? num?.slice(num?.length - length) : ''}`
 }
 
+export const padStart = (num: number) => {
+  return num > 9 ? `${num}` : `0${num}`
+}

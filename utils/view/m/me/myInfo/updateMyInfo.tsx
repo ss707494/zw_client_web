@@ -10,23 +10,23 @@ import {UserInfo} from '../../../../graphqlTypes/types'
 import {setForm} from '../../../../tools/commonAction'
 import {useStoreModel} from '../../../../ModelAction/useStore'
 import {fpSetPre} from '../../../../tools/utils'
-import { doc } from '../../../../graphqlTypes/doc'
+import {doc} from '../../../../graphqlTypes/doc'
 import {meModel} from '../model'
 
-const initForm = {
+export const initFormUpdateMyInfo = {
   name: '',
   phone: '',
   email: '',
 }
 export const UpdateMyInfoModel = modelFactory('UpdateMyInfo', {
-  form: initForm as UserInfo,
+  form: initFormUpdateMyInfo as UserInfo,
 }, {
   setForm: setForm,
   initForm: (value: UserInfo, option) => {
     option.setData(fpSetPre('form', value))
   },
   clearForm: (value, option) => {
-    option.setData(fpSetPre('form', initForm))
+    option.setData(fpSetPre('form', initFormUpdateMyInfo))
   },
   submit: async (value, option) => {
     return option.mutate(doc.updateUserInfo, {
@@ -35,22 +35,32 @@ export const UpdateMyInfoModel = modelFactory('UpdateMyInfo', {
   },
 })
 
-export const UpdateMyInfo = () => {
-  const {actions: actionsUpdateMyInfoModel, state: stateUpdateMyInfoModel} = useStoreModel(UpdateMyInfoModel)
+export const useUpdateMyInfoInit = () => {
+  const {actions: actionsUpdateMyInfoModel} = useStoreModel(UpdateMyInfoModel)
   const {actions: actionsMeModel, state: stateMeModel} = useStoreModel(meModel)
-  const {actions: actionsMe} = useStoreModel(meModel)
-
   const init = useCallback(async () => {
     const res = await actionsMeModel.getLoginUser()
-    actionsUpdateMyInfoModel.initForm(res?.userInfo ?? initForm)
-  }, [])
+    actionsUpdateMyInfoModel.initForm(res?.userInfo ?? initFormUpdateMyInfo)
+  }, [actionsMeModel, actionsUpdateMyInfoModel])
   useEffect(() => {
     if (!stateMeModel.user.id) {
       init()
     } else {
-      actionsUpdateMyInfoModel.initForm(stateMeModel.user?.userInfo ?? initForm)
+      actionsUpdateMyInfoModel.initForm(stateMeModel.user?.userInfo ?? initFormUpdateMyInfo)
     }
-  }, [])
+  }, [actionsUpdateMyInfoModel, init, stateMeModel.user.id, stateMeModel.user?.userInfo])
+  const initForm = useCallback(() => {
+    actionsUpdateMyInfoModel.initForm(stateMeModel.user?.userInfo ?? initFormUpdateMyInfo)
+  }, [actionsUpdateMyInfoModel, stateMeModel.user])
+  return {
+    initForm,
+  }
+}
+
+export const UpdateMyInfo = () => {
+  const {actions: actionsUpdateMyInfoModel, state: stateUpdateMyInfoModel} = useStoreModel(UpdateMyInfoModel)
+  const {actions: actionsMe} = useStoreModel(meModel)
+  useUpdateMyInfoInit()
 
   return <div>
     <HeaderTitle

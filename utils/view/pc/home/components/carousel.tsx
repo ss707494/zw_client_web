@@ -6,7 +6,6 @@ import {dealImgUrl} from '../../../../tools/img'
 import {Space} from '../../../../components/Box/Box'
 import {formatDate} from '../../../../tools/utils'
 import styled from 'styled-components'
-import {useRouter} from 'next/router'
 import {homeTabsModel} from '../../../m/home/components/Tabs/Tabs'
 
 const CusSwipeImg = styled.div`
@@ -24,13 +23,12 @@ const CusSwipeImg = styled.div`
 `
 
 export const Carousel = () => {
-  const router = useRouter()
   const {actions: actionsHomeCarouselModel, state: stateHomeCarouselModel} = useStoreModel(homeCarouselModel)
-  const {actions: actionsHomeTabs, state: stateHomeTabsModel} = useStoreModel(homeTabsModel)
+  const {actions: actionsHomeTabs} = useStoreModel(homeTabsModel)
   useEffect(() => {
     actionsHomeTabs.getData()
     actionsHomeCarouselModel.getHomeCarousel()
-  }, [])
+  }, [actionsHomeCarouselModel, actionsHomeTabs])
 
   return <div>
     {(() => {
@@ -38,13 +36,13 @@ export const Carousel = () => {
       return <CusCarousel
           showArrows={true}
           showIndicators={false}
-          height={'25vw'}
+          height={'400px'}
           dataList={filterList as []}
           renderItem={item => <CusSwipeImg
               key={`Carousel_${item.id}`}
           >
             <img
-                style={{height: '25vw'}}
+                style={{height: '400px'}}
                 src={dealImgUrl(item.imgUrl)}
                 alt=""/>
             <aside>

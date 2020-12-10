@@ -20,13 +20,13 @@ const Empty = styled.div`
   }
 `
 
-export const dealNoAuth = (others: any) => {
+export const DealNoAuth = (others: any) => {
   const {state: stateMe, actions: actionsMe} = useStoreModel(meModel)
   useEffect(() => {
     if (!stateMe.user.id) {
       actionsMe.getLoginUser()
     }
-  }, [])
+  }, [actionsMe, stateMe.user.id])
   return (!stateMe.user.id || !getToken())
       ? <Empty>
         <RegisterHeader/>

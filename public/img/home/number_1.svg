@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="43px" viewBox="0 0 40 43" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>第一名</title>
+    <defs>
+        <linearGradient x1="11.2942708%" y1="0%" x2="84.9650065%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#FFF0B1" offset="0%"></stop>
+            <stop stop-color="#B6883B" offset="100%"></stop>
+        </linearGradient>
+        <circle id="path-2" cx="20" cy="20" r="20"></circle>
+        <linearGradient x1="84.612192%" y1="27.664398%" x2="39.4231154%" y2="103.269997%" id="linearGradient-4">
+            <stop stop-color="#FFFFFF" stop-opacity="0.1" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" stop-opacity="0.2" offset="100%"></stop>
+        </linearGradient>
+        <text id="text-5" font-family="PingFangSC-Semibold, PingFang SC" font-size="24" font-weight="500" letter-spacing="-0.5788236" fill="#FFFFFF">
+            <tspan x="15" y="29">1</tspan>
+        </text>
+        <filter x="-70.0%" y="-15.2%" width="240.0%" height="142.4%" filterUnits="objectBoundingBox" id="filter-6">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.823529412   0 0 0 0 0.690196078   0 0 0 0 0.411764706  0 0 0 1 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="首页-分类选择-三级筛选" transform="translate(-1106.000000, -734.000000)">
+            <g id="纽维尔蜂蜜" transform="translate(1091.000000, 719.000000)">
+                <g id="第一名" transform="translate(15.000000, 15.000000)">
+                    <g id="徽章">
+                        <mask id="mask-3" fill="white">
+                            <use xlink:href="#path-2"></use>
+                        </mask>
+                        <use id="Mask" fill="url(#linearGradient-1)" xlink:href="#path-2"></use>
+                        <polygon id="Path-3" fill="url(#linearGradient-4)" mask="url(#mask-3)" points="-6.27734375 22.5273438 23.1601562 -5.046875 9.75488281 -18.4521484 -17.5166016 8.81933594"></polygon>
+                        <polygon id="Path-3" fill="url(#linearGradient-4)" mask="url(#mask-3)" points="-10.2773438 31.5273438 19.1601562 3.953125 5.75488281 -9.45214844 -21.5166016 17.8193359"></polygon>
+                    </g>
+                    <g id="1" fill="#FFFFFF" fill-opacity="1">
+                        <use filter="url(#filter-6)" xlink:href="#text-5"></use>
+                        <use xlink:href="#text-5"></use>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
