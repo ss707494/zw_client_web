@@ -9,7 +9,7 @@ import {useStoreModel} from '../../../../ModelAction/useStore'
 import styled from 'styled-components'
 import {UserAddress} from '../../../../graphqlTypes/types'
 import {Button, IconButton} from '@material-ui/core'
-import {ls} from '../../../../tools/dealKey'
+import {ll} from '../../../../tools/dealKey'
 import {grey} from '@material-ui/core/colors'
 import {useRouter} from 'next/router'
 import {showMessage} from '../../../../components/Message/Message'
@@ -90,7 +90,7 @@ export const MyAddress = () => {
           <footer>{value.city} {value.province} {value.zip}</footer>
         </AddressBox>
         <aside>
-          {(value.isDefault && <DefaultBox style={{fontSize: '14px'}}>{ls('默认')}</DefaultBox>) ||
+          {(value.isDefault && <DefaultBox style={{fontSize: '14px'}}>{ll('默认')}</DefaultBox>) ||
           <Button
               size={'small'}
               color={'secondary'}
@@ -100,7 +100,7 @@ export const MyAddress = () => {
                   actionsMAM.getList()
                 }
               }}
-          >{ls('设为默认')}</Button>
+          >{ll('设为默认')}</Button>
           }
           <IconButton
               onClick={() => router.push('/m/me/myAddress/edit/[id]', `/m/me/myAddress/edit/${value.id}`)}
@@ -123,7 +123,7 @@ export const MyAddress = () => {
           variant={'contained'}
           color={'secondary'}
           onClick={() => router.push('/m/me/myAddress/edit/[id]', `/m/me/myAddress/edit/0`)}
-      >{ls('新增')}</Button>
+      >{ll('新增')}</Button>
     </div>
   </div>
 }

@@ -9,13 +9,13 @@ import {Button, ButtonBase, IconButton} from '@material-ui/core'
 import {dealImgUrl} from '../../../../tools/img'
 import {grey} from '@material-ui/core/colors'
 import {User, UserInfoItemInput} from '../../../../graphqlTypes/types'
-import {ls} from '../../../../tools/dealKey'
+import {ll} from '../../../../tools/dealKey'
 import {showMessage} from '../../../../components/Message/Message'
 import {DefaultBox} from '../myAddress/list'
 import {PickupAddressDetail, PickupAddressDetailModel} from './pickupAddressDetail'
 import InfoIcon from '@material-ui/icons/Info'
 
-const pickupAddressModel = modelFactory('pickupAddressModel', {
+export const PickupAddressModel = modelFactory('pickupAddressModel', {
   list: [],
   user: {} as User,
 }, {
@@ -71,20 +71,20 @@ const RightBox = styled.div`
 `
 
 export const PickupAddress = () => {
-  const {actions: actionsPAM, state: statePAM} = useStoreModel(pickupAddressModel)
-  const {actions: actionsPickupAddressDetailModel, state: statePickupAddressDetailModel} = useStoreModel(PickupAddressDetailModel)
+  const {actions: actionsPickupAddressModel, state: statePickupAddressModel} = useStoreModel(PickupAddressModel)
+  const {actions: actionsPickupAddressDetailModel} = useStoreModel(PickupAddressDetailModel)
   useEffect(() => {
-    if (!statePAM.list.length) {
-      actionsPAM.getList()
+    if (!statePickupAddressModel.list.length) {
+      actionsPickupAddressModel.getList()
     }
-  }, [])
+  }, [actionsPickupAddressModel, statePickupAddressModel.list])
 
   return <div>
     <HeaderTitle
         title={'我的取货点'}
     />
     <Box>
-      {statePAM.list.sort((a: any, b: any) => statePAM.user.userInfo?.pickupAddressId === b?.id ? 1 : (b?.updateTime - a?.updateTime)).map((value: any) => <React.Fragment key={`PickupAddress_${value.id}`}>
+      {statePickupAddressModel.list.sort((a: any, b: any) => statePickupAddressModel.user.userInfo?.pickupAddressId === b?.id ? 1 : (b?.updateTime - a?.updateTime)).map((value: any) => <React.Fragment key={`PickupAddress_${value.id}`}>
         <ItemBox>
           <img src={dealImgUrl(value.imgUrl)}
                alt=""/>
@@ -105,16 +105,16 @@ export const PickupAddress = () => {
           >
             <InfoIcon/>
           </IconButton>
-          {(statePAM.user.userInfo?.pickupAddressId === value.id && <DefaultBox>{ls('默认地址')}</DefaultBox>) ||
+          {(statePickupAddressModel.user.userInfo?.pickupAddressId === value.id && <DefaultBox>{ll('默认地址')}</DefaultBox>) ||
           <Button
               color={'secondary'}
               variant={'outlined'}
               onClick={async () => {
-                if ((await actionsPAM.setDefault(value))?.updateUserInfo?.id) {
-                  actionsPAM.getList()
+                if ((await actionsPickupAddressModel.setDefault(value))?.updateUserInfo?.id) {
+                  actionsPickupAddressModel.getList()
                 }
               }}
-          >{ls('设为默认')}</Button>
+          >{ll('设为默认')}</Button>
           }
         </RightBox>
       </React.Fragment>)}

@@ -2,7 +2,7 @@ import {dialogModelFactory} from '../../../../commonModel/dialog'
 import {useStoreModel} from '../../../../ModelAction/useStore'
 import {Button, Dialog, DialogContent, TextField} from '@material-ui/core'
 import React from 'react'
-import {ls} from '../../../../tools/dealKey'
+import {ll} from '../../../../tools/dealKey'
 import {mergeTwoModel, modelFactory} from '../../../../ModelAction/modelUtil'
 import {setForm} from '../../../../tools/commonAction'
 import styled from 'styled-components'
@@ -28,7 +28,7 @@ export const InputPromoCodeDialog = () => {
   >
     <DialogContent>
       <TextField
-          label={ls('请输入验证码')}
+          label={ll('请输入验证码')}
           value={stateInputPromoCodeModel.form.promoCode}
           onChange={event => actionsInputPromoCodeModel.setForm(['promoCode', event.target.value])}
       />
@@ -45,7 +45,7 @@ export const InputPromoCodeDialog = () => {
                 actionsInputPromoCodeModel.setForm(['promoCode', ''])
               }
             }}
-        >{ls('确定')}</Button>
+        >{ll('确定')}</Button>
       </Footer>
     </DialogContent>
   </Dialog>

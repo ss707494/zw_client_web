@@ -10,7 +10,7 @@ import React, {ReactNode} from 'react'
 import styled from 'styled-components'
 
 const TopTitle = styled(RedBox)`
-  ${mpStyle.fontType.l};
+  ${mpStyle.fontType.xxl};
 `
 
 export const MeLayoutBox = ({children}: { children: ReactNode }) => {
@@ -20,9 +20,9 @@ export const MeLayoutBox = ({children}: { children: ReactNode }) => {
     <PcContentBox>
       <TopAction/>
       <HeaderTab/>
-      <Space h={mpStyle.space.n}/>
+      <Space h={40}/>
       <TopTitle>我的账户</TopTitle>
-      <Space h={mpStyle.space.n}/>
+      <Space h={mpStyle.space.xs}/>
       <MenuBox>
         {children}
       </MenuBox>

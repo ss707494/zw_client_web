@@ -1,5 +1,5 @@
 import React from 'react'
-import { ls } from '../../../tools/dealKey'
+import { ll } from '../../../tools/dealKey'
 import styled from 'styled-components'
 import {Button} from '@material-ui/core'
 import {useRouter} from 'next/router'
@@ -19,7 +19,7 @@ const Box = styled.div`
 export const OrderResult = () => {
   const router = useRouter()
   return <Box>
-    <main>{ls('下单成功')}</main>
+    <main>{ll('下单成功')}</main>
     <footer>
       <Button
           fullWidth={true}
@@ -29,7 +29,7 @@ export const OrderResult = () => {
             router.push('/m/home')
           }}
       >
-        {ls('返回首页')}
+        {ll('返回首页')}
       </Button>
     </footer>
   </Box>

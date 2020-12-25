@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
 import {Box, IconButton} from '@material-ui/core'
-import {ls} from '../../tools/dealKey'
+import {ll} from '../../tools/dealKey'
 import {useRouter} from 'next/router'
 import {Maybe} from '../../graphqlTypes/types'
 import {BoxProps} from '@material-ui/core/Box/Box'
@@ -43,7 +43,7 @@ export const HeaderTitle = ({title = '', backCall = () => {}, showCart = false, 
       <LeftIcon/>
     </LeftIconButton>
     <main>
-      {ls(title)}
+      {ll(title)}
     </main>
     <Action>
       {showSearch && <IconButton

@@ -1,5 +1,6 @@
 import grey from '@material-ui/core/colors/grey'
 import styled from 'styled-components'
+import {CreateCSSProperties} from '@material-ui/core/styles/withStyles'
 
 export const mpStyle = {
   red: '#F84033',
@@ -26,6 +27,28 @@ export const mpStyle = {
     s: '24px',
     xs: '16px',
     xxs: '8px',
+  },
+  fontTypeObj: {
+    xxl: {
+      fontSize: '28px',
+      fontWeight: 600,
+    } as CreateCSSProperties,
+    xl: {
+      fontSize: '24px',
+      fontWeight: 600,
+    } as CreateCSSProperties,
+    l: {
+      fontSize: '18px',
+      fontWeight: 600,
+    } as CreateCSSProperties,
+    n: {
+      fontSize: '16px',
+      fontWeight: 400,
+    } as CreateCSSProperties,
+    s: {
+      fontSize: '14px',
+      fontWeight: 400,
+    } as CreateCSSProperties,
   },
   fontType: {
     xxl: `

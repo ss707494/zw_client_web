@@ -1,9 +1,9 @@
-import { ls } from "../../tools/dealKey"
+import { ll } from "../../tools/dealKey"
 import React from 'react'
 
 export const NoData = () => {
 
   return <div
       style={{textAlign: 'center'}}
-  >{ls('暂无数据')}</div>
+  >{ll('暂无数据')}</div>
 }

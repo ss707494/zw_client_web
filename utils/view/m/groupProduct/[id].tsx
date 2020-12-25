@@ -17,7 +17,7 @@ import {dealMoney, fpMergePre} from '../../../tools/utils'
 import CusCarousel from '../../../components/Swipe/Swipe'
 import {HeaderTitle} from '../../../components/HeaderTitle/HeaderTitle'
 import styled from 'styled-components'
-import {ls} from '../../../tools/dealKey'
+import {ll} from '../../../tools/dealKey'
 import {mpStyle} from '../../../style/common'
 import {grey} from '@material-ui/core/colors'
 import {Button} from '@material-ui/core'
@@ -238,21 +238,21 @@ export const GroupProduct = () => {
     />
     <PriceRed>
       <main>
-        {ls('基准价格')}
+        {ll('基准价格')}
         <span>{dealMoney(product.priceOut)}/{product.packingUnitString}</span>
       </main>
-      <aside>{ls('已成团')}{stateGroupProduct.groupQueueList.filter(v => v.sumFillAmount === product?.groupPrecision).length}{ls('单')}</aside>
-      <aside>{ls('拼团中')}{stateGroupProduct.groupQueueList.filter(v => (v.sumFillAmount ?? 0) < (product?.groupPrecision ?? 0)).length}{ls('单')}</aside>
+      <aside>{ll('已成团')}{stateGroupProduct.groupQueueList.filter(v => v.sumFillAmount === product?.groupPrecision).length}{ll('单')}</aside>
+      <aside>{ll('拼团中')}{stateGroupProduct.groupQueueList.filter(v => (v.sumFillAmount ?? 0) < (product?.groupPrecision ?? 0)).length}{ll('单')}</aside>
     </PriceRed>
     <Name>
       <main>{product.name}</main>
       <section>{product.groupRemark}/{product.groupAmount}{product.groupAmountUnitString} {`每一份${dealGroupNumbers(product)}${product.groupAmountUnitString}`}<br/>
-      {ls('分团精度')}<span>{[...Array(product.groupPrecision)].map((v, i) => i).map(value =>
+      {ll('分团精度')}<span>{[...Array(product.groupPrecision)].map((v, i) => i).map(value =>
             <YellowStar key={value}/>)}</span>
       </section>
     </Name>
     <GroupQueueBox>
-      <Title>{ls('拼团中')}</Title>
+      <Title>{ll('拼团中')}</Title>
       {stateGroupProduct.groupQueueList.filter(v => (v.sumFillAmount ?? 0) < (product?.groupPrecision ?? 0)).map(groupQueue => {
         const select = groupQueue.id === stateGroupProduct.selectQueueId
         return <GroupQueueListBox
@@ -273,18 +273,18 @@ export const GroupProduct = () => {
                     onClick={() => actionsGroupProduct.updateSelectNum(value + 1)}
                 />)}
           </aside>
-          <footer>{ls((groupQueue.sumFillAmount ?? 0) + (select ? stateGroupProduct.selectNum : 0) === product.groupPrecision ? '成团啦' : '未成团')}</footer>
+          <footer>{ll((groupQueue.sumFillAmount ?? 0) + (select ? stateGroupProduct.selectNum : 0) === product.groupPrecision ? '成团啦' : '未成团')}</footer>
         </GroupQueueListBox>
       })}
     </GroupQueueBox>
     <SmartMatch>
       <header>
-        <Title>{ls('智能匹配')}</Title>
+        <Title>{ll('智能匹配')}</Title>
       </header>
       <section>
-        {ls('请点击')}
+        {ll('请点击')}
         <StarBorderRoundedIcon/>
-        {ls('确定您需要的份数')}
+        {ll('确定您需要的份数')}
       </section>
       <main>
         {[...Array(product.groupPrecision)].map((v, i) => i).map(value => value + 1 > stateGroupProduct.selectNum ?
@@ -302,27 +302,27 @@ export const GroupProduct = () => {
       <Price>
         <main>
           <header>{dealMoney(stateGroupProduct.dealDiscountAmountUnit(stateGroupProduct))}</header>
-          <footer>{ls('折后价格')}</footer>
+          <footer>{ll('折后价格')}</footer>
         </main>
         <div>=</div>
         <section>
           <header>{dealMoney((product.priceOut ?? 0))}</header>
-          <footer>{ls('基准价格')}</footer>
+          <footer>{ll('基准价格')}</footer>
         </section>
         <div>x</div>
         <section>
           <header>{stateGroupProduct.numDiscount}</header>
-          <footer>{ls('份数折扣')}</footer>
+          <footer>{ll('份数折扣')}</footer>
         </section>
         <div>x</div>
         <section>
           <header>{stateGroupProduct.groupDiscount}</header>
-          <footer>{ls('成团折上折')}</footer>
+          <footer>{ll('成团折上折')}</footer>
         </section>
       </Price>
     </SmartMatch>
     <Submit>
-      <aside>{ls('选择了')}{stateGroupProduct.selectNum}{ls('份')}</aside>
+      <aside>{ll('选择了')}{stateGroupProduct.selectNum}{ll('份')}</aside>
       <Button
           disabled={stateGroupProduct.selectNum === 0}
           style={{height: '100%', padding: '0 32px', borderRadius: '0', fontSize: '18px'}}
@@ -332,7 +332,7 @@ export const GroupProduct = () => {
             actionsGroupOrderPageModel.open()
           }}
       >
-        {ls('去结算')}
+        {ll('去结算')}
       </Button>
     </Submit>
     <GroupOrderPage/>

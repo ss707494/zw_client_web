@@ -1,6 +1,6 @@
 import {Button, Dialog, DialogContent, DialogTitle, TextField} from '@material-ui/core'
 import React from 'react'
-import {ls} from '../../tools/dealKey'
+import {ll} from '../../tools/dealKey'
 import {dialogModelFactory} from '../../commonModel/dialog'
 import {useStoreModel} from '../../ModelAction/useStore'
 import {mergeTwoModel, modelFactory} from '../../ModelAction/modelUtil'
@@ -30,7 +30,7 @@ export const UpdateShopCart = () => {
       open={stateUpdateShopCartModel.open}
       onClose={closeUpdateShopCart}
   >
-    <DialogTitle>{ls('添加数量')}</DialogTitle>
+    <DialogTitle>{ll('添加数量')}</DialogTitle>
     <DialogContent>
       <TextField
           type={'number'}
@@ -47,7 +47,7 @@ export const UpdateShopCart = () => {
               })
               closeUpdateShopCart()
             }}
-        >{ls('确定')}</Button>
+        >{ll('确定')}</Button>
       </Footer>
     </DialogContent>
   </Dialog>

@@ -17,7 +17,7 @@ import {ShopCartPage} from './shopCart'
 import React from 'react'
 import {useStoreModel} from '../../../ModelAction/useStore'
 import {OrderPage} from './orderPage'
-import {ls} from '../../../tools/dealKey'
+import {ll} from '../../../tools/dealKey'
 
 export const pageTypeEnum = {
   shopCart: 'shopCart',
@@ -103,7 +103,7 @@ export const shopCartModel = modelFactory('shopCartModel', {
       }))
       return ''
     } else {
-      return ls('未匹配到优惠码')
+      return ll('未匹配到优惠码')
     }
   },
   updatePageType: (value: string, option) => option.setData(fpMergePre({

@@ -5,7 +5,7 @@ import Router, {useRouter} from 'next/router'
 import {modelFactory} from '../../../../../ModelAction/modelUtil'
 import {useStoreModel} from '../../../../../ModelAction/useStore'
 import {AppModuleTypeEnum, DictTypeEnum} from '../../../../../ss_common/enum'
-import {ls} from '../../../../../tools/dealKey'
+import {ll} from '../../../../../tools/dealKey'
 import {PromotionFlashSale} from '../PromotionFlashSale/PromotionFlashSale'
 import {ThemeSelection} from '../ThemeSelection/ThemeSelection'
 import {HomeType} from '../../appModule'
@@ -68,7 +68,7 @@ export const HomeTabs = ({homeType}: { homeType: string }) => {
         >
           <Tab
               value={AppModuleTypeEnum.categorySelection}
-              label={ls(homeType === HomeType.group ? '分类拼团' : '分类选择')}
+              label={ll(homeType === HomeType.group ? '分类拼团' : '分类选择')}
           />
           {((homeType === HomeType.home && [
             [AppModuleTypeEnum.limitTime, '限时选购'],
@@ -81,7 +81,7 @@ export const HomeTabs = ({homeType}: { homeType: string }) => {
           ]) || []).filter(v => (homeTabsState?.appModuleConfig?.[v[0]])).map(v => <Tab
               key={`AppModuleTypeEnum_${v[0]}`}
               value={v[0]}
-              label={ls(v[1])}
+              label={ll(v[1])}
           />)}
         </Tabs>}
         <main

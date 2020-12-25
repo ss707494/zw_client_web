@@ -11,7 +11,7 @@ import {Button, ButtonBase, ButtonBaseProps} from '@material-ui/core'
 import {meModel} from './model'
 import {grey, red} from '@material-ui/core/colors'
 import {useStoreModel} from '../../../ModelAction/useStore'
-import {ls} from '../../../tools/dealKey'
+import {ll} from '../../../tools/dealKey'
 import {FootBar} from '../../../components/FootBar/FootBar'
 import MonetizationOn from '@material-ui/icons/MonetizationOn'
 import PaymentIcon from '@material-ui/icons/Payment'
@@ -117,7 +117,7 @@ export default function Me() {
         boxHeight={'calc(100vh - 45px)'}
     >
       <Header>
-        <header>{ls('您好,')}{stateMeModel.user.userInfo?.name}</header>
+        <header>{ll('您好,')}{stateMeModel.user.userInfo?.name}</header>
         <ShopIcon><ShoppingCartIconButton htmlColor={'white'}/></ShopIcon>
         <section>{stateMeModel.user.userInfo?.phone}</section>
         <section>{stateMeModel.user.userInfo?.email}</section>
@@ -126,7 +126,7 @@ export default function Me() {
               color={'inherit'}
               variant={'outlined'}
               onClick={() => actionsMeModel.logout()}
-          >{ls('登出')}</Button>
+          >{ll('登出')}</Button>
         </aside>
       </Header>
       <Tab>
@@ -140,7 +140,7 @@ export default function Me() {
         >
           <MonetizationOn/>
           <main>{stateMeModel.user.orderCoinCurrentMonth ?? 0}</main>
-          <footer>{ls('本月可用达人币')}</footer>
+          <footer>{ll('本月可用达人币')}</footer>
         </Card>
         <Parting/>
         <Card
@@ -153,7 +153,7 @@ export default function Me() {
         >
           <MonetizationOn/>
           <main>{stateMeModel.user.orderCoinNextMonth ?? 0}</main>
-          <footer>{ls('下月积攒达人币')}</footer>
+          <footer>{ll('下月积攒达人币')}</footer>
         </Card>
         <Parting/>
         <Card
@@ -163,7 +163,7 @@ export default function Me() {
         >
           <PaymentIcon/>
           <main>{stateCardModel.promoCodeList.filter(v => v.promoCodeType === PromoCodeTypeEnum.DarenCard).length}</main>
-          <footer>{ls('达人卡')}</footer>
+          <footer>{ll('达人卡')}</footer>
         </Card>
       </Tab>
       <ListItem
@@ -173,7 +173,7 @@ export default function Me() {
       >
         <HistoryIcon/>
         <main>
-          <section>{ls('我的订单历史')}</section>
+          <section>{ll('我的订单历史')}</section>
         </main>
         <aside>
           <ArrowForwardIosIcon/>
@@ -198,7 +198,7 @@ export default function Me() {
       >
         <CardMembershipIcon/>
         <main>
-          <section>{ls('我的达人证')}</section>
+          <section>{ll('我的达人证')}</section>
         </main>
         <aside>
           <ArrowForwardIosIcon/>
@@ -211,7 +211,7 @@ export default function Me() {
       >
         <CardGiftcardIcon/>
         <main>
-          <section>{ls('我的信用卡')}</section>
+          <section>{ll('我的信用卡')}</section>
         </main>
         <aside>
           <ArrowForwardIosIcon/>
@@ -224,7 +224,7 @@ export default function Me() {
       >
         <PinDropIcon/>
         <main>
-          <section>{ls('我的取货点')}</section>
+          <section>{ll('我的取货点')}</section>
         </main>
         <aside>
           <ArrowForwardIosIcon/>
@@ -237,7 +237,7 @@ export default function Me() {
       >
         <PersonPinCircleIcon/>
         <main>
-          <section>{ls('我的地址')}</section>
+          <section>{ll('我的地址')}</section>
         </main>
         <aside>
           <ArrowForwardIosIcon/>
@@ -250,7 +250,7 @@ export default function Me() {
       >
         <HelpOutlineIcon/>
         <main>
-          <section>{ls('帮助中心')}</section>
+          <section>{ll('帮助中心')}</section>
         </main>
         <aside>
           <ArrowForwardIosIcon/>

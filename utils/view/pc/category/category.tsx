@@ -13,7 +13,7 @@ import {Category} from '../../../graphqlTypes/types'
 import {homeCategorySelectionModel} from '../../m/home/components/CategorySelection/CategorySelection'
 import styled from 'styled-components'
 import {ProductItemBox} from '../pcComponents/productItemBox/productItemBox'
-import {ls} from '../../../tools/dealKey'
+import {ll} from '../../../tools/dealKey'
 import {MainBox} from '../pcComponents/mainBox/mainBox'
 
 const ProductBox = styled.div`
@@ -84,7 +84,7 @@ export const PcCategory = () => {
       <Space h={16}/>
       <Filter>
         <div/>
-        <div>{stateProductListModel.total}{ls('条结果')}</div>
+        <div>{stateProductListModel.total}{ll('条结果')}</div>
       </Filter>
       <Space h={16}/>
       <ProductBox>

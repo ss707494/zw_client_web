@@ -7,7 +7,7 @@ import {FieldContain} from '../../myInfo/updatePassword'
 import {HeaderTitle} from '../../../../../components/HeaderTitle/HeaderTitle'
 import {UserAddressItemInput} from '../../../../../graphqlTypes/types'
 import {setForm} from '../../../../../tools/commonAction'
-import {ls} from '../../../../../tools/dealKey'
+import {ll} from '../../../../../tools/dealKey'
 import {useRouter} from 'next/router'
 import {ButtonLoad} from '../../../../../components/ButtonLoad/ButtonLoad'
 import {doc} from '../../../../../graphqlTypes/doc'
@@ -110,7 +110,7 @@ export const MyAddressEdit = () => {
         ['联系方式', 'contactInformation'],
       ].map(v => (v[2] && v[2]) || <SigninInput
           key={`myAddressEdit_${v[1]}`}
-          label={ls(v[0] as string)}
+          label={ll(v[0] as string)}
           value={stateMAEM.form[v[1] as keyof UserAddressItemInput] ?? ''}
           onChange={event => actionsMAEM.setForm([v[1], event.target.value])}
       />)}

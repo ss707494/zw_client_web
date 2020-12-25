@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect} from 'react'
 import {HeaderTitle} from '../../../../components/HeaderTitle/HeaderTitle'
 import {SigninInput} from '../../register'
-import {ls} from '../../../../tools/dealKey'
+import {ll} from '../../../../tools/dealKey'
 import {ButtonLoad} from '../../../../components/ButtonLoad/ButtonLoad'
 import router from 'next/router'
 import {FieldContain} from './updatePassword'
@@ -68,17 +68,17 @@ export const UpdateMyInfo = () => {
     />
     <FieldContain>
       <SigninInput
-          label={ls('姓名')}
+          label={ll('姓名')}
           value={stateUpdateMyInfoModel.form.name}
           onChange={event => actionsUpdateMyInfoModel.setForm(['name', event.target.value])}
       />
       <SigninInput
-          label={ls('电话')}
+          label={ll('电话')}
           value={stateUpdateMyInfoModel.form.phone}
           onChange={event => actionsUpdateMyInfoModel.setForm(['phone', event.target.value])}
       />
       <SigninInput
-          label={ls('邮箱')}
+          label={ll('邮箱')}
           value={stateUpdateMyInfoModel.form.email}
           onChange={event => actionsUpdateMyInfoModel.setForm(['email', event.target.value])}
       />
@@ -95,7 +95,7 @@ export const UpdateMyInfo = () => {
               router.back()
             }
           }}
-      >{ls('保存')}</ButtonLoad>
+      >{ll('保存')}</ButtonLoad>
     </FieldContain>
   </div>
 }

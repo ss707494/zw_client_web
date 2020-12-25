@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import {ls} from '../../../../tools/dealKey'
+import {ll} from '../../../../tools/dealKey'
 import {Space} from '../../../../components/Box/Box'
 import {mpStyle} from '../../../../style/common'
 import {CategorySelection, CategorySelectionModel} from './categorySelection'
@@ -71,7 +71,7 @@ export const HeaderTab = () => {
             actionsCategorySelectionModel.switchIsShow(true)
           }}
       >
-        {ls('分类选择')}
+        {ll('分类选择')}
         <KeyboardArrowDownIcon
             style={stateCategorySelectionModel.isShow ? {transform: 'rotate(180deg)'} : {}}
         />
@@ -87,7 +87,7 @@ export const HeaderTab = () => {
       <PointBox
           href={`/pc/home#${v[1]}`}
       >
-        {ls(v[0])}
+        {ll(v[0])}
       </PointBox>
       <Space w={spaceNum}/>
     </React.Fragment>)}

@@ -3,7 +3,7 @@ import {ButtonBase, ButtonBaseProps, Drawer} from '@material-ui/core'
 import {useStoreModel} from '../../../ModelAction/useStore'
 import {productListModel} from './[id]'
 import styled from 'styled-components'
-import {ls} from '../../../tools/dealKey'
+import {ll} from '../../../tools/dealKey'
 import {grey} from '@material-ui/core/colors'
 
 const Contain = styled.div`
@@ -14,7 +14,7 @@ const Contain = styled.div`
   }
   
 `
-const Item = styled(ButtonBase)<ButtonBaseProps>`
+styled(ButtonBase)<ButtonBaseProps>`
   &&& {
     width: 100%;
     display: flex;
@@ -23,7 +23,6 @@ const Item = styled(ButtonBase)<ButtonBaseProps>`
     padding: 0 20px;
   }
 `
-
 export const FilterDrawer = () => {
 
   const {actions: actionsProductList, state: stateProductList} = useStoreModel(productListModel)
@@ -34,9 +33,9 @@ export const FilterDrawer = () => {
       anchor={'right'}
   >
     <Contain>
-      <header>{ls('筛选')}</header>
+      <header>{ll('筛选')}</header>
       <main>
-        {ls('暂无数据')}
+        {ll('暂无数据')}
       </main>
     </Contain>
   </Drawer>

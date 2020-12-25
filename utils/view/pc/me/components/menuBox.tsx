@@ -2,7 +2,7 @@ import React, {ReactNode} from 'react'
 import styled from 'styled-components'
 import {Tab, Tabs} from '@material-ui/core'
 import {useRouter} from 'next/router'
-import {ls} from '../../../../tools/dealKey'
+import {ll} from '../../../../tools/dealKey'
 import {mpStyle} from '../../../../style/common'
 
 const Box = styled.div`
@@ -32,6 +32,7 @@ const meMenuEnum = {
   myInfo: 'myInfo',
   orderHistory: 'orderHistory',
   myAddress: 'myAddress',
+  pickupAddress: 'pickupAddress',
   myCreditCard: 'myCreditCard',
 }
 const menuAct: any = {
@@ -64,10 +65,11 @@ export const MenuBox = ({children}: { children: ReactNode }) => {
           ['我的达人证', meMenuEnum.myInfo],
           ['我的订单历史', meMenuEnum.orderHistory],
           ['我的地址', meMenuEnum.myAddress],
+          ['我的取货点', meMenuEnum.pickupAddress],
           ['支付方式', meMenuEnum.myCreditCard],
         ].map(([label, value]) => <Tab
             key={`MeMenuRouterValue${value}`}
-            label={ls(label)}
+            label={ll(label)}
             value={value}
         />)}
       </Tabs>

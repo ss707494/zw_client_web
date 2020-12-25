@@ -3,7 +3,7 @@ import {useStoreModel} from '../../../ModelAction/useStore'
 import {RegisterHeader} from '../../../components/RegisterHeader/RegisterHeader'
 import {loginModel} from './model'
 import {Box} from '../../../components/Box/Box'
-import {ls} from '../../../tools/dealKey'
+import {ll} from '../../../tools/dealKey'
 import {SigninInput, SigninLabel, SigninSubButton} from '../register'
 
 export function Login() {
@@ -12,12 +12,12 @@ export function Login() {
   return <Box>
     <RegisterHeader/>
     <section style={{height: '15vh'}}/>
-    <SigninLabel>{ls('账号')}</SigninLabel>
+    <SigninLabel>{ll('账号')}</SigninLabel>
     <SigninInput
         value={state.form.name}
         onChange={event => actions.setForm(['name', event.target.value])}
     />
-    <SigninLabel>{ls('密码')}</SigninLabel>
+    <SigninLabel>{ll('密码')}</SigninLabel>
     <SigninInput
         type={'password'}
         value={state.form.password}
@@ -41,7 +41,7 @@ export function Login() {
           onClick={() => {
             actions.goToSignin()
           }}
-      >{ls('注册')}</SigninSubButton>
+      >{ll('注册')}</SigninSubButton>
       {/*<SigninSubButton*/}
       {/*    style={{marginTop: '10px'}}*/}
       {/*    size={'small'}*/}

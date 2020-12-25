@@ -11,7 +11,8 @@
     "graphql-codegen": "graphql-codegen",
     "prod": "next build & cross-env NODE_ENV=production node server.js",
     "prod_start": "cross-env NODE_ENV=production node server.js",
-    "pm2": "pm2 start ecosystem.config.js --name 'client_web'"
+    "pm2": "pm2 start ecosystem.config.js --name 'client_web'",
+    "lint:css": "stylelint './utils/**/*.ts'"
   },
   "dependencies": {
     "@date-io/date-fns": "1.x",
@@ -78,6 +79,10 @@
     "postcss-px-to-viewport": "^1.1.1",
     "postcss-pxtorem": "^5.1.1",
     "shelljs": "^0.8.4",
+    "stylelint": "^13.8.0",
+    "stylelint-config-recommended": "^3.0.0",
+    "stylelint-config-styled-components": "^0.1.1",
+    "stylelint-processor-styled-components": "^1.10.0",
     "typescript": "^3.8.3"
   }
 }

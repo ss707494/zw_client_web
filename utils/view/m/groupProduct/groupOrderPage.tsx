@@ -8,7 +8,7 @@ import {ShopCartProductBox} from '../cart/CartProduct'
 import {dealImgUrl} from '../../../tools/img'
 import {ProductPrice} from '../../../components/ProductItem/ProductItem'
 import {IconButton, MenuItem, TextField} from '@material-ui/core'
-import {ls} from '../../../tools/dealKey'
+import {ll} from '../../../tools/dealKey'
 import {Space} from '../../../components/Box/Box'
 import {getPickUpTypeName, PickUpTypeEnum} from '../../../ss_common/enum'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
@@ -107,15 +107,15 @@ export const GroupOrderPage = () => {
         <section>{product?.remark}</section>
         <footer>
           <ProductPrice
-              priceOutTip={ls('基准价')}
+              priceOutTip={ll('基准价')}
               product={product}/>
-          <span>{dealGroupNumbers(product) * stateGroupProduct.selectNum}{product.groupAmountUnitString}/{stateGroupProduct.selectNum}{ls('份')}</span>
+          <span>{dealGroupNumbers(product) * stateGroupProduct.selectNum}{product.groupAmountUnitString}/{stateGroupProduct.selectNum}{ll('份')}</span>
         </footer>
       </ShopCartProductBox>
       <TextField
           style={{margin: '16px', width: 'calc(100vw - 32px)'}}
           fullWidth={true}
-          label={ls('运送方式')}
+          label={ll('运送方式')}
           select={true}
           value={stateSCM.form.pickUpType}
           onChange={event => {
@@ -129,10 +129,10 @@ export const GroupOrderPage = () => {
       >
         <MenuItem
             value={PickUpTypeEnum.Self}
-        >{ls(getPickUpTypeName(PickUpTypeEnum.Self))}</MenuItem>
+        >{ll(getPickUpTypeName(PickUpTypeEnum.Self))}</MenuItem>
         <MenuItem
             value={PickUpTypeEnum.Delivery}
-        >{ls(getPickUpTypeName(PickUpTypeEnum.Delivery))}</MenuItem>
+        >{ll(getPickUpTypeName(PickUpTypeEnum.Delivery))}</MenuItem>
       </TextField>
       <AddressBox>
         <main>
@@ -158,7 +158,7 @@ export const GroupOrderPage = () => {
       </AddressBox>
       <ShopTitle>
         <Space w={20}/>
-        {ls('付款方式')}
+        {ll('付款方式')}
       </ShopTitle>
       <CardBox>
         <header>{cardData.name}</header>
@@ -180,15 +180,15 @@ export const GroupOrderPage = () => {
       <SelectCard/>
       <ShopTitle>
         <Space w={20}/>
-        {ls('使用达人币')}
+        {ll('使用达人币')}
         <Space w={16}/>
-        <footer>{ls('当月可用余额')}{dealMoney(stateSCM.user.orderCoinCurrentMonth)}</footer>
+        <footer>{ll('当月可用余额')}{dealMoney(stateSCM.user.orderCoinCurrentMonth)}</footer>
       </ShopTitle>
       <div>
         <Space w={20}/>
         <TextField
             style={{marginTop: '8px', marginBottom: '24px'}}
-            label={ls('')}
+            label={ll('')}
             value={stateSCM.form.deductCoin}
             onChange={e => {
               actionsSCM.setForm(['deductCoin', e.target.value])
@@ -196,37 +196,37 @@ export const GroupOrderPage = () => {
         />
       </div>
       <ShopTotal>
-        <header>{ls('购物车总计')}</header>
+        <header>{ll('购物车总计')}</header>
         <footer>{dealMoney(productTotal)}</footer>
       </ShopTotal>
       <ShopTotal>
-        <header>{ls('份数折扣')}</header>
+        <header>{ll('份数折扣')}</header>
         <footer>{stateGroupProduct.numDiscount}</footer>
       </ShopTotal>
       <ShopTotal>
-        <header>{ls('成团折上折')}</header>
+        <header>{ll('成团折上折')}</header>
         <footer>{stateGroupProduct.groupDiscount}</footer>
       </ShopTotal>
       {transportationCosts > 0 && <ShopTotal>
-        <header>{ls('运费')}</header>
+        <header>{ll('运费')}</header>
         <footer>{dealMoney(transportationCosts)}</footer>
       </ShopTotal>}
       <ShopTotal>
-        <header>{ls('达人币抵扣')}</header>
+        <header>{ll('达人币抵扣')}</header>
         <footer>{dealMoney(stateSCM.form.deductCoin, '-')}</footer>
       </ShopTotal>
       <ShopTotal
           style={{fontSize: '18px'}}
       >
-        <header>{ls('订单总额')}</header>
+        <header>{ll('订单总额')}</header>
         <footer>{dealMoney(actuallyPaid)}</footer>
       </ShopTotal>
       <Space h={120}/>
       <FooterFit>
-        <header>{ls('本次订单')}
-          <span>{ls(stateSCM.userLevelList.find(v => v.code === stateSCM.user.userInfo?.userLevel)?.name)}</span>
+        <header>{ll('本次订单')}
+          <span>{ll(stateSCM.userLevelList.find(v => v.code === stateSCM.user.userInfo?.userLevel)?.name)}</span>
         </header>
-        <footer>{ls('将获得下月使用达人币 ')}
+        <footer>{ll('将获得下月使用达人币 ')}
           <span>{dealMoney(generateCoin)}</span>
         </footer>
         <aside>
@@ -242,7 +242,7 @@ export const GroupOrderPage = () => {
               color={'secondary'}
               onClick={async () => {
                 if (dealMaybeNumber(stateSCM.user?.orderCoinCurrentMonth) < dealMaybeNumber(stateSCM.form.deductCoin)) {
-                  showMessage(ls('达人币余额不足'))
+                  showMessage(ll('达人币余额不足'))
                   return
                 }
                 const res = await actionsGroupProduct.submit({
@@ -270,7 +270,7 @@ export const GroupOrderPage = () => {
                   actionsOrderPageModel.close()
                 }
               }}
-          >{ls('提交订单')}</ButtonLoad>
+          >{ll('提交订单')}</ButtonLoad>
         </aside>
       </FooterFit>
     </OrderPageBox>

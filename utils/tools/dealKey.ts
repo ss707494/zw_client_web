@@ -1,3 +1,3 @@
 import { Maybe } from "../graphqlTypes/types";
 
-export const ls = (key: Maybe<string> | undefined) => key ?? ''
+export const ll = (key: Maybe<string> | undefined) => key ?? ''

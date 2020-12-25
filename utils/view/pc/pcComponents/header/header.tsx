@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import React from 'react'
-import {ls} from '../../../../tools/dealKey'
+import {ll} from '../../../../tools/dealKey'
 import {Button, Divider} from '@material-ui/core'
 import {Space} from '../../../../components/Box/Box'
 import {mpStyle} from '../../../../style/common'
@@ -48,7 +48,7 @@ export const PcHeader = () => {
 
   return <HeaderBox>
     <ContentBox>
-      <Welcome>{ls('晚上好, 欢迎来到马佩莱超市!')}</Welcome>
+      <Welcome>{ll('晚上好, 欢迎来到马佩莱超市!')}</Welcome>
       <Center>
         <Space
             w={20}
@@ -56,13 +56,13 @@ export const PcHeader = () => {
         <Button
             variant={'contained'}
             color={'secondary'}
-        >{ls('登录/注册')}</Button>
+        >{ll('登录/注册')}</Button>
       </Center>
       <Right>
         <Button
             variant={'text'}
             color={'inherit'}
-        >{ls('帮助中心')}</Button>
+        >{ll('帮助中心')}</Button>
         <Space w={22}/>
         <Divider
             style={{height: '16px', alignSelf: 'center'}}
@@ -73,7 +73,7 @@ export const PcHeader = () => {
         <Button
             variant={'text'}
             color={'inherit'}
-        >{ls('掌上超市')}</Button>
+        >{ll('掌上超市')}</Button>
       </Right>
     </ContentBox>
   </HeaderBox>

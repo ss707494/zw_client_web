@@ -2,7 +2,7 @@ import React, {useEffect} from 'react'
 import {doc} from '../../../graphqlTypes/doc'
 import {dealMaybeNumber, dealMoney, fpMerge} from '../../../tools/utils'
 import {useStoreModel} from '../../../ModelAction/useStore'
-import {ls} from '../../../tools/dealKey'
+import {ll} from '../../../tools/dealKey'
 import {HeaderTitle} from '../../../components/HeaderTitle/HeaderTitle'
 import {Box, Button, LinearProgress, MenuItem, TextField} from '@material-ui/core'
 import {grey} from '@material-ui/core/colors'
@@ -95,7 +95,7 @@ export const ShopCartPage = () => {
           <div
               style={{paddingTop: '16px', fontSize: '18px', textAlign: 'center'}}
           >
-            {productNumber}{ls('件商品')}
+            {productNumber}{ll('件商品')}
           </div>
           <div
               style={{
@@ -106,7 +106,7 @@ export const ShopCartPage = () => {
                 marginBottom: '10px',
               }}
           >
-            {ls('小计')}:{productSubtotal}
+            {ll('小计')}:{productSubtotal}
           </div>
           {stateShopCartModel.shopCartList.map(value => <CartProduct
               key={`CartProduct_${value.id}`}
@@ -115,7 +115,7 @@ export const ShopCartPage = () => {
           <TextField
               style={{marginTop: '10px'}}
               fullWidth={true}
-              label={ls('运送方式')}
+              label={ll('运送方式')}
               select={true}
               value={stateShopCartModel.form.pickUpType}
               onChange={event => {
@@ -129,15 +129,15 @@ export const ShopCartPage = () => {
           >
             <MenuItem
                 value={PickUpTypeEnum.Self}
-            >{ls(getPickUpTypeName(PickUpTypeEnum.Self))}</MenuItem>
+            >{ll(getPickUpTypeName(PickUpTypeEnum.Self))}</MenuItem>
             <MenuItem
                 value={PickUpTypeEnum.Delivery}
-            >{ls(getPickUpTypeName(PickUpTypeEnum.Delivery))}</MenuItem>
+            >{ll(getPickUpTypeName(PickUpTypeEnum.Delivery))}</MenuItem>
           </TextField>
-          <Title>{ls('达人卡和优惠券')}</Title>
+          <Title>{ll('达人卡和优惠券')}</Title>
           <PromoCode>
             <main>{stateShopCartModel.promoCode.title}</main>
-            <aside>{ls('code')}: {stateShopCartModel.promoCode.code}</aside>
+            <aside>{ll('code')}: {stateShopCartModel.promoCode.code}</aside>
           </PromoCode>
           <Space h={8}/>
           <Button
@@ -147,24 +147,24 @@ export const ShopCartPage = () => {
                   return actionsShopCartModel.dealPromoCode(promoCode)
                 })
               }}
-          >{ls(stateShopCartModel.promoCode.code ? '重新输入' : '输入验证码')}</Button>
+          >{ll(stateShopCartModel.promoCode.code ? '重新输入' : '输入验证码')}</Button>
           <InputPromoCodeDialog/>
-          <Title>{ls('预估价格')}</Title>
+          <Title>{ll('预估价格')}</Title>
           <Money>
-            <aside>{ls('小计')}</aside>
+            <aside>{ll('小计')}</aside>
             <main>{productSubtotal}</main>
           </Money>
           <Space h={10}/>
           <Money>
-            <aside>{ls('折扣')}</aside>
+            <aside>{ll('折扣')}</aside>
             <main>{dealMoney(stateShopCartModel.form.couponDiscount)}</main>
           </Money>
           <div style={{width: '100%', height: '10px'}}/>
           <Money>
-            <aside>{ls('总计')}</aside>
+            <aside>{ll('总计')}</aside>
             <main>{dealMoney(allTotal)}</main>
           </Money>
-          <Title>{ls('下次购买的商品')}</Title>
+          <Title>{ll('下次购买的商品')}</Title>
           {stateShopCartModel.shopCartListNext.map(value => <CartProduct
               key={`CartProduct_${value.id}`}
               shopCart={value}/>)}
@@ -178,7 +178,7 @@ export const ShopCartPage = () => {
             fullWidth={true}
             disabled={productNumber === 0}
             onClick={() => actionsShopCartModel.updatePageType(pageTypeEnum.order)}
-        >{ls('去结算')}</Button>
+        >{ll('去结算')}</Button>
       </FixFooter>
       <UpdateShopCart/>
     </>)}

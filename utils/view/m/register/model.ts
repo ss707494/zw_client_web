@@ -5,7 +5,7 @@ import {setToken} from '../../../tools/token'
 import {showMessage} from '../../../components/Message/Message'
 import {doc} from '../../../graphqlTypes/doc'
 import {modelFactory} from '../../../ModelAction/modelUtil'
-import { ls } from '../../../tools/dealKey'
+import { ll } from '../../../tools/dealKey'
 
 export const registerModel = modelFactory('register', {
   step: 0,
@@ -26,11 +26,11 @@ export const registerModel = modelFactory('register', {
   },
   goNext: (value, option) => {
     if (!option.data?.userForm?.name || !option.data?.userForm?.password || !option.data?.userForm?.confirmPassword) {
-      showMessage(ls('请填写表单'))
+      showMessage(ll('请填写表单'))
       return
     }
     if (option.data?.userForm?.password !== option.data?.userForm?.confirmPassword) {
-      showMessage(ls('两次密码输入不一致'))
+      showMessage(ll('两次密码输入不一致'))
       return
     }
     option.setData(fpMergePre({
@@ -40,7 +40,7 @@ export const registerModel = modelFactory('register', {
   submit: async (value, option) => {
     const userInfo = option.data.userForm?.userInfo || {}
     if (!userInfo.phone || !userInfo.email) {
-      showMessage(ls('请填写表单'))
+      showMessage(ll('请填写表单'))
       return
     }
     const {confirmPassword, ...params} = option.data.userForm
@@ -55,7 +55,7 @@ export const registerModel = modelFactory('register', {
     })
     const registerUser = res?.registerUser as UserInRegister
     if (registerUser?.user?.id) {
-      showMessage(ls('注册成功,即将登录'))
+      showMessage(ll('注册成功,即将登录'))
       setToken(registerUser.token as string)
       setToken(registerUser.refreshtoken as string, 'refreshtoken')
       await Router.replace(`/m/home`, `/m/home`, {shallow: true})

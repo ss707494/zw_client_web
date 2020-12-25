@@ -8,7 +8,7 @@ import {grey} from '@material-ui/core/colors'
 import {productModel, ProductPrice} from '../../../components/ProductItem/ProductItem'
 import {Button, IconButton} from '@material-ui/core'
 import {useStoreModel} from '../../../ModelAction/useStore'
-import {ls} from '../../../tools/dealKey'
+import {ll} from '../../../tools/dealKey'
 import {shopCartModel} from './index'
 import {showMessage} from '../../../components/Message/Message'
 import {updateShopCartModel} from '../../../components/ProductItem/UpdateShopCart'
@@ -62,7 +62,7 @@ export const CartProduct = ({shopCart}: { shopCart: ShopCart }) => {
               await actionsShopCartModel.moveToNext({shopCart})
               actionsShopCartModel.getList()
             }}
-        >{ls('下次购买')}</Button>
+        >{ll('下次购买')}</Button>
         {<IconButton
             disabled={(shopCart?.number ?? 0) <= 1}
             size={'small'}
@@ -99,7 +99,7 @@ export const CartProduct = ({shopCart}: { shopCart: ShopCart }) => {
               })
               actionsShopCartModel.getList()
             }}
-        >{ls('删除')}</Button>
+        >{ll('删除')}</Button>
         <Button
             size={'small'}
             variant={'outlined'}
@@ -125,7 +125,7 @@ export const CartProduct = ({shopCart}: { shopCart: ShopCart }) => {
                 }
               }
             }}
-        >{ls('加入购物车')}</Button>
+        >{ll('加入购物车')}</Button>
       </>}
     </footer>
   </ShopCartProductBox>

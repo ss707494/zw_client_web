@@ -2,7 +2,7 @@ import React, {useEffect} from 'react'
 import {HeaderTitle} from '../../../../components/HeaderTitle/HeaderTitle'
 import {Button, Card} from '@material-ui/core'
 import styled from 'styled-components'
-import {ls} from '../../../../tools/dealKey'
+import {ll} from '../../../../tools/dealKey'
 import {useStoreModel} from '../../../../ModelAction/useStore'
 import {meModel} from '../model'
 import {grey} from '@material-ui/core/colors'
@@ -67,35 +67,35 @@ export const MyInfo = () => {
     <MyCard>
       <section>
         <aside>
-          {ls('姓名')}
+          {ll('姓名')}
         </aside>
         <main>{stateMeModel.user.userInfo?.name}</main>
         <footer>
           <Button
               variant={'outlined'}
               onClick={() => router.push('/m/me/myInfo/updateMyInfo')}
-          >{ls('编辑')}</Button>
+          >{ll('编辑')}</Button>
         </footer>
       </section>
       <section>
         <aside>
-          {ls('电话')}
+          {ll('电话')}
         </aside>
         <main>{stateMeModel.user.userInfo?.phone}</main>
       </section>
       <section>
         <aside>
-          {ls('邮箱')}
+          {ll('邮箱')}
         </aside>
         <main>{stateMeModel.user.userInfo?.email}</main>
       </section>
     </MyCard>
     <Part/>
     <Account>
-      <header>{ls('账号设置')}</header>
-      <section>{ls('账号')}</section>
+      <header>{ll('账号设置')}</header>
+      <section>{ll('账号')}</section>
       <section>{stateMeModel.user.name}</section>
-      <section>{ls('密码')}</section>
+      <section>{ll('密码')}</section>
       <section>
         <span>********</span>
         <Button

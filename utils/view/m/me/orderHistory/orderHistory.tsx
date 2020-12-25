@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import {HeaderTitle} from '../../../../components/HeaderTitle/HeaderTitle'
 import {Button, ButtonBase, Tab, Tabs} from '@material-ui/core'
-import {ls} from '../../../../tools/dealKey'
+import {ll} from '../../../../tools/dealKey'
 import {modelFactory} from '../../../../ModelAction/modelUtil'
 import {useStoreModel} from '../../../../ModelAction/useStore'
 import {dealMaybeNumber, dealMoney, formatDate, fpMergePre} from '../../../../tools/utils'
@@ -102,7 +102,7 @@ export const OrderHistory = () => {
     >
       <Tab
           value={0}
-          label={ls('全部')}
+          label={ll('全部')}
       />
       <Tab
           value={OrderState.Picking}
@@ -142,7 +142,7 @@ export const OrderHistory = () => {
                 <span> {dealMoney(value?.actuallyPaid)}</span>,
               </section>
               <section>
-                {ls('抵扣')} {dealMoney(value?.deductCoin)}, {ls('积攒')} {dealMoney(value?.generateCoin)},
+                {ll('抵扣')} {dealMoney(value?.deductCoin)}, {ll('积攒')} {dealMoney(value?.generateCoin)},
               </section>
               <footer>
                 <Button
@@ -152,7 +152,7 @@ export const OrderHistory = () => {
                       e.stopPropagation()
                       router.push('/m/me/orderDetail/[id]', `/m/me/orderDetail/${value?.id}`)
                     }}
-                >{ls('查看详情')}</Button>
+                >{ll('查看详情')}</Button>
               </footer>
             </Item>
           </React.Fragment>,

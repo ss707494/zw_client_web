@@ -3,7 +3,7 @@ import React from 'react'
 import {Button, Dialog, DialogContent} from '@material-ui/core'
 import {useStoreModel} from '../../../../ModelAction/useStore'
 import styled from 'styled-components'
-import { ls } from '../../../../tools/dealKey'
+import { ll } from '../../../../tools/dealKey'
 
 export const HelpDetailModel = dialogModelFactory('HelpDetail', {
   problem: '',
@@ -39,7 +39,7 @@ export const HelpDetail = () => {
               stateHelpDetailModel.openResolve({ss: 123})
               actionsHelpDetailModel.onClose()
             }}
-        >{ls('知道了')}</Button>
+        >{ll('知道了')}</Button>
       </Foot>
     </DialogContent>
   </Dialog>

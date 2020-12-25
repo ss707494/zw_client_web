@@ -4,7 +4,7 @@ import {MyInfo} from '../components/myInfo'
 import {Space} from '../../../../components/Box/Box'
 import {mpStyle} from '../../../../style/common'
 import styled from 'styled-components'
-import { ls } from '../../../../tools/dealKey'
+import { ll } from '../../../../tools/dealKey'
 import {useRouter} from 'next/router'
 import {useStoreModel} from '../../../../ModelAction/useStore'
 import {orderDetailModel} from '../../../m/me/orderDetail/orderDetail'
@@ -78,15 +78,15 @@ export const OrderDetail = () => {
   return <MeLayoutBox>
     <MyInfo/>
     <Space h={mpStyle.space.n}/>
-    <Title>{ls('订单历史')} > {ls('订单详情')}</Title>
+    <Title>{ll('订单历史')} > {ll('订单详情')}</Title>
     <Space h={mpStyle.space.n}/>
     <InfoBox>
       <section>
-        <header>{ls('订单编号')}</header>
+        <header>{ll('订单编号')}</header>
         <main>{orderInfo.number}</main>
       </section>
       <section>
-        <header>{ls('取货地址')}</header>
+        <header>{ll('取货地址')}</header>
         <main>
           {(orderInfo.pickUpType === PickUpTypeEnum.Self &&
               (v => <>
@@ -106,19 +106,19 @@ export const OrderDetail = () => {
         </main>
       </section>
       <section>
-        <header>{ls('交易时间')}</header>
+        <header>{ll('交易时间')}</header>
         <main>{formatDate(orderInfo.createTime, 'YYYY/MM/dd')}</main>
       </section>
       <section>
-        <header>{ls('支付方式')}</header>
+        <header>{ll('支付方式')}</header>
         <main>
           <header>{orderInfo?.userPayCard?.code}</header>
           <Space h={mpStyle.space.xxs / 2}/>
-          <main>{ls('过期日')} {formatDate(orderInfo?.userPayCard?.expirationTime, 'MM/yy')}</main>
+          <main>{ll('过期日')} {formatDate(orderInfo?.userPayCard?.expirationTime, 'MM/yy')}</main>
           <Space h={mpStyle.space.xxs / 2}/>
-          <footer>{ls('卡号')} {dealLastNumber(orderInfo.userPayCard?.number)}</footer>
+          <footer>{ll('卡号')} {dealLastNumber(orderInfo.userPayCard?.number)}</footer>
           <Space h={mpStyle.space.xxs / 2}/>
-          <footer>{ls('持卡人')} {orderInfo?.userPayCard?.userName}</footer>
+          <footer>{ll('持卡人')} {orderInfo?.userPayCard?.userName}</footer>
         </main>
       </section>
     </InfoBox>
@@ -127,8 +127,8 @@ export const OrderDetail = () => {
       <section>
         <OrderAddressBox>
           <CheckCircleIcon/>
-          <section>{ls('已自取')}</section>
-          <footer>{ls('于')}{calcAddress(orderInfo, stateSelfAddressModel.list)?.name ?? ''}</footer>
+          <section>{ll('已自取')}</section>
+          <footer>{ll('于')}{calcAddress(orderInfo, stateSelfAddressModel.list)?.name ?? ''}</footer>
         </OrderAddressBox>
         <Space h={mpStyle.space.xs}/>
         <Divider />
@@ -140,33 +140,33 @@ export const OrderDetail = () => {
       </section>
       <Space w={mpStyle.space.xs}/>
       <aside>
-        <header>{ls('订单结算')}</header>
+        <header>{ll('订单结算')}</header>
         <Space h={mpStyle.space.xs}/>
         <TotalBox>
           <section>
-            <aside>{ls('小计')}</aside>
+            <aside>{ll('小计')}</aside>
             <main>{dealMoney(orderInfo.subtotal)}</main>
           </section>
           <Space h={mpStyle.space.xs}/>
           <section>
-            <aside>{ls('优惠券折扣')}</aside>
+            <aside>{ll('优惠券折扣')}</aside>
             <main>{dealMoney(0, '-')}</main>
           </section>
           <Space h={mpStyle.space.xs}/>
           <section>
-            <aside>{ls('运费')}</aside>
+            <aside>{ll('运费')}</aside>
             <main>{dealMoney(orderInfo.transportationCosts)}</main>
           </section>
           <Space h={mpStyle.space.xs}/>
           <section>
-            <aside>{ls('达人币抵扣')}</aside>
+            <aside>{ll('达人币抵扣')}</aside>
             <main>{dealMoney(orderInfo.deductCoin, '-')}</main>
           </section>
           <Space h={mpStyle.space.xs}/>
           <Divider />
           <Space h={mpStyle.space.xs}/>
           <BoldBox>
-            <aside>{ls('实际支付')}</aside>
+            <aside>{ll('实际支付')}</aside>
             <main>{dealMoney(orderInfo.actuallyPaid)}</main>
           </BoldBox>
         </TotalBox>

@@ -6,7 +6,7 @@ import {Search} from '@material-ui/icons'
 import React from 'react'
 import styled from 'styled-components'
 import {mpStyle} from '../../style/common'
-import {ls} from '../../tools/dealKey'
+import {ll} from '../../tools/dealKey'
 import { ShoppingCartIconButton } from '../ShoppingCartIconButton/ShoppingCartIconButton'
 import {useRouter} from 'next/router'
 import {HomeType} from '../../view/m/home/appModule'
@@ -94,7 +94,7 @@ export const HeaderSearch = ({homeType}: {homeType?: string}) => {
           alt=''
       />
     </Logo>
-    <Title>{ls(homeType === HomeType.group ? '拼团' : '逛店')}</Title>
+    <Title>{ll(homeType === HomeType.group ? '拼团' : '逛店')}</Title>
     <Action>
       {homeType === HomeType.home && <ShoppingCartIconButton/>}
       <IconButton

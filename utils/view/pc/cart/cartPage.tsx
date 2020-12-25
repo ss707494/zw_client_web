@@ -6,7 +6,7 @@ import {HeaderTab} from '../home/components/headerTab'
 import {Space} from '../../../components/Box/Box'
 import styled from 'styled-components'
 import {mpStyle} from '../../../style/common'
-import {ls} from '../../../tools/dealKey'
+import {ll} from '../../../tools/dealKey'
 import {Button} from '@material-ui/core'
 import {shopCartModel} from '../../m/cart'
 import {useStoreModel} from '../../../ModelAction/useStore'
@@ -87,7 +87,7 @@ const PickUpButton = ({pickUpType}: { pickUpType: string }) => {
           },
         }))])
       }}
-  >{ls(getPickUpTypeName(pickUpType))}</Button>
+  >{ll(getPickUpTypeName(pickUpType))}</Button>
 }
 
 export const CartPage = () => {
@@ -115,10 +115,10 @@ export const CartPage = () => {
       <TopAction/>
       <HeaderTab/>
       <Space h={mpStyle.space.s}/>
-      <Title>{ls('我的购物车')}</Title>
+      <Title>{ll('我的购物车')}</Title>
       <Space h={mpStyle.space.xs}/>
       <PickUpType>
-        <section>{ls('送货方式')}</section>
+        <section>{ll('送货方式')}</section>
         <Space w={mpStyle.space.s}/>
         <PickUpButton pickUpType={PickUpTypeEnum.Self}/>
         <Space w={mpStyle.space.xs}/>
@@ -126,7 +126,7 @@ export const CartPage = () => {
       </PickUpType>
       <Space h={mpStyle.space.xs}/>
       <PromoCode>
-        <header>{ls('达人卡和优惠券')}</header>
+        <header>{ll('达人卡和优惠券')}</header>
         <Space h={mpStyle.space.xxs}/>
         <main>
           <aside>{stateShopCartModel.promoCode.code}</aside>
@@ -138,30 +138,30 @@ export const CartPage = () => {
                   return actionsShopCartModel.dealPromoCode(promoCode)
                 })
               }}
-          >{ls(stateShopCartModel.promoCode.code ? '重新输入' : '输入验证码')}</Button>
+          >{ll(stateShopCartModel.promoCode.code ? '重新输入' : '输入验证码')}</Button>
         </main>
         <InputPromoCodeDialog/>
       </PromoCode>
       <Space h={mpStyle.space.s}/>
       <ProductBox>
         <ProductHeader>
-          {productNumber}{ls('件商品')}
+          {productNumber}{ll('件商品')}
         </ProductHeader>
         <CartProductTable/>
         <ProductFooter>
           <section style={{flexGrow: 1}}/>
           <Money>
-            <aside>{ls('小计')}</aside>
+            <aside>{ll('小计')}</aside>
             <main>{productSubtotal}</main>
           </Money>
           <Space w={mpStyle.space.s}/>
           <Money>
-            <aside>{ls('折扣')}</aside>
+            <aside>{ll('折扣')}</aside>
             <main>{dealMoney(stateShopCartModel.form.couponDiscount)}</main>
           </Money>
           <Space w={mpStyle.space.s}/>
           <Money>
-            <aside>{ls('总计')}</aside>
+            <aside>{ll('总计')}</aside>
             <main>{dealMoney(allTotal)}</main>
           </Money>
           <Space w={mpStyle.space.s}/>
@@ -172,12 +172,12 @@ export const CartPage = () => {
               onClick={() => {
                 router.push('/pc/cart/orderPage')
               }}
-          >{ls('去结算')}</Button>
+          >{ll('去结算')}</Button>
         </ProductFooter>
       </ProductBox>
       <NextBox>
         <Space h={mpStyle.space.n}/>
-        <header>{ls('下次购买的商品')}</header>
+        <header>{ll('下次购买的商品')}</header>
         <Space h={mpStyle.space.s}/>
         <main>
           {stateShopCartModel.shopCartListNext.map(shopCart => <ProductItemBox

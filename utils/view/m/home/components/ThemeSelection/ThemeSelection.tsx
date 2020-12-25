@@ -6,7 +6,7 @@ import {useStoreModel} from '../../../../../ModelAction/useStore'
 import {DataConfigItemInput, Product} from '../../../../../graphqlTypes/types'
 import {ProductItem} from '../../../../../components/ProductItem/ProductItem'
 import {DictTypeEnum} from '../../../../../ss_common/enum'
-import {ls} from '../../../../../tools/dealKey'
+import {ll} from '../../../../../tools/dealKey'
 import styled from 'styled-components'
 import {dealImgUrl} from '../../../../../tools/img'
 import {BScroller} from '../../../../../components/BScroll/BScroller'
@@ -93,7 +93,7 @@ export const ThemeSelection = () => {
   }, [])
 
   return <div>
-    <Title>{ls('主题甄选')}</Title>
+    <Title>{ll('主题甄选')}</Title>
     {statePromotionFlashSale.themeSelectionData?.map(v => <React.Fragment
         key={`themeSelectionDataImg${v.id}`}
     >

@@ -1,7 +1,7 @@
 import React from 'react'
 import {useRouter} from 'next/router'
 import {mpStyle} from '../../utils/style/common'
-import {ls} from '../../utils/tools/dealKey'
+import {ll} from '../../utils/tools/dealKey'
 import {Button} from '@material-ui/core'
 import styled from 'styled-components'
 
@@ -58,10 +58,10 @@ export const HomeRe = () => {
       <img src={"/img/home/logo_white.png"}
            alt=""/>
       <section>
-        {ls('Market')}
+        {ll('Market')}
       </section>
       <main>
-        {ls('Payless')}
+        {ll('Payless')}
       </main>
     </Title>
     <Actions>
@@ -72,14 +72,14 @@ export const HomeRe = () => {
           onClick={async () => {
             await router.push('/m/login')
           }}
-      >{ls('登录')}</Button>
+      >{ll('登录')}</Button>
       <Button
           size={'large'}
           variant={'outlined'}
           onClick={async () => {
             await router.push('/m/register')
           }}
-      >{ls('注册')}</Button>
+      >{ll('注册')}</Button>
     </Actions>
   </Box>
 }

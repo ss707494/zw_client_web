@@ -2,7 +2,7 @@ import {Dialog, DialogTitle, DialogContent, Radio, Button} from '@material-ui/co
 import React from 'react'
 import {dialogModelFactory} from '../../../../commonModel/dialog'
 import {useStoreModel} from '../../../../ModelAction/useStore'
-import {ls} from '../../../../tools/dealKey'
+import {ll} from '../../../../tools/dealKey'
 import {shopCartModel} from '../index'
 import styled from 'styled-components'
 import {useRouter} from 'next/router'
@@ -37,7 +37,7 @@ export const SelectCard = () => {
       open={stateSelectCard.open}
       onClose={actionsSelectCard.onClose}
   >
-    <DialogTitle>{ls('选择信用卡')}</DialogTitle>
+    <DialogTitle>{ll('选择信用卡')}</DialogTitle>
     <DialogContent>
       {stateShopCartModel.payCardList.map(v => <CardBox key={`DialogTitleAddressBox_${v.id}`}>
         <header>{v.name}</header>
@@ -60,7 +60,7 @@ export const SelectCard = () => {
             onClick={() => {
               router.push('/m/me/myCreditCard/edit/[id]', '/m/me/myCreditCard/edit/0')
             }}
-        >{ls('添加新方式')}</Button>
+        >{ll('添加新方式')}</Button>
       </Footer>
     </DialogContent>
   </Dialog>

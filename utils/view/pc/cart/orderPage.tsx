@@ -7,7 +7,7 @@ import {TopAction} from '../pcComponents/topAction/topAction'
 import {HeaderTab} from '../home/components/headerTab'
 import {Space} from '../../../components/Box/Box'
 import {mpStyle} from '../../../style/common'
-import {ls} from '../../../tools/dealKey'
+import {ll} from '../../../tools/dealKey'
 import {dealMaybeNumber, dealMoney, fpMergePre} from '../../../tools/utils'
 import {useOrderPageHooks} from '../../m/cart/orderPage'
 import {
@@ -211,7 +211,7 @@ export const OrderPage = () => {
                   isAct={statePcOrderPageModel.actStep === ActStepEnum.address}
               >
                 <aside>1</aside>
-                {ls('选择地址')}
+                {ll('选择地址')}
               </TabHeader>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
@@ -237,7 +237,7 @@ export const OrderPage = () => {
             <ExpansionPanelSummary>
               <TabHeader>
                 <aside>2</aside>
-                {ls('选择付款方式')}
+                {ll('选择付款方式')}
               </TabHeader>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
@@ -257,9 +257,9 @@ export const OrderPage = () => {
           </ExpansionPanel>
         </ModifyBox>
         <OrderDetailBox>
-          <header>{ls('订单详情')}</header>
+          <header>{ll('订单详情')}</header>
           <ShopTotal>
-            <header>{ls('购物车总计')}</header>
+            <header>{ll('购物车总计')}</header>
             <footer>{dealMoney(productTotal - (stateShopCartModel.form?.couponDiscount ?? 0))}</footer>
           </ShopTotal>
           {/*{dealMaybeNumber(stateShopCartModel.form?.couponDiscount) > 0 && <ShopTotal>*/}
@@ -267,11 +267,11 @@ export const OrderPage = () => {
           {/*  <footer>{dealMoney(stateShopCartModel.form?.couponDiscount)}</footer>*/}
           {/*</ShopTotal>}*/}
           {transportationCosts > 0 && <ShopTotal>
-            <header>{ls('运费')}</header>
+            <header>{ll('运费')}</header>
             <footer>{dealMoney(transportationCosts)}</footer>
           </ShopTotal>}
           <ShopTotal>
-            <header>{ls('达人币抵扣')}</header>
+            <header>{ll('达人币抵扣')}</header>
             <footer>{dealMoney(stateShopCartModel.form.deductCoin, '-')}</footer>
           </ShopTotal>
           {/*<ShopTotal>*/}
@@ -285,21 +285,21 @@ export const OrderPage = () => {
           <ShopTotal
               style={{fontSize: '18px'}}
           >
-            <header>{ls('订单总额')}</header>
+            <header>{ll('订单总额')}</header>
             <footer>{dealMoney(actuallyPaid)}</footer>
           </ShopTotal>
           <Space h={mpStyle.space.s}/>
           <div>
-            {ls('使用达人币')}
+            {ll('使用达人币')}
             <RedSpan>
-              {ls('当月可用余额')} {dealMoney(stateShopCartModel.user?.orderCoinCurrentMonth)}
+              {ll('当月可用余额')} {dealMoney(stateShopCartModel.user?.orderCoinCurrentMonth)}
             </RedSpan>
           </div>
           <Space h={mpStyle.space.xxs}/>
           <FillInputBox>
             <TextField
                 variant={'filled'}
-                label={ls('')}
+                label={ll('')}
                 value={stateShopCartModel.form.deductCoin}
                 onChange={e => {
                   actionsShopCartModel.setForm(['deductCoin', e.target.value])
@@ -308,7 +308,7 @@ export const OrderPage = () => {
           </FillInputBox>
           <Space h={mpStyle.space.s}/>
           <ShopTotal>
-            <header>{ls('购物车总计')}</header>
+            <header>{ll('购物车总计')}</header>
             <footer>{dealMoney(productTotal - (stateShopCartModel.form?.couponDiscount ?? 0))}</footer>
           </ShopTotal>
           <Space h={mpStyle.space.s}/>
@@ -318,7 +318,7 @@ export const OrderPage = () => {
               color={'secondary'}
               onClick={async () => {
                 if (dealMaybeNumber(stateShopCartModel.user?.orderCoinCurrentMonth) < dealMaybeNumber(stateShopCartModel.form.deductCoin)) {
-                  showMessage(ls('达人币余额不足'))
+                  showMessage(ll('达人币余额不足'))
                   return
                 }
                 const submitData = {
@@ -347,7 +347,7 @@ export const OrderPage = () => {
                 }
               }}
           >
-            {ls('提交订单')}
+            {ll('提交订单')}
           </Button>
         </OrderDetailBox>
       </OrderContentBox>

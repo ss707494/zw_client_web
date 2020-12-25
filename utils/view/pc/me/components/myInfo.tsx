@@ -5,7 +5,7 @@ import {meModel} from '../../../m/me/model'
 import {Avatar, AvatarProps} from '@material-ui/core'
 import styled from 'styled-components'
 import {dealMaybeNumber} from '../../../../tools/utils'
-import {ls} from '../../../../tools/dealKey'
+import {ll} from '../../../../tools/dealKey'
 import {yellow} from '@material-ui/core/colors'
 import {mpStyle} from '../../../../style/common'
 import {Space} from '../../../../components/Box/Box'
@@ -49,7 +49,7 @@ export const MyInfo = () => {
       <Space w={mpStyle.space.xxs}/>
       <section>
         <main>{dealMaybeNumber(stateMeModel.user.orderCoinCurrentMonth)}</main>
-        <footer>{ls('当月达人币')}</footer>
+        <footer>{ll('当月达人币')}</footer>
       </section>
     </Coin>
     <Coin>
@@ -57,7 +57,7 @@ export const MyInfo = () => {
       <Space w={mpStyle.space.xxs}/>
       <section>
         <main>{dealMaybeNumber(stateMeModel.user.orderCoinNextMonth)}</main>
-        <footer>{ls('下月达人币')}</footer>
+        <footer>{ll('下月达人币')}</footer>
       </section>
     </Coin>
   </Box>

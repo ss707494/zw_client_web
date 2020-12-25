@@ -13,7 +13,7 @@ import styled from 'styled-components'
 import {grey} from '@material-ui/core/colors'
 import {dealImgUrl} from '../../../tools/img'
 import {GroupProductItem, ProductItem} from '../../../components/ProductItem/ProductItem'
-import {ls} from '../../../tools/dealKey'
+import {ll} from '../../../tools/dealKey'
 import {NoData} from '../../../components/NoData/NoData'
 import {CategoryRootName} from '../../../ss_common/enum'
 import {UpdateShopCart} from '../../../components/ProductItem/UpdateShopCart'
@@ -185,7 +185,7 @@ export const CategoryPage = () => {
         (
             <>
               {stateCPM.categoryList.map(value => CategoryItem(value))}
-              <header>{ls('热门推荐')}</header>
+              <header>{ll('热门推荐')}</header>
               {(stateCPM.productList.length === 0) && <NoData/>}
               <ListBox
                   columns={stateHomeTabs.homeType === HomeType.group ? 1 : 2}

@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import React, {useEffect} from 'react'
-import {ls} from '../../../../tools/dealKey'
+import {ll} from '../../../../tools/dealKey'
 import {mpStyle} from '../../../../style/common'
 import {useStoreModel} from '../../../../ModelAction/useStore'
 import {promotionFlashSaleModel} from '../../../m/home/components/PromotionFlashSale/PromotionFlashSale'
@@ -8,8 +8,7 @@ import {Space} from '../../../../components/Box/Box'
 import {ProductItemBox} from '../../pcComponents/productItemBox/productItemBox'
 import {padStart} from '../../../../tools/utils'
 
-const Box = styled.div`
-`
+const Box = styled.div``
 const Header = styled.div`
   display: flex;
   align-items: center;
@@ -48,7 +47,7 @@ export const LimitTime = () => {
     {statePromotionFlashSale.nowLimitData?.id &&
     <>
       <Header>
-        <Title>{(statePromotionFlashSale.isNext && ls('距离下次抢购')) || ls('限时选购')}</Title>
+        <Title>{(statePromotionFlashSale.isNext && ll('距离下次抢购')) || ll('限时选购')}</Title>
         <Space w={18}/>
         <Tip>{padStart(calcDifferenceHours)[0]}</Tip>
         <Space w={6}/>

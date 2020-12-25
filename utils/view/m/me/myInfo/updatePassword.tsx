@@ -1,7 +1,7 @@
 import React from 'react'
 import {HeaderTitle} from '../../../../components/HeaderTitle/HeaderTitle'
 import {SigninInput} from '../../register'
-import {ls} from '../../../../tools/dealKey'
+import {ll} from '../../../../tools/dealKey'
 import {modelFactory} from '../../../../ModelAction/modelUtil'
 import {useStoreModel} from '../../../../ModelAction/useStore'
 import {fpMergePre} from '../../../../tools/utils'
@@ -53,8 +53,10 @@ export const updatePasswordModel = modelFactory('updatePasswordModel', {
 
 export const FieldContain = styled.div`
   padding: 0 22px;
-  ${SigninInput} {
-    margin-top: 10px;
+  &&& {
+    .MuiFormControl-root {
+      margin-top: 10px;
+    }
   }
 `
 
@@ -68,19 +70,19 @@ export const UpdatePassword = () => {
     />
     <FieldContain>
       <SigninInput
-          label={ls('原始密码')}
+          label={ll('原始密码')}
           type={'password'}
           value={stateUpdatePasswordModel.form.oldPassword}
           onChange={event => actionsUpdatePasswordModel.setForm(['oldPassword', event.target.value])}
       />
       <SigninInput
-          label={ls('新密码')}
+          label={ll('新密码')}
           type={'password'}
           value={stateUpdatePasswordModel.form.newPassword}
           onChange={event => actionsUpdatePasswordModel.setForm(['newPassword', event.target.value])}
       />
       <SigninInput
-          label={ls('确认密码')}
+          label={ll('确认密码')}
           type={'password'}
           value={stateUpdatePasswordModel.form.confirmPassword}
           onChange={event => actionsUpdatePasswordModel.setForm(['confirmPassword', event.target.value])}
@@ -97,7 +99,7 @@ export const UpdatePassword = () => {
               router.back()
             }
           }}
-      >{ls('保存')}</ButtonLoad>
+      >{ll('保存')}</ButtonLoad>
     </FieldContain>
   </div>
 }

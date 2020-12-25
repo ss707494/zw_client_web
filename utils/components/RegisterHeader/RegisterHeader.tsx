@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { ls } from '../../tools/dealKey'
+import { ll } from '../../tools/dealKey'
 import {mpStyle} from '../../style/common'
 
 const Header = styled.div`
@@ -37,8 +37,8 @@ export const RegisterHeader = () => {
     <img
         src={'/img/home/logo.png'}
         alt=""/>
-    <header>{ls('Market')}</header>
-    <footer>{ls('Payless')}</footer>
-    <main>{ls('欢迎来到马佩莱超市')}</main>
+    <header>{ll('Market')}</header>
+    <footer>{ll('Payless')}</footer>
+    <main>{ll('欢迎来到马佩莱超市')}</main>
   </Header>
 }

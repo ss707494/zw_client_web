@@ -3,7 +3,7 @@ import {ButtonBase, ButtonBaseProps, Drawer, Radio} from '@material-ui/core'
 import {useStoreModel} from '../../../ModelAction/useStore'
 import {sortTypeEnum, sortTypeLabel, productListModel} from './[id]'
 import styled from 'styled-components'
-import { ls } from '../../../tools/dealKey'
+import { ll } from '../../../tools/dealKey'
 import {grey} from '@material-ui/core/colors'
 import {useRouter} from 'next/router'
 
@@ -36,7 +36,7 @@ export const SortDrawer = () => {
       onClose={actionsProductList.closeSort}
   >
     <Contain>
-      <header>{ls('排序')}</header>
+      <header>{ll('排序')}</header>
       <main>
         {Object.keys(sortTypeEnum).map(v => <Item
             key={`orderTypeEnum_${v}`}

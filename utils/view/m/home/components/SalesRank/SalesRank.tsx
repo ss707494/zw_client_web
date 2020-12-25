@@ -5,7 +5,7 @@ import {useStoreModel} from '../../../../../ModelAction/useStore'
 import {Product, ProductItemInput} from '../../../../../graphqlTypes/types'
 import {GroupProductItem, ProductItemOneRow} from '../../../../../components/ProductItem/ProductItem'
 import styled from 'styled-components'
-import {ls} from '../../../../../tools/dealKey'
+import {ll} from '../../../../../tools/dealKey'
 import {dealUrlQuery, fpMergePre} from '../../../../../tools/utils'
 import Router, {useRouter} from 'next/router'
 import {SaleRankTypeEnum} from '../../../../../ss_common/enum'
@@ -80,7 +80,7 @@ export const SalesRank = () => {
           <Tab
               key={`SaleRankTab${v[0]}`}
               value={v[0]}
-              label={ls(v[1])}
+              label={ll(v[1])}
           />,
       )}
     </Tabs>

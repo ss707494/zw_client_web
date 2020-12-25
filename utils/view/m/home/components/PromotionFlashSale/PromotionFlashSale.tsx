@@ -5,7 +5,7 @@ import {fpMergePre} from '../../../../../tools/utils'
 import {useStoreModel} from '../../../../../ModelAction/useStore'
 import {Product} from '../../../../../graphqlTypes/types'
 import styled from 'styled-components'
-import {ls} from '../../../../../tools/dealKey'
+import {ll} from '../../../../../tools/dealKey'
 import {grey} from '@material-ui/core/colors'
 import {ProductItemOneRow} from '../../../../../components/ProductItem/ProductItem'
 import {differenceInHours, differenceInMinutes} from 'date-fns'
@@ -85,12 +85,12 @@ export const PromotionFlashSale = () => {
     {statePromotionFlashSale.nowLimitData?.id &&
     <>
       <Tip>
-        <main>{statePromotionFlashSale.isNext && ls('距离下次抢购') || ls('限时选购')}</main>
-        <section>{ls('剩余')}</section>
+        <main>{statePromotionFlashSale.isNext && ll('距离下次抢购') || ll('限时选购')}</main>
+        <section>{ll('剩余')}</section>
         <span>{`${actionsPromotionFlashSale.calcDifferenceHours()}`}</span>
-        <section>{ls('小时')}</section>
+        <section>{ll('小时')}</section>
         <span>{`${actionsPromotionFlashSale.calcDifferenceMinutes()}`}</span>
-        <section>{ls('分钟')}</section>
+        <section>{ll('分钟')}</section>
         {/*<span>0</span>*/}
         {/*:*/}
         {/*<span>0</span>*/}

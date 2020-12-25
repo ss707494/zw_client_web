@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import {useRouter} from 'next/router'
 import {HeaderTitle} from '../../../components/HeaderTitle/HeaderTitle'
-import {ls} from '../../../tools/dealKey'
+import {ll} from '../../../tools/dealKey'
 import {FootBar} from '../../../components/FootBar/FootBar'
 import {Button, Card, Tab, Tabs} from '@material-ui/core'
 import {modelFactory} from '../../../ModelAction/modelUtil'
@@ -107,8 +107,8 @@ export const getPromoCodeItem = (item: PromoCode, user: User) => {
       {item.title}
     </Title>
     <Remark>{item.remark}</Remark>
-    <CodeBox>{ls('优惠码')}: {item.code}</CodeBox>
-    <Time>{ls('使用时间')}: {formatDate(item.effectiveDateStart, 'YYYY/MM/dd')} - {formatDate(item.effectiveDateEnd, 'YYYY/MM/dd')}</Time>
+    <CodeBox>{ll('优惠码')}: {item.code}</CodeBox>
+    <Time>{ll('使用时间')}: {formatDate(item.effectiveDateStart, 'YYYY/MM/dd')} - {formatDate(item.effectiveDateEnd, 'YYYY/MM/dd')}</Time>
     <Action>
       <Button
           color={'secondary'}
@@ -120,7 +120,7 @@ export const getPromoCodeItem = (item: PromoCode, user: User) => {
               showMessage('操作成功')
             }
           }}
-      >{ls('应用到购物车')}</Button>
+      >{ll('应用到购物车')}</Button>
     </Action>
   </CardBox> : <CardBoxPromoCode
       key={`CardBoxPromoCode_${item.id}`}
@@ -131,9 +131,9 @@ export const getPromoCodeItem = (item: PromoCode, user: User) => {
     <Space h={8}/>
     <Remark>{item.remark}</Remark>
     <Space h={8}/>
-    <Time>{ls('使用时间')}: {formatDate(item.effectiveDateStart, 'YYYY/MM/dd')} - {formatDate(item.effectiveDateEnd, 'YYYY/MM/dd')}</Time>
+    <Time>{ll('使用时间')}: {formatDate(item.effectiveDateStart, 'YYYY/MM/dd')} - {formatDate(item.effectiveDateEnd, 'YYYY/MM/dd')}</Time>
     <Space h={8}/>
-    <CodeBox>{ls('优惠码')}: {item.code}</CodeBox>
+    <CodeBox>{ll('优惠码')}: {item.code}</CodeBox>
     <Space h={8}/>
     <Action>
       <Button
@@ -146,7 +146,7 @@ export const getPromoCodeItem = (item: PromoCode, user: User) => {
               showMessage('操作成功')
             }
           }}
-      >{ls('应用到购物车')}</Button>
+      >{ll('应用到购物车')}</Button>
     </Action>
   </CardBoxPromoCode>
 }
@@ -161,7 +161,7 @@ export const CardType = () => {
 
   return <div>
     <HeaderTitle
-        title={ls('达人专区')}
+        title={ll('达人专区')}
         showCart={true}
         hideLeft={true}
         showSearch={true}
@@ -173,11 +173,11 @@ export const CardType = () => {
     >
       <Tab
           value={PromoCodeTypeEnum.DarenCard}
-          label={ls('我的达人卡')}
+          label={ll('我的达人卡')}
       />
       <Tab
           value={PromoCodeTypeEnum.PromoCode}
-          label={ls('当前优惠促销')}
+          label={ll('当前优惠促销')}
       />
     </Tabs>
     <BScroller

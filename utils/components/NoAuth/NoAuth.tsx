@@ -2,7 +2,7 @@ import {useStoreModel} from '../../ModelAction/useStore'
 import {meModel} from '../../view/m/me/model'
 import React, {useEffect} from 'react'
 import {RegisterHeader} from '../RegisterHeader/RegisterHeader'
-import {ls} from '../../tools/dealKey'
+import {ll} from '../../tools/dealKey'
 import {Button} from '@material-ui/core'
 import styled from 'styled-components'
 import {getToken} from '../../tools/token'
@@ -31,13 +31,13 @@ export const DealNoAuth = (others: any) => {
       ? <Empty>
         <RegisterHeader/>
         <main>
-          <span>{ls('您未登录,请先登录')}</span>
+          <span>{ll('您未登录,请先登录')}</span>
           <Button
               fullWidth
               variant={'contained'}
               color={'secondary'}
               onClick={actionsMe.toLogin}
-          >{ls('登录')}</Button>
+          >{ll('登录')}</Button>
         </main>
       </Empty>
       : others

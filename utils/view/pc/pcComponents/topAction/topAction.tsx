@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import {Autocomplete} from '@material-ui/lab'
 import {Avatar, Button, ButtonBase, InputAdornment, TextField} from '@material-ui/core'
 import {Space} from '../../../../components/Box/Box'
-import {ls} from '../../../../tools/dealKey'
+import {ll} from '../../../../tools/dealKey'
 import {ShoppingCartIconButton} from '../../../../components/ShoppingCartIconButton/ShoppingCartIconButton'
 import {useRouter} from 'next/router'
 import {usePcOrMobile} from '../../../../hooks/usePcOrMobile'
@@ -105,7 +105,7 @@ export const TopAction = () => {
           value={''}
           onInputChange={() => {
           }}
-          placeholder={ls('搜索全站鲜美食品')}
+          placeholder={ll('搜索全站鲜美食品')}
           renderInput={(params) => (
               <TextField
                   {...params}
@@ -139,7 +139,7 @@ export const TopAction = () => {
     >
       <Avatar/>
       <Space w={8}/>
-      <h2>{ls('我的账户')}</h2>
+      <h2>{ll('我的账户')}</h2>
     </AvatarBox>
     <Space w={28}/>
     <ShopCartBox>

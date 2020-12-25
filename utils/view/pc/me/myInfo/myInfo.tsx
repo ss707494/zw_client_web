@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import {MeLayoutBox} from '../components/meLayoutBox'
 import {Button, Divider} from '@material-ui/core'
 import {Space} from '../../../../components/Box/Box'
-import {ls} from '../../../../tools/dealKey'
+import {ll} from '../../../../tools/dealKey'
 import {BaseField} from '../components/BaseField'
 import {modelFactory} from '../../../../ModelAction/modelUtil'
 import {useStoreModel} from '../../../../ModelAction/useStore'
@@ -17,12 +17,33 @@ import {updatePasswordModel} from '../../../m/me/myInfo/updatePassword'
 
 const TopTitle = styled('div')`
   ${mpStyle.fontType.l};
+  display: grid;
+  grid-template-columns: 1fr max-content;
+
+  &&& {
+    .MuiButton-root {
+      width: 95px;
+      height: 27px;
+      border-radius: 19px;
+      color: ${mpStyle.red};
+      border: 1px solid ${mpStyle.red};
+    }
+  }
 `
 const FormBox = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 240px);
   grid-column-gap: 60px;
   grid-row-gap: 24px;
+`
+const SubmitButtons = styled.div`
+  &&& {
+    .MuiButton-root {
+      width: 215px;
+      height: 50px;
+      border-radius: 8px;
+    }
+  }
 `
 
 export const PcMyInfoModel = modelFactory('PcMyInfoModel', {
@@ -42,30 +63,38 @@ export const PcMyInfo = () => {
   const {initForm} = useUpdateMyInfoInit()
 
   return <MeLayoutBox>
-    <TopTitle>{ls('个人资料')}</TopTitle>
-    <Space h={mpStyle.space.s}/>
+    <TopTitle>
+      {ll('个人资料')}
+      {!statePcMyInfoModel.isEditInfo && <Button
+          variant={'outlined'}
+          onClick={() => actionsPcMyInfoModel.setEditInfo(true)}
+      >{ll('编辑')}</Button>}
+    </TopTitle>
+    <Space h={mpStyle.space.xs}/>
     <Divider/>
     <Space h={mpStyle.space.s}/>
     <FormBox>
       <BaseField
           readonly={!statePcMyInfoModel.isEditInfo}
-          label={ls('姓名')}
+          label={ll('姓名')}
           value={stateUpdateMyInfoModel.form.name}
           onChange={event => actionsUpdateMyInfoModel.setForm(['name', event.target.value])}
       />
       <BaseField
           readonly={!statePcMyInfoModel.isEditInfo}
-          label={ls('电话')}
+          label={ll('电话')}
           value={stateUpdateMyInfoModel.form.phone}
           onChange={event => actionsUpdateMyInfoModel.setForm(['phone', event.target.value])}
       />
       <BaseField
           readonly={!statePcMyInfoModel.isEditInfo}
-          label={ls('邮箱')}
+          label={ll('邮箱')}
           value={stateUpdateMyInfoModel.form.email}
           onChange={event => actionsUpdateMyInfoModel.setForm(['email', event.target.value])}
       />
-      <div>
+      <SubmitButtons
+          style={{gridArea: '2/1/3/3', alignSelf: 'start'}}
+      >
         {(statePcMyInfoModel.isEditInfo && <>
           <ButtonLoad
               variant={'outlined'}
@@ -74,7 +103,7 @@ export const PcMyInfo = () => {
                 actionsPcMyInfoModel.setEditInfo(false)
                 initForm()
               }}
-          >{ls('取消')}</ButtonLoad>
+          >{ll('取消')}</ButtonLoad>
           <Space w={mpStyle.space.s}/>
           <ButtonLoad
               variant={'contained'}
@@ -87,48 +116,46 @@ export const PcMyInfo = () => {
                   actionsPcMyInfoModel.setEditInfo(false)
                 }
               }}
-          >{ls('保存')}</ButtonLoad>
+          >{ll('保存')}</ButtonLoad>
         </>)
-        || <Button
-            variant={'outlined'}
-            onClick={() => actionsPcMyInfoModel.setEditInfo(true)}
-        >{ls('编辑')}</Button>
         }
-      </div>
+      </SubmitButtons>
     </FormBox>
     <Space h={mpStyle.space.s}/>
-    <TopTitle>{ls('账户资料')}</TopTitle>
-    <Space h={mpStyle.space.s}/>
+    <TopTitle>
+      {ll('账户资料')}
+      {!statePcMyInfoModel.isEditPass && <Button
+          variant={'outlined'}
+          onClick={() => actionsPcMyInfoModel.setEditPass(true)}
+      >{ll('编辑')}</Button>}
+    </TopTitle>
+    <Space h={mpStyle.space.xs}/>
     <Divider/>
     <Space h={mpStyle.space.s}/>
     <FormBox>
       {(!statePcMyInfoModel.isEditPass && <>
         <BaseField
             readonly={true}
-            label={ls('达人账号名')}
+            label={ll('达人账号名')}
             value={stateMeModel.user.name}
         />
         <BaseField
             readonly={true}
-            label={ls('密码')}
+            label={ll('密码')}
             value={'*******'}
         />
         <div/>
-        <Button
-            variant={'outlined'}
-            onClick={() => actionsPcMyInfoModel.setEditPass(true)}
-        >{ls('编辑')}</Button>
       </>)
       || <>
         <BaseField
             readonly={true}
-            label={ls('达人账号名')}
+            label={ll('达人账号名')}
             value={stateMeModel.user.name}
         />
         <div/>
         <div/>
         <BaseField
-            label={ls('原始密码')}
+            label={ll('原始密码')}
             type={'password'}
             value={stateUpdatePasswordModel.form.oldPassword}
             onChange={event => actionsUpdatePasswordModel.setForm(['oldPassword', event.target.value])}
@@ -136,19 +163,21 @@ export const PcMyInfo = () => {
         <div/>
         <div/>
         <BaseField
-            label={ls('新密码')}
+            label={ll('新密码')}
             type={'password'}
             value={stateUpdatePasswordModel.form.newPassword}
             onChange={event => actionsUpdatePasswordModel.setForm(['newPassword', event.target.value])}
         />
         <BaseField
-            label={ls('确认密码')}
+            label={ll('确认密码')}
             type={'password'}
             value={stateUpdatePasswordModel.form.confirmPassword}
             onChange={event => actionsUpdatePasswordModel.setForm(['confirmPassword', event.target.value])}
         />
         <div/>
-        <div>
+        <SubmitButtons
+            style={{gridArea: '4/1/5/3', alignSelf: 'start'}}
+        >
           <ButtonLoad
               variant={'outlined'}
               loading={getLoad(doc.updateUserInfo)}
@@ -156,7 +185,7 @@ export const PcMyInfo = () => {
                 actionsPcMyInfoModel.setEditPass(false)
                 actionsUpdatePasswordModel.clearForm()
               }}
-          >{ls('取消')}</ButtonLoad>
+          >{ll('取消')}</ButtonLoad>
           <Space w={mpStyle.space.s}/>
           <ButtonLoad
               variant={'contained'}
@@ -169,8 +198,8 @@ export const PcMyInfo = () => {
                   actionsPcMyInfoModel.setEditPass(false)
                 }
               }}
-          >{ls('保存')}</ButtonLoad>
-        </div>
+          >{ll('保存')}</ButtonLoad>
+        </SubmitButtons>
       </>
       }
     </FormBox>

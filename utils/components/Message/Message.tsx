@@ -6,7 +6,7 @@ import {SnackbarProps} from '@material-ui/core/Snackbar/Snackbar'
 import {originStore, useStoreModel} from '../../ModelAction/useStore'
 import {fpMergePre} from '../../tools/utils'
 import {modelFactory} from '../../ModelAction/modelUtil'
-import { ls } from '../../tools/dealKey'
+import { ll } from '../../tools/dealKey'
 
 const typeHelp = {
   default: `background: ${grey[700]};`,
@@ -61,7 +61,7 @@ export const Message = () => {
   return <CusSnackbar
       open={mState.open}
       autoHideDuration={mState.autoHideDuration}
-      message={ls(mState.message as string)}
+      message={ll(mState.message as string)}
       msg_type={mState.msg_type}
       onClose={() => actions.onClose()}
   />

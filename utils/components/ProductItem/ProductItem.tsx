@@ -14,7 +14,7 @@ import {useStoreModel} from '../../ModelAction/useStore'
 import {meModel} from '../../view/m/me/model'
 import {doc} from '../../graphqlTypes/doc'
 import {showMessage} from '../Message/Message'
-import {ls} from '../../tools/dealKey'
+import {ll} from '../../tools/dealKey'
 import {grey} from '@material-ui/core/colors'
 import {shopCartModel} from '../../view/m/cart'
 import {useRouter} from 'next/router'
@@ -181,7 +181,7 @@ export const ProductItemOneRow = ({product, sumOrderTip = '', hideAction = false
     <LeftBox>
       <main>{product.name} {product.weight}{product.unit} {product.packingUnitString}</main>
       {/*<Stock>{ls('当前剩余')}: {product.stock}</Stock>*/}
-      {showSumOrder && <Tip>{sumOrderTip}{ls('销量')}: {product.sumOrder}</Tip>}
+      {showSumOrder && <Tip>{sumOrderTip}{ll('销量')}: {product.sumOrder}</Tip>}
       <Price>
         <ProductPrice product={product}/>
       </Price>
@@ -204,7 +204,7 @@ export const ProductItemOneRow = ({product, sumOrderTip = '', hideAction = false
             }}
         >
           <ShoppingCartIcon/>
-          {ls('加入购物车')}
+          {ll('加入购物车')}
         </Button>
       </Bun>}
     </LeftBox>
@@ -277,13 +277,13 @@ export const GroupProductItem = ({product, groupQueue, sumOrderTip = '', showSum
       <Title>
         {product.name}({product.groupRemark}/{product.groupAmount}{product.groupAmountUnitString}/{product.groupPrecisionString})
       </Title>
-      {showSumOrder && <OrderTip>{sumOrderTip}{ls('拼团达人数')}: {product.sumOrder}</OrderTip>}
+      {showSumOrder && <OrderTip>{sumOrderTip}{ll('拼团达人数')}: {product.sumOrder}</OrderTip>}
       <MarketPrice>
-        {ls('市场价')}
+        {ll('市场价')}
         <span>{dealMoney(product.priceMarket)}</span>
       </MarketPrice>
       <OutPrice>
-        {ls('基准价格')}
+        {ll('基准价格')}
         <span>{dealMoney(product.priceOut)}</span>
       </OutPrice>
       <Star>
@@ -311,7 +311,7 @@ export const GroupProductItem = ({product, groupQueue, sumOrderTip = '', showSum
             }}
         >
           <AddCircleOutlineIcon/>
-          {ls('拼一个')}
+          {ll('拼一个')}
         </Button>
       </Action>
     </RightBox>

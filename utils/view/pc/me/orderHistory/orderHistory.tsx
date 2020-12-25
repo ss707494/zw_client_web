@@ -9,7 +9,7 @@ import {useStoreModel} from '../../../../ModelAction/useStore'
 import {orderHistoryModel} from '../../../m/me/orderHistory/orderHistory'
 import {dealMaybeNumber, dealMoney, formatDate, fpMergePre} from '../../../../tools/utils'
 import {Button, ButtonProps, Divider} from '@material-ui/core'
-import {ls} from '../../../../tools/dealKey'
+import {ll} from '../../../../tools/dealKey'
 import {dealImgUrl} from '../../../../tools/img'
 import {doc} from '../../../../graphqlTypes/doc'
 import {DictTypeEnum, PickUpTypeEnum} from '../../../../ss_common/enum'
@@ -99,7 +99,7 @@ export const OrderHistory = () => {
   return <MeLayoutBox>
     <MyInfo/>
     <Space h={mpStyle.space.n}/>
-    <Title>{ls('订单历史')}</Title>
+    <Title>{ll('订单历史')}</Title>
     {stateOrderHistoryModel.orderList.list?.map(order => <OrderBox
         key={`stateOrderHistoryModel.orderList.list?${order?.id}`}
     >
@@ -110,7 +110,7 @@ export const OrderHistory = () => {
             onClick={() => {
               router.push(`/pc/me/orderDetail/${order?.id ?? ''}`)
             }}
-        >{ls('详情')} ></DetailItem>
+        >{ll('详情')} ></DetailItem>
       </OrderTop>
       <Space h={mpStyle.space.xxs}/>
       <OrderPay>{dealMoney(order?.actuallyPaid)}</OrderPay>
@@ -119,8 +119,8 @@ export const OrderHistory = () => {
       <Space h={mpStyle.space.xxs}/>
       <OrderAddressBox>
         <CheckCircleIcon/>
-        <section>{ls('已自取')}</section>
-        <footer>{ls('于')}{calcAddress(order, stateSelfAddressModel.list)?.name ?? ''}</footer>
+        <section>{ll('已自取')}</section>
+        <footer>{ll('于')}{calcAddress(order, stateSelfAddressModel.list)?.name ?? ''}</footer>
       </OrderAddressBox>
       <Space h={mpStyle.space.xxs}/>
       <OrderImgBox>
@@ -128,7 +128,7 @@ export const OrderHistory = () => {
             key={`url_${value1?.product?.img?.[0]?.url}`}
             src={dealImgUrl(value1?.product?.img?.[0]?.url)}
             alt=""/>)}
-        {ls('共')} {dealMaybeNumber(order?.rOrderProduct?.length)} {ls('件商品')}
+        {ll('共')} {dealMaybeNumber(order?.rOrderProduct?.length)} {ll('件商品')}
       </OrderImgBox>
       <Space h={mpStyle.space.n}/>
       <Divider/>

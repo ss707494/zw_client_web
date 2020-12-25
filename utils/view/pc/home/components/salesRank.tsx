@@ -1,8 +1,7 @@
 import styled from 'styled-components'
 import React, {useEffect} from 'react'
 import {mpStyle} from '../../../../style/common'
-import {ls} from '../../../../tools/dealKey'
-import {Space} from '../../../../components/Box/Box'
+import {ll} from '../../../../tools/dealKey'
 import {useStoreModel} from '../../../../ModelAction/useStore'
 import {SalesRankModel} from '../../../m/home/components/SalesRank/SalesRank'
 import {ProductItemInput} from '../../../../graphqlTypes/types'
@@ -18,12 +17,20 @@ const Title = styled.div`
 const Content = styled.div`
   display: grid;
   grid-gap: 24px;
+  padding-top: 24px;
+  margin-top: 20px;
+  box-shadow: 0 4px 8px 0 #F5F5F5;
+
+  > section {
+    background: #4A90E2;
+  }
 `
 const Rank = styled.div`
   position: relative;
   > aside {
     position: absolute;
     top: -10px;
+    left: 15px;
     > main {
       width: 40px;
       height: 40px;
@@ -60,9 +67,8 @@ export const SalesRank = () => {
       id={'SalesRank'}
   >
     <Title>
-      {ls('热门排行')}
+      {ll('热门排行')}
     </Title>
-    <Space h={24}/>
     <Content>
       {stateSalesRankModel.listData.map((product, index) => <Rank
           key={`ProductItem_${product.id}`}

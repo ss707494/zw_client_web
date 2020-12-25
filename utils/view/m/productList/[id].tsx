@@ -10,7 +10,7 @@ import {useStoreModel} from '../../../ModelAction/useStore'
 import {HeaderTitle} from '../../../components/HeaderTitle/HeaderTitle'
 import styled from 'styled-components'
 import {Button} from '@material-ui/core'
-import {ls} from '../../../tools/dealKey'
+import {ll} from '../../../tools/dealKey'
 import {GroupProductItem, ProductItem} from '../../../components/ProductItem/ProductItem'
 import {BScroller} from '../../../components/BScroll/BScroller'
 import {SortDrawer} from './SortDrawer'
@@ -162,13 +162,13 @@ export const ProductList = () => {
               },
             })
           }}
-      >{ls('排序')}
+      >{ll('排序')}
         <SortIcon/>
       </Button>
       <Button
           fullWidth
           onClick={() => actionsPLM.openFilter()}
-      >{ls('筛选')}
+      >{ll('筛选')}
         <FilterListIcon/>
       </Button>
     </HeaderTab>

@@ -11,7 +11,7 @@ import {doc} from '../../../graphqlTypes/doc'
 import {useStoreModel} from '../../../ModelAction/useStore'
 import {setForm} from '../../../tools/commonAction'
 import {fpMergePre} from '../../../tools/utils'
-import {ls} from '../../../tools/dealKey'
+import {ll} from '../../../tools/dealKey'
 import {GroupProductItem, ProductItemOneRow} from '../../../components/ProductItem/ProductItem'
 import {Space} from '../../../components/Box/Box'
 import {getPromoCodeItem} from '../card/[type]'
@@ -99,7 +99,7 @@ export const SearchPage = () => {
       />
     </SearchInput>
     {stateSearchPageModel.productList.length > 0 && <>
-      <Title>{ls('零售商品')}</Title>
+      <Title>{ll('零售商品')}</Title>
       <ListBox>
         {stateSearchPageModel.productList.map(value => <ProductItemOneRow
             key={`productList${value.id}`}
@@ -110,7 +110,7 @@ export const SearchPage = () => {
       <Divider />
     </>}
     {stateSearchPageModel.groupProductList.length > 0 && <>
-      <Title>{ls('拼团商品')}</Title>
+      <Title>{ll('拼团商品')}</Title>
       <ListBox>
         {stateSearchPageModel.groupProductList.map(value => <GroupProductItem
             key={`productList${value.id}`}
@@ -121,7 +121,7 @@ export const SearchPage = () => {
       <Divider />
     </>}
     {stateSearchPageModel.darenCardPromoCodeList.length > 0 && <>
-      <Title>{ls('达人卡')}</Title>
+      <Title>{ll('达人卡')}</Title>
       <ListBox>
         {stateSearchPageModel.darenCardPromoCodeList.map(value => getPromoCodeItem(value, stateSearchPageModel.user))}
       </ListBox>
@@ -129,7 +129,7 @@ export const SearchPage = () => {
       <Divider />
     </>}
     {stateSearchPageModel.promoCodePromoCodeList.length > 0 && <>
-      <Title>{ls('优惠码')}</Title>
+      <Title>{ll('优惠码')}</Title>
       <ListBox>
         {stateSearchPageModel.promoCodePromoCodeList.map(value => getPromoCodeItem(value, stateSearchPageModel.user))}
       </ListBox>

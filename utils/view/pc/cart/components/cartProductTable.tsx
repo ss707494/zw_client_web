@@ -3,7 +3,7 @@ import {mpStyle, RedBox} from '../../../../style/common'
 import {useStoreModel} from '../../../../ModelAction/useStore'
 import {shopCartModel} from '../../../m/cart'
 import {productModel} from '../../../../components/ProductItem/ProductItem'
-import {ls} from '../../../../tools/dealKey'
+import {ll} from '../../../../tools/dealKey'
 import React from 'react'
 import {Space} from '../../../../components/Box/Box'
 import {dealImgUrl} from '../../../../tools/img'
@@ -44,7 +44,7 @@ export const CartProductTable = () => {
     {/*<TableHeader>{ls('选择')}</TableHeader>*/}
     {['商品信息', '单价', '数量', '重量', '小计', '操作'].map(v => <TableHeader
         key={`TableHeader${v}`}
-    >{ls(v)}</TableHeader>)}
+    >{ll(v)}</TableHeader>)}
     {stateShopCartModel.shopCartList.map(shopCart => {
       const product = shopCart.product
       return <React.Fragment
@@ -92,7 +92,7 @@ export const CartProductTable = () => {
               await actionsShopCartModel.moveToNext({shopCart})
               actionsShopCartModel.getList()
             }}
-        >{ls('下次购买')}</Button>
+        >{ll('下次购买')}</Button>
       </React.Fragment>
     })}
   </CartProductTableBox>

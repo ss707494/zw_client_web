@@ -8,7 +8,7 @@ import {doc} from '../../../../graphqlTypes/doc'
 import {dealMoney, formatDate, fpMergePre, getLastNumber} from '../../../../tools/utils'
 import {useStoreModel} from '../../../../ModelAction/useStore'
 import {useRouter} from 'next/router'
-import {ls} from '../../../../tools/dealKey'
+import {ll} from '../../../../tools/dealKey'
 import {orderStateToString, PickUpTypeEnum} from '../../../../ss_common/enum'
 import {mpStyle} from '../../../../style/common'
 import {grey} from '@material-ui/core/colors'
@@ -141,11 +141,11 @@ export const OrderDetail = () => {
           <aside>{orderStateToString(orderInfo?.state)}</aside>
         </Top>
         <InfoLabel>
-          <aside>{ls('订单编号')} :</aside>
+          <aside>{ll('订单编号')} :</aside>
           <section>{orderInfo.number}</section>
         </InfoLabel>
         <InfoLabel>
-          <aside>{ls('送货地址')} :</aside>
+          <aside>{ll('送货地址')} :</aside>
           <section>
             {(orderInfo.pickUpType === PickUpTypeEnum.Self &&
                 (v => <>
@@ -161,12 +161,12 @@ export const OrderDetail = () => {
           </section>
         </InfoLabel>
         <InfoLabel>
-          <aside>{ls('支付方式')} :</aside>
+          <aside>{ll('支付方式')} :</aside>
           <section>
             {/*<header>{orderInfo?.userPayCard?.code}</header>*/}
             {/*<main>{ls('过期日')} {formatDate(orderInfo?.userPayCard?.expirationTime, 'MM/yy')}</main>*/}
-            <footer>{ls('卡号后四位')} {getLastNumber(`${orderInfo.userPayCard?.number}`)}</footer>
-            <footer>{ls('持卡人')} {orderInfo?.userPayCard?.userName}</footer>
+            <footer>{ll('卡号后四位')} {getLastNumber(`${orderInfo.userPayCard?.number}`)}</footer>
+            <footer>{ll('持卡人')} {orderInfo?.userPayCard?.userName}</footer>
           </section>
         </InfoLabel>
         <GreyPart/>
@@ -183,7 +183,7 @@ export const OrderDetail = () => {
               <main>{rOrderProduct.product?.remark}</main>
               <footer>
                 <aside>{dealMoney(rOrderProduct.product?.priceMarket)}</aside>
-                <span>{dealMoney(rOrderProduct.product?.priceOut)}/{rOrderProduct.product?.packingUnitString ?? ls('件')}</span>
+                <span>{dealMoney(rOrderProduct.product?.priceOut)}/{rOrderProduct.product?.packingUnitString ?? ll('件')}</span>
               </footer>
               <aside>
                 <span>
@@ -197,19 +197,19 @@ export const OrderDetail = () => {
         ))}
         <div style={{height: '26px', width: '100%'}}/>
         <Sum>
-          <aside>{ls('小计')}</aside>
+          <aside>{ll('小计')}</aside>
           <main>{dealMoney(orderInfo.subtotal)}</main>
         </Sum>
         <Sum>
-          <aside>{ls('优惠券折扣')}</aside>
+          <aside>{ll('优惠券折扣')}</aside>
           <main>{dealMoney(0, '-')}</main>
         </Sum>
         <Sum>
-          <aside>{ls('运费')}</aside>
+          <aside>{ll('运费')}</aside>
           <main>{dealMoney(orderInfo.transportationCosts)}</main>
         </Sum>
         <Sum>
-          <aside>{ls('达人币抵扣')}</aside>
+          <aside>{ll('达人币抵扣')}</aside>
           <main>{dealMoney(orderInfo.deductCoin, '-')}</main>
         </Sum>
         {/*<Sum>*/}
@@ -217,11 +217,11 @@ export const OrderDetail = () => {
         {/*  <main>{dealMoney(orderInfo.saleTax)}</main>*/}
         {/*</Sum>*/}
         <Sum>
-          <aside>{ls('实际支付')}</aside>
+          <aside>{ll('实际支付')}</aside>
           <main>{dealMoney(orderInfo.actuallyPaid)}</main>
         </Sum>
         <Sum>
-          <aside>{ls('获得达人币')}</aside>
+          <aside>{ll('获得达人币')}</aside>
           <main>{dealMoney(orderInfo.generateCoin)}</main>
         </Sum>
         <div style={{height: '96px', width: '100%'}}/>

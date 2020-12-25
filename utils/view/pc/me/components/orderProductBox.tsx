@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import {dealImgUrl} from '../../../../tools/img'
 import {Space} from '../../../../components/Box/Box'
 import {mpStyle} from '../../../../style/common'
-import {ls} from '../../../../tools/dealKey'
+import {ll} from '../../../../tools/dealKey'
 import {dealMoney} from '../../../../tools/utils'
 import {ProductBox} from '../../../m/me/orderDetail/orderDetail'
 
@@ -25,7 +25,7 @@ export const OrderProductBox = ({rOrderProduct}: { rOrderProduct: ROrderProduct 
     <section>
       {rOrderProduct.product?.name}
       <Space w={mpStyle.space.xxs}/>
-      <span> {rOrderProduct.product?.number}{ls('份')} </span>
+      <span> {rOrderProduct.product?.number}{ll('份')} </span>
     </section>
     <main>{rOrderProduct.product?.remark}</main>
     <footer>

@@ -5,7 +5,7 @@ import {showMessage} from '../../../components/Message/Message'
 import {doc} from '../../../graphqlTypes/doc'
 import {UserItemInput} from '../../../graphqlTypes/types'
 import {modelFactory} from '../../../ModelAction/modelUtil'
-import { ls } from '../../../tools/dealKey'
+import { ll } from '../../../tools/dealKey'
 
 export const loginModel = modelFactory('loginModel', {
   form: {
@@ -19,7 +19,7 @@ export const loginModel = modelFactory('loginModel', {
   login: async (value, option) => {
     const form = option.data.form
     if (!form?.name || !form?.password) {
-      return showMessage(ls('请填写表单'))
+      return showMessage(ll('请填写表单'))
     }
     const res = await option.query(doc.login, {
       data: {...form}
