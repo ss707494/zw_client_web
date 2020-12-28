@@ -216,7 +216,7 @@ export const GroupProduct = () => {
   const {actions: actionsGroupProduct, state: stateGroupProduct} = useStoreModel(groupProductModel)
   useEffect(() => {
     actionsGroupProduct.getData(id)
-  }, [id])
+  }, [actionsGroupProduct, id])
   const {actions: actionsGroupOrderPageModel} = useStoreModel(groupOrderPageModel)
 
   const product = stateGroupProduct.product
@@ -239,7 +239,7 @@ export const GroupProduct = () => {
     <PriceRed>
       <main>
         {ll('基准价格')}
-        <span>{dealMoney(product.priceOut)}/{product.packingUnitString}</span>
+        <span>{dealMoney(product.priceOut)}/{product.groupAmountUnitString}</span>
       </main>
       <aside>{ll('已成团')}{stateGroupProduct.groupQueueList.filter(v => v.sumFillAmount === product?.groupPrecision).length}{ll('单')}</aside>
       <aside>{ll('拼团中')}{stateGroupProduct.groupQueueList.filter(v => (v.sumFillAmount ?? 0) < (product?.groupPrecision ?? 0)).length}{ll('单')}</aside>

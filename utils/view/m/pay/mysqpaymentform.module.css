@@ -12,24 +12,24 @@
 */
 
 
-/*body, html {*/
-/*  background-color: #F7F8F9;*/
-/*  color: #373F4A;*/
-/*  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/
-/*  font-weight: normal;*/
-/*  height: 100%;*/
-/*}*/
+body, html {
+  background-color: #F7F8F9;
+  color: #373F4A;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: normal;
+  height: 100%;
+}
 
-/*button {*/
-/*  border: 0;*/
-/*  font-weight: 500;*/
-/*}*/
+button {
+  border: 0;
+  font-weight: 500;
+}
 
-/*fieldset {*/
-/*  margin: 0;*/
-/*  padding: 0;*/
-/*  border: 0;*/
-/*}*/
+fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
 
 #form-container {
   position: relative;

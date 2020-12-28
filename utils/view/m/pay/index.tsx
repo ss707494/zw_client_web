@@ -7,108 +7,74 @@ import {useStoreModel} from '../../../ModelAction/useStore'
 import {orderDetailModel} from '../me/orderDetail/orderDetail'
 import {dealMoney} from '../../../tools/utils'
 import {OrderState} from '../../../ss_common/enum'
-import {createGlobalStyle} from 'styled-components'
-const GlobalStyle = createGlobalStyle`
-        :global(*) {
-          -webkit-font-smoothing: antialiased;
-          -moz-osx-font-smoothing: grayscale;
-        }
+import {makeStyles} from '@material-ui/styles'
 
-        :global(body, html) {
-          background-color: #F7F8F9;
-          color: #373F4A;
-          font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-          font-weight: normal;
-          height: 100%;
-        }
-
-        :global(button) {
-          border: 0;
-          font-weight: 500;
-        }
-
-        :global(fieldset) {
-          margin: 0;
-          padding: 0;
-          border: 0;
-        }
-
-        :global(#form-container) {
-          padding: 20px;
-          //position: relative;
-          //width: 380px;
-          //margin: 0 auto;
-          //top: 50%;
-          //transform: translateY(-50%);
-        }
-
-        :global(.third) {
-          float: left;
-          width: calc((100% - 32px) / 3);
-          padding: 0;
-          margin: 0 16px 16px 0;
-        }
-
-        :global(.third:last-of-type) {
-          margin-right: 0;
-        }
-
-        /* Define how SqPaymentForm iframes should look */
-        :global(.sq-input) {
-          height: 56PX;
-          box-sizing: border-box;
-          border: 1px solid #E0E2E3;
-          background-color: white;
-          border-radius: 6px;
-          display: inline-block;
-          -webkit-transition: border-color .2s ease-in-out;
-             -moz-transition: border-color .2s ease-in-out;
-                  transition: border-color .2s ease-in-out;
-        }
-
-        /* Define how SqPaymentForm iframes should look when they have focus */
-        :global(.sq-input--focus) {
-          border: 1px solid #4A90E2;
-        }
-
-        /* Define how SqPaymentForm iframes should look when they contain invalid values */
-        :global(.sq-input--error) {
-          border: 1px solid #E02F2F;
-        }
-
-        :global(#sq-card-number) {
-          margin-bottom: 16px;
-        }
-
-        /* Customize the "Pay with Credit Card" button */
-        :global(.button-credit-card) {
-          width: 100%;
-          height: 56px;
-          margin-top: 10px;
-          background: #4A90E2;
-          border-radius: 6px;
-          cursor: pointer;
-          display: block;
-          color: #FFFFFF;
-          font-size: 16px;
-          line-height: 24px;
-          font-weight: 700;
-          letter-spacing: 0;
-          text-align: center;
-          -webkit-transition: background .2s ease-in-out;
-             -moz-transition: background .2s ease-in-out;
-                  transition: background .2s ease-in-out;
-        }
-
-        :global(.button-credit-card:hover) {
-          background-color: #4281CB;
-        }
-    `
+const useStyles = makeStyles({
+  '@global': {
+    'body, html': {
+      backgroundColor: '#F7F8F9',
+      color: '#373F4A',
+      fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+      fontWeight: 'normal',
+      height: '100%',
+    },
+    button: {border: '0', fontWeight: 500},
+    fieldset: {margin: '0', padding: '0', border: '0'},
+    '#form-container': {
+      position: 'relative',
+      width: '380px',
+      margin: '0 auto',
+      top: '50%',
+      transform: 'translateY(22%)',
+    },
+    '.third': {
+      cssFloat: 'left',
+      width: 'calc((100% - 32px) / 3)',
+      padding: '0',
+      margin: '0 16px 16px 0',
+    },
+    '.third:last-of-type': {marginRight: '0'},
+    '.sq-input': {
+      height: '56px',
+      boxSizing: 'border-box',
+      border: '1px solid #E0E2E3',
+      backgroundColor: 'white',
+      borderRadius: '6px',
+      display: 'inline-block',
+      WebkitTransition: 'border-color .2s ease-in-out',
+      MozTransition: 'border-color .2s ease-in-out',
+      transition: 'border-color .2s ease-in-out',
+    },
+    '.sq-input--focus': {border: '1px solid #4A90E2'},
+    '.sq-input--error': {border: '1px solid #E02F2F'},
+    '#sq-card-number': {marginBottom: '16px'},
+    '.button-credit-card': {
+      width: '100%',
+      height: '56px',
+      marginTop: '10px',
+      background: '#4A90E2',
+      borderRadius: '6px',
+      cursor: 'pointer',
+      display: 'block',
+      color: '#FFFFFF',
+      fontSize: '16px',
+      lineHeight: '24px',
+      fontWeight: 700,
+      letterSpacing: '0',
+      textAlign: 'center',
+      WebkitTransition: 'background .2s ease-in-out',
+      MozTransition: 'background .2s ease-in-out',
+      transition: 'background .2s ease-in-out',
+    },
+    '.button-credit-card:hover': {backgroundColor: '#4281CB'},
+  },
+})
 
 const applicationId = process.env.NODE_ENV === 'production' ? 'sq0idp-IAEwX77Hdunl5dWByHQjIQ' : 'sandbox-sq0idb-42FQ7wGBwzibToRM9_zdFw'
 // const applicationId = 'sq0idp-IAEwX77Hdunl5dWByHQjIQ'
 
 export const Pay = () => {
+  useStyles()
   const router = useRouter()
   const orderId = (router.query?.orderId as string) ?? ''
 
@@ -119,7 +85,7 @@ export const Pay = () => {
     if (orderId) {
       actionsOD.getDetail(`${orderId}`)
     }
-  }, [orderId])
+  }, [actionsOD, orderId])
 
   useEffect(() => {
     // @ts-ignore
@@ -220,10 +186,9 @@ export const Pay = () => {
       }
       document.querySelector('#sq-creditcard')?.addEventListener('click', onGetCardNonce)
     }
-  }, [orderInfo.actuallyPaid])
+  }, [actionsOD, orderId, orderInfo.actuallyPaid, router])
 
   return <div>
-    <GlobalStyle/>
     <Head>
       <title>pay</title>
       <script type="text/javascript"

@@ -1,36 +1,22 @@
-import React, {useEffect} from 'react'
+import {MainBox} from '../pcComponents/mainBox/mainBox'
 import {PcHeader} from '../pcComponents/header/header'
 import {TopAction} from '../pcComponents/topAction/topAction'
-import {HeaderTab} from './components/headerTab'
-import styled from 'styled-components'
+import {HeaderTab} from '../home/components/headerTab'
+import {Carousel} from '../home/components/carousel'
 import {Space} from '../../../components/Box/Box'
-import {LimitTime} from './components/limitTime'
-import {SalesRank} from './components/salesRank'
-import {ThemeSelection} from './components/themeSelection'
-import {Carousel} from './components/carousel'
-import {MainBox} from '../pcComponents/mainBox/mainBox'
+import {LimitTime} from '../home/components/limitTime'
+import {ThemeSelection} from '../home/components/themeSelection'
+import {SalesRank} from '../home/components/salesRank'
+import React, {useEffect} from 'react'
+import {PcContentBox, TwoSide} from '../home/pcHome'
 import {useStoreModel} from '../../../ModelAction/useStore'
 import {homeTabsModel} from '../../m/home/components/Tabs/Tabs'
 import {HomeType} from '../../m/home/appModule'
 
-export const PcContentBox = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-`
-export const TwoSide = styled.div`
-  display: flex;
-  > section {
-    flex-grow: 1;
-  }
-  > aside {
-    flex-basis: 210px;
-  }
-`
-
-export const PcHome = () => {
+export const PcHomeGroup = () => {
   const {actions: actionsHomeTabs} = useStoreModel(homeTabsModel)
   useEffect(() => {
-    actionsHomeTabs.setHomeType(HomeType.home)
+    actionsHomeTabs.setHomeType(HomeType.group)
   }, [actionsHomeTabs])
 
   return <MainBox>
