@@ -33,7 +33,8 @@ const initForm: OrderInfoItemInput = {
   transportationCosts: 0,
   couponDiscount: 0,
 }
-export const shopCartModel = modelFactory('shopCartModel', {
+export const ShopCartModel = modelFactory('shopCartModel', {
+  isGroupOrder: false,
   user: {} as User,
   promoCode: {} as PromoCode,
   promoCodeError: '',
@@ -69,6 +70,11 @@ export const shopCartModel = modelFactory('shopCartModel', {
     }, parseFloat(state.freightConfig[state.freightConfig.length - 1]?.freightPay)))) || 0
   },
 }, {
+  updateIsGroupOrder: async (value: boolean, option) => {
+    option.setData(fpMergePre({
+      isGroupOrder: value,
+    }))
+  },
   clearData: (value, option) => {
     option.setData(fpMergePre({
       form: initForm,
@@ -169,6 +175,6 @@ export const shopCartModel = modelFactory('shopCartModel', {
 })
 
 export const CartPage = () => {
-  const {state: stateSCM} = useStoreModel(shopCartModel)
+  const {state: stateSCM} = useStoreModel(ShopCartModel)
   return (stateSCM.pageType === pageTypeEnum.order && <OrderPage/>) || <ShopCartPage/>
 }

@@ -10,7 +10,7 @@ import {ThemeSelection} from './components/themeSelection'
 import {Carousel} from './components/carousel'
 import {MainBox} from '../pcComponents/mainBox/mainBox'
 import {useStoreModel} from '../../../ModelAction/useStore'
-import {homeTabsModel} from '../../m/home/components/Tabs/Tabs'
+import {HomeTabsModel} from '../../m/home/components/Tabs/Tabs'
 import {HomeType} from '../../m/home/appModule'
 
 export const PcContentBox = styled.div`
@@ -28,7 +28,7 @@ export const TwoSide = styled.div`
 `
 
 export const PcHome = () => {
-  const {actions: actionsHomeTabs} = useStoreModel(homeTabsModel)
+  const {actions: actionsHomeTabs} = useStoreModel(HomeTabsModel)
   useEffect(() => {
     actionsHomeTabs.setHomeType(HomeType.home)
   }, [actionsHomeTabs])

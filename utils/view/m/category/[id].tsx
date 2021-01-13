@@ -18,7 +18,7 @@ import {NoData} from '../../../components/NoData/NoData'
 import {CategoryRootName} from '../../../ss_common/enum'
 import {UpdateShopCart} from '../../../components/ProductItem/UpdateShopCart'
 import {HomeType} from '../home/appModule'
-import {homeTabsModel} from '../home/components/Tabs/Tabs'
+import {HomeTabsModel} from '../home/components/Tabs/Tabs'
 
 export const CategoryPageModel = modelFactory('CategoryPage', {
   productList: [] as Product[],
@@ -116,10 +116,10 @@ export const CategoryPage = () => {
   const id = (router.query?.id as string) ?? ''
   const {state: stateCPM, actions: actionsCPM, getLoad} = useStoreModel(CategoryPageModel)
   const {actions: actionsCI, state: stateCategoryItemModel} = useStoreModel(categoryItemModel)
-  const {state: stateHomeTabs, actions: actionsHomeTabs} = useStoreModel(homeTabsModel)
+  const {state: stateHomeTabs, actions: actionsHomeTabs} = useStoreModel(HomeTabsModel)
   useEffect(() => {
     actionsHomeTabs.setHomeType((router.query.homeType as string) ?? HomeType.home)
-  }, [router.query.homeType])
+  }, [actionsHomeTabs, router.query.homeType])
 
   const CategoryItem = (v: Category) => {
     return <CategoryItemStyle
@@ -153,7 +153,7 @@ export const CategoryPage = () => {
       })
       actionsCI.getCategory({id})
     }
-  }, [id])
+  }, [actionsCI, actionsCPM, id, router.query.homeType])
 
   return <div>
     <HeaderTitle

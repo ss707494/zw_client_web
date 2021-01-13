@@ -8,12 +8,11 @@ import {HeaderTab} from '../home/components/headerTab'
 import {Space} from '../../../components/Box/Box'
 import {mpStyle} from '../../../style/common'
 import {ll} from '../../../tools/dealKey'
-import {dealMaybeNumber, dealMoney, fpMergePre} from '../../../tools/utils'
+import {dealMaybeNumber, dealMoney, dealUrlQuery, fpMergePre} from '../../../tools/utils'
 import {useOrderPageHooks} from '../../m/cart/orderPage'
 import {
   Button,
-  ButtonBase,
-  ButtonBaseProps,
+  ButtonBase, ButtonBaseProps,
   Divider,
   ExpansionPanel,
   ExpansionPanelDetails,
@@ -25,6 +24,7 @@ import {useStoreModel} from '../../../ModelAction/useStore'
 import {useRouter} from 'next/router'
 import {grey} from '@material-ui/core/colors'
 import {showMessage} from '../../../components/Message/Message'
+import {jssStyled} from '../../../tools/jssStyled'
 
 const OrderContentBox = styled.div`
   display: grid;
@@ -41,6 +41,7 @@ const ModifyBox = styled.div`
 const OrderDetailBox = styled.div`
   padding: ${mpStyle.spacePx.xs};
   border: 1px solid ${mpStyle.greyLite};
+
   > header {
     ${mpStyle.fontType.n};
   }
@@ -64,6 +65,7 @@ const TabHeader = styled.div<{ isAct?: boolean }>`
   ${mpStyle.fontType.n};
   display: flex;
   align-items: center;
+
   > aside {
     display: inline-flex;
     align-items: center;
@@ -85,21 +87,21 @@ const AddressBox = styled.div`
   grid-template-columns: repeat(3, 1fr);
   grid-gap: ${mpStyle.spacePx.xs};
 `
-const AddressBoxItem = styled(ButtonBase)<ButtonBaseProps & { isAct?: boolean }>`
-  &&& {
-    flex-direction: column;
-    align-items: flex-start;
-    border: 1px solid ${grey[800]};
-    border-radius: 4px;
-    padding: ${mpStyle.spacePx.xxs};
-    cursor: pointer;
-    ${props => props.isAct && `
-      background: ${mpStyle.red};
-      color: #fff;
-      border: none;
-    `};
-  }
-`
+const AddressBoxItem = jssStyled(ButtonBase, ['isAct'])<{
+  isAct?: boolean,
+}>(props => ({
+  flexDirection: 'column',
+  alignItems: 'flex-start',
+  border: `1px solid ${grey[800]}`,
+  borderRadius: 4,
+  padding: mpStyle.spacePx.xxs,
+  cursor: 'pointer',
+  ...(props.isAct ? {
+    background: mpStyle.red,
+    color: '#fff',
+    border: 'none',
+  } : {}),
+}))
 
 const ActStepEnum = {
   product: 'product',
@@ -113,7 +115,6 @@ export const PcOrderPageModel = modelFactory('PcOrderPageModel', {
   updateActStep: async (value, option) => {
     option.setData(fpMergePre({actStep: value}))
   },
-
 })
 
 export const OrderPage = () => {
@@ -339,9 +340,9 @@ export const OrderPage = () => {
                   ...submitData,
                 })
                 if (res?.saveOrder?.id) {
-                  showMessage('操作成功')
-                  // const _query = dealUrlQuery({orderId: res?.saveOrder?.id})
-                  await router.replace(`/pc/home`)
+                  showMessage('操作成功 将前往付款')
+                  const _query = dealUrlQuery({orderId: res?.saveOrder?.id})
+                  await router.replace(`/pc/pay${_query}`, `/pc/pay${_query}`)
                   actionsShopCartModel.clearData()
                   actionsShopCartModel.getList()
                 }

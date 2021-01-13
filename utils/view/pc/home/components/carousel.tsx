@@ -6,7 +6,7 @@ import {dealImgUrl} from '../../../../tools/img'
 import {Space} from '../../../../components/Box/Box'
 import {formatDate} from '../../../../tools/utils'
 import styled from 'styled-components'
-import {homeTabsModel} from '../../../m/home/components/Tabs/Tabs'
+import {HomeTabsModel} from '../../../m/home/components/Tabs/Tabs'
 
 const CusSwipeImg = styled.div`
   > aside {
@@ -24,7 +24,7 @@ const CusSwipeImg = styled.div`
 
 export const Carousel = () => {
   const {actions: actionsHomeCarouselModel, state: stateHomeCarouselModel} = useStoreModel(homeCarouselModel)
-  const {actions: actionsHomeTabs} = useStoreModel(homeTabsModel)
+  const {actions: actionsHomeTabs} = useStoreModel(HomeTabsModel)
   useEffect(() => {
     actionsHomeTabs.getData()
     actionsHomeCarouselModel.getHomeCarousel()
@@ -38,22 +38,6 @@ export const Carousel = () => {
           showIndicators={false}
           height={'400px'}
           dataList={filterList as []}
-          renderItem={item => <CusSwipeImg
-              key={`Carousel_${item.id}`}
-          >
-            <img
-                style={{height: '400px'}}
-                src={dealImgUrl(item.imgUrl)}
-                alt=""/>
-            <aside>
-              <section>{item?.objData?.remark}</section>
-              <Space w={4}/>
-              {item?.objData?.effectiveDateStart &&
-              <main>[ {formatDate(item?.objData?.effectiveDateStart, 'YYYY/MM/dd')} - {formatDate(item?.objData?.effectiveDateEnd, 'YYYY/MM/dd')} ]</main>}
-              {item?.objData?.startTime &&
-              <main>[ {formatDate(item?.objData?.startTime, 'YYYY/MM/dd')} - {formatDate(item?.objData?.endTime, 'YYYY/MM/dd')} ]</main>}
-            </aside>
-          </CusSwipeImg>}
           onClickItem={(index) => {
             return
           }}

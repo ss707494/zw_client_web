@@ -23,6 +23,9 @@ import {grey} from '@material-ui/core/colors'
 import {Button} from '@material-ui/core'
 import {GroupOrderPage, groupOrderPageModel} from './groupOrderPage'
 import {DictTypeEnum} from '../../../ss_common/enum'
+import {GroupQueueList} from './groupQueueList'
+import {PriceBox} from '../../pc/groupProduct/[id]'
+import {ShopCartModel} from '../cart'
 
 const dealDiscount = (num: number) => {
   return (100 - num ?? 0) / 100
@@ -59,7 +62,7 @@ export const groupProductModel = modelFactory('groupProductModel', {
     const res2 = await option.query(getDataConfig, {
       data: {
         type: DictTypeEnum.GroupPrecision,
-      } as DataConfigItemInput
+      } as DataConfigItemInput,
     }, {})
 
     option.setData(fpMergePre({
@@ -91,7 +94,7 @@ export const groupProductModel = modelFactory('groupProductModel', {
   submit: async ({orderInfoItemInput}: { orderInfoItemInput: OrderInfoItemInput }, option) => {
     return await option.mutate(doc.saveGroupOrder, {
       orderInfoItemInput: {
-          ...orderInfoItemInput,
+        ...orderInfoItemInput,
       } as OrderInfoItemInput,
       groupOrderItemInput: {
         orderGroupAmount: option.data.selectNum,
@@ -111,9 +114,11 @@ const PriceRed = styled.div`
   grid-template-columns: 1fr 120px;
   grid-template-rows: repeat(2, 30px);
   align-items: center;
+
   > main {
     grid-area: 1/1/3/2;
     padding-left: 20px;
+
     > span {
       margin-left: 16px;
     }
@@ -123,11 +128,13 @@ const Name = styled.div`
   padding: 16px 20px;
   display: flex;
   align-items: flex-end;
+
   > main {
     font-size: 22px;
     margin-right: 8px;
     flex-shrink: 0;
   }
+
   > section {
     > span {
       padding: 0 4px;
@@ -140,10 +147,12 @@ const Name = styled.div`
       align-items: center;
     }
   }
+
+  grid-auto-flow: column;
 `
 
-const YellowStar = () => <StarRoundedIcon fontSize={'small'}
-                                          style={{color: '#FDD334'}}/>
+export const YellowStar = () => <StarRoundedIcon fontSize={'small'}
+                                                 style={{color: '#FDD334'}}/>
 
 const Title = styled.header`
   font-size: 20px;
@@ -154,70 +163,72 @@ const GroupQueueBox = styled.div`
 
 const SmartMatch = styled.div`
   padding: 16px 16px 90px;
+
   > section {
     margin-top: 8px;
     display: flex;
     align-items: center;
   }
+
   > main {
     > svg {
       font-size: 3.0rem;
     }
   }
 `
-
-const Price = styled.div`
-  margin-top: 8px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  > main {
-    //font-size: 18px;
-    font-weight: bold;
-  }
-  > main, section {
-    > * {
-      text-align: center;
-    }
-  }
-`
-
 const Submit = styled.div`
-  position: fixed;
-  height: 60px;
-  bottom: 0;
-  width: 100vw;
   background: white;
   border-top: 1px solid ${mpStyle.red};
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: ${mpStyle.shadow['1']};
+
   > aside {
     padding-left: 16px;
     color: ${mpStyle.red};
   }
 `
-const GroupQueueListBox = styled.div<{select: boolean}>`
-  margin-top: 16px;
-  border-radius: 8px;
-  background: ${prop => prop.select
-    ? `linear-gradient(to right, ${mpStyle.red}, #FC7361)` 
-    : grey['200']};
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 8px;
+export const GroupSubmit = ({className, submitCall}: {className?: string, submitCall?: Function}) => {
+  const {actions: actionsShopCartModel} = useStoreModel(ShopCartModel)
+  const {state: stateGroupProduct} = useStoreModel(groupProductModel)
+
+  return <Submit
+      className={className}
+  >
+    <aside>{ll('选择了')}{stateGroupProduct.selectNum}{ll('份')}</aside>
+    <Button
+        disabled={stateGroupProduct.selectNum === 0}
+        style={{height: '100%', padding: '0 32px', borderRadius: '0', fontSize: '18px'}}
+        color={'secondary'}
+        variant={'contained'}
+        onClick={() => {
+          actionsShopCartModel.updateIsGroupOrder(true)
+          submitCall && submitCall()
+        }}
+    >
+      {ll('去结算')}
+    </Button>
+  </Submit>
+}
+
+const GroupSubmitBox = styled(GroupSubmit)`
+  &&& {
+    position: fixed;
+    height: 60px;
+    bottom: 0;
+    width: 100vw;
+    box-shadow: ${mpStyle.shadow['1']};
+  }
 `
 
 export const GroupProduct = () => {
   const router = useRouter()
   const id = (router.query?.id as string) ?? ''
+  const {actions: actionsGroupOrderPageModel} = useStoreModel(groupOrderPageModel)
   const {actions: actionsGroupProduct, state: stateGroupProduct} = useStoreModel(groupProductModel)
   useEffect(() => {
     actionsGroupProduct.getData(id)
   }, [actionsGroupProduct, id])
-  const {actions: actionsGroupOrderPageModel} = useStoreModel(groupOrderPageModel)
 
   const product = stateGroupProduct.product
   // useEffect(() => {
@@ -247,35 +258,13 @@ export const GroupProduct = () => {
     <Name>
       <main>{product.name}</main>
       <section>{product.groupRemark}/{product.groupAmount}{product.groupAmountUnitString} {`每一份${dealGroupNumbers(product)}${product.groupAmountUnitString}`}<br/>
-      {ll('分团精度')}<span>{[...Array(product.groupPrecision)].map((v, i) => i).map(value =>
+        {ll('分团精度')}<span>{[...Array(product.groupPrecision)].map((v, i) => i).map(value =>
             <YellowStar key={value}/>)}</span>
       </section>
     </Name>
     <GroupQueueBox>
       <Title>{ll('拼团中')}</Title>
-      {stateGroupProduct.groupQueueList.filter(v => (v.sumFillAmount ?? 0) < (product?.groupPrecision ?? 0)).map(groupQueue => {
-        const select = groupQueue.id === stateGroupProduct.selectQueueId
-        return <GroupQueueListBox
-            select={select}
-            key={`GroupQueueListBox${groupQueue.id}`}
-        >
-          <aside>
-            {[...Array(product.groupPrecision)].map((v, i) => i).map(value => value + 1 > ((groupQueue.sumFillAmount ?? 0) + (select ? stateGroupProduct.selectNum : 0)) ?
-                <StarBorderRoundedIcon
-                    key={`clickStar${value}`}
-                    fontSize={'large'}
-                    onClick={() => actionsGroupProduct.updateSelectNum(value + 1)}
-                    style={{color: select ? '#fff' : '#000'}}
-                /> : <StarRoundedIcon
-                    key={`clickStar${value}`}
-                    style={{color: '#FDD334'}}
-                    fontSize={'large'}
-                    onClick={() => actionsGroupProduct.updateSelectNum(value + 1)}
-                />)}
-          </aside>
-          <footer>{ll((groupQueue.sumFillAmount ?? 0) + (select ? stateGroupProduct.selectNum : 0) === product.groupPrecision ? '成团啦' : '未成团')}</footer>
-        </GroupQueueListBox>
-      })}
+      <GroupQueueList/>
     </GroupQueueBox>
     <SmartMatch>
       <header>
@@ -299,42 +288,13 @@ export const GroupProduct = () => {
                 onClick={() => actionsGroupProduct.updateSelectNum(value + 1)}
             />)}
       </main>
-      <Price>
-        <main>
-          <header>{dealMoney(stateGroupProduct.dealDiscountAmountUnit(stateGroupProduct))}</header>
-          <footer>{ll('折后价格')}</footer>
-        </main>
-        <div>=</div>
-        <section>
-          <header>{dealMoney((product.priceOut ?? 0))}</header>
-          <footer>{ll('基准价格')}</footer>
-        </section>
-        <div>x</div>
-        <section>
-          <header>{stateGroupProduct.numDiscount}</header>
-          <footer>{ll('份数折扣')}</footer>
-        </section>
-        <div>x</div>
-        <section>
-          <header>{stateGroupProduct.groupDiscount}</header>
-          <footer>{ll('成团折上折')}</footer>
-        </section>
-      </Price>
+      <PriceBox/>
     </SmartMatch>
-    <Submit>
-      <aside>{ll('选择了')}{stateGroupProduct.selectNum}{ll('份')}</aside>
-      <Button
-          disabled={stateGroupProduct.selectNum === 0}
-          style={{height: '100%', padding: '0 32px', borderRadius: '0', fontSize: '18px'}}
-          color={'secondary'}
-          variant={'contained'}
-          onClick={() => {
-            actionsGroupOrderPageModel.open()
-          }}
-      >
-        {ll('去结算')}
-      </Button>
-    </Submit>
+    <GroupSubmitBox
+        submitCall={() => {
+          actionsGroupOrderPageModel.open()
+        }}
+    />
     <GroupOrderPage/>
   </div>
 }

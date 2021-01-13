@@ -10,7 +10,7 @@ import styled from 'styled-components'
 import {DiscountConditionEnum, DiscountTypeEnum, getPickUpTypeName, PickUpTypeEnum} from '../../../ss_common/enum'
 import {CartProduct} from './CartProduct'
 import {BScroller} from '../../../components/BScroll/BScroller'
-import {pageTypeEnum, shopCartModel} from './index'
+import {pageTypeEnum, ShopCartModel} from './index'
 import {DealNoAuth} from '../../../components/NoAuth/NoAuth'
 import {Space} from '../../../components/Box/Box'
 import {InputPromoCodeDialog, inputPromoCodeModel} from './components/InputPromoCode'
@@ -46,7 +46,7 @@ const FixFooter = styled(Box)`
 `
 
 export const ShopCartPage = () => {
-  const {state: stateShopCartModel, actions: actionsShopCartModel, getLoad} = useStoreModel(shopCartModel)
+  const {state: stateShopCartModel, actions: actionsShopCartModel, getLoad} = useStoreModel(ShopCartModel)
   const {actions: actionsInputPromoCodeModel} = useStoreModel(inputPromoCodeModel)
 
   useEffect(() => {
@@ -177,7 +177,10 @@ export const ShopCartPage = () => {
             color={'secondary'}
             fullWidth={true}
             disabled={productNumber === 0}
-            onClick={() => actionsShopCartModel.updatePageType(pageTypeEnum.order)}
+            onClick={() => {
+              actionsShopCartModel.updateIsGroupOrder(false)
+              actionsShopCartModel.updatePageType(pageTypeEnum.order)
+            }}
         >{ll('去结算')}</Button>
       </FixFooter>
       <UpdateShopCart/>

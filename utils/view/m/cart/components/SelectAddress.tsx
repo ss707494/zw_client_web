@@ -3,7 +3,7 @@ import React from 'react'
 import {dialogModelFactory} from '../../../../commonModel/dialog'
 import {useStoreModel} from '../../../../ModelAction/useStore'
 import {ll} from '../../../../tools/dealKey'
-import {shopCartModel} from '../index'
+import {ShopCartModel} from '../index'
 import styled from 'styled-components'
 import {useRouter} from 'next/router'
 import {PickUpTypeEnum} from '../../../../ss_common/enum'
@@ -31,7 +31,7 @@ const Footer = styled.div`
 export const SelectAddress = () => {
   const router = useRouter()
   const {state: stateSelectAddressModel, actions: actionsSelectAddressModel} = useStoreModel(selectAddressModel)
-  const {state: stateShopCartModel, actions: actionsShopCartModel} = useStoreModel(shopCartModel)
+  const {state: stateShopCartModel, actions: actionsShopCartModel} = useStoreModel(ShopCartModel)
   const addressList = stateShopCartModel.dealAddressList(stateShopCartModel)
 
 

@@ -18,7 +18,7 @@ import {isEmpty} from 'lodash'
 import {LineRanking} from '../LineRanking/LineRanking'
 import styled from 'styled-components'
 
-export const homeTabsModel = modelFactory('HomeTabs', {
+export const HomeTabsModel = modelFactory('HomeTabs', {
   homeType: '',
   appModuleConfig: {} as any,
 }, {
@@ -57,7 +57,7 @@ const Box = styled.div`
 
 export const HomeTabs = ({homeType}: { homeType: string }) => {
   const router = useRouter()
-  const {state: homeTabsState, actions: homeTabsActions} = useStoreModel(homeTabsModel)
+  const {state: homeTabsState, actions: homeTabsActions} = useStoreModel(HomeTabsModel)
 
   return (
       <Box>

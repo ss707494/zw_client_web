@@ -22,7 +22,7 @@ export const LineRanking = () => {
   const {actions: actionsLineRankingModel, state: stateLineRankingModel} = useStoreModel(LineRankingModel)
   useEffect(() => {
     actionsLineRankingModel.getList()
-  }, [])
+  }, [actionsLineRankingModel])
   return <div>
     {stateLineRankingModel.list
         .filter(v => dealMaybeNumber(v.sumFillAmount) < dealMaybeNumber(v.product?.groupPrecision))

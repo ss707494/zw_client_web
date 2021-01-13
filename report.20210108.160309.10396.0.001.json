@@ -1,0 +1,585 @@
+
+{
+  "header": {
+    "reportVersion": 1,
+    "event": "Allocation failed - JavaScript heap out of memory",
+    "trigger": "FatalError",
+    "filename": "report.20210108.160309.10396.0.001.json",
+    "dumpEventTime": "2021-01-08T16:03:09Z",
+    "dumpEventTimeStamp": "1610092989567",
+    "processId": 10396,
+    "cwd": "D:\\code\\zw\\zw_client_web",
+    "commandLine": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "server.js"
+    ],
+    "nodejsVersion": "v12.13.0",
+    "wordSize": 64,
+    "arch": "x64",
+    "platform": "win32",
+    "componentVersions": {
+      "node": "12.13.0",
+      "v8": "7.7.299.13-node.12",
+      "uv": "1.32.0",
+      "zlib": "1.2.11",
+      "brotli": "1.0.7",
+      "ares": "1.15.0",
+      "modules": "72",
+      "nghttp2": "1.39.2",
+      "napi": "5",
+      "llhttp": "1.1.4",
+      "http_parser": "2.8.0",
+      "openssl": "1.1.1d",
+      "cldr": "35.1",
+      "icu": "64.2",
+      "tz": "2019a",
+      "unicode": "12.1"
+    },
+    "release": {
+      "name": "node",
+      "lts": "Erbium",
+      "headersUrl": "https://nodejs.org/download/release/v12.13.0/node-v12.13.0-headers.tar.gz",
+      "sourceUrl": "https://nodejs.org/download/release/v12.13.0/node-v12.13.0.tar.gz",
+      "libUrl": "https://nodejs.org/download/release/v12.13.0/win-x64/node.lib"
+    },
+    "osName": "Windows_NT",
+    "osRelease": "10.0.18363",
+    "osVersion": "Windows 10 Pro",
+    "osMachine": "x86_64",
+    "cpus": [
+      {
+        "model": "Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz",
+        "speed": 2592,
+        "user": 2104515,
+        "nice": 0,
+        "sys": 4054828,
+        "idle": 47761734,
+        "irq": 2305843
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz",
+        "speed": 2592,
+        "user": 1257718,
+        "nice": 0,
+        "sys": 816171,
+        "idle": 51846687,
+        "irq": 29953
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz",
+        "speed": 2592,
+        "user": 3638109,
+        "nice": 0,
+        "sys": 2579046,
+        "idle": 47703421,
+        "irq": 39687
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz",
+        "speed": 2592,
+        "user": 1673000,
+        "nice": 0,
+        "sys": 678609,
+        "idle": 51568968,
+        "irq": 12640
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz",
+        "speed": 2592,
+        "user": 2517218,
+        "nice": 0,
+        "sys": 2068921,
+        "idle": 49334437,
+        "irq": 45765
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz",
+        "speed": 2592,
+        "user": 1270875,
+        "nice": 0,
+        "sys": 636015,
+        "idle": 52013687,
+        "irq": 20265
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz",
+        "speed": 2592,
+        "user": 2607390,
+        "nice": 0,
+        "sys": 1875078,
+        "idle": 49438078,
+        "irq": 35203
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz",
+        "speed": 2592,
+        "user": 1695125,
+        "nice": 0,
+        "sys": 801718,
+        "idle": 51423703,
+        "irq": 30812
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz",
+        "speed": 2592,
+        "user": 2087812,
+        "nice": 0,
+        "sys": 2119828,
+        "idle": 49712906,
+        "irq": 45281
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz",
+        "speed": 2592,
+        "user": 1658718,
+        "nice": 0,
+        "sys": 2576781,
+        "idle": 49685046,
+        "irq": 163953
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz",
+        "speed": 2592,
+        "user": 2258765,
+        "nice": 0,
+        "sys": 1587171,
+        "idle": 50074609,
+        "irq": 34359
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz",
+        "speed": 2592,
+        "user": 1628921,
+        "nice": 0,
+        "sys": 760765,
+        "idle": 51530859,
+        "irq": 18046
+      }
+    ],
+    "networkInterfaces": [
+      {
+        "name": "以太网 4",
+        "internal": false,
+        "mac": "00:24:9b:54:24:e6",
+        "address": "fe80::94c3:ab24:9db8:752c",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 21
+      },
+      {
+        "name": "以太网 4",
+        "internal": false,
+        "mac": "00:24:9b:54:24:e6",
+        "address": "192.168.20.243",
+        "netmask": "255.255.255.0",
+        "family": "IPv4"
+      },
+      {
+        "name": "本地连接",
+        "internal": false,
+        "mac": "00:ff:4f:a6:44:db",
+        "address": "fe80::da4:7548:930:8292",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 12
+      },
+      {
+        "name": "本地连接",
+        "internal": false,
+        "mac": "00:ff:4f:a6:44:db",
+        "address": "10.8.0.250",
+        "netmask": "255.255.255.252",
+        "family": "IPv4"
+      },
+      {
+        "name": "Loopback Pseudo-Interface 1",
+        "internal": true,
+        "mac": "00:00:00:00:00:00",
+        "address": "::1",
+        "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+        "family": "IPv6",
+        "scopeid": 0
+      },
+      {
+        "name": "Loopback Pseudo-Interface 1",
+        "internal": true,
+        "mac": "00:00:00:00:00:00",
+        "address": "127.0.0.1",
+        "netmask": "255.0.0.0",
+        "family": "IPv4"
+      }
+    ],
+    "host": "cc"
+  },
+  "javascriptStack": {
+    "message": "No stack.",
+    "stack": [
+      "Unavailable."
+    ]
+  },
+  "nativeStack": [
+    {
+      "pc": "0x00007ff7d3531389",
+      "symbol": "std::basic_ostream<char,std::char_traits<char> >::operator<<+10873"
+    },
+    {
+      "pc": "0x00007ff7d35357cc",
+      "symbol": "std::basic_ostream<char,std::char_traits<char> >::operator<<+28348"
+    },
+    {
+      "pc": "0x00007ff7d3534778",
+      "symbol": "std::basic_ostream<char,std::char_traits<char> >::operator<<+24168"
+    },
+    {
+      "pc": "0x00007ff7d362332b",
+      "symbol": "v8::base::CPU::has_sse+37723"
+    },
+    {
+      "pc": "0x00007ff7d3e26f4e",
+      "symbol": "v8::Isolate::ReportExternalAllocationLimitReached+94"
+    },
+    {
+      "pc": "0x00007ff7d3e0ef91",
+      "symbol": "v8::SharedArrayBuffer::Externalize+833"
+    },
+    {
+      "pc": "0x00007ff7d3cdc85c",
+      "symbol": "v8::internal::Heap::EphemeronKeyWriteBarrierFromCode+1436"
+    },
+    {
+      "pc": "0x00007ff7d3ce7c00",
+      "symbol": "v8::internal::Heap::ProtectUnprotectedMemoryChunks+1312"
+    },
+    {
+      "pc": "0x00007ff7d3ce4734",
+      "symbol": "v8::internal::Heap::PageFlagsAreConsistent+3204"
+    },
+    {
+      "pc": "0x00007ff7d3cd9fc3",
+      "symbol": "v8::internal::Heap::CollectGarbage+1283"
+    },
+    {
+      "pc": "0x00007ff7d3cd8794",
+      "symbol": "v8::internal::Heap::AddRetainedMap+2356"
+    },
+    {
+      "pc": "0x00007ff7d3cf9a65",
+      "symbol": "v8::internal::Factory::NewFillerObject+53"
+    },
+    {
+      "pc": "0x00007ff7d3a66239",
+      "symbol": "v8::internal::interpreter::JumpTableTargetOffsets::iterator::operator=+4057"
+    },
+    {
+      "pc": "0x00007ff7d4252c6d",
+      "symbol": "v8::internal::SetupIsolateDelegate::SetupHeap+567949"
+    },
+    {
+      "pc": "0x000003ee1ff9c9a5",
+      "symbol": ""
+    }
+  ],
+  "javascriptHeap": {
+    "totalMemory": 2153201664,
+    "totalCommittedMemory": 2153201664,
+    "usedMemory": 2127264856,
+    "availableMemory": 55800584,
+    "memoryLimit": 2197815296,
+    "heapSpaces": {
+      "read_only_space": {
+        "memorySize": 262144,
+        "committedMemory": 262144,
+        "capacity": 261872,
+        "used": 32296,
+        "available": 229576
+      },
+      "new_space": {
+        "memorySize": 2097152,
+        "committedMemory": 2097152,
+        "capacity": 1047488,
+        "used": 577504,
+        "available": 469984
+      },
+      "old_space": {
+        "memorySize": 1449242624,
+        "committedMemory": 1449242624,
+        "capacity": 1440447632,
+        "used": 1431177616,
+        "available": 9270016
+      },
+      "code_space": {
+        "memorySize": 3047424,
+        "committedMemory": 3047424,
+        "capacity": 2899968,
+        "used": 2730080,
+        "available": 169888
+      },
+      "map_space": {
+        "memorySize": 11538432,
+        "committedMemory": 11538432,
+        "capacity": 8385200,
+        "used": 8385200,
+        "available": 0
+      },
+      "large_object_space": {
+        "memorySize": 686391296,
+        "committedMemory": 686391296,
+        "capacity": 683811760,
+        "used": 683811760,
+        "available": 0
+      },
+      "code_large_object_space": {
+        "memorySize": 622592,
+        "committedMemory": 622592,
+        "capacity": 550400,
+        "used": 550400,
+        "available": 0
+      },
+      "new_large_object_space": {
+        "memorySize": 0,
+        "committedMemory": 0,
+        "capacity": 1047488,
+        "used": 0,
+        "available": 1047488
+      }
+    }
+  },
+  "resourceUsage": {
+    "userCpuSeconds": 679.062,
+    "kernelCpuSeconds": 54.875,
+    "cpuConsumptionPercent": 0.951373,
+    "maxRss": 1999171584,
+    "pageFaults": {
+      "IORequired": 7345409,
+      "IONotRequired": 0
+    },
+    "fsActivity": {
+      "reads": 53502,
+      "writes": 722
+    }
+  },
+  "libuv": [
+  ],
+  "environmentVariables": {
+    "": "C:=C:\\",
+    "": "D:=D:\\code\\zw\\zw_client_web",
+    "ALLUSERSPROFILE": "C:\\ProgramData",
+    "ANDROID_AVD_HOME": "D:\\androidAvd\\.android\\avd",
+    "ANDROID_SDK_HOME": "D:\\androidSDK",
+    "APPDATA": "C:\\Users\\ss707494\\AppData\\Roaming",
+    "ChocolateyInstall": "C:\\ProgramData\\chocolatey",
+    "ChocolateyLastPathUpdate": "132299460391128899",
+    "ChocolateyToolsLocation": "C:\\tools",
+    "CHROME_EXECUTABLE": "D:\\ss707494\\app\\mychrome\\Chrome\\chrome.exe",
+    "client_api_uri": "http://localhost:4464/type__graphql/api",
+    "CommonProgramFiles": "C:\\Program Files\\Common Files",
+    "CommonProgramFiles(x86)": "C:\\Program Files (x86)\\Common Files",
+    "CommonProgramW6432": "C:\\Program Files\\Common Files",
+    "COMPUTERNAME": "CC",
+    "ComSpec": "C:\\WINDOWS\\system32\\cmd.exe",
+    "DriverData": "C:\\Windows\\System32\\Drivers\\DriverData",
+    "FLUTTER_STORAGE_BASE_URL": "https://storage.flutter-io.cn",
+    "FPS_BROWSER_APP_PROFILE_STRING": "Internet Explorer",
+    "FPS_BROWSER_USER_PROFILE_STRING": "Default",
+    "HOMEDRIVE": "C:",
+    "HOMEPATH": "\\Users\\ss707494",
+    "IDEA_INITIAL_DIRECTORY": "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2019.2.4\\bin",
+    "img_domain": "http://127.0.0.1:4464/",
+    "INIT_CWD": "D:\\code\\zw\\zw_client_web",
+    "IntelliJ IDEA": "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2019.2.4\\bin;",
+    "LOCALAPPDATA": "C:\\Users\\ss707494\\AppData\\Local",
+    "LOGONSERVER": "\\\\CC",
+    "NODE": "C:\\Program Files\\nodejs\\node.exe",
+    "NODE_ENV": "development",
+    "npm_config_argv": "{\"remain\":[],\"cooked\":[\"run\",\"dev\"],\"original\":[\"run\",\"dev\"]}",
+    "npm_config_bin_links": "true",
+    "npm_config_email": "31huiyi",
+    "npm_config_ignore_optional": "",
+    "npm_config_ignore_scripts": "",
+    "npm_config_init_license": "MIT",
+    "npm_config_init_version": "1.0.0",
+    "npm_config_python": "C:\\Users\\ss707494\\.windows-build-tools\\python27\\python.exe",
+    "npm_config_registry": "https://registry.yarnpkg.com",
+    "npm_config_sass_binary_site": "http://npm.taobao.org/mirrors/node-sass",
+    "npm_config_save_prefix": "^",
+    "npm_config_strict_ssl": "true",
+    "npm_config_username": "31npm",
+    "npm_config_user_agent": "yarn/1.19.1 npm/? node/v12.13.0 win32 x64",
+    "npm_config_version_commit_hooks": "true",
+    "npm_config_version_git_message": "v%s",
+    "npm_config_version_git_sign": "",
+    "npm_config_version_git_tag": "true",
+    "npm_config_version_tag_prefix": "v",
+    "npm_execpath": "C:\\ProgramData\\nvm\\v12.13.0\\node_modules\\yarn\\bin\\yarn.js",
+    "npm_lifecycle_event": "dev",
+    "npm_lifecycle_script": "node server.js",
+    "npm_node_execpath": "C:\\Program Files\\nodejs\\node.exe",
+    "npm_package_dependencies_apollo_boost": "^0.4.7",
+    "npm_package_dependencies_apollo_client": "^2.6.8",
+    "npm_package_dependencies_better_scroll": "^1.15.2",
+    "npm_package_dependencies_body_parser": "^1.19.0",
+    "npm_package_dependencies_cross_env": "^7.0.2",
+    "npm_package_dependencies_cross_fetch": "^3.0.4",
+    "npm_package_dependencies_date_fns": "^2.14.0",
+    "npm_package_dependencies_dotenv": "^8.2.0",
+    "npm_package_dependencies_express": "^4.17.1",
+    "npm_package_dependencies_graphql": "^15.0.0",
+    "npm_package_dependencies_http_proxy_middleware": "^1.0.4",
+    "npm_package_dependencies_lodash": "^4.17.15",
+    "npm_package_dependencies_material_auto_rotating_carousel": "^3.0.2",
+    "npm_package_dependencies_next": "^10.0.1",
+    "npm_package_dependencies_node_fetch": "^2.6.0",
+    "npm_package_dependencies_node_sass": "^4.14.0",
+    "npm_package_dependencies_postcss_flexbugs_fixes": "^4.2.1",
+    "npm_package_dependencies_postcss_preset_env": "^6.7.0",
+    "npm_package_dependencies_react": "^16.13.1",
+    "npm_package_dependencies_react_dom": "^16.13.1",
+    "npm_package_dependencies_react_responsive_carousel": "^3.2.5",
+    "npm_package_dependencies_react_swipeable_views": "^0.13.9",
+    "npm_package_dependencies_square_connect": "^4.20200625.0",
+    "npm_package_dependencies_styled_components": "^5.1.0",
+    "npm_package_dependencies_styled_jsx_plugin_postcss": "^2.0.1",
+    "npm_package_dependencies_styled_jsx_plugin_sass": "^1.0.0",
+    "npm_package_dependencies__date_io_date_fns": "1.x",
+    "npm_package_dependencies__material_ui_core": "^4.9.12",
+    "npm_package_dependencies__material_ui_icons": "^4.9.1",
+    "npm_package_dependencies__material_ui_lab": "^4.0.0-alpha.56",
+    "npm_package_dependencies__material_ui_pickers": "^3.2.10",
+    "npm_package_dependencies__material_ui_styles": "^4.9.13",
+    "npm_package_dependencies__material_ui_system": "^4.9.13",
+    "npm_package_dependencies__mui_treasury_styles": "^1.1.4",
+    "npm_package_dependencies__types_better_scroll": "^1.12.1",
+    "npm_package_dependencies__types_lodash": "^4.14.150",
+    "npm_package_dependencies__types_material_ui": "^0.21.7",
+    "npm_package_dependencies__types_node_fetch": "^2.5.7",
+    "npm_package_dependencies__types_react_swipeable_views": "^0.13.0",
+    "npm_package_dependencies__types_styled_components": "^5.1.0",
+    "npm_package_description": "First, run the development server:",
+    "npm_package_devDependencies_babel_eslint": "^10.1.0",
+    "npm_package_devDependencies_babel_plugin_styled_components": "^1.10.7",
+    "npm_package_devDependencies_eslint": "^7.15.0",
+    "npm_package_devDependencies_eslint_config_react_app": "^6.0.0",
+    "npm_package_devDependencies_eslint_loader": "^4.0.2",
+    "npm_package_devDependencies_eslint_plugin_flowtype": "^5.2.0",
+    "npm_package_devDependencies_eslint_plugin_import": "^2.22.1",
+    "npm_package_devDependencies_eslint_plugin_jsx_a11y": "^6.4.1",
+    "npm_package_devDependencies_eslint_plugin_react": "^7.21.5",
+    "npm_package_devDependencies_eslint_plugin_react_hooks": "^4.2.0",
+    "npm_package_devDependencies_postcss_pxtorem": "^5.1.1",
+    "npm_package_devDependencies_postcss_px_to_viewport": "^1.1.1",
+    "npm_package_devDependencies_shelljs": "^0.8.4",
+    "npm_package_devDependencies_stylelint": "^13.8.0",
+    "npm_package_devDependencies_stylelint_config_recommended": "^3.0.0",
+    "npm_package_devDependencies_stylelint_config_styled_components": "^0.1.1",
+    "npm_package_devDependencies_stylelint_processor_styled_components": "^1.10.0",
+    "npm_package_devDependencies_typescript": "^3.8.3",
+    "npm_package_devDependencies__graphql_codegen_cli": "^1.13.4",
+    "npm_package_devDependencies__graphql_codegen_fragment_matcher": "^1.13.5",
+    "npm_package_devDependencies__graphql_codegen_typescript": "^1.13.4",
+    "npm_package_devDependencies__graphql_codegen_typescript_operations": "^1.13.4",
+    "npm_package_devDependencies__typescript_eslint_eslint_plugin": "^4.9.0",
+    "npm_package_devDependencies__typescript_eslint_parser": "^4.9.0",
+    "npm_package_devDependencies__types_node": "^13.9.3",
+    "npm_package_devDependencies__types_react": "^16.9.25",
+    "npm_package_devDependencies__types_shelljs": "^0.8.7",
+    "npm_package_name": "zw_client_web",
+    "npm_package_private": "true",
+    "npm_package_readmeFilename": "README.md",
+    "npm_package_scripts_build": "next build",
+    "npm_package_scripts_buildCopy": "node ./scripts/startPro.js",
+    "npm_package_scripts_dev": "node server.js",
+    "npm_package_scripts_export": "next export",
+    "npm_package_scripts_graphql_codegen": "graphql-codegen",
+    "npm_package_scripts_lint_css": "stylelint './utils/**/*.ts'",
+    "npm_package_scripts_pm2": "pm2 start ecosystem.config.js --name 'client_web'",
+    "npm_package_scripts_prod": "next build & cross-env NODE_ENV=production node server.js",
+    "npm_package_scripts_prod_start": "cross-env NODE_ENV=production node server.js",
+    "npm_package_scripts_start": "next dev",
+    "npm_package_version": "0.1.0",
+    "NUMBER_OF_PROCESSORS": "12",
+    "NVM_HOME": "C:\\ProgramData\\nvm",
+    "NVM_SYMLINK": "C:\\Program Files\\nodejs",
+    "OneDrive": "C:\\Users\\ss707494\\OneDrive",
+    "OneDriveConsumer": "C:\\Users\\ss707494\\OneDrive",
+    "OS": "Windows_NT",
+    "Path": "C:\\Users\\ss707494\\AppData\\Local\\Temp\\yarn--1610015848552-0.2754890609039473;D:\\code\\zw\\zw_client_web\\node_modules\\.bin;C:\\Users\\ss707494\\AppData\\Local\\Yarn\\Data\\link\\node_modules\\.bin;C:\\Program Files\\libexec\\lib\\node_modules\\npm\\bin\\node-gyp-bin;C:\\Program Files\\lib\\node_modules\\npm\\bin\\node-gyp-bin;C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\node-gyp-bin;D:\\flutter\\flutter\\bin;C:\\Python38\\Scripts\\;C:\\Python38\\;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\ProgramData\\chocolatey\\bin;C:\\ProgramData\\nvm;C:\\Program Files\\nodejs;D:\\androidSDK\\tools;D:\\androidSDK\\platform-tools;C:\\Users\\ss707494\\AppData\\Local\\Yarn\\bin;C:\\Users\\ss707494\\.android;C:\\Users\\ss707494\\.android\\avd;D:\\ss707494\\app\\wget;C:\\Program Files\\PowerShell\\7\\;C:\\Program Files\\Git\\cmd;C:\\Program Files\\Process Lasso\\;C:\\Users\\ss707494\\scoop\\shims;C:\\Users\\ss707494\\.windows-build-tools\\python27\\;C:\\Users\\ss707494\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Program Files\\Bandizip\\;C:\\Program Files\\JetBrains\\IntelliJ IDEA 2019.2.4\\bin;;C:\\Users\\ss707494\\AppData\\Local\\Microsoft\\WindowsApps;C:\\tools\\mysql\\current\\bin;;D:\\ss707494\\app\\Fiddler",
+    "PATHEXT": ".COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.PY;.PYW",
+    "PORT": "4454",
+    "POWERSHELL_DISTRIBUTION_CHANNEL": "MSI:Windows 10 Pro",
+    "PROCESSOR_ARCHITECTURE": "AMD64",
+    "PROCESSOR_IDENTIFIER": "Intel64 Family 6 Model 158 Stepping 10, GenuineIntel",
+    "PROCESSOR_LEVEL": "6",
+    "PROCESSOR_REVISION": "9e0a",
+    "ProgramData": "C:\\ProgramData",
+    "ProgramFiles": "C:\\Program Files",
+    "ProgramFiles(x86)": "C:\\Program Files (x86)",
+    "ProgramW6432": "C:\\Program Files",
+    "PROMPT": "$P$G",
+    "PSModulePath": "C:\\Program Files\\WindowsPowerShell\\Modules;C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\Modules",
+    "PUBLIC": "C:\\Users\\Public",
+    "PUB_HOSTED_URL": "https://pub.flutter-io.cn",
+    "server_host": "http://localhost:4464/",
+    "SESSIONNAME": "Console",
+    "SystemDrive": "C:",
+    "SystemRoot": "C:\\WINDOWS",
+    "TEMP": "C:\\Users\\ss707494\\AppData\\Local\\Temp",
+    "TMP": "C:\\Users\\ss707494\\AppData\\Local\\Temp",
+    "USERDOMAIN": "CC",
+    "USERDOMAIN_ROAMINGPROFILE": "CC",
+    "USERNAME": "ss707494",
+    "USERPROFILE": "C:\\Users\\ss707494",
+    "windir": "C:\\WINDOWS",
+    "WXDRIVE_START_ARGS": "--wxdrive-setting=0 --disable-gpu --disable-software-rasterizer --enable-features=NetworkServiceInProcess",
+    "YARN_WRAP_OUTPUT": "false",
+    "__NEXT_PROCESSED_ENV": "true"
+  },
+  "sharedObjects": [
+    "C:\\Program Files\\nodejs\\node.exe",
+    "C:\\WINDOWS\\SYSTEM32\\ntdll.dll",
+    "C:\\WINDOWS\\System32\\KERNEL32.DLL",
+    "C:\\WINDOWS\\System32\\KERNELBASE.dll",
+    "C:\\WINDOWS\\System32\\WS2_32.dll",
+    "C:\\WINDOWS\\System32\\RPCRT4.dll",
+    "C:\\WINDOWS\\System32\\ADVAPI32.dll",
+    "C:\\WINDOWS\\System32\\msvcrt.dll",
+    "C:\\WINDOWS\\System32\\sechost.dll",
+    "C:\\WINDOWS\\System32\\USER32.dll",
+    "C:\\WINDOWS\\System32\\win32u.dll",
+    "C:\\WINDOWS\\System32\\GDI32.dll",
+    "C:\\WINDOWS\\System32\\gdi32full.dll",
+    "C:\\WINDOWS\\System32\\msvcp_win.dll",
+    "C:\\WINDOWS\\SYSTEM32\\dbghelp.dll",
+    "C:\\WINDOWS\\System32\\ucrtbase.dll",
+    "C:\\WINDOWS\\System32\\PSAPI.DLL",
+    "C:\\WINDOWS\\System32\\CRYPT32.dll",
+    "C:\\WINDOWS\\System32\\MSASN1.dll",
+    "C:\\WINDOWS\\System32\\bcrypt.dll",
+    "C:\\WINDOWS\\SYSTEM32\\IPHLPAPI.DLL",
+    "C:\\WINDOWS\\SYSTEM32\\USERENV.dll",
+    "C:\\WINDOWS\\System32\\profapi.dll",
+    "C:\\WINDOWS\\SYSTEM32\\WINMM.dll",
+    "C:\\WINDOWS\\SYSTEM32\\winmmbase.dll",
+    "C:\\WINDOWS\\System32\\cfgmgr32.dll",
+    "C:\\WINDOWS\\System32\\bcryptPrimitives.dll",
+    "C:\\WINDOWS\\System32\\IMM32.DLL",
+    "C:\\WINDOWS\\System32\\powrprof.dll",
+    "C:\\WINDOWS\\System32\\UMPDC.dll",
+    "C:\\WINDOWS\\system32\\uxtheme.dll",
+    "C:\\WINDOWS\\System32\\combase.dll",
+    "C:\\WINDOWS\\system32\\mswsock.dll",
+    "C:\\WINDOWS\\System32\\kernel.appcore.dll",
+    "C:\\WINDOWS\\SYSTEM32\\CRYPTBASE.DLL",
+    "C:\\WINDOWS\\System32\\NSI.dll",
+    "C:\\WINDOWS\\SYSTEM32\\dhcpcsvc6.DLL",
+    "C:\\WINDOWS\\SYSTEM32\\dhcpcsvc.DLL",
+    "C:\\WINDOWS\\SYSTEM32\\DNSAPI.dll",
+    "C:\\WINDOWS\\system32\\napinsp.dll",
+    "C:\\WINDOWS\\system32\\pnrpnsp.dll",
+    "C:\\WINDOWS\\System32\\winrnr.dll",
+    "C:\\WINDOWS\\system32\\NLAapi.dll",
+    "C:\\WINDOWS\\system32\\wshbth.dll",
+    "C:\\Program Files\\Bonjour\\mdnsNSP.dll",
+    "C:\\Windows\\System32\\rasadhlp.dll",
+    "C:\\WINDOWS\\System32\\fwpuclnt.dll"
+  ]
+}

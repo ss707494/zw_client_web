@@ -8,7 +8,7 @@ import styled from 'styled-components'
 import {mpStyle} from '../../../style/common'
 import {ll} from '../../../tools/dealKey'
 import {Button} from '@material-ui/core'
-import {shopCartModel} from '../../m/cart'
+import {ShopCartModel} from '../../m/cart'
 import {useStoreModel} from '../../../ModelAction/useStore'
 import {getPickUpTypeName, PickUpTypeEnum} from '../../../ss_common/enum'
 import {dealMaybeNumber, dealMoney, fpMerge} from '../../../tools/utils'
@@ -17,6 +17,7 @@ import {CartProductTable} from './components/cartProductTable'
 import {ProductItemBox} from '../pcComponents/productItemBox/productItemBox'
 import {MainBox} from '../pcComponents/mainBox/mainBox'
 import {useRouter} from 'next/router'
+import {HomeType} from '../../m/home/appModule'
 
 const Title = styled.div`
   ${mpStyle.fontType.l};
@@ -73,7 +74,7 @@ const NextBox = styled.div`
 `
 
 const PickUpButton = ({pickUpType}: { pickUpType: string }) => {
-  const {actions: actionsShopCartModel, state: stateShopCartModel} = useStoreModel(shopCartModel)
+  const {actions: actionsShopCartModel, state: stateShopCartModel} = useStoreModel(ShopCartModel)
   const isActPickUpType = (type: string) => type === stateShopCartModel.form.pickUpType
 
   return <Button
@@ -92,7 +93,7 @@ const PickUpButton = ({pickUpType}: { pickUpType: string }) => {
 
 export const CartPage = () => {
   const router = useRouter()
-  const {actions: actionsShopCartModel, state: stateShopCartModel} = useStoreModel(shopCartModel)
+  const {actions: actionsShopCartModel, state: stateShopCartModel} = useStoreModel(ShopCartModel)
   const {actions: actionsInputPromoCodeModel} = useStoreModel(inputPromoCodeModel)
   useEffect(() => {
     if (stateShopCartModel.shopCartList.length === 0) {
@@ -170,7 +171,13 @@ export const CartPage = () => {
               variant={'contained'}
               color={'secondary'}
               onClick={() => {
-                router.push('/pc/cart/orderPage')
+                actionsShopCartModel.updateIsGroupOrder(false)
+                router.push({
+                  pathname: '/pc/cart/orderPage',
+                  query: {
+                    homeType: HomeType.group,
+                  },
+                })
               }}
           >{ll('去结算')}</Button>
         </ProductFooter>

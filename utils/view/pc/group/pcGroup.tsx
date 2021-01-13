@@ -10,11 +10,12 @@ import {SalesRank} from '../home/components/salesRank'
 import React, {useEffect} from 'react'
 import {PcContentBox, TwoSide} from '../home/pcHome'
 import {useStoreModel} from '../../../ModelAction/useStore'
-import {homeTabsModel} from '../../m/home/components/Tabs/Tabs'
+import {HomeTabsModel} from '../../m/home/components/Tabs/Tabs'
 import {HomeType} from '../../m/home/appModule'
+import {LineRanking} from '../home/components/lineRanking'
 
 export const PcHomeGroup = () => {
-  const {actions: actionsHomeTabs} = useStoreModel(homeTabsModel)
+  const {actions: actionsHomeTabs} = useStoreModel(HomeTabsModel)
   useEffect(() => {
     actionsHomeTabs.setHomeType(HomeType.group)
   }, [actionsHomeTabs])
@@ -28,8 +29,7 @@ export const PcHomeGroup = () => {
       <Space h={50}/>
       <TwoSide>
         <section>
-          <LimitTime/>
-          <ThemeSelection/>
+          <LineRanking />
         </section>
         <aside>
           <SalesRank/>

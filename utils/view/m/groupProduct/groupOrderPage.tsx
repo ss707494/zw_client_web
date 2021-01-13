@@ -3,7 +3,7 @@ import {modelFactory} from '../../../ModelAction/modelUtil'
 import styled from 'styled-components'
 import {useStoreModel} from '../../../ModelAction/useStore'
 import {dealMaybeNumber, dealMoney, dealUrlQuery, fpMerge, fpMergePre} from '../../../tools/utils'
-import {dealGroupNumbers, groupProductModel} from './[id]'
+import {dealGroupNumbers} from './[id]'
 import {ShopCartProductBox} from '../cart/CartProduct'
 import {dealImgUrl} from '../../../tools/img'
 import {ProductPrice} from '../../../components/ProductItem/ProductItem'
@@ -12,8 +12,7 @@ import {ll} from '../../../tools/dealKey'
 import {Space} from '../../../components/Box/Box'
 import {getPickUpTypeName, PickUpTypeEnum} from '../../../ss_common/enum'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
-import {AddressBox, CardBox, FooterFit, ShopTitle, ShopTotal} from '../cart/orderPage'
-import {shopCartModel} from '../cart'
+import {AddressBox, CardBox, FooterFit, ShopTitle, ShopTotal, useOrderPageHooks} from '../cart/orderPage'
 import {SelectAddress, selectAddressModel} from '../cart/components/SelectAddress'
 import {SelectCard, selectCardModel} from '../cart/components/SelectCard'
 import {ButtonLoad} from '../../../components/ButtonLoad/ButtonLoad'
@@ -58,40 +57,38 @@ const OrderPageBox = styled.div`
 export const GroupOrderPage = () => {
   const router = useRouter()
   const {state: stateOrderPageModel, actions: actionsOrderPageModel} = useStoreModel(groupOrderPageModel)
-  const {actions: actionsGroupProduct, state: stateGroupProduct} = useStoreModel(groupProductModel)
-  const product = stateGroupProduct.product
-  const {state: stateSCM, actions: actionsSCM} = useStoreModel(shopCartModel)
-  useEffect(() => {
-    if (!stateSCM.user.id) {
-      actionsSCM.getOrderInfo()
-    }
-  }, [])
   const {actions: actionsSAM} = useStoreModel(selectAddressModel)
   const {actions: actionsSelectCard} = useStoreModel(selectCardModel)
-
-  const addressData = stateSCM.dealAddressData(stateSCM)
-  const cardData = stateSCM.payCardList?.find(v => v.id === stateSCM.form.paymentMethodCardId) || {}
-  const productTotal = (product.priceOut ?? 0) * dealGroupNumbers(product) * stateGroupProduct.selectNum
-  const transportationCosts = stateSCM.dealTransportationCosts(stateSCM, productTotal)
-  const actuallyPaid = (stateGroupProduct.dealDiscountAmount(stateGroupProduct)) + transportationCosts + dealMaybeNumber(stateSCM.form.saleTax) - dealMaybeNumber(stateSCM.form?.deductCoin)
-  const generateCoin = actuallyPaid * 0.01
+  const {
+    stateShopCartModel,
+    actionsShopCartModel,
+    addressData,
+    cardData,
+    productTotal,
+    transportationCosts,
+    actuallyPaid,
+    generateCoin,
+    stateGroupProduct,
+    actionsGroupProduct,
+    product,
+  } = useOrderPageHooks()
 
   useEffect(() => {
     if (stateOrderPageModel.show) {
       window.history.pushState(null, '', document.URL)
-      window.addEventListener('popstate', (state) => {
+      window.addEventListener('popstate', () => {
         // 监听到返回事件，注意，只有触发了返回才会执行这个方法
         actionsOrderPageModel.close()
       }, false)
     }
     return () => {
-      window.removeEventListener('popstate', (state) => {
+      window.removeEventListener('popstate', () => {
         actionsOrderPageModel.close()
       })
     }
-  }, [stateOrderPageModel.show])
+  }, [actionsOrderPageModel, stateOrderPageModel.show])
 
-  return stateOrderPageModel.show && <>
+  return (stateOrderPageModel.show && <>
     <OrderPageBox>
       <HeaderTitle
           title={'订单支付'}
@@ -117,10 +114,10 @@ export const GroupOrderPage = () => {
           fullWidth={true}
           label={ll('运送方式')}
           select={true}
-          value={stateSCM.form.pickUpType}
+          value={stateShopCartModel.form.pickUpType}
           onChange={event => {
-            actionsSCM.setForm(['pickUpType', event.target.value])
-            actionsSCM.setForm(['addressId', stateSCM.initAddressId(fpMerge(stateSCM, {
+            actionsShopCartModel.setForm(['pickUpType', event.target.value])
+            actionsShopCartModel.setForm(['addressId', stateShopCartModel.initAddressId(fpMerge(stateShopCartModel, {
               form: {
                 pickUpType: event.target.value,
               },
@@ -148,7 +145,7 @@ export const GroupOrderPage = () => {
               onClick={async () => {
                 const res = await actionsSAM.openClick()
                 if (res) {
-                  actionsSCM.setForm(['addressId', res])
+                  actionsShopCartModel.setForm(['addressId', res])
                 }
               }}
           >
@@ -168,7 +165,7 @@ export const GroupOrderPage = () => {
               onClick={async () => {
                 const res = await actionsSelectCard.openClick()
                 if (res) {
-                  actionsSCM.setForm(['paymentMethodCardId', res])
+                  actionsShopCartModel.setForm(['paymentMethodCardId', res])
                 }
               }}
           >
@@ -182,16 +179,16 @@ export const GroupOrderPage = () => {
         <Space w={20}/>
         {ll('使用达人币')}
         <Space w={16}/>
-        <footer>{ll('当月可用余额')}{dealMoney(stateSCM.user.orderCoinCurrentMonth)}</footer>
+        <footer>{ll('当月可用余额')}{dealMoney(stateShopCartModel.user.orderCoinCurrentMonth)}</footer>
       </ShopTitle>
       <div>
         <Space w={20}/>
         <TextField
             style={{marginTop: '8px', marginBottom: '24px'}}
             label={ll('')}
-            value={stateSCM.form.deductCoin}
+            value={stateShopCartModel.form.deductCoin}
             onChange={e => {
-              actionsSCM.setForm(['deductCoin', e.target.value])
+              actionsShopCartModel.setForm(['deductCoin', e.target.value])
             }}
         />
       </div>
@@ -213,7 +210,7 @@ export const GroupOrderPage = () => {
       </ShopTotal>}
       <ShopTotal>
         <header>{ll('达人币抵扣')}</header>
-        <footer>{dealMoney(stateSCM.form.deductCoin, '-')}</footer>
+        <footer>{dealMoney(stateShopCartModel.form.deductCoin, '-')}</footer>
       </ShopTotal>
       <ShopTotal
           style={{fontSize: '18px'}}
@@ -224,7 +221,7 @@ export const GroupOrderPage = () => {
       <Space h={120}/>
       <FooterFit>
         <header>{ll('本次订单')}
-          <span>{ll(stateSCM.userLevelList.find(v => v.code === stateSCM.user.userInfo?.userLevel)?.name)}</span>
+          <span>{ll(stateShopCartModel.userLevelList.find(v => v.code === stateShopCartModel.user.userInfo?.userLevel)?.name)}</span>
         </header>
         <footer>{ll('将获得下月使用达人币 ')}
           <span>{dealMoney(generateCoin)}</span>
@@ -241,18 +238,18 @@ export const GroupOrderPage = () => {
               variant={'contained'}
               color={'secondary'}
               onClick={async () => {
-                if (dealMaybeNumber(stateSCM.user?.orderCoinCurrentMonth) < dealMaybeNumber(stateSCM.form.deductCoin)) {
+                if (dealMaybeNumber(stateShopCartModel.user?.orderCoinCurrentMonth) < dealMaybeNumber(stateShopCartModel.form.deductCoin)) {
                   showMessage(ll('达人币余额不足'))
                   return
                 }
                 const res = await actionsGroupProduct.submit({
                   orderInfoItemInput: {
-                    ...stateSCM.form,
+                    ...stateShopCartModel.form,
                     generateCoin,
                     actuallyPaid,
                     transportationCosts,
                     subtotal: productTotal,
-                    currentUserLevel: stateSCM.user.userInfo?.userLevel,
+                    currentUserLevel: stateShopCartModel.user.userInfo?.userLevel,
                     rOrderProduct: [{
                       count: stateGroupProduct.selectNum,
                       productId: product?.id,
@@ -264,8 +261,8 @@ export const GroupOrderPage = () => {
                   showMessage('操作成功 将前往付款')
                   const _query = dealUrlQuery({orderId: res?.saveGroupOrder?.id})
                   await router.replace(`/m/pay${_query}`, `/m/pay${_query}`)
-                  actionsSCM.clearData()
-                  actionsSCM.getList()
+                  actionsShopCartModel.clearData()
+                  actionsShopCartModel.getList()
                   actionsGroupProduct.clearData()
                   actionsOrderPageModel.close()
                 }
@@ -274,5 +271,5 @@ export const GroupOrderPage = () => {
         </aside>
       </FooterFit>
     </OrderPageBox>
-  </> || null
+  </>) || null
 }

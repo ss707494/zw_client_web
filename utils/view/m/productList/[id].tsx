@@ -17,7 +17,7 @@ import {SortDrawer} from './SortDrawer'
 import {FilterDrawer} from './FilterDrawer'
 import {ResolverFun} from '../../../commonModel/dialog'
 import {HomeType} from '../home/appModule'
-import {homeTabsModel} from '../home/components/Tabs/Tabs'
+import {HomeTabsModel} from '../home/components/Tabs/Tabs'
 import {UpdateShopCart} from '../../../components/ProductItem/UpdateShopCart'
 
 export const sortTypeEnum = {
@@ -128,7 +128,7 @@ export const ProductList = () => {
   const router = useRouter()
   const id = (router.query?.id as string) ?? ''
   const {actions: actionsPLM, state: statePLM} = useStoreModel(productListModel)
-  const {state: stateHomeTabs, actions: actionsHomeTabs} = useStoreModel(homeTabsModel)
+  const {state: stateHomeTabs, actions: actionsHomeTabs} = useStoreModel(HomeTabsModel)
   useEffect(() => {
     actionsHomeTabs.setHomeType((router.query.homeType as string) ?? HomeType.home)
   }, [router.query.homeType])

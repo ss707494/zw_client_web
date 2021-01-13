@@ -4,7 +4,7 @@ import {useRouter} from 'next/router'
 import {AppModuleTypeEnum, DictTypeEnum, RelatedObjTypeEnum} from '../../../ss_common/enum'
 import {DataConfig, DataConfigItemInput} from '../../../graphqlTypes/types'
 import {modelFactory} from '../../../ModelAction/modelUtil'
-import {HomeTabs, homeTabsModel} from './components/Tabs/Tabs'
+import {HomeTabs, HomeTabsModel} from './components/Tabs/Tabs'
 import CusCarousel from '../../../components/Swipe/Swipe'
 import {HeaderSearch} from '../../../components/HeaderSearch/HeaderSearch'
 import {FootBar} from '../../../components/FootBar/FootBar'
@@ -84,7 +84,7 @@ export const HomeAppModule = (type?: string) => function () {
   })
 
   const {actions: actionsHomeCarouselModel, state: stateHomeCarouselModel} = useStoreModel(homeCarouselModel)
-  const {actions: actionsHomeTabs, state: stateHomeTabsModel} = useStoreModel(homeTabsModel)
+  const {actions: actionsHomeTabs, state: stateHomeTabsModel} = useStoreModel(HomeTabsModel)
   useEffect(() => {
     actionsHomeCarouselModel.getHomeCarousel()
     actionsHomeTabs.getData()
@@ -104,7 +104,7 @@ export const HomeAppModule = (type?: string) => function () {
                 return <CusCarousel
                     height={'160px'}
                     dataList={filterList as []}
-                    renderItem={item => <CusSwipeImg
+                    renderItem={(item: any) => <CusSwipeImg
                         key={`Carousel_${item.id}`}
                     >
                       <img

@@ -9,7 +9,7 @@ import {productModel, ProductPrice} from '../../../components/ProductItem/Produc
 import {Button, IconButton} from '@material-ui/core'
 import {useStoreModel} from '../../../ModelAction/useStore'
 import {ll} from '../../../tools/dealKey'
-import {shopCartModel} from './index'
+import {ShopCartModel} from './index'
 import {showMessage} from '../../../components/Message/Message'
 import {updateShopCartModel} from '../../../components/ProductItem/UpdateShopCart'
 
@@ -42,7 +42,7 @@ export const ShopCartProductBox = styled.div`
 `
 
 export const CartProduct = ({shopCart}: { shopCart: ShopCart }) => {
-  const {actions: actionsShopCartModel, state: stateSCM} = useStoreModel(shopCartModel)
+  const {actions: actionsShopCartModel, state: stateSCM} = useStoreModel(ShopCartModel)
   const {actions: actionsProductModel} = useStoreModel(productModel)
   const {actions: actionsUpdateShopCartModel} = useStoreModel(updateShopCartModel)
   const product = shopCart.product

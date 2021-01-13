@@ -3,7 +3,7 @@ import React from 'react'
 import {dialogModelFactory} from '../../../../commonModel/dialog'
 import {useStoreModel} from '../../../../ModelAction/useStore'
 import {ll} from '../../../../tools/dealKey'
-import {shopCartModel} from '../index'
+import {ShopCartModel} from '../index'
 import styled from 'styled-components'
 import {useRouter} from 'next/router'
 import {dealLastNumber} from '../../../../tools/utils'
@@ -31,7 +31,7 @@ const Footer = styled.div`
 export const SelectCard = () => {
   const router = useRouter()
   const {state: stateSelectCard, actions: actionsSelectCard} = useStoreModel(selectCardModel)
-  const {state: stateShopCartModel, actions: actionsShopCartModel} = useStoreModel(shopCartModel)
+  const {state: stateShopCartModel, actions: actionsShopCartModel} = useStoreModel(ShopCartModel)
 
   return <Dialog
       open={stateSelectCard.open}

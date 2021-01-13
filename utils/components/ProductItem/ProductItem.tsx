@@ -16,7 +16,7 @@ import {doc} from '../../graphqlTypes/doc'
 import {showMessage} from '../Message/Message'
 import {ll} from '../../tools/dealKey'
 import {grey} from '@material-ui/core/colors'
-import {shopCartModel} from '../../view/m/cart'
+import {ShopCartModel} from '../../view/m/cart'
 import {useRouter} from 'next/router'
 import {updateShopCartModel} from './UpdateShopCart'
 import {Space} from '../Box/Box'
@@ -79,7 +79,7 @@ export const ProductPrice = ({product, priceOutTip}: { product?: Maybe<Product>,
 
 export const ProductItem = ({product}: { product: Product }) => {
   const {actions: actionsUpdateShopCartModel} = useStoreModel(updateShopCartModel)
-  const {actions: actionsShopCart} = useStoreModel(shopCartModel)
+  const {actions: actionsShopCart} = useStoreModel(ShopCartModel)
   const {state: stateMe, actions: actionsMe} = useStoreModel(meModel)
   useEffect(() => {
     if (!stateMe.user.id) {
@@ -165,7 +165,7 @@ export const ProductItemOneRow = ({product, sumOrderTip = '', hideAction = false
   const {actions: actionsUpdateShopCartModel} = useStoreModel(updateShopCartModel)
   const {state: stateMe, actions: actionsMe} = useStoreModel(meModel)
   const {actions: actionsPM} = useStoreModel(productModel)
-  const {actions: actionsShopCart} = useStoreModel(shopCartModel)
+  const {actions: actionsShopCart} = useStoreModel(ShopCartModel)
 
   useEffect(() => {
     if (!stateMe.user.id) {

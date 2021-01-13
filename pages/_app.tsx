@@ -8,9 +8,11 @@ import {theme} from '../utils/style/theme'
 import Head from 'next/head'
 import {Message} from '../utils/components/Message/Message'
 import {DateWrapperApollo} from '../utils/components/DateWarpper'
+import {PcMobileWarpper} from '../utils/components/PcMobileWarpper'
 
 export default function MyApp({Component, pageProps}: AppProps) {
   return [
+    PcMobileWarpper,
     DateWrapperApollo,
   ].reduce((previousValue: any, currentValue: any) => currentValue(previousValue),
       <>

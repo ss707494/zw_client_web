@@ -4,7 +4,7 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 import React, {useEffect} from 'react'
 import {useRouter} from 'next/router'
 import {useStoreModel} from '../../ModelAction/useStore'
-import {shopCartModel} from '../../view/m/cart'
+import {ShopCartModel} from '../../view/m/cart'
 import {usePcOrMobile} from '../../hooks/usePcOrMobile'
 
 type Color = 'inherit' | 'primary' | 'secondary' | 'action' | 'disabled' | 'error'
@@ -12,7 +12,7 @@ type Color = 'inherit' | 'primary' | 'secondary' | 'action' | 'disabled' | 'erro
 export const ShoppingCartIconButton = ({color, htmlColor}: { color?: Color, htmlColor?: string }) => {
   const {isPc} = usePcOrMobile()
   const router = useRouter()
-  const {state: stateShopCart, actions: actionsShopCart} = useStoreModel(shopCartModel)
+  const {state: stateShopCart, actions: actionsShopCart} = useStoreModel(ShopCartModel)
   useEffect(() => {
     if (!stateShopCart.user.id) {
       actionsShopCart.getList()

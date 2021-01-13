@@ -15,6 +15,7 @@ import styled from 'styled-components'
 import {ProductItemBox} from '../pcComponents/productItemBox/productItemBox'
 import {ll} from '../../../tools/dealKey'
 import {MainBox} from '../pcComponents/mainBox/mainBox'
+import {HomeTabsModel} from '../../m/home/components/Tabs/Tabs'
 
 const ProductBox = styled.div`
   display: grid;
@@ -35,10 +36,15 @@ export const PcCategory = () => {
   const {actions: actionsCategoryPageModel, state: stateCategoryPageModel} = useStoreModel(CategoryPageModel)
   const {actions: actionsCategoryPageModel3, state: stateCategoryPageModel3} = useStoreModel(CategoryPageModel, 'CategoryPageModel3')
   const {actions: actionsHomeCategorySelectionModel, state: stateHomeCategorySelectionModel} = useStoreModel(homeCategorySelectionModel)
+  const {state: stateHomeTabs, actions: actionsHomeTabs} = useStoreModel(HomeTabsModel)
+
+  useEffect(() => {
+    actionsHomeTabs.setHomeType((router.query.homeType as string) ?? HomeType.home)
+  }, [actionsHomeTabs, router.query.homeType])
 
   useEffect(() => {
     actionsHeaderTabModel.switchIsCategory(true)
-  }, [])
+  }, [actionsHeaderTabModel])
   const getCat = useCallback(async () => {
     if (!!id) {
       const category: Category = await actionsCategoryItemModel.getCategory({id})
@@ -71,10 +77,10 @@ export const PcCategory = () => {
         },
       })
     }
-  }, [id])
+  }, [actionsCategoryItemModel, actionsCategoryPageModel, actionsCategoryPageModel3, actionsHomeCategorySelectionModel, actionsProductListModel, id, router.query.homeType])
   useEffect(() => {
     getCat()
-  }, [id])
+  }, [getCat, id])
 
   return <MainBox>
     <PcHeader/>
@@ -91,6 +97,7 @@ export const PcCategory = () => {
         {stateProductListModel.productList.map(product => <ProductItemBox
             key={`stateProductListModel.productList_${product.id}`}
             product={product}
+            type={stateHomeTabs.homeType}
         />)}
       </ProductBox>
     </PcContentBox>

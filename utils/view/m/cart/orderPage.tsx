@@ -2,7 +2,7 @@ import React, {useEffect} from 'react'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import {HeaderTitle} from '../../../components/HeaderTitle/HeaderTitle'
 import {useStoreModel} from '../../../ModelAction/useStore'
-import {pageTypeEnum, shopCartModel} from './index'
+import {pageTypeEnum, ShopCartModel} from './index'
 import styled from 'styled-components'
 import {ll} from '../../../tools/dealKey'
 import {PickUpTypeEnum} from '../../../ss_common/enum'
@@ -18,6 +18,9 @@ import {mpStyle} from '../../../style/common'
 import {ButtonLoad} from '../../../components/ButtonLoad/ButtonLoad'
 import {showMessage} from '../../../components/Message/Message'
 import {useRouter} from 'next/router'
+import {dealGroupNumbers, groupProductModel} from '../groupProduct/[id]'
+import {Product} from '../../../graphqlTypes/types'
+import {HomeType} from '../home/appModule'
 
 export const ShopTitle = styled.div`
   font-size: 18px;
@@ -86,30 +89,66 @@ export const FooterFit = styled.div`
 `
 
 export const useOrderPageHooks = () => {
-  const {state: stateShopCartModel, actions: actionsShopCartModel, getLoad} = useStoreModel(shopCartModel)
+  const router = useRouter()
+  const {state: stateShopCartModel, actions: actionsShopCartModel, getLoad} = useStoreModel(ShopCartModel)
+  const {state: stateGroupProduct, actions: actionsGroupProduct} = useStoreModel(groupProductModel)
+  const product = stateGroupProduct.product
 
+  useEffect(() => {
+    if (router.query.homeType === HomeType.group && !stateShopCartModel.isGroupOrder) {
+      actionsShopCartModel.updateIsGroupOrder(true)
+    } else if (router.query.homeType === HomeType.home && stateShopCartModel.isGroupOrder) {
+      actionsShopCartModel.updateIsGroupOrder(false)
+    }
+  }, [actionsShopCartModel, router.query.homeType, stateShopCartModel.isGroupOrder])
   useEffect(() => {
     actionsShopCartModel.getOrderInfo()
   }, [actionsShopCartModel])
 
-  const addressData = stateShopCartModel.dealAddressData(stateShopCartModel)
-  const cardData = stateShopCartModel.payCardList?.find(v => v.id === stateShopCartModel.form.paymentMethodCardId) || {}
-  const productTotal = stateShopCartModel.dealProductTotal(stateShopCartModel)
-  const transportationCosts = stateShopCartModel.dealTransportationCosts(stateShopCartModel, productTotal)
-  const actuallyPaid = productTotal + transportationCosts - dealMaybeNumber(stateShopCartModel.form.deductCoin) + dealMaybeNumber(stateShopCartModel.form.saleTax) - dealMaybeNumber(stateShopCartModel.form?.couponDiscount)
-  const generateCoin = actuallyPaid * 0.01
-
-  return {
-    stateShopCartModel,
-    actionsShopCartModel,
-    getLoad,
-    addressData,
-    cardData,
-    productTotal,
-    transportationCosts,
-    actuallyPaid,
-    generateCoin,
+  if (stateShopCartModel.isGroupOrder) {
+    const addressData = stateShopCartModel.dealAddressData(stateShopCartModel)
+    const cardData = stateShopCartModel.payCardList?.find(v => v.id === stateShopCartModel.form.paymentMethodCardId) || {}
+    const productTotal = (product.priceOut ?? 0) * dealGroupNumbers(product) * stateGroupProduct.selectNum
+    const transportationCosts = stateShopCartModel.dealTransportationCosts(stateShopCartModel, productTotal)
+    const actuallyPaid = (stateGroupProduct.dealDiscountAmount(stateGroupProduct)) + transportationCosts + dealMaybeNumber(stateShopCartModel.form.saleTax) - dealMaybeNumber(stateShopCartModel.form?.deductCoin)
+    const generateCoin = actuallyPaid * 0.01
+    return {
+      stateShopCartModel,
+      actionsShopCartModel,
+      getLoad,
+      addressData,
+      cardData,
+      productTotal,
+      transportationCosts,
+      actuallyPaid,
+      generateCoin,
+      product,
+      stateGroupProduct,
+      actionsGroupProduct,
+    }
+  } else {
+    const addressData = stateShopCartModel.dealAddressData(stateShopCartModel)
+    const cardData = stateShopCartModel.payCardList?.find(v => v.id === stateShopCartModel.form.paymentMethodCardId) || {}
+    const productTotal = stateShopCartModel.dealProductTotal(stateShopCartModel)
+    const transportationCosts = stateShopCartModel.dealTransportationCosts(stateShopCartModel, productTotal)
+    const actuallyPaid = productTotal + transportationCosts - dealMaybeNumber(stateShopCartModel.form.deductCoin) + dealMaybeNumber(stateShopCartModel.form.saleTax) - dealMaybeNumber(stateShopCartModel.form?.couponDiscount)
+    const generateCoin = actuallyPaid * 0.01
+    return {
+      stateShopCartModel,
+      actionsShopCartModel,
+      getLoad,
+      addressData,
+      cardData,
+      productTotal,
+      transportationCosts,
+      actuallyPaid,
+      generateCoin,
+      product,
+      stateGroupProduct,
+      actionsGroupProduct,
+    }
   }
+
 }
 
 export const OrderPage = () => {

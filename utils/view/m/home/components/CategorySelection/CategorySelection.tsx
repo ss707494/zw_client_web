@@ -11,7 +11,7 @@ import {dealImgUrl} from '../../../../../tools/img'
 import {CategoryRootName} from '../../../../../ss_common/enum'
 import {modelFactory} from '../../../../../ModelAction/modelUtil'
 import {useRouter} from 'next/router'
-import {homeTabsModel} from '../Tabs/Tabs'
+import {HomeTabsModel} from '../Tabs/Tabs'
 import styled from 'styled-components'
 
 export const homeCategorySelectionModel = modelFactory('HomeCategorySelection', {
@@ -66,7 +66,7 @@ const ButtonBaseBox = styled(ButtonBase)`
 export const CategorySelection = () => {
   const router = useRouter()
   const {state: homeCategorySelectionState, actions: homeCategorySelectionActions, getLoad: hsGetLoad} = useStoreModel(homeCategorySelectionModel)
-  const {state: homeTabsState} = useStoreModel(homeTabsModel)
+  const {state: homeTabsState} = useStoreModel(HomeTabsModel)
 
   useEffect(() => {
     homeCategorySelectionActions.getList()

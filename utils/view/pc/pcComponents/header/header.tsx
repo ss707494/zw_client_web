@@ -1,11 +1,11 @@
 import styled from 'styled-components'
 import React from 'react'
 import {ll} from '../../../../tools/dealKey'
-import {Button, ButtonProps, Divider} from '@material-ui/core'
+import {Button, ButtonBase, ButtonBaseProps, Divider} from '@material-ui/core'
 import {Space} from '../../../../components/Box/Box'
 import {mpStyle} from '../../../../style/common'
 import {useStoreModel} from '../../../../ModelAction/useStore'
-import {homeTabsModel} from '../../../m/home/components/Tabs/Tabs'
+import {HomeTabsModel} from '../../../m/home/components/Tabs/Tabs'
 import {HomeType} from '../../../m/home/appModule'
 import {useRouter} from 'next/router'
 
@@ -54,36 +54,35 @@ const Tabs = styled.div`
   display: grid;
   grid-auto-flow: column;
 `
-const TabButton = styled(Button)<ButtonProps & {
-  active?: boolean
-}>`
-  &&& {
-    padding: 0 21px;
-    border-radius: 0;
-    color: white;
-    ${prop => prop.active ? `
-      color: #0D0D21;
-      background: #FFFFFF;
-    ` : ''};
-  }
-`
+const TabButton = styled(ButtonBase)<ButtonBaseProps & {
+  $isAct?: boolean
+}>(props => ({
+  '&.MuiButtonBase-root': {
+    padding: '0 21px',
+    borderRadius: 0,
+    color: 'white',
+    ...(props.$isAct ? {
+      color: '#0D0D21',
+      background: '#FFFFFF',
+    } : {}),
+  },
+}))
+
 export const PcHeader = () => {
   const router = useRouter()
-  const {state: stateHomeTabsModel} = useStoreModel(homeTabsModel)
-  console.log(stateHomeTabsModel.homeType)
-
+  const {state: stateHomeTabsModel} = useStoreModel(HomeTabsModel)
 
   return <HeaderBox>
     <ContentBox>
       <Tabs>
         <TabButton
-            active={stateHomeTabsModel.homeType === HomeType.home}
+            $isAct={stateHomeTabsModel.homeType === HomeType.home}
             onClick={() => {
               router.push('/pc/home')
             }}
         >{ll('零售超市')}</TabButton>
         <TabButton
-            active={stateHomeTabsModel.homeType === HomeType.group}
+            $isAct={stateHomeTabsModel.homeType === HomeType.group}
             onClick={() => {
               router.push('/pc/group')
             }}

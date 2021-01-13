@@ -11,7 +11,7 @@ import Router, {useRouter} from 'next/router'
 import {SaleRankTypeEnum} from '../../../../../ss_common/enum'
 import {Tab, Tabs} from '@material-ui/core'
 import {Space} from '../../../../../components/Box/Box'
-import {homeTabsModel} from '../Tabs/Tabs'
+import {HomeTabsModel} from '../Tabs/Tabs'
 import {HomeType} from '../../appModule'
 
 export const SalesRankModel = modelFactory('SalesRank', {
@@ -43,7 +43,7 @@ const SaleRankTypeEnumLabel: {[k: string]: string} = {
   [SaleRankTypeEnum.OneMonth]: '本月',
 }
 export const SalesRank = () => {
-  const {state: homeTabsState} = useStoreModel(homeTabsModel)
+  const {state: homeTabsState} = useStoreModel(HomeTabsModel)
   const router = useRouter()
   useEffect(() => {
     if (!router.query.salesRankType || ![SaleRankTypeEnum.OneMonth, SaleRankTypeEnum.OneWeek, SaleRankTypeEnum.OneDay].includes(`${router?.query?.salesRankType}`)) {

@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import {mpStyle, RedBox} from '../../../../style/common'
 import {useStoreModel} from '../../../../ModelAction/useStore'
-import {shopCartModel} from '../../../m/cart'
+import {ShopCartModel} from '../../../m/cart'
 import {productModel} from '../../../../components/ProductItem/ProductItem'
 import {ll} from '../../../../tools/dealKey'
 import React from 'react'
@@ -37,7 +37,7 @@ const InfoBox = styled.div`
   }
 `
 export const CartProductTable = () => {
-  const {actions: actionsShopCartModel, state: stateShopCartModel} = useStoreModel(shopCartModel)
+  const {actions: actionsShopCartModel, state: stateShopCartModel} = useStoreModel(ShopCartModel)
   const {actions: actionsProductModel} = useStoreModel(productModel)
 
   return <CartProductTableBox>

@@ -8,6 +8,8 @@ import {ProductItemInput} from '../../../../graphqlTypes/types'
 import {useRouter} from 'next/router'
 import {SaleRankTypeEnum} from '../../../../ss_common/enum'
 import {ProductItemBox} from '../../pcComponents/productItemBox/productItemBox'
+import {HomeTabsModel} from '../../../m/home/components/Tabs/Tabs'
+import {HomeType} from '../../../m/home/appModule'
 
 const Box = styled.div`
 `
@@ -52,16 +54,17 @@ const Rank = styled.div`
 export const SalesRank = () => {
   const router = useRouter()
   const {actions: actionsSalesRankModel, state: stateSalesRankModel} = useStoreModel(SalesRankModel)
+  const {state: stateHomeTabsModel} = useStoreModel(HomeTabsModel)
   useEffect(() => {
     if (1 || router.query.salesRankType) {
       actionsSalesRankModel.getList({
         productInput: {
-          isGroup: 0,
+          isGroup: stateHomeTabsModel.homeType === HomeType.group ? 1 : 0,
         } as ProductItemInput,
         orderByType: router.query.salesRankType ?? SaleRankTypeEnum.OneMonth,
       })
     }
-  }, [actionsSalesRankModel, router.query.salesRankType])
+  }, [actionsSalesRankModel, router.query.salesRankType, stateHomeTabsModel.homeType])
 
   return <Box
       id={'SalesRank'}

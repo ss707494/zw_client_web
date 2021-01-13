@@ -10,6 +10,7 @@ import {categoryItemModel, CategoryPageModel} from '../../../m/category/[id]'
 import {useRouter} from 'next/router'
 import {modelFactory} from '../../../../ModelAction/modelUtil'
 import {fpMergePre} from '../../../../tools/utils'
+import {HomeTabsModel} from '../../../m/home/components/Tabs/Tabs'
 
 export const CategorySelectionModel = modelFactory('CategorySelectionModel', {
   isShow: false,
@@ -53,14 +54,15 @@ export const CategorySelection = ({className}: { className?: string }) => {
   const {actions: actionsHomeCategorySelectionModel, state: stateHomeCategorySelectionModel} = useStoreModel(homeCategorySelectionModel)
   const {actions: actionsCategoryPageModel, state: stateCategoryPageModel} = useStoreModel(CategoryPageModel)
   const {actions: actionsCategoryPageModel3, state: stateCategoryPageModel3} = useStoreModel(CategoryPageModel, 'CategoryPageModel3')
-  const {actions: actionsCategoryItemModel, state: stateCategoryItemModel} = useStoreModel(categoryItemModel)
+  const {actions: actionsCategoryItemModel} = useStoreModel(categoryItemModel)
   const {actions: actionsCategorySelectionModel, state: stateCategorySelectionModel} = useStoreModel(CategorySelectionModel)
+  const {state: stateHomeTabs} = useStoreModel(HomeTabsModel)
 
   useEffect(() => {
     if (stateCategorySelectionModel.isShow) {
       actionsHomeCategorySelectionModel.getList()
     }
-  }, [stateCategorySelectionModel.isShow])
+  }, [actionsHomeCategorySelectionModel, stateCategorySelectionModel.isShow])
 
   return <>
     {stateCategorySelectionModel.isShow &&
@@ -127,10 +129,8 @@ export const CategorySelection = ({className}: { className?: string }) => {
               <LinkButton
                   key={`stateCategoryPageModel3?.categoryList${value.id}`}
                   onClick={async () => {
-                    // actionsCategoryItemModel.getCategory({id: value.id})
-                    // actionsCategoryPageModel3.changeActCatId(value.id)
+                    await router.push(`/pc/category/[id]?homeType=${stateHomeTabs.homeType}`, `/pc/category/${value.id}?homeType=${stateHomeTabs.homeType}`)
                     actionsCategorySelectionModel.switchIsShow(false)
-                    await router.push(`/pc/category/[id]`, `/pc/category/${value.id}`)
                   }}
                   isact={stateCategoryPageModel3.actCatId === value.id ? 1 : 0}
               >
