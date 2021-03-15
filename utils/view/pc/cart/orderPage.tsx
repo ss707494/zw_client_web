@@ -12,7 +12,7 @@ import {dealMaybeNumber, dealMoney, dealUrlQuery, fpMergePre} from '../../../too
 import {useOrderPageHooks} from '../../m/cart/orderPage'
 import {
   Button,
-  ButtonBase, ButtonBaseProps,
+  ButtonBase,
   Divider,
   ExpansionPanel,
   ExpansionPanelDetails,
@@ -299,6 +299,7 @@ export const OrderPage = () => {
           <Space h={mpStyle.space.xxs}/>
           <FillInputBox>
             <TextField
+                type={'number'}
                 variant={'filled'}
                 label={ll('')}
                 value={stateShopCartModel.form.deductCoin}

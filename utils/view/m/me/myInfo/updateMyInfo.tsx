@@ -5,20 +5,23 @@ import {ll} from '../../../../tools/dealKey'
 import {ButtonLoad} from '../../../../components/ButtonLoad/ButtonLoad'
 import router from 'next/router'
 import {FieldContain} from './updatePassword'
-import {modelFactory} from '../../../../ModelAction/modelUtil'
+import {mergeTwoModel, modelFactory} from '../../../../ModelAction/modelUtil'
 import {UserInfo} from '../../../../graphqlTypes/types'
 import {setForm} from '../../../../tools/commonAction'
 import {useStoreModel} from '../../../../ModelAction/useStore'
 import {fpSetPre} from '../../../../tools/utils'
 import {doc} from '../../../../graphqlTypes/doc'
 import {meModel} from '../model'
+import {FormValideBaseModel, FormValideErrObjEnum} from '../../../../tools/formValide'
+import {isEmail} from '../../../../tools/regExp'
 
 export const initFormUpdateMyInfo = {
   name: '',
   phone: '',
   email: '',
 }
-export const UpdateMyInfoModel = modelFactory('UpdateMyInfo', {
+
+export const UpdateMyInfoModel = mergeTwoModel(FormValideBaseModel, modelFactory('UpdateMyInfo', {
   form: initFormUpdateMyInfo as UserInfo,
 }, {
   setForm: setForm,
@@ -33,7 +36,7 @@ export const UpdateMyInfoModel = modelFactory('UpdateMyInfo', {
       userInfo: option.data.form,
     })
   },
-})
+}))
 
 export const useUpdateMyInfoInit = () => {
   const {actions: actionsUpdateMyInfoModel} = useStoreModel(UpdateMyInfoModel)
@@ -61,6 +64,34 @@ export const UpdateMyInfo = () => {
   const {actions: actionsUpdateMyInfoModel, state: stateUpdateMyInfoModel} = useStoreModel(UpdateMyInfoModel)
   const {actions: actionsMe} = useStoreModel(meModel)
   useUpdateMyInfoInit()
+  useEffect(() => {
+    actionsUpdateMyInfoModel.initFormValide({
+      rules: [
+        {
+          key: 'name',
+          name: '姓名',
+        },
+        {
+          key: 'phone',
+          name: '电话',
+          customCall: ({value}: any) => {
+            if (!/^[\d-]+$/.test(value)) {
+              return '电话格式错误'
+            }
+          },
+        },
+        {
+          key: 'email',
+          name: '邮箱',
+          customCall: ({value}: any) => {
+            if (!isEmail(value)) {
+              return '邮箱格式错误'
+            }
+          },
+        },
+      ],
+    })
+  }, [actionsUpdateMyInfoModel])
 
   return <div>
     <HeaderTitle
@@ -71,16 +102,19 @@ export const UpdateMyInfo = () => {
           label={ll('姓名')}
           value={stateUpdateMyInfoModel.form.name}
           onChange={event => actionsUpdateMyInfoModel.setForm(['name', event.target.value])}
+          {...stateUpdateMyInfoModel[FormValideErrObjEnum].name}
       />
       <SigninInput
           label={ll('电话')}
           value={stateUpdateMyInfoModel.form.phone}
           onChange={event => actionsUpdateMyInfoModel.setForm(['phone', event.target.value])}
+          {...stateUpdateMyInfoModel[FormValideErrObjEnum].phone}
       />
       <SigninInput
           label={ll('邮箱')}
           value={stateUpdateMyInfoModel.form.email}
           onChange={event => actionsUpdateMyInfoModel.setForm(['email', event.target.value])}
+          {...stateUpdateMyInfoModel[FormValideErrObjEnum].email}
       />
       <ButtonLoad
           style={{marginTop: '20px'}}
@@ -88,6 +122,9 @@ export const UpdateMyInfo = () => {
           color={'secondary'}
           fullWidth
           onClick={async () => {
+            if (await actionsUpdateMyInfoModel.formValide()) {
+              return
+            }
             const res = await actionsUpdateMyInfoModel.submit()
             if (res?.updateUserInfo?.id) {
               actionsUpdateMyInfoModel.clearForm()

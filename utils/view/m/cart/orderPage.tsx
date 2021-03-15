@@ -19,7 +19,6 @@ import {ButtonLoad} from '../../../components/ButtonLoad/ButtonLoad'
 import {showMessage} from '../../../components/Message/Message'
 import {useRouter} from 'next/router'
 import {dealGroupNumbers, groupProductModel} from '../groupProduct/[id]'
-import {Product} from '../../../graphqlTypes/types'
 import {HomeType} from '../home/appModule'
 
 export const ShopTitle = styled.div`
@@ -265,6 +264,7 @@ export const OrderPage = () => {
       <div>
         <Space w={20}/>
         <TextField
+            type={'number'}
             style={{marginTop: '8px', marginBottom: '24px'}}
             label={ll('')}
             value={stateShopCartModel.form.deductCoin}
