@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import {modelFactory} from '../../../../../ModelAction/modelUtil'
+import {mergeTwoModel, modelFactory} from '../../../../../ModelAction/modelUtil'
 import {useStoreModel} from '../../../../../ModelAction/useStore'
 import {fpMergePre} from '../../../../../tools/utils'
 import {SigninInput} from '../../../register'
@@ -14,8 +14,9 @@ import {doc} from '../../../../../graphqlTypes/doc'
 import {showMessage} from '../../../../../components/Message/Message'
 import {MenuItem, TextField} from '@material-ui/core'
 import {ProvinceData} from '../../../../../ss_common/enum'
+import {FormValideBaseModel} from '../../../../../tools/formValide'
 
-export const myAddressEditModel = modelFactory('myAddressEditModel', {
+export const myAddressEditModel = mergeTwoModel(FormValideBaseModel, modelFactory('myAddressEditModel', {
   form: {
     name: '',
     address: '',
@@ -45,7 +46,7 @@ export const myAddressEditModel = modelFactory('myAddressEditModel', {
         ...form,
         ...(id ? {
           id,
-        } : {})
+        } : {}),
       },
     })
   },
@@ -61,7 +62,7 @@ export const myAddressEditModel = modelFactory('myAddressEditModel', {
       },
     }))
   },
-})
+}))
 
 export const MyAddressEdit = () => {
   const router = useRouter()
@@ -76,7 +77,41 @@ export const MyAddressEdit = () => {
     } else {
       actionsMAEM.setForm(['id', ''])
     }
-  }, [id])
+  }, [actionsMAEM, id])
+  useEffect(() => {
+    actionsMAEM.initFormValide({
+      rules: [
+        {
+          key: 'name',
+          name: '姓名',
+        },
+        {
+          key: 'address',
+          name: '详细地址',
+        },
+        {
+          key: 'district',
+          name: '地区',
+        },
+        {
+          key: 'city',
+          name: '城市',
+        },
+        {
+          key: 'province',
+          name: '州',
+        },
+        {
+          key: 'zip',
+          name: '邮政编码',
+        },
+        {
+          key: 'contactInformation',
+          name: '联系方式',
+        },
+      ],
+    })
+  }, [actionsMAEM])
 
   return <div>
     <HeaderTitle
@@ -98,13 +133,14 @@ export const MyAddressEdit = () => {
               label={'州'}
               value={stateMAEM.form.province ?? ''}
               onChange={e => actionsMAEM.setForm(['province', e.target.value])}
+              {...stateMAEM.formValideErrObj?.['province']}
           >
             {ProvinceData.map(item => <MenuItem
                 key={`provinceData_${item[0]}`}
                 value={item[1]}>
               {item[1]}
             </MenuItem>)}
-          </TextField>
+          </TextField>,
         ],
         ['邮政编码', 'zip'],
         ['联系方式', 'contactInformation'],
@@ -113,6 +149,7 @@ export const MyAddressEdit = () => {
           label={ll(v[0] as string)}
           value={stateMAEM.form[v[1] as keyof UserAddressItemInput] ?? ''}
           onChange={event => actionsMAEM.setForm([v[1], event.target.value])}
+          {...stateMAEM.formValideErrObj?.[v[1] as string]}
       />)}
       <section style={{width: '100%', height: '20px'}}/>
       <ButtonLoad
@@ -120,6 +157,7 @@ export const MyAddressEdit = () => {
           variant={'contained'}
           color={'secondary'}
           onClick={async () => {
+            if (await actionsMAEM.formValide()) return
             if ((await actionsMAEM.submit())?.saveUserAddress?.id) {
               showMessage('操作成功')
               router.back()

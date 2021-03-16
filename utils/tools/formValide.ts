@@ -18,7 +18,7 @@ export type formValideRule = {
   name?: string,
   msg?: string,
   customCall?: (o: {
-    value: any,
+    value: string | undefined | null,
   }) => undefined | string
 }
 

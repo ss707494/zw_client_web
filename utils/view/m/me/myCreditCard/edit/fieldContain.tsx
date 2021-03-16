@@ -13,7 +13,7 @@ import {
 } from '@material-ui/core'
 import {Space} from '../../../../../components/Box/Box'
 import {DatePicker} from '@material-ui/pickers'
-import React, {ReactNode} from 'react'
+import React, {ReactNode, useEffect} from 'react'
 import {CreditAddressInputTypeEnum, ProvinceData} from '../../../../../ss_common/enum'
 import {UserPayCard} from '../../../../../graphqlTypes/types'
 import {ButtonLoad} from '../../../../../components/ButtonLoad/ButtonLoad'
@@ -23,15 +23,41 @@ import {useStoreModel} from '../../../../../ModelAction/useStore'
 import {MyCreditCardEditModel} from './[id]'
 import {styled} from '@material-ui/styles'
 import {myAddressModel} from '../../myAddress/list'
+import {isAccountNumber} from '../../../../../tools/regExp'
 
 const RadioGroupBox = styled(RadioGroup)<RadioGroupProps>({
   display: 'flex',
   flexDirection: 'row',
 })
 
-export const CardFieldContain = ({footerBox, finallyAction = () => {}, variant = 'standard'}: { finallyAction: Function, variant?: 'standard'|'filled'|'outlined', footerBox?: ReactNode }) => {
-  const {state: stateMyCreditCardEditModel, actions: actionsMyCreditCardEditModel} = useStoreModel(MyCreditCardEditModel)
+export const CardFieldContain = ({
+                                   footerBox, finallyAction = () => {
+  }, variant = 'standard',
+                                 }: { finallyAction: Function, variant?: 'standard' | 'filled' | 'outlined', footerBox?: ReactNode }) => {
+  const {
+    state: stateMyCreditCardEditModel,
+    actions: actionsMyCreditCardEditModel,
+  } = useStoreModel(MyCreditCardEditModel)
   const {state: stateMyAddressModel} = useStoreModel(myAddressModel)
+  useEffect(() => {
+    actionsMyCreditCardEditModel.initFormValide({
+      rules: [
+        {
+          key: 'number',
+          name: '信用卡号',
+          customCall: (o: { value: any }) => {
+            if (!isAccountNumber(o.value)) {
+              return '信用卡号格式错误'
+            }
+          },
+        },
+        {
+          key: 'code',
+          name: '验证码',
+        },
+      ],
+    })
+  }, [actionsMyCreditCardEditModel])
 
   return <FieldContain>
     {[
@@ -42,6 +68,7 @@ export const CardFieldContain = ({footerBox, finallyAction = () => {}, variant =
           value={stateMyCreditCardEditModel.isEditNumber ? stateMyCreditCardEditModel.form['number'] : dealLastNumber(stateMyCreditCardEditModel.form['number']) ?? ''}
           onChange={event => actionsMyCreditCardEditModel.setForm(['number', event.target.value])}
           onFocus={() => actionsMyCreditCardEditModel.numberFocus()}
+          {...stateMyCreditCardEditModel.formValideErrObj?.['number']}
       />],
       ['过期日', 'expirationTime', () => <DatePicker
           key={`expirationTime`}
@@ -61,6 +88,7 @@ export const CardFieldContain = ({footerBox, finallyAction = () => {}, variant =
           label={ll('验证码')}
           value={stateMyCreditCardEditModel.form['code'] ?? ''}
           onChange={event => actionsMyCreditCardEditModel.setForm(['code', event.target.value])}
+          {...stateMyCreditCardEditModel.formValideErrObj?.['code']}
       />],
       ['持卡人姓名', 'userName'],
       ['详细地址', 'addressDetail', () => <React.Fragment
@@ -164,6 +192,9 @@ export const CardFieldContain = ({footerBox, finallyAction = () => {}, variant =
           variant={'contained'}
           color={'secondary'}
           onClick={async () => {
+            if (await actionsMyCreditCardEditModel.formValide()) {
+              return
+            }
             if ((await actionsMyCreditCardEditModel.submit())?.saveUserPayCard?.id) {
               showMessage('操作成功')
               actionsMyCreditCardEditModel.clearForm()

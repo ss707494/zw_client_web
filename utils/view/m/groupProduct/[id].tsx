@@ -26,9 +26,10 @@ import {DictTypeEnum} from '../../../ss_common/enum'
 import {GroupQueueList} from './groupQueueList'
 import {PriceBox} from '../../pc/groupProduct/[id]'
 import {ShopCartModel} from '../cart'
+import {ssLog} from '../../../tools/global'
 
 const dealDiscount = (num: number) => {
-  return (100 - num ?? 0) / 100
+  return (100 - (num ?? 0)) / 100
 }
 export const dealGroupNumbers = (product: Product) => {
   return ~~((product.groupAmount ?? 0) / (product.groupPrecision ?? 1))
@@ -76,6 +77,7 @@ export const groupProductModel = modelFactory('groupProductModel', {
     const selectNum = value === option.data.selectNum ? 0 : value
     const selectQueueId = value === option.data.selectNum ? '' : [...option.data.groupQueueList].reverse()?.find(v => (v.sumFillAmount ?? 0) + value <= (option.data?.product?.groupPrecision ?? 0))?.id ?? ''
 
+    ssLog(groupDiscountConfig?.[(option.data.product.groupPrecision ?? 0)]?.discount?.[selectNum])
     option.setData(fpMergePre({
       selectNum,
       selectQueueId,

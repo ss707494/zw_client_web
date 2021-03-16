@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import {modelFactory} from '../../../../../ModelAction/modelUtil'
+import {mergeTwoModel, modelFactory} from '../../../../../ModelAction/modelUtil'
 import {useStoreModel} from '../../../../../ModelAction/useStore'
 import {fpMergePre} from '../../../../../tools/utils'
 import {HeaderTitle} from '../../../../../components/HeaderTitle/HeaderTitle'
@@ -10,8 +10,9 @@ import {doc} from '../../../../../graphqlTypes/doc'
 import {CreditAddressInputTypeEnum} from '../../../../../ss_common/enum'
 import {myAddressModel} from '../../myAddress/list'
 import {CardFieldContain} from './fieldContain'
+import {FormValideBaseModel} from '../../../../../tools/formValide'
 
-export const MyCreditCardEditModel = modelFactory('myCreditCardEditModel', {
+export const MyCreditCardEditModel = mergeTwoModel(FormValideBaseModel, modelFactory('myCreditCardEditModel', {
   selectId: '',
   form: {
     number: '',
@@ -95,7 +96,7 @@ export const MyCreditCardEditModel = modelFactory('myCreditCardEditModel', {
       }))
     }
   },
-})
+}))
 
 export const MyCreditCardEdit = () => {
   const router = useRouter()
@@ -114,7 +115,7 @@ export const MyCreditCardEdit = () => {
   }, [actionsMyCreditCardEditModel, id])
   useEffect(() => {
     actionsMyAddressModel.getList()
-  }, [])
+  }, [actionsMyAddressModel])
 
   return <div>
     <HeaderTitle

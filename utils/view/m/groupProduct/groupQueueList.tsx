@@ -21,7 +21,7 @@ const GroupQueueListBox = styled.div<{select: boolean}>`
 `
 
 export const GroupQueueList = () => {
-  const {actions: actionsGroupProduct, state: stateGroupProduct} = useStoreModel(groupProductModel)
+  const {state: stateGroupProduct} = useStoreModel(groupProductModel)
   const product = stateGroupProduct.product
 
   return <>
@@ -37,13 +37,13 @@ export const GroupQueueList = () => {
               <StarBorderRoundedIcon
                   key={`clickStar${value}`}
                   fontSize={'large'}
-                  onClick={() => actionsGroupProduct.updateSelectNum(value + 1)}
+                  // onClick={() => actionsGroupProduct.updateSelectNum(value + 1)}
                   style={{color: select ? '#fff' : '#000'}}
               /> : <StarRoundedIcon
                   key={`clickStar${value}`}
                   style={{color: '#FDD334'}}
                   fontSize={'large'}
-                  onClick={() => actionsGroupProduct.updateSelectNum(value + 1)}
+                  // onClick={() => actionsGroupProduct.updateSelectNum(value + 1)}
               />)}
         </aside>
         <footer>{ll((groupQueue.sumFillAmount ?? 0) + (select ? stateGroupProduct.selectNum : 0) === product.groupPrecision ? '成团啦' : '未成团')}</footer>
