@@ -37,7 +37,7 @@ export const registerModel = modelFactory('register', {
       step: 1,
     }))
   },
-  submit: async (value, option) => {
+  submit: async (value: {isPc?: boolean}, option) => {
     const userInfo = option.data.userForm?.userInfo || {}
     if (!userInfo.phone || !userInfo.email) {
       showMessage(ll('请填写表单'))
@@ -58,10 +58,10 @@ export const registerModel = modelFactory('register', {
       showMessage(ll('注册成功,即将登录'))
       setToken(registerUser.token as string)
       setToken(registerUser.refreshtoken as string, 'refreshtoken')
-      await Router.replace(`/m/home`, `/m/home`, {shallow: true})
+      await Router.replace(`/${(value?.isPc && 'pc') ?? 'm'}/home`, `/${(value?.isPc && 'pc') ?? 'm'}/home`, {shallow: true})
     }
   },
-  goToSignup: (value, option) => {
-    Router.push('/m/login')
+  goToSignup: (value: {isPc?: boolean}, option) => {
+    Router.push(`/${(value?.isPc && 'pc') ?? 'm'}/login`)
   },
 })

@@ -6,8 +6,9 @@ import {TextFieldProps} from '@material-ui/core/TextField/TextField'
 import {mpStyle} from '../../../style/common'
 import {useStoreModel} from '../../../ModelAction/useStore'
 import {RegisterHeader} from '../../../components/RegisterHeader/RegisterHeader'
-import { ll } from '../../../tools/dealKey'
+import {ll} from '../../../tools/dealKey'
 import {Box} from '../../../components/Box/Box'
+import {usePcOrMobile} from '../../../hooks/usePcOrMobile'
 
 const Tab = styled.div`
   font-size: 22px;
@@ -47,6 +48,7 @@ export const SigninSubButton = styled(Button)<ButtonProps>`
 
 export default function Register() {
   const {state: rState, actions: rActions} = useStoreModel(registerModel)
+  const {isPc} = usePcOrMobile()
 
   return (
       <Box>
@@ -94,7 +96,7 @@ export default function Register() {
               color={'secondary'}
               variant={'text'}
               onClick={() => {
-                rActions.goToSignup()
+                rActions.goToSignup({isPc})
               }}
           >账号密码登录</Button>
         </>}
@@ -120,7 +122,7 @@ export default function Register() {
               variant={'contained'}
               fullWidth
               onClick={() => {
-                rActions.submit()
+                rActions.submit({isPc})
               }}
           >{ll('确认并登陆')}</SigninSubButton>
           <Button
@@ -129,7 +131,7 @@ export default function Register() {
               color={'secondary'}
               variant={'text'}
               onClick={() => {
-                rActions.goToSignup()
+                rActions.goToSignup({isPc})
               }}
           >账号密码登录</Button>
         </>}

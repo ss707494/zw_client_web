@@ -1,14 +1,14 @@
 import 'cross-fetch/polyfill'
-import {getToken, setToken} from '../tools/token'
+import {getToken} from '../tools/token'
 import {Operation} from 'apollo-link'
 import {ErrorLink} from 'apollo-link-error'
 import Router from 'next/router'
 import ApolloClient from 'apollo-boost'
 import {ssLog} from '../tools/global'
 import {DocumentNode} from 'graphql'
-import {doc} from '../graphqlTypes/doc'
 import {showMessage} from '../components/Message/Message'
 import getConfig from 'next/config'
+import {mobileCheck} from '../components/PcMobileWarpper'
 
 const config = getConfig()
 const client_api_uri = config?.publicRuntimeConfig?.client_api_uri ?? 'http://localhost:4464/type__graphql/api'
@@ -17,6 +17,14 @@ const omitTypename = (key: any, value: any) => {
   return key === '__typename' ? undefined : value
 }
 
+const goToLogin = () => {
+  const isMobile = mobileCheck()
+  if (isMobile) {
+    Router.push('/m/login')
+  } else {
+    Router.push('/pc/login')
+  }
+}
 export const getClient = () => {
 
   const request: (operation: Operation) => Promise<void> | void = (operation) => {
@@ -32,25 +40,25 @@ export const getClient = () => {
     }))
   }
 
-  const refreshToken = () => {
-    graphQLQuery()(doc.refreshToken.doc, {
-      data: getToken('refreshtoken'),
-    }).then(res => {
-      if (res.data?.refreshToken?.token) {
-        setToken(res.data?.refreshToken?.token)
-        setToken(res.data?.refreshToken?.refreshtoken, 'refreshtoken')
-        showMessage({message: '登录超时,刷新登录信息'})
-        Router.reload()
-      } else {
-        showMessage({message: '请重新登录'})
-        Router.push('/m/login')
-      }
-    }).catch(err => {
-      ssLog(err)
-      showMessage({message: '请重新登录'})
-      Router.push('/m/login')
-    })
-  }
+  // const refreshToken = () => {
+  //   graphQLQuery()(doc.refreshToken.doc, {
+  //     data: getToken('refreshtoken'),
+  //   }).then(res => {
+  //     if (res.data?.refreshToken?.token) {
+  //       setToken(res.data?.refreshToken?.token)
+  //       setToken(res.data?.refreshToken?.refreshtoken, 'refreshtoken')
+  //       showMessage({message: '登录超时,刷新登录信息'})
+  //       Router.reload()
+  //     } else {
+  //       showMessage({message: '请重新登录'})
+  //       goToLogin()
+  //     }
+  //   }).catch(err => {
+  //     ssLog(err)
+  //     showMessage({message: '请重新登录'})
+  //     goToLogin()
+  //   })
+  // }
   const onError: ErrorLink.ErrorHandler = ({response, operation, graphQLErrors, networkError}) => {
     // console.log(response)
     // console.log(operation)
@@ -61,7 +69,8 @@ export const getClient = () => {
         )
         if (extensions?.code === 'UNAUTHENTICATED') {
           showMessage({message: '请重新登录'})
-          Router.push('/m/login')
+          goToLogin()
+
           // if (message.includes('first')) {
           //   refreshToken()
           // } else {
@@ -83,7 +92,7 @@ export const getClient = () => {
       ssLog(`[Network error]: ${errMsg}`)
       if ('statusCode' in networkError && networkError?.statusCode === 401) {
         showMessage({message: '请重新登录'})
-        Router.push('/m/login')
+        goToLogin()
         // if (errMsg.includes('first') && getToken('refreshtoken')) {
         //   refreshToken()
         // } else {

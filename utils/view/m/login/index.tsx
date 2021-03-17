@@ -5,9 +5,11 @@ import {loginModel} from './model'
 import {Box} from '../../../components/Box/Box'
 import {ll} from '../../../tools/dealKey'
 import {SigninInput, SigninLabel, SigninSubButton} from '../register'
+import {usePcOrMobile} from '../../../hooks/usePcOrMobile'
 
 export function Login() {
   const {state, actions} = useStoreModel(loginModel)
+  const {isPc} = usePcOrMobile()
 
   return <Box>
     <RegisterHeader/>
@@ -29,7 +31,7 @@ export function Login() {
         variant={'contained'}
         fullWidth
         onClick={() => {
-          actions.login()
+          actions.login({isPc})
         }}
     >登录</SigninSubButton>
     <div style={{display: 'flex', justifyContent: 'space-between'}}>
@@ -39,18 +41,18 @@ export function Login() {
           color={'secondary'}
           variant={'text'}
           onClick={() => {
-            actions.goToSignin()
+            actions.goToSignin({isPc})
           }}
       >{ll('注册')}</SigninSubButton>
-      {/*<SigninSubButton*/}
-      {/*    style={{marginTop: '10px'}}*/}
-      {/*    size={'small'}*/}
-      {/*    color={'secondary'}*/}
-      {/*    variant={'text'}*/}
-      {/*    onClick={() => {*/}
-      {/*      actions.goHome()*/}
-      {/*    }}*/}
-      {/*>{ls('游客访问')}</SigninSubButton>*/}
+      {isPc && <SigninSubButton
+          style={{marginTop: '10px'}}
+          size={'small'}
+          color={'secondary'}
+          variant={'text'}
+          onClick={() => {
+            actions.goHome({isPc})
+          }}
+      >{ll('游客访问')}</SigninSubButton>}
     </div>
   </Box>
 }

@@ -16,7 +16,7 @@ export const loginModel = modelFactory('loginModel', {
   setForm: ([path, value], option) => {
     option.setData(fpSetPre(`form.${path}`, value))
   },
-  login: async (value, option) => {
+  login: async (value: {isPc?: boolean}, option) => {
     const form = option.data.form
     if (!form?.name || !form?.password) {
       return showMessage(ll('请填写表单'))
@@ -27,13 +27,17 @@ export const loginModel = modelFactory('loginModel', {
     if (res?.login?.token) {
       setToken(res?.login?.token)
       setToken(res?.login?.refreshtoken, 'refreshtoken')
-      await Router.push('/m/home')
+      await Router.push(`/${(value?.isPc && 'pc') ?? 'm'}/home`)
     }
   },
-  goToSignin: async (value, option) => {
-    await Router.push('/m/register')
+  goToSignin: async (value: {isPc?: boolean}, option) => {
+    await Router.push(`/${(value?.isPc && 'pc') ?? 'm'}/register`)
   },
-  goHome: async (value, option) => {
-    await Router.push('/m/home/[appModule]', '/m/home/categorySelection')
+  goHome: async (value: {isPc?: boolean}, option) => {
+    if (value?.isPc) {
+      await Router.push(`/pc/home`, `/pc/home`)
+    } else {
+      await Router.push(`/m/home/[appModule]`, `/m/home/categorySelection`)
+    }
   },
 })

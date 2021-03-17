@@ -107,6 +107,9 @@ export const PcHeader = () => {
             }}
             variant={'contained'}
             color={'secondary'}
+            onClick={() => {
+              router.push('/pc/login')
+            }}
         >{ll('登录/注册')}</Button>
         <Space w={32}/>
         <Button
