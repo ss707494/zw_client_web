@@ -12,7 +12,8 @@
     "prod": "next build & cross-env NODE_ENV=production node server.js",
     "prod_start": "cross-env NODE_ENV=production node server.js",
     "pm2": "pm2 start ecosystem.config.js --name 'client_web'",
-    "lint:css": "stylelint './utils/**/*.ts'"
+    "lint:css": "stylelint './utils/**/*.ts'",
+    "deploy": "npm run buildCopy && cd ../deploy && npm run deploy"
   },
   "dependencies": {
     "@date-io/date-fns": "1.x",
