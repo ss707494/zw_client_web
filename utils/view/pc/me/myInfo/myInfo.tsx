@@ -13,7 +13,8 @@ import {fpMergePre} from '../../../../tools/utils'
 import {meModel} from '../../../m/me/model'
 import {ButtonLoad} from '../../../../components/ButtonLoad/ButtonLoad'
 import {doc} from '../../../../graphqlTypes/doc'
-import {updatePasswordModel} from '../../../m/me/myInfo/updatePassword'
+import {updatePasswordModel, useInitUpdatePasswordModel} from '../../../m/me/myInfo/updatePassword'
+import {FormValideErrObjEnum} from '../../../../tools/formValide'
 
 const TopTitle = styled('div')`
   ${mpStyle.fontType.l};
@@ -59,8 +60,10 @@ export const PcMyInfo = () => {
   const {actions: actionsUpdateMyInfoModel, state: stateUpdateMyInfoModel, getLoad} = useStoreModel(UpdateMyInfoModel)
   const {state: stateUpdatePasswordModel, actions: actionsUpdatePasswordModel} = useStoreModel(updatePasswordModel)
   const {actions: actionsMe, state: stateMeModel} = useStoreModel(meModel)
-
   const {initForm} = useUpdateMyInfoInit()
+  useInitUpdatePasswordModel()
+
+  console.log(stateUpdatePasswordModel.formValideErrObj?.['newPassword'])
 
   return <MeLayoutBox>
     <TopTitle>
@@ -79,18 +82,21 @@ export const PcMyInfo = () => {
           label={ll('姓名')}
           value={stateUpdateMyInfoModel.form.name}
           onChange={event => actionsUpdateMyInfoModel.setForm(['name', event.target.value])}
+          {...stateUpdateMyInfoModel[FormValideErrObjEnum].name}
       />
       <BaseField
           readonly={!statePcMyInfoModel.isEditInfo}
           label={ll('电话')}
           value={stateUpdateMyInfoModel.form.phone}
           onChange={event => actionsUpdateMyInfoModel.setForm(['phone', event.target.value])}
+          {...stateUpdateMyInfoModel[FormValideErrObjEnum].phone}
       />
       <BaseField
           readonly={!statePcMyInfoModel.isEditInfo}
           label={ll('邮箱')}
           value={stateUpdateMyInfoModel.form.email}
           onChange={event => actionsUpdateMyInfoModel.setForm(['email', event.target.value])}
+          {...stateUpdateMyInfoModel[FormValideErrObjEnum].email}
       />
       <SubmitButtons
           style={{gridArea: '2/1/3/3', alignSelf: 'start'}}
@@ -110,6 +116,7 @@ export const PcMyInfo = () => {
               color={'secondary'}
               loading={getLoad(doc.updateUserInfo)}
               onClick={async () => {
+                if (await actionsUpdateMyInfoModel.formValide()) return
                 const res = await actionsUpdateMyInfoModel.submit()
                 if (res?.updateUserInfo?.id) {
                   actionsMe.getLoginUser()
@@ -159,6 +166,7 @@ export const PcMyInfo = () => {
             type={'password'}
             value={stateUpdatePasswordModel.form.oldPassword}
             onChange={event => actionsUpdatePasswordModel.setForm(['oldPassword', event.target.value])}
+            {...stateUpdatePasswordModel.formValideErrObj?.['oldPassword']}
         />
         <div/>
         <div/>
@@ -167,12 +175,14 @@ export const PcMyInfo = () => {
             type={'password'}
             value={stateUpdatePasswordModel.form.newPassword}
             onChange={event => actionsUpdatePasswordModel.setForm(['newPassword', event.target.value])}
+            {...stateUpdatePasswordModel.formValideErrObj?.['newPassword']}
         />
         <BaseField
             label={ll('确认密码')}
             type={'password'}
             value={stateUpdatePasswordModel.form.confirmPassword}
             onChange={event => actionsUpdatePasswordModel.setForm(['confirmPassword', event.target.value])}
+            {...stateUpdatePasswordModel.formValideErrObj?.['confirmPassword']}
         />
         <div/>
         <SubmitButtons
@@ -192,6 +202,7 @@ export const PcMyInfo = () => {
               color={'secondary'}
               loading={getLoad(doc.updateUserInfo)}
               onClick={async () => {
+                if (await actionsUpdatePasswordModel.formValide()) return
                 const res = await actionsUpdatePasswordModel.submit()
                 if (res?.updatePassword?.id) {
                   actionsMe.getLoginUser()

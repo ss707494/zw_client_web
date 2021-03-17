@@ -56,13 +56,14 @@ export const setFormErrorMsg = ({key, err, clear}: { key: string, err?: string, 
 export const dealFormValide = ({rules}: {
   rules: formValideRule[]
 }) => async (value: formValideValue, option: any) => {
-  console.log(rules)
+  console.log(value)
   return (await rules.reduce<Promise<{
     flag?: boolean,
     option?: any,
     key?: string,
   }>>(async (previousValue, currentValue) => {
     const pre = await previousValue
+    console.log(pre)
     if (pre?.flag) {
       return pre
     }
@@ -73,7 +74,7 @@ export const dealFormValide = ({rules}: {
       const value = option.data.form[currentValue.key]
       if (!value) {
         setFormErrorMsg({
-          key,
+          key: currentValue.key,
           err: `请输入${currentValue.name}`,
         })
         return {
@@ -84,7 +85,7 @@ export const dealFormValide = ({rules}: {
         const msg = await currentValue.customCall({value})
         if (msg) {
           setFormErrorMsg({
-            key,
+            key: currentValue.key,
             err: `${msg}`,
           })
           return {
@@ -94,7 +95,7 @@ export const dealFormValide = ({rules}: {
         }
       } else {
         setFormErrorMsg({
-          key,
+          key: currentValue.key,
           clear: true,
         })
         return {

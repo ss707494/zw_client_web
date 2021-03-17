@@ -14,7 +14,7 @@ type BaseFieldProps = {
   value?: string | null | undefined,
   onChange?: InputProps['onChange'],
 } & TextFieldProps
-export const BaseField = ({type, label, readonly = false, value = '', onChange}: BaseFieldProps) => {
+export const BaseField = ({type, label, readonly = false, value = '', onChange, onBlur, error, helperText}: BaseFieldProps) => {
 
   return <div>
     <Label>{label}</Label>
@@ -26,6 +26,9 @@ export const BaseField = ({type, label, readonly = false, value = '', onChange}:
         size={'small'}
         value={value}
         onChange={onChange}
+        onBlur={onBlur}
+        error={error}
+        helperText={helperText}
         type={type}
     />
     }

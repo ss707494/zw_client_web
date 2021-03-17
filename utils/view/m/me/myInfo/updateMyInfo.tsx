@@ -55,15 +55,6 @@ export const useUpdateMyInfoInit = () => {
   const initForm = useCallback(() => {
     actionsUpdateMyInfoModel.initForm(stateMeModel.user?.userInfo ?? initFormUpdateMyInfo)
   }, [actionsUpdateMyInfoModel, stateMeModel.user])
-  return {
-    initForm,
-  }
-}
-
-export const UpdateMyInfo = () => {
-  const {actions: actionsUpdateMyInfoModel, state: stateUpdateMyInfoModel} = useStoreModel(UpdateMyInfoModel)
-  const {actions: actionsMe} = useStoreModel(meModel)
-  useUpdateMyInfoInit()
   useEffect(() => {
     actionsUpdateMyInfoModel.initFormValide({
       rules: [
@@ -92,6 +83,15 @@ export const UpdateMyInfo = () => {
       ],
     })
   }, [actionsUpdateMyInfoModel])
+  return {
+    initForm,
+  }
+}
+
+export const UpdateMyInfo = () => {
+  const {actions: actionsUpdateMyInfoModel, state: stateUpdateMyInfoModel} = useStoreModel(UpdateMyInfoModel)
+  const {actions: actionsMe} = useStoreModel(meModel)
+  useUpdateMyInfoInit()
 
   return <div>
     <HeaderTitle
