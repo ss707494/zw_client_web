@@ -15,6 +15,7 @@ import {formatDate, fpMergePre} from '../../../tools/utils'
 import styled from 'styled-components'
 import {dealImgUrl} from '../../../tools/img'
 import {Space} from '../../../components/Box/Box'
+import {hideShop} from '../../../tools/global'
 
 export const HomeType = {
   home: 'home',
@@ -44,7 +45,7 @@ export const homeCarouselModel = modelFactory('homeCarouselModel', {
 
 const CusSwipeImg = styled.div`
   > aside {
-    background: rgb(164,164,164, .4);
+    background: rgb(164, 164, 164, .4);
     color: white;
     position: absolute;
     top: 4px;
@@ -63,6 +64,7 @@ const CommonBox = styled.div`
   flex-grow: 1;
   flex-shrink: 1;
   overflow: auto;
+
   > * {
     margin-left: 10px;
     margin-right: 10px;
@@ -96,7 +98,12 @@ export const HomeAppModule = (type?: string) => function () {
   return (
       <div>
         <HeaderSearch homeType={type ?? HomeType.home}/>
-        <BScroller boxHeight={'calc(100vh - 65px)'}>
+        {((hideShop() && type === HomeType.home) && <img
+            style={{width: '100vw'}}
+            alt={''}
+            src={'http://xhel.cn/upload/image/20190718/1563420148103741.jpg'}
+        />)
+        || <BScroller boxHeight={'calc(100vh - 65px)'}>
           <CommonBox>
             <CusCarouselBox>
               {(() => {
@@ -141,6 +148,7 @@ export const HomeAppModule = (type?: string) => function () {
             </div>
           </CommonBox>
         </BScroller>
+        }
         <FootBar/>
       </div>
   )

@@ -6,6 +6,7 @@ import {doc} from '../../../graphqlTypes/doc'
 import {UserItemInput} from '../../../graphqlTypes/types'
 import {modelFactory} from '../../../ModelAction/modelUtil'
 import { ll } from '../../../tools/dealKey'
+import {hideShop} from '../../../tools/global'
 
 export const loginModel = modelFactory('loginModel', {
   form: {
@@ -27,17 +28,21 @@ export const loginModel = modelFactory('loginModel', {
     if (res?.login?.token) {
       setToken(res?.login?.token)
       setToken(res?.login?.refreshtoken, 'refreshtoken')
-      await Router.push(`/${(value?.isPc && 'pc') ?? 'm'}/home`)
+      await Router.push(`/${value?.isPc ? 'pc' : 'm'}/${(hideShop() && 'group') || 'home'}`)
     }
   },
   goToSignin: async (value: {isPc?: boolean}, option) => {
-    await Router.push(`/${(value?.isPc && 'pc') ?? 'm'}/register`)
+    await Router.push(`/${value?.isPc ? 'pc' : 'm'}/register`)
   },
   goHome: async (value: {isPc?: boolean}, option) => {
     if (value?.isPc) {
       await Router.push(`/pc/home`, `/pc/home`)
     } else {
-      await Router.push(`/m/home/[appModule]`, `/m/home/categorySelection`)
+      if (hideShop()) {
+        await Router.push(`/m/group/[appModule]`, `/m/group/categorySelection`)
+      } else {
+        await Router.push(`/m/home/[appModule]`, `/m/home/categorySelection`)
+      }
     }
   },
 })

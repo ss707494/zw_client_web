@@ -5,6 +5,7 @@ const HomeIndex = () => {
   const router = useRouter()
   useEffect(() => {
     router.replace('/m/home/[appModule]', '/m/home/categorySelection', {})
+    // router.replace('/m/group/[appModule]', '/m/group/categorySelection', {})
   })
   return <div/>
 }
